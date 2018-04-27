@@ -1,7 +1,8 @@
 # Sistema do CAC
 
 #####Proposta
-Informatizar o processo de cadastro de:
+Informatizar o processo de cadastro de
+
 - alunos
 - Professores
 - Oficinas
