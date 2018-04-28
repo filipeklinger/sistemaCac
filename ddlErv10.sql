@@ -23,8 +23,8 @@ USE `sistema_cac` ;
 CREATE TABLE IF NOT EXISTS `sistema_cac`.`predio` (
   `id_predio` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
-  `localizacao` VARCHAR(45) NOT NULL,
-  `is_ativo` TINYINT NOT NULL DEFAULT 1,
+  `localizacao` VARCHAR(60) NOT NULL,
+  `is_ativo` TINYINT NOT NULL DEFAULT 1 COMMENT '1 sim\n0 nao',
   PRIMARY KEY (`id_predio`))
   ENGINE = InnoDB;
 
