@@ -147,14 +147,14 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`menor_idade` (
 
 
 -- -----------------------------------------------------
--- Table `sistema_cac`.`maior_idade`
+-- Table `sistema_cac`.`documento`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sistema_cac`.`maior_idade` (
+CREATE TABLE IF NOT EXISTS `sistema_cac`.`documento` (
   `pessoa_id` INT NOT NULL,
   `numero_documento` VARCHAR(45) NOT NULL COMMENT 'numero sem pontos nem traco',
   `tipo_documento` INT(2) NOT NULL COMMENT '1 Registro geral (RG)\n2 Passaporte',
   PRIMARY KEY (`pessoa_id`, `numero_documento`),
-  CONSTRAINT `pessoa_maior`
+  CONSTRAINT `pessoa_documento`
   FOREIGN KEY (`pessoa_id`)
   REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
