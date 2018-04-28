@@ -82,7 +82,8 @@ class getPessoas{
         return $cand;
     }
 }
-
+//Dependendo de como será o design podemos enviar as informaçoes de todos os usuario do sistema
+//ou enviamos cada tipo de usuario numa requisicao diferente
 $pess = new getPessoas();
 echo $pess->getAdministradores();
 echo "<br>Professores: <br>";
