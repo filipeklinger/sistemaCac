@@ -12,20 +12,24 @@ class login{
         $this->db = new Database();
     }
 
-    public function verifyUser($usuario,$senha){
+    public function verifyUser($login, $senha){
         //usuario retornado caso de erro no login
         $user = "[{\"id_pessoa\":\"-1\",\"nome\":\"err\",\"nv_acesso\":\"-1\"}]";
         //primeiro buscamos os usuarios possiveis
-        $usr = json_decode($this->db->select("senha,pessoa_id","login","usuario = ?",array($usuario)));
+        $usr = json_decode($this->db->select("senha,pessoa_id","login","usuario = ?",array($login)));
         //depois vericamos se o usuario encontrado e a senha informada conferem
-        if(password_verify($senha,$usr[0]->senha)){
+        if($usr != null and password_verify($senha,$usr[0]->senha)){
             $user = $this->db->select("id_pessoa,nome,nv_acesso","pessoa","id_pessoa = ?",array($usr[0]->pessoa_id));
         }
         return $user;
     }
 }
+//Obtendo dados atraves de GET (para um debug mais facil)
+$login = isset($_GET['login']) ? $_GET['login'] : 'erro';
+$senha = isset($_GET['senha']) ? $_GET['senha'] : 0;
 
-$login = new login();
-echo $login->verifyUser("filipe",123);
+$objLogin = new login();
+
+echo $objLogin->verifyUser($login,$senha);
 //no banco de dados essa senha esta gravada como
 //PASSWORD_BCRYPT: $2y$10$rPPCz9EYNmxCPKSB3vUERe/zQLX0ZdldkyrCppn6cSRsRn.n/9TQq
