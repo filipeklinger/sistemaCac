@@ -1,0 +1,76 @@
+<body>
+<h3>Infraestrutura</h3>
+<div style="overflow-x: auto;">
+    <ul style="min-width: 450px;" class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#predios">Predios</a></li>
+        <li><a data-toggle="tab" href="#salas">Salas</a></li>
+    </ul>
+
+    <div id="contTab" class="tab-content" style="padding: 16px;">
+
+        <div id="predios" class="tab-pane fade in active">
+            <button type="button" class="btn btn-primary">Cadastrar Predio</button>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class='col-md-5'>Nome</th>
+                    <th class='col-md-5'>Localização</th>
+                    <th class='col-md-1'>Ativo</th>
+                    <th class='col-md-1'>Ação</th>
+                </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+
+        </div>
+
+        <div id="salas" class="tab-pane fade">
+            <button type="button" class="btn btn-primary">Cadastrar Sala</button>
+        </div>
+
+
+    </div>
+</div>
+<script type="text/javascript">
+    // language=JQuery-CSS
+    $('#tbody').on("load", ajaxLoad("predio"));
+
+    //Recuperando as informações
+    function ajaxLoad(tipo){
+        var body = $('#tbody');
+        //colocando uma mensagem de load para o usuario
+        body.append('<div class="loader"></div>');
+        var xhttp = new XMLHttpRequest();//Objeto Ajax
+        xhttp.onreadystatechange = function(){//toda vez que mudar estado chama a funcao
+            if(xhttp.readyState === 4){//estado 4 é quando recebe a resposta
+                $(".loader").remove();
+                body.empty();
+                jsonParse(this.responseText);
+
+            }
+        };
+        xhttp.open("GET", "control/getInfra.php?tipo="+tipo);
+        xhttp.send();
+
+    }
+
+    function jsonParse(resposta) {
+        var corpo = $('#tbody');
+        var objJson = JSON.parse(resposta);
+        for(var i in objJson){
+            corpo.append(
+                '<tr>' +
+                '<td class=\'col-md-5\'> '+ objJson[i].nome + '</td>' +
+                '<td class=\'col-md-5\'> '+ objJson[i].localizacao + '</td>' +
+                '<td class=\'col-md-1\'> '+ isAtivo(objJson[i].is_ativo) + '</td>' +
+                '<td class=\'col-md-1\'> <a href="#" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
+                '</tr>');
+        }
+    }
+
+    function isAtivo(num) {
+        if(num === '1') return "Sim";
+        else return "nao";
+    }
+</script>
+</body>

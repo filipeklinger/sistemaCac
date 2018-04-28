@@ -32,8 +32,10 @@ $opcao = isset($_GET['pag']) ? $_GET['pag'] : 'Login';
 
 switch ($opcao) {
     case 'Login':
-    case 'Pesquisa':
         include "view/login.html";
+        break;
+    case 'Infraestrutura':
+        include "view/infraestrutura.html";
         break;
     case 'DashBoard':
         include "view/dashboard.html";

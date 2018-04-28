@@ -7,7 +7,8 @@
 
 include_once '../model/DatabaseOpenHelper.php';
 include 'constantes.php';
-class infraestrutura{
+
+class infra{
     private $db;
 
     public function __construct(){
@@ -31,7 +32,7 @@ class infraestrutura{
 }
 //recebe por GET o tipo da infraestrutura
 $tipo = $_GET['tipo'];
-$infra = new infraestrutura();
+$infra = new infra();
 if($tipo == 1){
     $infra->insertPredio();
 }else if($tipo == 2){

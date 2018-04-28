@@ -7,7 +7,7 @@
  */
 include_once '../model/DatabaseOpenHelper.php';
 include 'constantes.php';
-class newUser{
+class setUser{
     private $db;
     private $responsavelID,$parentesco,$user,$senha;
 
@@ -124,5 +124,5 @@ class newUser{
 }
 
 //Criando instancia
-$cadastro = new newUser();
+$cadastro = new setUser();
 $cadastro->recebeDados();
