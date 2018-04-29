@@ -1,0 +1,31 @@
+<body>
+
+<div class="row" style="padding: 16px;">
+    <legend><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Cadastro de Novas Oficinas</legend>
+    <p>
+        Obs.: Aqui é somente para cadastro de Oficinas<br/>
+        cadastro de uma turma é na guia cadastro de Novas turmas.
+    </p>
+
+    <form class="form-horizontal" action="control/setOficina.php" method="POST">
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="nome">Nome</label>
+            <div class="col-md-4">
+                <input id="nome" name="nome" type="text" placeholder="Oficina de Desenho"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="pre_requisito">Pré-requisito</label>
+            <div class="col-md-4">
+                <input id="pre_requisito" name="pre_requisito" type="text" placeholder="necessário ter conhecimeno prévio em..."  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <div class="col-md-4 col-md-offset-4"><!-- Submit -->
+            <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Cadastrar" />
+        </div>
+    </form>
+</div>
+</body>

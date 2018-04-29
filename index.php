@@ -36,6 +36,9 @@ switch ($opcao) {
     case 'Login':
         include "view/login.html";
         break;
+    case 'DashBoard':
+        include "view/dashboard.html";
+        break;
     case 'Infraestrutura':
         include "view/infraestrutura.html";
         break;
@@ -45,8 +48,8 @@ switch ($opcao) {
     case 'Cad.Sala':
         include "view/cadSala.html";
         break;
-    case 'DashBoard':
-        include "view/dashboard.html";
+    case 'Cad.Oficina':
+        include "view/cadOficina.html";
         break;
     //TODO Incluir as paginas view aqui
     //A string do case se torna o Titulo da pagina
