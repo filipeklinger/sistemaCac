@@ -13,6 +13,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag'] : 'Sistema CAC';//versao reduzida i
 
     <!-- Bootstrap -->
     <link href="bootstrap3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap3.3.7/select/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="css/cssPersonalizado.css" rel="stylesheet">
     <!-- HTML5 shim e Respond.js para suporte no IE8 de elementos HTML5 e media queries -->
     <!-- ALERTA: Respond.js não funciona se você visualizar uma página file:// -->
@@ -24,6 +25,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag'] : 'Sistema CAC';//versao reduzida i
     <script src="bootstrap3.3.7/jquery.min.js"></script>
     <!-- Inclui todos os plugins compilados do bootstrap (abaixo) -->
     <script src="bootstrap3.3.7/js/bootstrap.min.js"></script>
+    <script src="bootstrap3.3.7/select/js/bootstrap-select.min.js"></script>
     <script src="js/jsonParser.js";></script>
 </head>
 <?php
@@ -39,6 +41,9 @@ switch ($opcao) {
         break;
     case 'Cad.Predio':
         include "view/cadPredio.html";
+        break;
+    case 'Cad.Sala':
+        include "view/cadSala.html";
         break;
     case 'DashBoard':
         include "view/dashboard.html";

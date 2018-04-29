@@ -27,6 +27,7 @@ class infra{
         $predioId = isset($_POST['predio_id']) ? $_POST['predio_id'] : INVALIDO;;
         $nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
         $is_ativo = 1;
+
         $params = array($predioId,$nome,$is_ativo);
         $this->db->insert("predio_id,nome,is_ativo","sala",$params);
         $this->redireciona();
@@ -39,12 +40,13 @@ class infra{
 }
 //recebe por GET o tipo da infraestrutura
 $tipo = $_GET['tipo'];
+
 $infra = new infra();
+
 if($tipo == "predio"){
     $infra->insertPredio();
-}else if($tipo == 2){
+}else if($tipo == "sala"){
     $infra->insertSala();
 }else{
     echo "Erro no tipo";
 }
-

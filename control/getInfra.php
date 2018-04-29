@@ -16,7 +16,7 @@ class getInfra{
     }
 
     public function getPredios(){
-        return $this->db->select("nome,localizacao,is_ativo","predio");
+        return $this->db->select("id_predio,nome,localizacao,is_ativo","predio");
     }
 
     public function getSalas(){
