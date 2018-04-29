@@ -37,6 +37,9 @@ switch ($opcao) {
     case 'Infraestrutura':
         include "view/infraestrutura.html";
         break;
+    case 'Cad.Predio':
+        include "view/cadPredio.html";
+        break;
     case 'DashBoard':
         include "view/dashboard.html";
         break;

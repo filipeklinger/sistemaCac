@@ -20,6 +20,7 @@ class infra{
         $localizacao = isset($_POST['localizacao']) ? $_POST['localizacao'] : INVALIDO;
         $params = array($nome,$localizacao);
         $this->db->insert("nome,localizacao","predio",$params);
+        $this->redireciona();
     }
 
     public function insertSala(){
@@ -28,12 +29,18 @@ class infra{
         $is_ativo = 1;
         $params = array($predioId,$nome,$is_ativo);
         $this->db->insert("predio_id,nome,is_ativo","sala",$params);
+        $this->redireciona();
+    }
+
+    private function redireciona(){
+        //depois de inserir redirecionamos para a pagina de infra
+        header("Location: ../index.php?pag=Infraestrutura");
     }
 }
 //recebe por GET o tipo da infraestrutura
 $tipo = $_GET['tipo'];
 $infra = new infra();
-if($tipo == 1){
+if($tipo == "predio"){
     $infra->insertPredio();
 }else if($tipo == 2){
     $infra->insertSala();
