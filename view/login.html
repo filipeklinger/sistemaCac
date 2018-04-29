@@ -1,8 +1,29 @@
 <body>
 
 <div class="container">
-    <h2>Pagina de login</h2>
-
+    <div class="panel panel-default" >
+        <div class="panel-heading">
+            <h3 class="text-center">Login</h3>
+        </div>
+        <div class="panel-body" >
+            <form id="form" action="control/validadorLogin.php" class="form-horizontal" method="POST">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="user" type="text" class="form-control" name="login" placeholder="Usuário">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="password" type="password" class="form-control" name="senha" placeholder="Senha">
+                </div>
+                <div class="form-group">
+                    <!-- Button -->
+                    <div class="col-md-12 controls">
+                        <button type="submit" href="#" class="btn btn-primary btn-block"><i class="glyphicon glyphicon-log-in"></i> Entrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 </body>
