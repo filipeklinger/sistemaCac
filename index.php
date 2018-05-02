@@ -31,7 +31,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag'] : 'Sistema CAC';//versao reduzida i
 <?php
 //aqui recebemos por get a pagina de conteudo escolhida
 $opcao = isset($_GET['pag']) ? $_GET['pag'] : 'Login';
-
+//TODO: verificar User Agente - evitar que código de estilo quebre
 switch ($opcao) {
     case 'Login':
         include "view/login.html";
