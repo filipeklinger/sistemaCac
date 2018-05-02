@@ -77,19 +77,19 @@ class Database{
         }
 
         //ORDER
-        if (sizeof($orderBy) > 0 & $orderBy != NULL) {
+        if ($orderBy!= null and sizeof($orderBy) > 0 & $orderBy != NULL) {
             $query .= " ORDER BY " . $this->antiInjection($orderBy)." ".$this->antiInjection($sequence);
         }
 
         //Paginator
-        if (sizeof($limit) > 0 & $offset != null) {
+        if ($offset != null and sizeof($limit) > 0) {
             $query .=" LIMIT ". intval($limit). " OFFSET ".intval($offset);
         }
         //Preparing
         $PDO = $this->databaseObj;
         $stmt = $PDO->prepare($query);
         //Inserting params
-        if (sizeof($whereArgs) > 0) {
+        if ($whereArgs != null and sizeof($whereArgs) > 0) {
             for ($i = 0; $i < sizeof($whereArgs); $i++) {
                 $whereArgs[$i] = $this->antiInjection($whereArgs[$i]);
                 $stmt->bindParam($i + 1, $whereArgs[$i]);
