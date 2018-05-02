@@ -1,0 +1,12 @@
+/*
+*/
+
+.page404{
+    background-image: url("../img/bg-main.jpg");
+    background-color: cyan;
+    background-size: cover;
+    min-height: 100vh;
+    min-width: 100%;
+    background-repeat: no-repeat ;
+    overflow: hidden;
+}
