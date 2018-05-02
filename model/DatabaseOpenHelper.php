@@ -71,7 +71,7 @@ class Database{
         $query .= " FROM " . $table;
 
         //RESTRICTION
-        if (sizeof($whereClause) > 0) {
+        if ($whereClause!=null and sizeof($whereClause) > 0) {
             $query .= " WHERE ";
             $query .= $whereClause;
         }
