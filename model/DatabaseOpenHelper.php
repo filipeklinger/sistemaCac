@@ -77,7 +77,7 @@ class Database{
         }
 
         //ORDER
-        if ($orderBy!= null and sizeof($orderBy) > 0 & $orderBy != NULL) {
+        if ($orderBy!= null and sizeof($orderBy) > 0) {
             $query .= " ORDER BY " . $this->antiInjection($orderBy)." ".$this->antiInjection($sequence);
         }
 
