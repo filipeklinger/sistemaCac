@@ -1,12 +1,30 @@
 /*
 */
-
+.container{
+    margin-top: 10%;
+}
 .page404{
     background-image: url("../img/bg-main.jpg");
-    background-color: cyan;
+    background-color: #72daff;
     background-size: cover;
     min-height: 100vh;
     min-width: 100%;
     background-repeat: no-repeat ;
     overflow: hidden;
 }
+.page404 h1{
+    color: white;
+    font-size: 200px;
+}
+
+.page404 h2{
+    color: white;
+}
+.page404 a {
+    color: white;
+    border: 1px solid white;
+    border-radius: 25px 25px 25px 25px;
+    padding: 8px 20px 8px 20px;
+}
+
+
