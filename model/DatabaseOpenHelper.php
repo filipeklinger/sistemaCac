@@ -154,7 +154,7 @@ class Database{
         $stmt = $PDO->prepare($query);
 
         //Inserting params
-        if (sizeof($params) > 0) {
+        if ($params != null and sizeof($params) > 0) {
             for ($i = 0; $i < sizeof($params); $i++) {
                 $params[$i] = $this->antiInjection($params[$i]);
                 $stmt->bindParam($i + 1, $params[$i]);
