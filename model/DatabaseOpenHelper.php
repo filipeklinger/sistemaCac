@@ -71,13 +71,13 @@ class Database{
         $query .= " FROM " . $table;
 
         //RESTRICTION
-        if ($whereClause!=null and sizeof($whereClause) > 0) {
+        if ($whereClause != null and is_array($whereClause) and sizeof($whereClause) > 0) {
             $query .= " WHERE ";
             $query .= $whereClause;
         }
 
         //ORDER
-        if ($orderBy!= null and sizeof($orderBy) > 0) {
+        if ($orderBy != null and is_string($orderBy) and sizeof($orderBy) > 0) {
             $query .= " ORDER BY " . $this->antiInjection($orderBy)." ".$this->antiInjection($sequence);
         }
 
