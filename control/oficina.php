@@ -22,7 +22,6 @@ class oficina{
     }
 
     private function inserOficina(){
-        $this->getDados();
         $params = array($this->nome,$this->preRequisito);
         $this->db->insert("nome,pre_requisito","oficina",$params);
         $this->redireciona();
