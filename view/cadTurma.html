@@ -1,3 +1,48 @@
 <body>
-    <h3>Cadastro de TURMAS!!</h3>
+<div class="row" style="padding: 16px;">
+    <legend><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Cadastro de Turmas</legend>
+
+    <form class="form-horizontal" action="control/main.php?req=13" method="POST">
+
+        <div id="tbody" class="form-group">
+            <label class="col-md-4 control-label"></label>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <select id="tipoPredio" name="predio_id" class="selectpicker" title="Escolha um predio" required="required">
+                        <option value="0">CAC</option>
+                    </select>
+                </div><!-- /input-group -->
+            </div>
+        </div><!-- /form-group -->
+
+        <div id="tsala" class="form-group">
+            <label class="col-md-4 control-label"></label>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <select id="tipoSala" name="predio_id" class="selectpicker" title="Escolha uma Sala" required="required">
+                        <option value="1">Sala de Desenho</option>
+                    </select>
+                </div><!-- /input-group -->
+            </div>
+        </div><!-- /form-group -->
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="pre_requisito">Pré-requisito</label>
+            <div class="col-md-4">
+                <input id="pre_requisito" name="pre_requisito" type="text" placeholder="necessário ter conhecimeno prévio em..."  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="pre_requisito">Num. de vagas</label>
+            <div class="col-md-4">
+                <input id="vagas" name="vagas" type="number" placeholder="numero de vagas"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <div class="col-md-4 col-md-offset-4"><!-- Submit -->
+            <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Cadastrar" />
+        </div>
+    </form>
+</div>
 </body>
