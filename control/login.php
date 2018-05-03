@@ -5,6 +5,8 @@
  * Time: 18:22
  */
 include_once '../model/DatabaseOpenHelper.php';
+include_once 'constantes.php';
+
 class login{
     private $db;
 
@@ -14,8 +16,8 @@ class login{
 
     public function verifyUser(){
         //Obtendo dados atraves de POST
-        $login = isset($_POST['login']) ? $_POST['login'] : 'erro';
-        $senha = isset($_POST['senha']) ? $_POST['senha'] : 0;
+        $login = isset($_POST['login']) ? $_POST['login'] : INVALIDO;
+        $senha = isset($_POST['senha']) ? $_POST['senha'] : INVALIDO;
 
         //primeiro buscamos os usuarios possiveis
         $usr = json_decode($this->db->select("senha,pessoa_id","login","usuario = ?",array($login)));

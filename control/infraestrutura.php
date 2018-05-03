@@ -19,6 +19,7 @@ class infraestrutura{
         $nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
         $localizacao = isset($_POST['localizacao']) ? $_POST['localizacao'] : INVALIDO;
         $params = array($nome,$localizacao);
+
         if($nome != INVALIDO){
             $this->db->insert("nome,localizacao","predio",$params);
         }
