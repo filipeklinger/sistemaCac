@@ -48,3 +48,13 @@ function isAtivo(num) {
     if(num === '1') return "Sim";
     else return "nao";
 }
+
+
+function jsonParseNomePredios(resposta) {
+    var corpo = $('#tipoPredio');
+    var objJson = JSON.parse(resposta);
+    for(var i in objJson){
+        corpo.append(
+            '<option value="' + objJson[i].id_predio+'">' + objJson[i].nome + '</option>' );
+    }
+}
