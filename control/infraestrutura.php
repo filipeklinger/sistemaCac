@@ -48,6 +48,12 @@ class infraestrutura{
         return $this->db->select("id_sala,predio.nome as predio,sala.nome as sala,sala.is_ativo","predio,sala","id_predio = predio_id",null,"predio_id");
     }
 
+    public function getSalaById($identificador){
+
+        //retornamos as salas de um predio especifico
+        return $this->db->select("id_sala,nome","sala","predio_id = ?",array($identificador));
+    }
+
     private function redireciona(){
         //depois de inserir redirecionamos para a pagina de infra
         header("Location: ../index.php?pag=Infraestrutura");

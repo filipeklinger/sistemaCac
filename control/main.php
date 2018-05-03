@@ -69,6 +69,18 @@ class main{
                 $ofic = new oficina();
                 echo $ofic->getOficina();
                 break;
+            case 12:
+                $turma = new turma();
+                $turma->setTurma();
+                break;
+            case 13:
+                $turma = new turma();
+                $turma->getTurmas();
+                break;
+            case 14:
+                $infra = new infraestrutura();
+                echo $infra->getSalaById($_GET['id']);
+                break;
             default:
                 echo "Erro nenhuma requisição solicitada";
                 break;

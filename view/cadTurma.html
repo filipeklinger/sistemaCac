@@ -8,8 +8,8 @@
             <label class="col-md-4 control-label"></label>
             <div class="col-md-4">
                 <div class="input-group">
-                    <select id="tipoPredio" name="predio_id" class="selectpicker" title="Escolha um predio" required="required">
-                        <option value="0">CAC</option>
+                    <select id="tipoPredio" onchange="idSalaPredio();" name="prediosDisponiveis" class="selectpicker" title="Escolha um predio" required="required">
+
                     </select>
                 </div><!-- /input-group -->
             </div>
@@ -19,8 +19,8 @@
             <label class="col-md-4 control-label"></label>
             <div class="col-md-4">
                 <div class="input-group">
-                    <select id="tipoSala" name="predio_id" class="selectpicker" title="Escolha uma Sala" required="required">
-                        <option value="1">Sala de Desenho</option>
+                    <select id="tipoSala" name="salasDisponiveis" class="selectpicker" title="Escolha uma Sala" required="required">
+
                     </select>
                 </div><!-- /input-group -->
             </div>
@@ -45,4 +45,23 @@
         </div>
     </form>
 </div>
+
+<script type="text/javascript">
+    $('#tipoPredio').on("load", ajaxLoadGET('control/main.php?req=4',jsonParseNomePredios,'#tipoPredio'));
+    $(document).on("load",idSalaPredio());
+    function idSalaPredio() {
+        var identificador = '1';//$('#tipoPredio').val();
+        ajaxLoadGET('control/main.php?req=14&id='+identificador,jsonParseSalas,'#tipoSala');
+    }
+
+    function jsonParseSalas(resposta) {
+        var corpo = $('#tipoSala');
+        var objJson = JSON.parse(resposta);
+        for(var i in objJson){
+            corpo.append(
+                '<option value="' + objJson[i].id_sala+'">' + objJson[i].nome + '</option>' );
+        }
+    }
+
+</script>
 </body>
