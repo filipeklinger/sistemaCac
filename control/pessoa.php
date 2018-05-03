@@ -21,10 +21,12 @@ class pessoa{
      * Esse Metodo recebe primeiro o numero de cadastros pois como foi definida na documentação
      * um usuário pode cadastrar varios dependentes (menores de idade)
      * @return bool - Cadastrado ou nao
+     * @throws Exception
      */
     public function setPessoa(){
-        $num_cadastros = isset($_POST['num_cadastros']) ? $_POST['num_cadastros'] : 0;
 
+        $num_cadastros = isset($_POST['num_cadastros']) ? $_POST['num_cadastros'] : INVALIDO;
+        if($num_cadastros == INVALIDO) return false;
         //cada cadastro deve ter somente um login
         $this->user = isset($_POST['usuario']) ? $_POST['usuario'] : '';
         $this->senha = isset($_POST['senha']) ? $_POST['senha'] : INVALIDO;
@@ -73,6 +75,7 @@ class pessoa{
 
     /**
      * @return bool| integer - Retorna o ID do dado inserido ou falso se der erro
+     * @throws Exception
      */
     private function insertDadosBasicos($nome, $sobre, $nv, $menor, $rural, $nasc){
         $params = array($nome,$sobre,$nv,$menor,$rural,$nasc);
@@ -101,6 +104,7 @@ class pessoa{
     /**
      * @param $pessoa_id int - identificador da pessoa na tabela pessoa
      * @return bool|integer - Retorna o ID do dado inserido ou falso se der erro
+     * @throws Exception
      */
     private function insertLogin($pessoa_id){
         $params = array($pessoa_id,$this->user,$this->make_hash($this->senha));
@@ -125,6 +129,7 @@ class pessoa{
 
     /**
      * @return string JSON
+     * @throws Exception
      */
     public function getAdministradores(){
         //Obtemos todos os administradores com left Join em Maior idade pois e obrigatorio ser maior de idade
