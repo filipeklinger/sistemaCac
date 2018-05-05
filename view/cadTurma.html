@@ -48,9 +48,11 @@
 
 <script type="text/javascript">
     $('#tipoPredio').on("load", ajaxLoadGET('control/main.php?req=4',jsonParseNomePredios,'#tipoPredio'));
-    $(document).on("load",idSalaPredio());
+
+    $('#tipoPredio').change(idSalaPredio());
+
     function idSalaPredio() {
-        var identificador = '1';//$('#tipoPredio').val();
+        var identificador = 1;//parseInt($("#tipoPredio").val());
         ajaxLoadGET('control/main.php?req=14&id='+identificador,jsonParseSalas,'#tipoSala');
     }
 
