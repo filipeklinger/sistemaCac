@@ -53,6 +53,7 @@
 
     function idSalaPredio() {
         var identificador = 1;//parseInt($("#tipoPredio").val());
+
         ajaxLoadGET('control/main.php?req=14&id='+identificador,jsonParseSalas,'#tipoSala');
     }
 

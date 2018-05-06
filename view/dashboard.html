@@ -1,15 +1,23 @@
 <body>
-<div class="container">
-    <h2>DashBoard</h2>
+<div class="container-fluid dashboard">
+    <div class="col-md-3 sidebar">
+        <div class="row branding"></div>
+        <div class="row">
+            <ul class="nav">
+                <li class=""><a class="navbar-link" href="?pag=Infraestrutura">Infra</a></li>
+                <li class=""><a class="navbar-link" href="?pag=Cad.Oficina">Novas oficinas</a></li>
+                <li class=""><a class="navbar-link" href="?pag=Cad.Turma">Novas Turmas</a></li>
+            </ul>
+        </div>
+    </div>
 
-    <p>
-        Para criar um link a outras paginas deve-se criar um parametro get.<br/>
-        por exemplo <a href="?pag=DashBoard">A pagina</a> de DashBoard<br/>
-        <a href="?pag=Infraestrutura">Infra</a><br/>
-        <a href="?pag=Cad.Oficina">Novas oficinas</a>
-        <br/>
-        <a href="?pag=Cad.Turma">Novas Turmas</a>
-    </p>
+    <div class="col-md-9">
+        <h2>DashBoard</h2>
 
+        <p>
+            Para criar um link a outras paginas deve-se criar um parametro get.<br/>
+            por exemplo <a href="?pag=DashBoard">A pagina</a> de DashBoard<br/>
+        </p>
+    </div>
 </div>
 </body>

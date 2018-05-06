@@ -3,7 +3,6 @@
 body{
     height: 100vh;
 }
-
 /*Página 404*/
 .page404 .container{
     margin-top: 10%;
@@ -157,6 +156,29 @@ body{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.dashboard{
+    background-color: #f7f7f7;
+    height: 100%;
+    padding: 0 0 0 0 ;
+}
+.dashboard .container-fluid{
+    /*padding: 0 0 0 0;*/
+}
+.dashboard .sidebar{
+    background-color: #424242;
+    color: white;
+    height: 100%;
+}
+.dashboard .sidebar .branding {
+    height: 15%;
+    min-height: 150px;
+    background-image: url("../img/capa4.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
 
 /*TODO: adicionar estilo para Login: lista*/
 /*TODO: adicionar estilo para rodapé*/
