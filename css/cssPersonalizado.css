@@ -44,7 +44,11 @@ body{
 }
 
 .painel .logo{
-    /*TODO: código de estilo do logo aqui*/
+    /*TODO: melhorar estilo de logo, muito para a esquerda e muito pequeno*/
+    background-image: url("../img/logo-web.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 50%;
 }
 .painel input{
     background-color: rgba(31, 31, 31, 0.7);
@@ -56,7 +60,7 @@ body{
     border: 1px solid #8f8f8f;
 }
 .painel .container{
-    padding-top: 17%;
+    padding-top: 11%;
     height: 100%;
 }
 .painel .navbar-fixed-bottom{
@@ -64,6 +68,9 @@ body{
 }
 .painel .continue{
     font-size: 20px;
+}
+.painel form{
+    padding-top: 9%;
 }
 .painel form>a {
     color: white;
