@@ -1,5 +1,5 @@
 <body>
-<div class="painel">
+<div id="main" class="painel">
     <div class="container">
         <div class="col-lg-6 logo">
             <!--TODO: inserir logo do CAC aqui-->
@@ -7,6 +7,7 @@
         <div class="col-lg-6">
             <div class="panel-body">
                 <form id="form" action="control/main.php?req=1" method="POST">
+                    <div id="alertsArea"></div>
                     <!--TODO: debugar falha de autenticação-->
                     <input id="user" type="text" name="login" class="form-control" placeholder="Usuário" autocomplete="off">
                     <br>
@@ -25,15 +26,18 @@
         </div>
     </div>
 </div>
-<div class="lista">
+<div id="oficinas" class="lista">
     <div class="container">
         Obs: Isto não é um erro, implementar lista de oficinas aqui
         <br/>
         <!--Imagens de fundo estavam deixando a página muito pesada, estilizar a lista, e não o fundo-->
-        <!--TODO: adicionar indexador de oficinas disponpiveis-->
+        <!--TODO: adicionar indexador de oficinas disponíveis-->
         <!--TODO: adicionar estrutura para lista de oficínas-->
         <!--TODO: adicionar footer com redes sociais e direito de cópia-->
         <!--Rodapé desta página será diferente dos outros-->
     </div>
+    <footer class="text-center panel-footer">
+        <span>&copy; 2018 - <?php echo date('Y')?>, CAC, UFRRJ, todos os direitos reservados</span>
+    </footer>
 </div>
 </body>

@@ -1,14 +1,17 @@
 <body>
 <div class="container-fluid dashboard">
     <div class="col-md-3 sidebar">
-        <div class="row branding"></div>
+        <!-- TODO: nav não é responsivo e não colapsam ao diminuir a tela  -->
         <div class="row">
-            <ul class="nav">
+            <div class="branding"></div>
+        </div>
+        <nav class="row">
+            <ul class="nav nav-stacked navbar-collapse" id="targeto">
                 <li class=""><a class="navbar-link" href="?pag=Infraestrutura">Infra</a></li>
                 <li class=""><a class="navbar-link" href="?pag=Cad.Oficina">Novas oficinas</a></li>
                 <li class=""><a class="navbar-link" href="?pag=Cad.Turma">Novas Turmas</a></li>
             </ul>
-        </div>
+        </nav>
     </div>
 
     <div class="col-md-9">
@@ -16,7 +19,7 @@
 
         <p>
             Para criar um link a outras paginas deve-se criar um parametro get.<br/>
-            por exemplo <a href="?pag=DashBoard">A pagina</a> de DashBoard<br/>
+            por exemplo <a href="?pag=DashBoard">A página</a> de DashBoard<br/>
         </p>
     </div>
 </div>

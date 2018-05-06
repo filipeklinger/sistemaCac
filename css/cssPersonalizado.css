@@ -25,13 +25,29 @@ body{
     color: white;
 }
 .page404 a {
-    color: white;
-    border: 1px solid white;
-    border-radius: 25px 25px 25px 25px;
-    padding: 8px 20px 8px 20px;
+     color: white;
+     border: 1px solid white;
+     border-radius: 25px 25px 25px 25px;
+     padding: 8px 20px 8px 20px;
+     text-decoration: none;
+    -webkit-transition: 0.4s ease-in-out;
+    -moz-transition: 0.4s ease-in-out;
+    -ms-transition: 0.4s ease-in-out;
+    -o-transition: 0.4s ease-in-out;
+    transition: 0.4s ease-in-out;
+ }
+.page404 a:hover {
+    color: #56abff;
+    border: 1px solid #d7d7d7;
+    background-color: rgba(0, 0, 0, 0.14);
+    -webkit-transition: 0.4s ease-in-out;
+    -moz-transition: 0.4s ease-in-out;
+    -ms-transition: 0.4s ease-in-out;
+    -o-transition: 0.4s ease-in-out;
+    transition: 0.4s ease-in-out;
 }
 
-/*Login*/
+/*Login: página principal*/
 
 .painel{
     background-image: url("../img/bg-main.jpg");
@@ -146,6 +162,13 @@ body{
     height: 100%;
 
 }
+.lista footer{
+    background-color: #2aabd2;
+    color: white;
+}
+.lista .superlista{
+
+}
 
 /* Estilo do Loader que esta no codigo do ajax */
 .loader {
@@ -158,12 +181,12 @@ body{
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
 }
-
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
+/*Dashboard: Tela inicial, pós login*/
 .dashboard{
     background-color: #f7f7f7;
     height: 100%;
@@ -185,7 +208,10 @@ body{
     background-size: cover;
     background-position: center;
 }
-
-
+.dashboard .sidebar {
+    background-color: #424242;
+    color: white;
+    height: 100%;
+}
+/*TODO: estilo de footer do dashboard */
 /*TODO: adicionar estilo para Login: lista*/
-/*TODO: adicionar estilo para rodapé*/
