@@ -9,7 +9,10 @@
             <div class="col-md-4">
                 <div class="input-group">
                     <select id="tipoPredio" onchange="idSalaPredio();" name="prediosDisponiveis" class="selectpicker" title="Escolha um predio" required="required">
-
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
                     </select>
                 </div><!-- /input-group -->
             </div>
@@ -20,7 +23,10 @@
             <div class="col-md-4">
                 <div class="input-group">
                     <select id="tipoSala" name="salasDisponiveis" class="selectpicker" title="Escolha uma Sala" required="required">
-
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
                     </select>
                 </div><!-- /input-group -->
             </div>
@@ -47,22 +53,24 @@
 </div>
 
 <script type="text/javascript">
-    $('#tipoPredio').on("load", ajaxLoadGET('control/main.php?req=4',jsonParseNomePredios,'#tipoPredio'));
+    var selectPredio = $('#tipoPredio');
+    var selectSala = $('#tipoSala');
 
-    $('#tipoPredio').change(idSalaPredio());
+    selectPredio.on("load", ajaxLoadGET('control/main.php?req=4',jsonParseNomePredios,selectPredio));
+    selectPredio.change(idSalaPredio());
 
     function idSalaPredio() {
-        var identificador = 1;//parseInt($("#tipoPredio").val());
-
-        ajaxLoadGET('control/main.php?req=14&id='+identificador,jsonParseSalas,'#tipoSala');
+        var identificador = parseInt(selectPredio.val());
+        ajaxLoadGET('control/main.php?req=14&id='+identificador,jsonParseSalas,selectSala);
     }
 
-    function jsonParseSalas(resposta) {
-        var corpo = $('#tipoSala');
+    function jsonParseSalas(resposta,corpo) {
+        alert(resposta);
+        corpo.children().remove();
         var objJson = JSON.parse(resposta);
+
         for(var i in objJson){
-            corpo.append(
-                '<option value="' + objJson[i].id_sala+'">' + objJson[i].nome + '</option>' );
+            corpo.append('<option value="' + objJson[i].id_sala+'">' + objJson[i].nome + '</option>' );
         }
     }
 
