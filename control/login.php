@@ -26,13 +26,28 @@ class login{
         if($usr != null and password_verify($senha,$usr[0]->senha)){
             $user = json_decode($this->db->select("id_pessoa,nome,nv_acesso","pessoa","id_pessoa = ?",array($usr[0]->pessoa_id)));
             $_SESSION['LOGADO'] = true;
-            $_SESSION['USER'] = $user[0]->nome;
+            $user[0]->nv_acesso = $this->getNVacesso($user[0]->nv_acesso);
+
+            $_SESSION['USER'] = json_encode($user[0],JSON_UNESCAPED_UNICODE);
             $_SESSION['NIVEL'] = $user[0]->nv_acesso;
             $_SESSION['ID'] = $user[0]->id_pessoa;
             $this->redireciona(true);
         }else{
             $_SESSION['LOGADO'] = false;
             $this->redireciona(false);
+        }
+    }
+
+    private function getNVacesso(int $nv){
+        switch ($nv){
+            case ADMINISTRADOR:
+                return "Administrador";
+            case PROFESSOR:
+                return "Oficineiro";
+            case ALUNO:
+                return "Aluno";
+            default:
+                return "Visitante";
         }
     }
 

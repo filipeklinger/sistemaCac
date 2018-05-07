@@ -39,6 +39,22 @@ class turma{
     echo "</table>";
     }
 
+    private function receiveForm(){
+        /*
+         * oficina_id	1
+            sala_id	1
+            seg	on
+            ter	on
+            qua	on
+            qui	on
+            sex	on
+            horario_inic	08:00
+            horario_fim	09:00
+            vagas	14
+         */
+
+    }
+
     public function getTurmas(){
         return $this->db->select("criacao_turma,oficina_id,num_vagas,nome_turma,professor","turma");
     }

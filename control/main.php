@@ -12,6 +12,7 @@ include_once 'oficina.php';
 include_once 'pessoa.php';
 include_once 'turma.php';
 
+session_start();
 class main{
     private $act;
 
@@ -82,8 +83,16 @@ class main{
                 $infra = new infraestrutura();
                 echo $infra->getSalaById($_GET['id']);
                 break;
+            case 99:
+                session_destroy();
+                header("Location: ../index.php?pag=Login");
+                break;
             default:
-                echo "Erro nenhuma requisição solicitada";
+                if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
+                    echo $_SESSION['USER'];
+                }else{
+                    header("Location: ../index.php?pag=Login");
+                }
                 break;
         }
     }

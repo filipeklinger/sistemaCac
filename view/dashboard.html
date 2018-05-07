@@ -10,6 +10,7 @@
                 <li class=""><a class="navbar-link" href="?pag=Infraestrutura">Infra</a></li>
                 <li class=""><a class="navbar-link" href="?pag=Cad.Oficina">Novas oficinas</a></li>
                 <li class=""><a class="navbar-link" href="?pag=Cad.Turma">Novas Turmas</a></li>
+                <li class=""><a class="navbar-link" href="control/main.php?req=99">Sair</a></li>
             </ul>
         </nav>
     </div>
@@ -17,10 +18,25 @@
     <div class="col-md-9">
         <h2>DashBoard</h2>
 
+        <p id="usr">
+            Olá <span id="user"></span>, seu nivel de acesso é <span id="nv"></span>
+        </p>
+
         <p>
             Para criar um link a outras paginas deve-se criar um parametro get.<br/>
             por exemplo <a href="?pag=DashBoard">A página</a> de DashBoard<br/>
         </p>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    $(document).on("load",ajaxLoadGET('control/main.php',parseUsuario,'#nv'));
+
+    function parseUsuario(resposta) {
+        var jsonObj = JSON.parse(resposta);
+        $('#user').append(jsonObj.nome);
+        $('#nv').append(jsonObj.nv_acesso);
+    }
+</script>
 </body>
