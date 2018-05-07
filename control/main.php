@@ -83,16 +83,19 @@ class main{
                 $infra = new infraestrutura();
                 echo $infra->getSalaById($_GET['id']);
                 break;
-            case 99:
-                session_destroy();
-                header("Location: ../index.php?pag=Login");
-                break;
-            default:
+            case 98:
                 if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
                     echo $_SESSION['USER'];
                 }else{
                     header("Location: ../index.php?pag=Login");
                 }
+                break;
+            case 99:
+                session_destroy();
+                header("Location: ../index.php?pag=Login");
+                break;
+            default:
+                    header("Location: ../index.php?pag=Login");
                 break;
         }
     }
