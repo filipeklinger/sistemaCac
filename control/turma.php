@@ -23,6 +23,20 @@ class turma{
         $professor = "";//Identificador de um professor já cadastrado
         $is_ativo = SIM;
         //$this->redireciona();
+
+    echo "<table>";
+        foreach ($_POST as $key => $value) {
+            echo "<tr>";
+            echo "<td>";
+            echo $key;
+            echo "</td>";
+            echo "<td>";
+            echo $value;
+            echo "</td>";
+            echo "</tr>";
+        }
+
+    echo "</table>";
     }
 
     public function getTurmas(){

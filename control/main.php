@@ -10,6 +10,7 @@ include_once 'login.php';
 include_once 'infraestrutura.php';
 include_once 'oficina.php';
 include_once 'pessoa.php';
+include_once 'turma.php';
 
 class main{
     private $act;
