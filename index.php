@@ -54,6 +54,9 @@ switch ($opcao) {
     case 'Cad.Turma':
         include "view/cadTurma.html";
         break;
+    case 'Cad.Pessoa':
+        include "view/cadPessoa.html";
+        break;
     //TODO Incluir as paginas view aqui
     //A string do case se torna o Titulo da pagina
     default:
