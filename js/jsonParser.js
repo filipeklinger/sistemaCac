@@ -50,8 +50,7 @@ function isAtivo(num) {
 }
 
 
-function jsonParseNomePredios(resposta) {
-    var corpo = $('#tipoPredio');
+function jsonParseNomePredios(resposta,corpo) {
     var objJson = JSON.parse(resposta);
     for(var i in objJson){
         corpo.append(
