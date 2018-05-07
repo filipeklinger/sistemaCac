@@ -59,12 +59,10 @@
     }
 
     function jsonParseSalas(resposta,corpo) {
-        alert(resposta);
-        corpo.children().remove();
+        corpo.empty();
         var objJson = JSON.parse(resposta);
-
         for(var i in objJson){
-            corpo.append('<option value="' + objJson[i].id_sala+'">' + objJson[i].nome + '</option>' );
+           corpo.append('<option value="' + objJson[i].id_sala+'">' + objJson[i].nome + '</option>' );
         }
     }
 
