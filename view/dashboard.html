@@ -27,17 +27,53 @@
             Para criar um link a outras paginas deve-se criar um parametro get.<br/>
             por exemplo <a href="?pag=DashBoard">A página</a> de DashBoard<br/>
         </p>
+
+        <p>
+            Turmas disponiveis com horarios cadastrados:<br/>
+            <span id="turmasHorarios"></span>
+        </p>
     </div>
 </div>
 
 <script type="text/javascript">
 
-    $(document).on("load",ajaxLoadGET('control/main.php?req=98',parseUsuario,'#nv'));
+    $(document).on("load",loader());
 
+    function loader() {
+        ajaxLoadGET('control/main.php?req=98',parseUsuario,'#nv');
+        ajaxLoadGET('control/main.php?req=13',parseTurmaHorario,'#tumasHorarios');
+    }
     function parseUsuario(resposta) {
         var jsonObj = JSON.parse(resposta);
         $('#user').append(jsonObj.nome);
         $('#nv').append(jsonObj.nv_acesso);
+    }
+
+    function parseTurmaHorario(resposta) {
+        var jsonObj = JSON.parse(resposta);
+        for(i in jsonObj)
+        $('#turmasHorarios').append(
+            jsonObj[i].oficina+", "+
+            getDiaSemana(jsonObj[i].dia_semana)+
+            " - Horario: "+jsonObj[i].inicio+" as "+jsonObj[i].fim+"<br/>"
+        );
+    }
+
+    function getDiaSemana( dia) {
+        switch (parseInt(dia)){
+            case 1:
+                return "domingo";
+            case 2:
+                return "segunda";
+            case 3:
+                return "terça";
+            case 4:
+                return "quarta";
+            case 5:
+                return "quinta";
+            case 6:
+                return "sexta";
+        }
     }
 </script>
 </body>

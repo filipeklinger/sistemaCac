@@ -65,11 +65,22 @@ class turma{
         $is_ativo = SIM;
         $params = array($criacao_turma,$this->oficina,$this->vagas,$nome_turma,$this->prof,$is_ativo);
         print_r($params);
-        $this->db->insert("criacao_turma,oficina_id,num_vagas,nome_turma,professor,is_ativo","turma",$params);
+        $this->db->insert("criacao_turma,oficina.nome,num_vagas,nome_turma,professor,is_ativo","turma",$params);
     }
 
     public function getTurmas(){
-        return $this->db->select("criacao_turma,oficina_id,num_vagas,nome_turma,professor","turma");
+
+        try {
+            $projection ="criacao_turma as criacao,oficina.nome as oficina,num_vagas as vagas,nome_turma as turma,pessoa.nome as professor,sala.nome as sala,dia_semana,inicio,fim";
+            $table ="(pessoa,oficina,turma,sala)";
+            $joinClause = " LEFT JOIN horario_turma_sala ON id_turma = turma_id";
+
+            $whereClause = "professor=id_pessoa and id_oficina=oficina_id and (sala_id = id_sala or sala_id = null)";
+
+            return $this->db->select($projection,$table.$joinClause , $whereClause);
+        } catch (Exception $e) {
+            return $e;
+        }
     }
 
     private function redireciona(){
