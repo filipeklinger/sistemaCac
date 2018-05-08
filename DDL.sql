@@ -1,6 +1,6 @@
 -- MySQL Script
 -- Sáb 28 Abr 2018 10:45:45 -03
--- Model: Sistema CAC    Version: 10.0
+-- Model: Sistema CAC    Version: 11.0
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -105,11 +105,15 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`turma` (
 CREATE TABLE IF NOT EXISTS `sistema_cac`.`horario_turma_sala` (
   `ano` YEAR NOT NULL,
   `sala_id` INT NOT NULL,
-  `dia_semana` INT NOT NULL COMMENT '1 dom\n2 seg\n3 ter\n4 qua\n5 qui\n6 sex\n7 sab',
+  `segunda` TINYINT NOT NULL,
+  `terca` TINYINT NOT NULL,
+  `quarta` TINYINT NOT NULL,
+  `quinta` TINYINT NOT NULL,
+  `sexta` TINYINT NOT NULL,
   `inicio` TIME(2) NOT NULL,
   `fim` TIME(2) NOT NULL,
   `turma_id` INT NOT NULL,
-  PRIMARY KEY (`ano`, `sala_id`, `dia_semana`, `inicio`),
+  PRIMARY KEY (`ano`, `sala_id`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `inicio`),
   INDEX `horario_turma_idx` (`turma_id` ASC),
   CONSTRAINT `horario_turma`
   FOREIGN KEY (`turma_id`)

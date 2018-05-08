@@ -27,34 +27,27 @@ class turma{
         $this->insertTurma();
         $this->turmaId = $this->db->getLastId();
         //recuperando os horarios definidos
-        $this->formHorarios();
+        $this->insertHorario();
         //redirecionando para pagina inicial
         $this->redireciona();
     }
 
-    private function formHorarios(){
+    private function insertHorario(){
         $this->sala = isset($_POST['sala_id']) ? $_POST['sala_id'] : INVALIDO;
         if($this->sala != INVALIDO){
-            $seg = isset($_POST['seg']) ? $_POST['seg'] : false;
-            $ter = isset($_POST['ter']) ? $_POST['ter'] : false;
-            $qua = isset($_POST['qua']) ? $_POST['qua'] : false;
-            $qui = isset($_POST['qui']) ? $_POST['qui'] : false;
-            $sex = isset($_POST['sex']) ? $_POST['sex'] : false;
+            $seg = isset($_POST['seg']) ? 1 : 0;
+            $ter = isset($_POST['ter']) ? 1 : 0;
+            $qua = isset($_POST['qua']) ? 1 : 0;
+            $qui = isset($_POST['qui']) ? 1 : 0;
+            $sex = isset($_POST['sex']) ? 1 : 0;
 
-            if($seg != false) $this->insertHorario(2);
-            if($ter != false) $this->insertHorario(3);
-            if($qua != false) $this->insertHorario(4);
-            if($qui != false) $this->insertHorario(5);
-            if($sex != false) $this->insertHorario(6);
+
+            $ano = date('Y')."";
+            $columns = "ano,sala_id,segunda,terca,quarta,quinta,sexta,inicio,fim,turma_id";
+            $params = array($ano,$this->sala,$seg,$ter,$qua,$qui,$sex,$this->hinic,$this->hfim,$this->turmaId);
+            $this->db->insert($columns,"horario_turma_sala",$params);
         }
 
-
-    }
-
-    private function insertHorario($diaSemana){
-        $ano = date('Y')."";
-        $params = array($ano,$this->sala,$diaSemana,$this->hinic,$this->hfim,$this->turmaId);
-        $this->db->insert("ano,sala_id,dia_semana,inicio,fim,turma_id","horario_turma_sala",$params);
 
     }
 
@@ -63,15 +56,18 @@ class turma{
         $nome_turma = "t01-".date('Y');//nome automatico da turma
         $criacao_turma = $date."";
         $is_ativo = SIM;
+        $columns = "criacao_turma,oficina_id,num_vagas,nome_turma,professor,is_ativo";
         $params = array($criacao_turma,$this->oficina,$this->vagas,$nome_turma,$this->prof,$is_ativo);
         print_r($params);
-        $this->db->insert("criacao_turma,oficina.nome,num_vagas,nome_turma,professor,is_ativo","turma",$params);
+        $this->db->insert($columns,"turma",$params);
     }
 
     public function getTurmas(){
 
         try {
-            $projection ="criacao_turma as criacao,oficina.nome as oficina,num_vagas as vagas,nome_turma as turma,pessoa.nome as professor,sala.nome as sala,dia_semana,inicio,fim";
+            $projection =
+                "criacao_turma as criacao,oficina.nome as oficina,num_vagas as vagas,nome_turma as turma,".
+                "pessoa.nome as professor,sala.nome as sala,segunda,terca,quarta,quinta,sexta,inicio,fim";
             $table ="(pessoa,oficina,turma,sala)";
             $joinClause = " LEFT JOIN horario_turma_sala ON id_turma = turma_id";
 

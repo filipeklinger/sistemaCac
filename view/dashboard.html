@@ -28,10 +28,19 @@
             por exemplo <a href="?pag=DashBoard">A página</a> de DashBoard<br/>
         </p>
 
-        <p>
-            Turmas disponiveis com horarios cadastrados:<br/>
-            <span id="turmasHorarios"></span>
-        </p>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class='col-md-2'>Oficina</th>
+                <th class='col-md-2'>Dia da semana</th>
+                <th class='col-md-2'>Horario</th>
+                <th class='col-md-2'>Sala</th>
+                <th class='col-md-2'>Professor</th>
+                <th class='col-md-2'>Vagas</th>
+            </tr>
+            </thead>
+            <tbody id="t_oficinas"></tbody>
+        </table>
     </div>
 </div>
 
@@ -41,7 +50,7 @@
 
     function loader() {
         ajaxLoadGET('control/main.php?req=98',parseUsuario,'#nv');
-        ajaxLoadGET('control/main.php?req=13',parseTurmaHorario,'#tumasHorarios');
+        ajaxLoadGET('control/main.php?req=13',parseTurmaHorario,'#t_oficinas');
     }
     function parseUsuario(resposta) {
         var jsonObj = JSON.parse(resposta);
@@ -49,31 +58,29 @@
         $('#nv').append(jsonObj.nv_acesso);
     }
 
-    function parseTurmaHorario(resposta) {
-        var jsonObj = JSON.parse(resposta);
-        for(i in jsonObj)
-        $('#turmasHorarios').append(
-            jsonObj[i].oficina+", "+
-            getDiaSemana(jsonObj[i].dia_semana)+
-            " - Horario: "+jsonObj[i].inicio+" as "+jsonObj[i].fim+"<br/>"
-        );
+    function parseTurmaHorario(resposta,corpo) {
+        var objJson = JSON.parse(resposta);
+        for(i in objJson) {
+            corpo.append(
+                '<tr>' +
+                '<td class=\'col-md-2\'>'+objJson[i].oficina+'</td>' +
+                '<td class=\'col-md-2\'>'+getDiaSemana(objJson[i])+'</td>' +
+                '<td class=\'col-md-2\'>'+objJson[i].inicio+" as "+objJson[i].fim+'</td>' +
+                '<td class=\'col-md-2\'>'+objJson[i].sala+'</td>' +
+                '<td class=\'col-md-2\'>'+objJson[i].professor+'</td>' +
+                '<td class=\'col-md-2\'>'+objJson[i].vagas+'</td>'+
+                '</tr>');
+        }
     }
 
-    function getDiaSemana( dia) {
-        switch (parseInt(dia)){
-            case 1:
-                return "domingo";
-            case 2:
-                return "segunda";
-            case 3:
-                return "terça";
-            case 4:
-                return "quarta";
-            case 5:
-                return "quinta";
-            case 6:
-                return "sexta";
-        }
+    function getDiaSemana(objdia) {
+        var diasSemana = "";
+        if(objdia.segunda === "1") diasSemana = "-Segunda";
+        if(objdia.terca === "1") diasSemana += " - Terça";
+        if(objdia.quarta === "1") diasSemana += " - Quarta";
+        if(objdia.quinta === "1") diasSemana += " - Quinta";
+        if(objdia.sexta === "1") diasSemana += " - Sexta";
+        return diasSemana;
     }
 </script>
 </body>
