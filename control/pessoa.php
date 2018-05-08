@@ -161,8 +161,15 @@ class pessoa{
         for($i=0;$i< sizeof($objProf);$i++){
             if($objProf[$i]->ruralino == 1){
                 $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objProf[$i]->id_pessoa)));
-                $objProf[$i]->curso = $ruralino[0]->curso;
-                $objProf[$i]->bolsista = $ruralino[0]->bolsista;
+
+                if(sizeof($ruralino)> 0){//verificacao adicional para verificar se existe a tupla indicada
+                    $objProf[$i]->curso = $ruralino[0]->curso;
+                    $objProf[$i]->bolsista = $ruralino[0]->bolsista;
+                }else{
+                    $objProf[$i]->curso = null;
+                    $objProf[$i]->bolsista = null;
+                }
+
 
             }
             $prof = json_encode($objProf,JSON_UNESCAPED_UNICODE);

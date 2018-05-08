@@ -77,7 +77,7 @@ class main{
                 break;
             case 13:
                 $turma = new turma();
-                $turma->getTurmas();
+                echo $turma->getTurmas();
                 break;
             case 14:
                 $infra = new infraestrutura();
