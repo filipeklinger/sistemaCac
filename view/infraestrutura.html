@@ -47,7 +47,8 @@
 </div>
 <script type="text/javascript">
     // language=JQuery-CSS
-    $('#tbody').on("load", ajaxLoadGET('control/main.php?req=4',jsonParsePredios,'#tpredio'));
+    var controlador = "control/main.php?req=4";
+    $('#tbody').on("load", ajaxLoadGET(controlador,jsonParsePredios,'#tpredio'));
 
 
 </script>

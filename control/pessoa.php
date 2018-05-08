@@ -154,15 +154,15 @@ class pessoa{
     public function getProfesores(){
         //Obtemos todos os professores com left Join em Maior idade
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $prof = $this->db->select("id_pessoa,nome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso = ?",array(2));
+        $prof = $this->db->select("id_pessoa,nome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso <= ?",array(2));
         //transformamos o JSON em objeto php
         $objProf = json_decode($prof);
         //verificmos se esse administrador esuda na rural e adicionamos as informacoes necessarias
         for($i=0;$i< sizeof($objProf);$i++){
             if($objProf[$i]->ruralino == 1){
                 $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objProf[$i]->id_pessoa)));
-                $objProf[$i]->curso = $ruralino[$i]->curso;
-                $objProf[$i]->bolsista = $ruralino[$i]->bolsista;
+                $objProf[$i]->curso = $ruralino[0]->curso;
+                $objProf[$i]->bolsista = $ruralino[0]->bolsista;
 
             }
             $prof = json_encode($objProf,JSON_UNESCAPED_UNICODE);

@@ -44,6 +44,19 @@
             </div>
         </div><!-- /form-group -->
 
+        <h3 class="text-center">Escolha o Professor</h3>
+        <!-- Professores disponiveis -->
+        <div id="tprof" class="form-group">
+            <label class="col-md-4 control-label">Professor</label>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <select id="selectProf" name="prof_id" class="selectpicker" title="Escolha uma Professor" required="required">
+                        <option value="-1">Selecione um prof</option>
+                    </select>
+                </div><!-- /input-group -->
+            </div>
+        </div><!-- /form-group -->
+
         <!-- Selecione o dia da semana -->
         <div class="form-group">
             <h3 class="text-center">Escolha os dias da semana</h3>
@@ -113,6 +126,7 @@
     var selectPredio = $('#selectPredio');
     var selectSala = $('#selectSala');
     var selectOficina = $('#selectOficina');
+    var selectProf = $('#selectProf');
 
     $(document).on("load",carregador());
 
@@ -121,6 +135,8 @@
         ajaxLoadGET('control/main.php?req=11',jsonParseOficinas,selectOficina);
         //obtendo predios
         ajaxLoadGET('control/main.php?req=4',jsonParseNomePredios,selectPredio);
+        //obtendo professores
+        ajaxLoadGET('control/main.php?req=8',jsonParseProfessor,selectProf);
         //carregando previamente os itens cadastrados no primeiro predio
         SalaFromPredioId();
 
@@ -144,6 +160,14 @@
         var objJson = JSON.parse(resposta);
         for(var i in objJson){
            corpo.append('<option value="' + objJson[i].id_sala+'">' + objJson[i].nome + '</option>' );
+        }
+    }
+
+    function jsonParseProfessor(resposta,corpo) {
+        corpo.empty();
+        var objJson = JSON.parse(resposta);
+        for(var i in objJson){
+            corpo.append('<option value="' + objJson[i].id_pessoa+'">' + objJson[i].nome + '</option>' );
         }
     }
 
