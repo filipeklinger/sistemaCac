@@ -61,7 +61,7 @@ body{
 
 .painel .logo{
     /*TODO: melhorar estilo de logo, muito para a esquerda e muito pequeno*/
-    background-image: url("../img/logo-web.svg");
+    background-image: url("../img/Logo-web.svg");
     background-repeat: no-repeat;
     background-position: center;
     min-height: 50%;
