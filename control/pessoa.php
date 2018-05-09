@@ -21,9 +21,31 @@ class pessoa{
      * Esse Metodo recebe primeiro o numero de cadastros pois como foi definida na documentação
      * um usuário pode cadastrar varios dependentes (menores de idade)
      * @return bool - Cadastrado ou nao
-     * @throws Exception
      */
     public function setPessoa(){
+        /*
+Campos enviados pelo form         *
+menor	1
+nv_acesso	2
+nome	Filipe
+sobrenome	klinger
+ruralino	1
+matricula	2016390288
+curso	Sistemas de informação
+nascimento	1994-08-23
+resp_tel	972935253
+resp_tel_type	2
+doc_type	1
+doc_number	273319186
+rua	Rua das acacias
+numero	12
+complemento	ap 205
+bairro	campo lindo
+cidade	Seropédica
+estado	RJ
+nome_menor0	pedrinho
+sobrenome_menor0	junior
+nascimento_menor0	2008-05-03
 
         $num_cadastros = isset($_POST['num_cadastros']) ? $_POST['num_cadastros'] : INVALIDO;
         if($num_cadastros == INVALIDO) return false;
@@ -35,7 +57,7 @@ class pessoa{
 
         $this->parentesco = isset($_POST['parentesco']) ? $_POST['parentesco'] : INVALIDO;
 
-        //aqui iteramos sobre os dados de usuarios enviados
+        //aqui iteramos sobre os dados de usuario enviados
         for($i=0;$i<sizeof($num_cadastros);$i++){
 
             //iterando sobre a matriz POST
@@ -71,6 +93,19 @@ class pessoa{
 
         }
         return true;
+        */
+       echo "<table>";
+            foreach ($_POST as $key => $value) {
+                echo "<tr>";
+                echo "<td>";
+                echo $key;
+                echo "</td>";
+                echo "<td>";
+                echo $value;
+                echo "</td>";
+                echo "</tr>";
+            }
+        echo "</table>";
     }
 
     /**

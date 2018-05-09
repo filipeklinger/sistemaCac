@@ -3,27 +3,27 @@
 <h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a>| Cadastro de Pessoas</h3>
 
 <div class="row" style="padding: 16px;">
-    <!-- Form Name control/main.php?req=6 -->
-    <form class="form-horizontal" action="#" method="POST">
-        <h4>Caso já possua cadastro e deseje inserir mais dependentes, cadasre os mesmos através de sua conta usando a opcao de adicionar dependente</h4>
+    <!-- Form Name  -->
+    <form class="form-horizontal" action="control/main.php?req=6" method="POST">
+
+        <div class="col-md-9 col-md-offset-3">
+            <h4 >Caso já possua cadastro e deseje inserir mais dependentes, cadasre os mesmos através de sua conta usando a opcao de adicionar dependente</h4>
+            <hr/>
+        </div>
 
         <!-- Menor de idade ? -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="menor">Menor de idade?</label>
-            <div class="col-md-4">
-                <select id="menor" name="menor">
-                    <option value=0>Não</option>
-                    <option value=1>Sim</option>
-                </select>
-            </div>
+        <div class="checkbox col-md-offset-4 col-md-9"  style="padding: 16px;">
+            <label>
+                <input id="is_menor" name="menor" type="checkbox"> Menor de idade ?
+            </label>
         </div>
+
         <!-- TODO somente sera disponivel ao Administrador alterar esse campo -->
         <!-- Nivel de acesso -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="nv_acesso">Perfil</label>
             <div class="col-md-4">
                 <select id="nv_acesso" name="nv_acesso">
-                    <option value=4>Visitante</option>
                     <option value=3>Aluno</option>
                     <option value=2>Oficineiro</option>
                     <option value=1>Administrador</option>
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <h4 id="responsavel_label" class="text-center">Dados do responsavel</h4>
+        <h4 id="responsavel_label" class="text-center" hidden="hidden">Dados do responsavel</h4>
 
         <!-- Primeiro nome da pessoa -->
         <div class="form-group">
@@ -49,37 +49,7 @@
             </div>
         </div>
 
-        <!-- Ruralino -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="ruralino">Aluno da Rural?</label>
-            <div class="col-md-4">
-                <select id="ruralino" name="ruralino">
-                    <option value=1>Sim</option>
-                    <option value=0>Não</option>
-                </select>
-            </div>
-        </div>
 
-        <!-- TODO Essas inf devem ser pedidas somente se campo Ruralino for Sim -->
-        <h4>Informações necessárias para emitir certificados e/ou enviar auxilios</h4>
-        <!-- Matricula Ruralino -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="matricula">Matricula</label>
-            <div class="col-md-4">
-                <input id="matricula" name="matricula" type="number" placeholder="somente numeros"  class="form-control input-md" required="">
-            </div>
-        </div>
-
-        <!-- Curso Ruralino -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="curso">Curso</label>
-            <div class="col-md-4">
-                <input id="curso" name="curso" type="text" placeholder="Sistemas de Informação"  class="form-control input-md" required="">
-            </div>
-        </div>
-        <!-- bolsista Ruralino - Por padrão cadastrado como nao bolsista -->
-        <!-- Administrador deve setar essa opcao -->
-        <!-- TODO FIM Ruralino -->
 
         <!-- Nascimento -->
         <div class="form-group">
@@ -99,7 +69,7 @@
 
         <!-- Tipo do telefone do responsavel -->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="resp_tel_type">Tipo</label>
+            <label class="col-md-4 control-label" for="resp_tel_type">Tipo do Telefone</label>
             <div class="col-md-4">
                 <select id="resp_tel_type" name="resp_tel_type">
                     <option value="2">Whatsapp</option>
@@ -129,7 +99,16 @@
             </div>
         </div>
 
-        <h4>Endereço</h4>
+        <!-- Parentesco -->
+        <div id="label_parentesco" class="form-group" >
+
+        </div>
+
+        <div class="col-md-8 col-md-offset-3">
+            <h4 >Endereço</h4>
+            <hr/>
+        </div>
+
 
         <!-- Rua -->
         <div class="form-group">
@@ -207,32 +186,65 @@
             </div>
         </div>
 
-        <h4 class="text-center">Informações do menor</h4>
+        <!-- Ruralino -->
+        <div class="checkbox col-md-offset-4 col-md-9"  style="padding: 16px;">
+            <label>
+                <input id="is_ruralino" name="ruralino" type="checkbox"> Aluno da Rural ?
+            </label>
+        </div>
 
-        <!-- Primeiro nome do menor 0 -->
+        <!-- Essas inf devem ser pedidas somente se campo Ruralino for Sim -->
+        <div id="aluno_da_rural" hidden="hidden">
+            <div class="col-md-8 col-md-offset-3">
+                <h4 >Informações necessárias para emitir certificados e/ou enviar auxilios</h4>
+                <hr/>
+            </div>
+
+            <!-- Matricula Ruralino -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="matricula">Matricula</label>
+                <div class="col-md-4">
+                    <input id="matricula" name="matricula" type="number" placeholder="somente numeros"  class="form-control input-md">
+                </div>
+            </div>
+
+            <!-- Curso Ruralino -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="curso">Curso</label>
+                <div class="col-md-4">
+                    <input id="curso" name="curso" type="text" placeholder="Sistemas de Informação"  class="form-control input-md">
+                </div>
+            </div>
+            <!-- bolsista Ruralino - Por padrão cadastrado como nao bolsista -->
+            <!-- Administrador deve setar essa opcao -->
+            <!-- TODO FIM Ruralino -->
+        </div>
+
+        <div class="col-md-9 col-md-offset-3">
+            <h4 >Crie um login e senha para ter acesso ao sistema</h4>
+            <hr/>
+        </div>
+
         <div class="form-group">
-            <label class="col-md-4 control-label" for="nome_menor0">Nome</label>
+            <label class="col-md-4 control-label" for="usuario">Usuário</label>
             <div class="col-md-4">
-                <input id="nome_menor0" name="nome_menor0" type="text" placeholder="nome menor 0"  class="form-control input-md" required="">
+                <input id="usuario" name="usuario" type="text" placeholder="nome do usuario"  class="form-control input-md" required="">
             </div>
         </div>
 
-        <!-- Sobrenome do menor 0 -->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="sobrenome_menor0">Sobrenome</label>
+            <label class="col-md-4 control-label" for="senha">Senha</label>
             <div class="col-md-4">
-                <input id="sobrenome_menor0" name="sobrenome_menor0" type="text" placeholder="sobrenome menor 0"  class="form-control input-md" required="">
+                <input id="senha" name="senha" type="password" placeholder="senha"  class="form-control input-md" required="">
             </div>
         </div>
 
-        <!-- Nascimento do menor 0 -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="nascimento_menor0">Nascimento</label>
-            <div class="col-md-4">
-                <input id="nascimento_menor0" name="nascimento_menor0" type="date" placeholder="dd/mm/aaaa"  class="form-control input-md" required="">
-            </div>
-        </div>
 
+
+        <div id="menor_de_idade">
+            <h4 id="menor_label" class="text-center"  hidden="hidden">Informações do menor <a type="button" class="btn btn-default" onclick="addMenor();" id="addMulti"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></h4>
+            <input type="hidden" name="qtd_menor" value="0" id="qtd_menor">
+        </div>
 
 
         <div class="col-md-4 col-md-offset-4"><!-- Submit -->
@@ -240,4 +252,75 @@
         </div>
     </form>
 </div>
+
+<script type="text/javascript">
+
+    $('#is_menor').change(function () {
+        var parentesco = $('#label_parentesco');
+        $('#responsavel_label').prop('hidden',!this.checked);
+        $('#menor_label').prop('hidden',!this.checked);
+
+        if(this.checked){//adiciona
+            addMenor();
+            parentesco.append(
+                '<label class="col-md-4 control-label" for="parentesco">Parentesco</label>\n' +
+                '            <div class="col-md-4">\n' +
+                '                <input id="parentesco" name="parentesco" type="text" placeholder="pai/mãe"  class="form-control input-md" required="required">\n' +
+                '            </div>');
+
+        }else{//remove
+            $('.aluno').remove();
+            $('#qtd_menor').val(0);
+            parentesco.empty();
+        }
+
+    });
+
+    $('#is_ruralino').change(function () {
+        $('#aluno_da_rural').prop('hidden',!this.checked);
+    });
+    
+    function addMenor() {
+        var quantidade = $('#qtd_menor').val();
+        var divContent = $('#menor_de_idade');
+
+        quantidade++;
+
+        $(function () {
+            $('<div class="aluno">' +
+                '<!-- Primeiro nome do menor ' + quantidade + ' -->\n' +
+                '            <div class="form-group">\n' +
+                '                <label class="col-md-4 control-label" for="nome_menor' + quantidade + '">Nome</label>\n' +
+                '                <div class="col-md-4">\n' +
+                '                    <input id="nome_menor0" name="nome_menor' + quantidade + '" type="text" placeholder="nome menor ' + quantidade + '"  class="form-control input-md" required="">\n' +
+                '                </div>\n' +
+                '            </div>\n' +
+                '\n' +
+                '            <!-- Sobrenome do menor 0 -->\n' +
+                '            <div class="form-group">\n' +
+                '                <label class="col-md-4 control-label" for="sobrenome_menor' + quantidade + '">Sobrenome</label>\n' +
+                '                <div class="col-md-4">\n' +
+                '                    <input id="sobrenome_menor0" name="sobrenome_menor' + quantidade + '" type="text" placeholder="sobrenome menor ' + quantidade + '"  class="form-control input-md" required="">\n' +
+                '                </div>\n' +
+                '            </div>\n' +
+                '\n' +
+                '            <!-- Nascimento do menor ' + quantidade + ' -->\n' +
+                '            <div class="form-group">\n' +
+                '                <label class="col-md-4 control-label" for="nascimento_menor' + quantidade + '">Nascimento</label>\n' +
+                '                <div class="col-md-4">\n' +
+                '                    <input id="nascimento_menor0" name="nascimento_menor' + quantidade + '" type="date" placeholder="dd/mm/aaaa"  class="form-control input-md" required="">\n' +
+                '                </div>\n' +
+                '            </div>' +
+                '</div>').appendTo(divContent);
+            $('#qtd_menor').remove();
+
+            $('<input type="hidden" name="qtd_menor" value=" ' + quantidade + '" id="qtd_menor">').appendTo(divContent);
+        });
+    }
+    
+    function addRuralino() {
+
+    }
+
+</script>
 </body>

@@ -26,39 +26,52 @@ $titulo = isset($_GET['pag']) ? $_GET['pag'] : 'Sistema CAC';//versao reduzida i
     <!-- Inclui todos os plugins compilados do bootstrap (abaixo) -->
     <script src="bootstrap3.3.7/js/bootstrap.min.js"></script>
     <!-- estiliza o seletor script src="bootstrap3.3.7/select/js/bootstrap-select.min.js"></script -->
-    <script src="js/jsonParser.js";></script>
+    <script src="js/jsonParser.js"></script>
 </head>
 <?php
 //aqui recebemos por get a pagina de conteudo escolhida
 $opcao = isset($_GET['pag']) ? $_GET['pag'] : 'Login';
 //TODO: verificar User Agente - evitar que código de estilo quebre
 switch ($opcao) {
+    //A string do case se torna o Titulo da pagina
     case 'Login':
         include "view/login.html";
         break;
     case 'DashBoard':
         include "view/dashboard.html";
         break;
+    //Infra
     case 'Infraestrutura':
-        include "view/infraestrutura.html";
+        include "view/infraestrutura/gerenciar_infraestrutura.html";
         break;
     case 'Cad.Predio':
-        include "view/cadPredio.html";
+        include "view/infraestrutura/cadPredio.html";
         break;
     case 'Cad.Sala':
-        include "view/cadSala.html";
+        include "view/infraestrutura/cadSala.html";
         break;
+    //Oficina
     case 'Cad.Oficina':
-        include "view/cadOficina.html";
+        include "view/oficina/cadOficina.html";
         break;
     case 'Cad.Turma':
-        include "view/cadTurma.html";
+        include "view/oficina/cadTurma.html";
+        break;
+    //Usuario
+    case 'Usuarios':
+        include "view/usuario/gerenciar_usuario.html";
         break;
     case 'Cad.Pessoa':
-        include "view/cadPessoa.html";
+        include "view/usuario/cadPessoa.html";
         break;
-    //TODO Incluir as paginas view aqui
-    //A string do case se torna o Titulo da pagina
+    //Alunos
+    case 'Alunos':
+        include "view/aluno/gerenciar_aluno.html";
+        break;
+    //Relatorios
+    case 'Relatorios':
+        include "view/relatorio/gerenciar_relatorio.html";
+        break;
     default:
         include "view/404.html";
         break;
