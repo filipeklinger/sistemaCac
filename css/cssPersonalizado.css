@@ -1,4 +1,5 @@
 /**/
+@import "bootstrapColExpansion.css";
 /*Globals*/
 body{
     height: 100vh;
@@ -20,7 +21,6 @@ body{
     color: white;
     font-size: 200px;
 }
-
 .page404 h2{
     color: white;
 }
@@ -58,7 +58,6 @@ body{
     color: white;
     height: 100vh;
 }
-
 .painel .logo{
     /*TODO: melhorar estilo de logo, muito para a esquerda e muito pequeno*/
     background-image: url("../img/Logo-web.svg");
@@ -92,13 +91,6 @@ body{
     color: white;
     padding-left: 10px;
 }
-/*
-.painel a.continue:hover{
-    text-underline: none;
-    color: #bdbdb3;
-    text-decoration: none;
-}
-*/
 .painel .navbar-fixed-bottom{
     position: absolute;
 }
@@ -146,6 +138,7 @@ body{
 
 /*Login: lista de oficinas disponíveis*/
 /*TODO: código repetido, otimizar*/
+
 .lista{
     /*background-image: url("../img/bg-list.jpg");*/
     /*background-color: #ffc987;*/
@@ -213,5 +206,8 @@ body{
     color: white;
     height: 100%;
 }
+
+
+
 /*TODO: estilo de footer do dashboard */
 /*TODO: adicionar estilo para Login: lista*/

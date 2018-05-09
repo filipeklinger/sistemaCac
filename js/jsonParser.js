@@ -56,4 +56,13 @@ function jsonParseNomePredios(resposta,corpo) {
         corpo.append(
             '<option value="' + objJson[i].id_predio+'">' + objJson[i].nome + '</option>' );
     }
+
+function jsonParseNomePredios(resposta) {
+        var corpo = $('#tipoPredio');
+}
+        var objJson = JSON.parse(resposta);
+        for(var i in objJson){
+            corpo.append(
+                '<option value="' + objJson[i].id_predio+'">' + objJson[i].nome + '</option>' );
+        }
 }
