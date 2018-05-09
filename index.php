@@ -51,6 +51,9 @@ switch ($opcao) {
         include "view/infraestrutura/cadSala.html";
         break;
     //Oficina
+    case 'Oficina':
+        include "view/oficina/gerenciar_oficina.html";
+        break;
     case 'Cad.Oficina':
         include "view/oficina/cadOficina.html";
         break;
