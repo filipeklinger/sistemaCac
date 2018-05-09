@@ -1,6 +1,243 @@
 <body>
-<legend><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> </legend>
 
-<h3>Cadastro de Pessoas</h3>
+<h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a>| Cadastro de Pessoas</h3>
 
+<div class="row" style="padding: 16px;">
+    <!-- Form Name control/main.php?req=6 -->
+    <form class="form-horizontal" action="#" method="POST">
+        <h4>Caso já possua cadastro e deseje inserir mais dependentes, cadasre os mesmos através de sua conta usando a opcao de adicionar dependente</h4>
+
+        <!-- Menor de idade ? -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="menor">Menor de idade?</label>
+            <div class="col-md-4">
+                <select id="menor" name="menor">
+                    <option value=0>Não</option>
+                    <option value=1>Sim</option>
+                </select>
+            </div>
+        </div>
+        <!-- TODO somente sera disponivel ao Administrador alterar esse campo -->
+        <!-- Nivel de acesso -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="nv_acesso">Perfil</label>
+            <div class="col-md-4">
+                <select id="nv_acesso" name="nv_acesso">
+                    <option value=4>Visitante</option>
+                    <option value=3>Aluno</option>
+                    <option value=2>Oficineiro</option>
+                    <option value=1>Administrador</option>
+                </select>
+            </div>
+        </div>
+
+        <h4 id="responsavel_label" class="text-center">Dados do responsavel</h4>
+
+        <!-- Primeiro nome da pessoa -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="nome">Nome</label>
+            <div class="col-md-4">
+                <input id="nome" name="nome" type="text" placeholder="José"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <!-- Sobrenome da pessoa -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="sobrenome">Sobrenome</label>
+            <div class="col-md-4">
+                <input id="sobrenome" name="sobrenome" type="text" placeholder="da silva"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <!-- Ruralino -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="ruralino">Aluno da Rural?</label>
+            <div class="col-md-4">
+                <select id="ruralino" name="ruralino">
+                    <option value=1>Sim</option>
+                    <option value=0>Não</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- TODO Essas inf devem ser pedidas somente se campo Ruralino for Sim -->
+        <h4>Informações necessárias para emitir certificados e/ou enviar auxilios</h4>
+        <!-- Matricula Ruralino -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="matricula">Matricula</label>
+            <div class="col-md-4">
+                <input id="matricula" name="matricula" type="number" placeholder="somente numeros"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <!-- Curso Ruralino -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="curso">Curso</label>
+            <div class="col-md-4">
+                <input id="curso" name="curso" type="text" placeholder="Sistemas de Informação"  class="form-control input-md" required="">
+            </div>
+        </div>
+        <!-- bolsista Ruralino - Por padrão cadastrado como nao bolsista -->
+        <!-- Administrador deve setar essa opcao -->
+        <!-- TODO FIM Ruralino -->
+
+        <!-- Nascimento -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="nascimento">Nascimento</label>
+            <div class="col-md-4">
+                <input id="nascimento" name="nascimento" type="date" placeholder="dd/mm/aaaa"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <!-- Telefone responsavel -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="resp_tel">Telefone</label>
+            <div class="col-md-4">
+                <input id="resp_tel" name="resp_tel" type="number" placeholder="somente numeros"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <!-- Tipo do telefone do responsavel -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="resp_tel_type">Tipo</label>
+            <div class="col-md-4">
+                <select id="resp_tel_type" name="resp_tel_type">
+                    <option value="2">Whatsapp</option>
+                    <option value="1">Celular</option>
+                    <option value="3">Fixo (residencial)</option>
+                    <option value="4">Recados</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Documento -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="doc_type">Documento</label>
+            <div class="col-md-4">
+                <select id="doc_type" name="doc_type">
+                    <option value="1">Registro geral (RG)</option>
+                    <option value="2">Passaporte</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Numero do Documento -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="doc_number">Num. Documento</label>
+            <div class="col-md-4">
+                <input id="doc_number" name="doc_number" type="number" placeholder="somente numeros"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <h4>Endereço</h4>
+
+        <!-- Rua -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="rua">Rua</label>
+            <div class="col-md-4">
+                <input id="rua" name="rua" type="text" placeholder="Rua x"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <!-- Numero -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="numero">Número</label>
+            <div class="col-md-4">
+                <input id="numero" name="numero" type="number" placeholder="123"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <!-- Complemento -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="complemento">Complemento</label>
+            <div class="col-md-4">
+                <input id="complemento" name="complemento" type="text" placeholder="sobrado"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <!-- Bairro -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="bairro">Bairro</label>
+            <div class="col-md-4">
+                <input id="bairro" name="bairro" type="text" placeholder="campo lindo"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <!-- Cidade -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="cidade">Cidade</label>
+            <div class="col-md-4">
+                <input id="cidade" name="cidade" type="text" placeholder="Seropédica"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <!-- Estado -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="estado">Estado</label>
+            <div class="col-md-4">
+                <select id="estado" name="estado">
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                </select>
+            </div>
+        </div>
+
+        <h4 class="text-center">Informações do menor</h4>
+
+        <!-- Primeiro nome do menor 0 -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="nome_menor0">Nome</label>
+            <div class="col-md-4">
+                <input id="nome_menor0" name="nome_menor0" type="text" placeholder="nome menor 0"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <!-- Sobrenome do menor 0 -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="sobrenome_menor0">Sobrenome</label>
+            <div class="col-md-4">
+                <input id="sobrenome_menor0" name="sobrenome_menor0" type="text" placeholder="sobrenome menor 0"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+        <!-- Nascimento do menor 0 -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="nascimento_menor0">Nascimento</label>
+            <div class="col-md-4">
+                <input id="nascimento_menor0" name="nascimento_menor0" type="date" placeholder="dd/mm/aaaa"  class="form-control input-md" required="">
+            </div>
+        </div>
+
+
+
+        <div class="col-md-4 col-md-offset-4"><!-- Submit -->
+            <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Cadastrar" />
+        </div>
+    </form>
+</div>
 </body>
