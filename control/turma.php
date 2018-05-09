@@ -45,7 +45,11 @@ class turma{
             $ano = date('Y')."";
             $columns = "ano,sala_id,segunda,terca,quarta,quinta,sexta,inicio,fim,turma_id";
             $params = array($ano,$this->sala,$seg,$ter,$qua,$qui,$sex,$this->hinic,$this->hfim,$this->turmaId);
-            $this->db->insert($columns,"horario_turma_sala",$params);
+            try {
+                $this->db->insert($columns, "horario_turma_sala", $params);
+            } catch (Exception $e) {
+                //TODO msg de erro $e
+            }
         }
 
 
@@ -59,7 +63,11 @@ class turma{
         $columns = "criacao_turma,oficina_id,num_vagas,nome_turma,professor,is_ativo";
         $params = array($criacao_turma,$this->oficina,$this->vagas,$nome_turma,$this->prof,$is_ativo);
         print_r($params);
-        $this->db->insert($columns,"turma",$params);
+        try {
+            $this->db->insert($columns, "turma", $params);
+        } catch (Exception $e) {
+            //todo msg de erro $e
+        }
     }
 
     public function getTurmas(){

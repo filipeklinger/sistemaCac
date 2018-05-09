@@ -19,7 +19,7 @@ class login{
         $login = isset($_POST['login']) ? $_POST['login'] : INVALIDO;
         $senha = isset($_POST['senha']) ? $_POST['senha'] : INVALIDO;
 
-        //primeiro buscamos os usuarios possiveis
+        //primeiro buscamos os usuario possiveis
         $usr = json_decode($this->db->select("senha,pessoa_id","login","usuario = ?",array($login)));
 
         //depois vericamos se o usuario encontrado e a senha informada conferem
