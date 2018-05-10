@@ -26,16 +26,49 @@
 </div>
 <div id="oficinas" class="lista">
     <div class="container">
-        Obs: Isto não é um erro, implementar lista de oficinas aqui
-        <br/>
-
-        <!--TODO: adicionar indexador de oficinas disponíveis-->
-        <!--TODO: adicionar estrutura para lista de oficínas-->
-
-
-
-
+        <div class="panel panel-default">
+            <div class="panel-heading">Panel heading</div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class='col-md-2'>Oficina</th>
+                    <th class='col-md-2'>Dia da semana</th>
+                    <th class='col-md-2'>Horario</th>
+                    <th class='col-md-2'>Sala</th>
+                    <th class='col-md-2'>Professor</th>
+                    <th class='col-md-2'>Vagas</th>
+                </tr>
+                </thead>
+                <tbody id="t_oficinas"></tbody>
+            </table>
+        </div>
     </div>
+    <script>
+        ajaxLoadGET('control/main.php?req=13',listaMarota,'#t_oficinas');
+
+        function listaMarota(resposta,corpo) {
+            var objJson = JSON.parse(resposta);
+            if(objJson.length > 0){
+                for(var i in objJson){
+                    corpo.append(
+                        '<tr>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].oficina + '</td>' +
+                        '<td class=\'col-md-2\'>' + 1 + '</td>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].inicio + " as " + objJson[i].fim + '</td>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].sala + '</td>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].vagas + '</td>' +
+                        '</tr>');
+                }
+            }
+            else{
+                corpo.append(
+                   '<h2> :( Nenhuma turma disponível</h2>'
+                );
+            }
+        }
+
+    </script>
     <!--TODO: adicionar redes sociais no footer -->
     <footer class="text-center panel-footer">
         <span>&copy; 2018 - <?php echo date('Y')?>, CAC, UFRRJ, todos os direitos reservados</span>
