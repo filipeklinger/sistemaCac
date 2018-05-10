@@ -32,6 +32,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag'] : 'Sistema CAC';//versao reduzida i
 //aqui recebemos por get a pagina de conteudo escolhida
 $opcao = isset($_GET['pag']) ? $_GET['pag'] : 'Login';
 //TODO: verificar User Agente - evitar que código de estilo quebre
+
 if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
     //pessoa logada tem essas opcoes de pagina
     switch ($opcao) {
