@@ -1,41 +1,47 @@
 /**/
-@import "bootstrapColExpansion.css";
+@import "bootstrapExpansion.css";
 /*Globals*/
-body{
+body {
     height: 100vh;
 }
+
 /*Página 404*/
-.page404 .container{
+.page404 .container {
     margin-top: 10%;
 }
-.page404{
+
+.page404 {
     background-image: url("../img/bg-main.jpg");
     background-color: #72daff;
     background-size: cover;
     min-height: 100vh;
     min-width: 100%;
-    background-repeat: no-repeat ;
+    background-repeat: no-repeat;
     overflow: hidden;
 }
-.page404 h1{
+
+.page404 h1 {
     color: white;
     font-size: 200px;
 }
-.page404 h2{
+
+.page404 h2 {
     color: white;
 }
+
 .page404 a {
-     color: white;
-     border: 1px solid white;
-     border-radius: 25px 25px 25px 25px;
-     padding: 8px 20px 8px 20px;
-     text-decoration: none;
+    color: white;
+    border: 1px solid white;
+    border-radius: 25px 25px 25px 25px;
+    padding: 8px 20px 8px 20px;
+    text-decoration: none;
     -webkit-transition: 0.4s ease-in-out;
     -moz-transition: 0.4s ease-in-out;
     -ms-transition: 0.4s ease-in-out;
     -o-transition: 0.4s ease-in-out;
     transition: 0.4s ease-in-out;
- }
+}
+
 .page404 a:hover {
     color: #56abff;
     border: 1px solid #d7d7d7;
@@ -49,7 +55,7 @@ body{
 
 /*Login: página principal*/
 
-.painel{
+.painel {
     background-image: url("../img/bg-main.jpg");
     background-color: #72daff;
     background-size: cover;
@@ -58,88 +64,139 @@ body{
     color: white;
     height: 100vh;
 }
-.painel .logo{
+
+.painel .logo {
     /*TODO: melhorar estilo de logo, muito para a esquerda e muito pequeno*/
     background-image: url("../img/Logo-web.svg");
     background-repeat: no-repeat;
     background-position: center;
     min-height: 50%;
 }
-.painel input{
+
+.painel input {
     background-color: rgba(31, 31, 31, 0.7);
     border: 0;
     /*max-height: 100%;*/
     color: white;
 }
-.painel input:focus{
+
+.painel input:focus {
     border: 1px solid #8f8f8f;
 }
-.painel .container{
+
+.painel .container {
     padding-top: 11%;
     height: 100%;
 }
-.painel .navbar-fixed-bottom{
+
+.painel .navbar-fixed-bottom {
     padding-bottom: 3%;
 }
-.painel .continue{
+
+.painel .continue {
     font-size: 20px;
 }
-.painel form{
+
+.painel form {
     padding-top: 9%;
 }
-.painel form>a {
+
+.painel form > a {
     color: white;
     padding-left: 10px;
 }
-.painel .navbar-fixed-bottom{
+
+.painel .navbar-fixed-bottom {
     position: absolute;
 }
-.painel .continue{
+
+.painel .continue {
     animation-name: fade-in-out;
     animation-duration: 1s;
     animation-iteration-count: infinite;
 }
+
 @keyframes fade-in-out {
-    0% {color: darkgrey}
-    50% {color: white}
-    100% {color: darkgrey}
+    0% {
+        color: darkgrey
+    }
+    50% {
+        color: white
+    }
+    100% {
+        color: darkgrey
+    }
 }
+
 /*Login: Compatibilidade entre navegadores*/
-@keyframes fade-in-out
-{
-    0% {color: darkgrey}
-    50% {color: white}
-    100% {color: darkgrey}
+@keyframes fade-in-out {
+    0% {
+        color: darkgrey
+    }
+    50% {
+        color: white
+    }
+    100% {
+        color: darkgrey
+    }
 }
-@-moz-keyframes fade-in-out  /* Firefox */
+
+@-moz-keyframes fade-in-out /* Firefox */
 {
-    0% {color: darkgrey}
-    50% {color: white}
-    100% {color: darkgrey}
+    0% {
+        color: darkgrey
+    }
+    50% {
+        color: white
+    }
+    100% {
+        color: darkgrey
+    }
 }
-@-webkit-keyframes fade-in-out  /* Safari and Chrome */
+
+@-webkit-keyframes fade-in-out /* Safari and Chrome */
 {
-    0% {color: darkgrey}
-    50% {color: white}
-    100% {color: darkgrey}
+    0% {
+        color: darkgrey
+    }
+    50% {
+        color: white
+    }
+    100% {
+        color: darkgrey
+    }
 }
-@-o-keyframes fade-in-out  /* Opera */
+
+@-o-keyframes fade-in-out /* Opera */
 {
-    0% {color: darkgrey}
-    50% {color: white}
-    100% {color: darkgrey}
+    0% {
+        color: darkgrey
+    }
+    50% {
+        color: white
+    }
+    100% {
+        color: darkgrey
+    }
 }
-@-ms-keyframes fade-in-out  /* IE */
+
+@-ms-keyframes fade-in-out /* IE */
 {
-    0% {color: darkgrey}
-    50% {color: white}
-    100% {color: darkgrey}
+    0% {
+        color: darkgrey
+    }
+    50% {
+        color: white
+    }
+    100% {
+        color: darkgrey
+    }
 }
 
 /*Login: lista de oficinas disponíveis*/
 /*TODO: código repetido, otimizar*/
 
-.lista{
+.lista {
     /*background-image: url("../img/bg-list.jpg");*/
     /*background-color: #ffc987;*/
     background-color: #f7f7f7;
@@ -150,16 +207,19 @@ body{
     height: 100vh;
 
 }
-.lista .container{
+
+.lista .container {
     padding-top: 5%;
     height: 100%;
 
 }
-.lista footer{
+
+.lista footer {
     background-color: #2aabd2;
     color: white;
 }
-.lista .superlista{
+
+.lista .superlista {
 
 }
 
@@ -174,40 +234,244 @@ body{
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
 }
+
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /*Dashboard: Tela inicial, pós login*/
-.dashboard{
-    background-color: #f7f7f7;
-    height: 100%;
-    padding: 0 0 0 0 ;
+
+.dashboard {
+    display: flex;
+    align-items: stretch;
 }
-.dashboard .container-fluid{
-    /*padding: 0 0 0 0;*/
+
+.dashboard .content {
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    width: 100%;
 }
-.dashboard .sidebar{
-    background-color: #424242;
-    color: white;
-    height: 100%;
+
+.dashboard .content .wells{
+    background-color: #2aabd2;
+    max-width: 50px;
 }
-.dashboard .sidebar .branding {
-    height: 15%;
-    min-height: 150px;
-    background-image: url("../img/capa4.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+.dashboard a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
 }
+
+/*Sidebar*/
 .dashboard .sidebar {
-    background-color: #424242;
-    color: white;
-    height: 100%;
+    min-width: 250px;
+    max-width: 250px;
+    background: #7386D5;
+    color: #fff;
+    transition: all 0.3s;
+}
+.dashboard .sidebar .brand{
+    font-size: x-large;
+    font-weight: bold;
 }
 
+.dashboard .sidebar.active {
+    min-width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+.dashboard .sidebar-header #arrow{
+    color: white;
+    -webkit-transition: 0.4s ease-in-out;
+    -moz-transition: 0.4s ease-in-out;
+    -ms-transition: 0.4s ease-in-out;
+    -o-transition: 0.4s ease-in-out;
+    transition: 0.4s ease-in-out;
+}
+.dashboard .sidebar-header #arrow:hover{
+    color: #78b1df;
+}
+.dashboard .sidebar.active .sidebar-header span, .dashboard .sidebar.active .CTAs {
+    display: none;
+}
+.dashboard .sidebar.active .sidebar-header strong {
+    display: block;
+}
 
+.dashboard .sidebar ul li a {
+    text-align: left;
+}
+
+.dashboard .sidebar.active ul li a {
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 0.85em;
+}
+
+.dashboard .sidebar.active ul li a i {
+    margin-right: 0;
+    display: block;
+    font-size: 1.8em;
+    margin-bottom: 5px;
+}
+
+.dashboard .sidebar.active ul ul a {
+    padding: 10px !important;
+}
+
+.dashboard .sidebar.active a[aria-expanded="false"]::before, #sidebar.active a[aria-expanded="true"]::before {
+    top: auto;
+    bottom: 5px;
+    right: 50%;
+    -webkit-transform: translateX(50%);
+    -ms-transform: translateX(50%);
+    transform: translateX(50%);
+}
+
+.dashboard .sidebar .sidebar-header {
+    padding: 20px;
+    background: #6d7fcc;
+}
+
+.dashboard .sidebar .sidebar-header strong {
+    display: none;
+    font-size: 1.8em;
+}
+
+.dashboard .sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+.dashboard .sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+.dashboard .sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff;
+}
+
+.dashboard .sidebar ul li a i {
+    margin-right: 10px;
+}
+
+.dashboard .sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #6d7fcc;
+}
+
+.dashboard a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dashboard a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
+    content: '\e259';
+    display: block;
+    position: absolute;
+    right: 20px;
+    font-family: 'Glyphicons Halflings';
+    font-size: 0.6em;
+}
+
+.dashboard a[aria-expanded="true"]::before {
+    content: '\e260';
+}
+
+.dashboard ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc;
+}
+
+.dashboard ul.CTAs {
+    padding: 20px;
+}
+
+.dashboard ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.dashboard a.download {
+    background: #fff;
+    color: #7386D5;
+}
+
+.dashboard a.article, a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+
+@media (max-width: 768px) {
+    .dashboard .sidebar {
+        min-width: 80px;
+        max-width: 80px;
+        text-align: center;
+        margin-left: -80px !important;
+    }
+
+    .dashboard a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
+        top: auto;
+        bottom: 5px;
+        right: 50%;
+        -webkit-transform: translateX(50%);
+        -ms-transform: translateX(50%);
+        transform: translateX(50%);
+    }
+
+    .dashboard .sidebar.active {
+        margin-left: 0 !important;
+    }
+
+    .dashboard .sidebar .sidebar-header h3, .dashboard .sidebar .CTAs {
+        display: none;
+    }
+
+    .dashboard .sidebar .sidebar-header strong {
+        display: block;
+    }
+
+    .dashboard .sidebar ul li a {
+        padding: 20px 10px;
+    }
+
+    .dashboard .sidebar ul li a span {
+        font-size: 0.85em;
+    }
+
+    .dashboard .sidebar ul li a i {
+        margin-right: 0;
+        display: block;
+    }
+
+    .dashboard .sidebar ul ul a {
+        padding: 10px !important;
+    }
+
+    .dashboard .sidebar ul li a i {
+        font-size: 1.3em;
+    }
+
+    .dashboard .sidebar {
+        margin-left: 0;
+    }
+
+    .dashboard .sidebarCollapse span {
+        display: none;
+    }
+}
 
 /*TODO: estilo de footer do dashboard */
 /*TODO: adicionar estilo para Login: lista*/
