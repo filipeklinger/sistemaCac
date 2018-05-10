@@ -372,7 +372,7 @@ class Database{
      * @param string $name name of variable
      * @param $value mixed value of variable
      */
-    public function setVariable(string $name, $value){
+    public function setVariable($name, $value){
         $value = $this->antiInjection($value);
         $name = $this->antiInjection($name);
         $this->databaseObj->query("Set @".$name.":=".$value);

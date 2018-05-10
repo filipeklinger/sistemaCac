@@ -20,7 +20,10 @@ class login{
         $senha = isset($_POST['senha']) ? $_POST['senha'] : INVALIDO;
 
         //primeiro buscamos os usuario possiveis
-        $usr = json_decode($this->db->select("senha,pessoa_id","login","usuario = ?",array($login)));
+        try {
+            $usr = json_decode($this->db->select("senha,pessoa_id", "login", "usuario = ?", array($login)));
+        } catch (Exception $e) {
+        }
 
         //depois vericamos se o usuario encontrado e a senha informada conferem
         if($usr != null and password_verify($senha,$usr[0]->senha)){
@@ -38,7 +41,7 @@ class login{
         }
     }
 
-    private function getNVacesso(int $nv){
+    private function getNVacesso($nv){
         switch ($nv){
             case ADMINISTRADOR:
                 return "Administrador";
