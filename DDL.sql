@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`ruralino` (
   `pessoa_id` INT NOT NULL,
   `matricula` VARCHAR(45) NOT NULL,
   `curso` VARCHAR(45) NOT NULL,
-  `bolsista` TINYINT NOT NULL COMMENT '1 sim\n0 nao',
+  `bolsista` TINYINT NOT NULL DEFAULT 0 COMMENT '1 sim\n0 nao',
   PRIMARY KEY (`pessoa_id`, `matricula`),
   CONSTRAINT `pessoa_ruralina`
   FOREIGN KEY (`pessoa_id`)
