@@ -32,56 +32,71 @@ $titulo = isset($_GET['pag']) ? $_GET['pag'] : 'Sistema CAC';//versao reduzida i
 //aqui recebemos por get a pagina de conteudo escolhida
 $opcao = isset($_GET['pag']) ? $_GET['pag'] : 'Login';
 //TODO: verificar User Agente - evitar que código de estilo quebre
-switch ($opcao) {
-    //A string do case se torna o Titulo da pagina
-    case 'Login':
-        include "view/login.html";
-        break;
-    case 'DashBoard':
-        include "view/dashboard.html";
-        break;
-    //Infra
-    case 'Infraestrutura':
-        include "view/infraestrutura/gerenciar_infraestrutura.html";
-        break;
-    case 'Cad.Predio':
-        include "view/infraestrutura/cadPredio.html";
-        break;
-    case 'Cad.Sala':
-        include "view/infraestrutura/cadSala.html";
-        break;
-    //Oficina
-    case 'Oficina':
-        include "view/oficina/gerenciar_oficina.html";
-        break;
-    case 'Cad.Oficina':
-        include "view/oficina/cadOficina.html";
-        break;
-    //Turma
-    case 'Turmas':
-        include "view/turma/gerenciar_turma.html";
-        break;
-    case 'Cad.Turma':
-        include "view/turma/cadTurma.html";
-        break;
-    //Usuario
-    case 'Usuarios':
-        include "view/usuario/gerenciar_usuario.html";
-        break;
-    case 'Cad.Pessoa':
-        include "view/usuario/cadPessoa.html";
-        break;
-    //Alunos
-    case 'Alunos':
-        include "view/aluno/gerenciar_aluno.html";
-        break;
-    //Relatorios
-    case 'Relatorios':
-        include "view/relatorio/gerenciar_relatorio.html";
-        break;
-    default:
-        include "view/404.html";
-        break;
+if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
+    //pessoa logada tem essas opcoes de pagina
+    switch ($opcao) {
+        //A string do case se torna o Titulo da pagina
+        case 'Login'://se a pessoa ja esta logada nao precisa de login novamente
+        case 'DashBoard':
+            include "view/dashboard.html";
+            break;
+        //Infra
+        case 'Infraestrutura':
+            include "view/infraestrutura/gerenciar_infraestrutura.html";
+            break;
+        case 'Cad.Predio':
+            include "view/infraestrutura/cadPredio.html";
+            break;
+        case 'Cad.Sala':
+            include "view/infraestrutura/cadSala.html";
+            break;
+        //Oficina
+        case 'Oficina':
+            include "view/oficina/gerenciar_oficina.html";
+            break;
+        case 'Cad.Oficina':
+            include "view/oficina/cadOficina.html";
+            break;
+        //Turma
+        case 'Turmas':
+            include "view/turma/gerenciar_turma.html";
+            break;
+        case 'Cad.Turma':
+            include "view/turma/cadTurma.html";
+            break;
+        //Usuario
+        case 'Usuarios':
+            include "view/usuario/gerenciar_usuario.html";
+            break;
+        case 'Cad.Pessoa':
+            include "view/usuario/cadPessoa.html";
+            break;
+        //Alunos
+        case 'Alunos':
+            include "view/aluno/gerenciar_aluno.html";
+            break;
+        //Relatorios
+        case 'Relatorios':
+            include "view/relatorio/gerenciar_relatorio.html";
+            break;
+        default:
+            include "view/404.html";
+            break;
+    }
+}else{
+    //Pessoa nao logada tem essas opcoes de pagina
+    switch ($opcao) {
+        case 'Login':
+            include "view/login.html";
+            break;
+        case 'Cad.Candidato':
+            include "view/usuario/cadCandidato.html";
+            break;
+        default:
+            header("Location: ?pag=Login");
+            break;
+    }
 }
+
 ?>
 </html>
