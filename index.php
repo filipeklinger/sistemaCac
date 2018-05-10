@@ -57,8 +57,12 @@ switch ($opcao) {
     case 'Cad.Oficina':
         include "view/oficina/cadOficina.html";
         break;
+    //Turma
+    case 'Turmas':
+        include "view/turma/gerenciar_turma.html";
+        break;
     case 'Cad.Turma':
-        include "view/oficina/cadTurma.html";
+        include "view/turma/cadTurma.html";
         break;
     //Usuario
     case 'Usuarios':
