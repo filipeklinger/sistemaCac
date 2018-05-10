@@ -57,3 +57,25 @@ function jsonParseNomePredios(resposta,corpo) {
             '<option value="' + objJson[i].id_predio+'">' + objJson[i].nome + '</option>' );
     }
 }
+
+function getDiaSemana(objdia) {
+    var diasSemana = "";
+    if (objdia.segunda === "1") diasSemana = "Segunda";
+    if (objdia.terca === "1"){
+        if(diasSemana.length > 1) diasSemana += " e ";
+        diasSemana += "Terça";
+    }
+    if (objdia.quarta === "1"){
+        if(diasSemana.length > 1) diasSemana += " e ";
+        diasSemana += "Quarta";
+    }
+    if (objdia.quinta === "1"){
+        if(diasSemana.length > 1) diasSemana += " e ";
+        diasSemana += "Quinta";
+    }
+    if (objdia.sexta === "1"){
+        if(diasSemana.length > 1) diasSemana += " e ";
+        diasSemana += "Sexta";
+    }
+    return diasSemana;
+}

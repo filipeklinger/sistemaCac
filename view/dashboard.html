@@ -125,15 +125,6 @@
         }
     }
 
-    function getDiaSemana(objdia) {
-        var diasSemana = "";
-        if (objdia.segunda === "1") diasSemana = "-Segunda";
-        if (objdia.terca === "1") diasSemana += " - Terça";
-        if (objdia.quarta === "1") diasSemana += " - Quarta";
-        if (objdia.quinta === "1") diasSemana += " - Quinta";
-        if (objdia.sexta === "1") diasSemana += " - Sexta";
-        return diasSemana;
-    }
 
     $(document).ready(function () {
         $('#sidebarCollapse').on('click', function () {
