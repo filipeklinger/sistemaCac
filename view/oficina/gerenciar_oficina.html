@@ -1,3 +1,33 @@
 <body>
 <h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Gerenciando Oficinas</h3>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th class='col-md-5'>Nome</th>
+        <th class='col-md-5'>Pre Requisito</th>
+        <th class='col-md-1'>Ação</th>
+    </tr>
+    </thead>
+    <tbody id="toficinas"></tbody>
+</table>
+
+<script type="text/javascript">
+    // language=JQuery-CSS
+    var controlador = "control/main.php?req=selectOficina";
+    $('#tbody').on("load", ajaxLoadGET(controlador,jsonParseOficinas,'#toficinas'));
+    function jsonParseOficinas(json,corpo) {
+        var objJson = JSON.parse(json);
+        for(var i in objJson){
+            corpo.append(
+                '<tr>' +
+                '<td class=\'col-md-5\'> '+ objJson[i].nome + '</td>' +
+                '<td class=\'col-md-5\'> '+ objJson[i].pre_requisito + '</td>' +
+                //'<td class=\'col-md-1\'> '+ objJson[i].id_oficina + '</td>' +
+                '<td class=\'col-md-1\'> <a href="#" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
+                '</tr>');
+        }
+    }
+
+</script>
 </body>

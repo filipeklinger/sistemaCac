@@ -4,7 +4,7 @@
 <div style="overflow-x: auto;">
     <ul style="min-width: 450px;" class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#predios">Predios</a></li>
-        <li><a data-toggle="tab" onclick="ajaxLoadGET('control/main.php?req=5',jsonParseSalas,'#tsala');" href="#salas">Salas</a></li>
+        <li><a data-toggle="tab" onclick="ajaxLoadGET('control/main.php?req=selectSala',jsonParseSalas,'#tsala');" href="#salas">Salas</a></li>
     </ul>
 
     <div id="contTab" class="tab-content" style="padding: 16px;">
@@ -47,7 +47,7 @@
 </div>
 <script type="text/javascript">
     // language=JQuery-CSS
-    var controlador = "control/main.php?req=4";
+    var controlador = "control/main.php?req=selectPredio";
     $('#tbody').on("load", ajaxLoadGET(controlador,jsonParsePredios,'#tpredio'));
 
 

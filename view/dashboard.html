@@ -56,7 +56,7 @@
                 </ul>
             </li>
             <li>
-                <a href="control/main.php?req=99">
+                <a href="control/main.php?req=logout">
                     <i class="glyphicon glyphicon-log-out"></i>
                     Sair
                 </a>
@@ -100,8 +100,8 @@
     $(document).on("load", loader());
 
     function loader() {
-        ajaxLoadGET('control/main.php?req=98', parseUsuario, '#nv');
-        ajaxLoadGET('control/main.php?req=13', parseTurmaHorario, '#t_oficinas');
+        ajaxLoadGET('control/main.php?req=selecUsuarioLogado', parseUsuario, '#nv');
+        ajaxLoadGET('control/main.php?req=selectTurma', parseTurmaHorario, '#t_oficinas');
     }
 
     function parseUsuario(resposta) {

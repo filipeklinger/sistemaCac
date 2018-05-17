@@ -2,7 +2,7 @@
 <div class="row" style="padding: 16px;">
     <legend><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Cadastro de Turmas</legend>
 
-    <form class="form-horizontal" action="control/main.php?req=12" method="POST">
+    <form class="form-horizontal" action="control/main.php?req=insertTurma" method="POST">
 
         <h3 class="text-center">Escolha a oficina</h3>
 
@@ -132,11 +132,11 @@
 
     function carregador() {
         //obtendo oficinas
-        ajaxLoadGET('control/main.php?req=11',jsonParseOficinas,selectOficina);
+        ajaxLoadGET('control/main.php?req=selectOficina',jsonParseOficinas,selectOficina);
         //obtendo predios
-        ajaxLoadGET('control/main.php?req=4',jsonParseNomePredios,selectPredio);
+        ajaxLoadGET('control/main.php?req=selectPredio',jsonParseNomePredios,selectPredio);
         //obtendo professores
-        ajaxLoadGET('control/main.php?req=8',jsonParseProfessor,selectProf);
+        ajaxLoadGET('control/main.php?req=selectProfessor',jsonParseProfessor,selectProf);
         //carregando previamente os itens cadastrados no primeiro predio
         SalaFromPredioId();
 
@@ -152,7 +152,7 @@
 
     function SalaFromPredioId() {
         var identificador = parseInt(selectPredio.val());
-        ajaxLoadGET('control/main.php?req=14&id='+identificador,jsonParseSalas,selectSala);
+        ajaxLoadGET('control/main.php?req=selectSalaById&id='+identificador,jsonParseSalas,selectSala);
     }
 
     function jsonParseSalas(resposta,corpo) {

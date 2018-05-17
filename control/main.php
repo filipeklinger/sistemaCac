@@ -27,70 +27,70 @@ class main{
 
     private function doAction(){
         switch ($this->act){
-            case 1:
+            case "login":
                 $login = new login();
                 $login->verifyUser();
                 break;
-            case 2:
+            case "insertPredio":
                 $infra = new infraestrutura();
                 $infra->setPredio();
                 break;
-            case 3:
+            case "insertSala":
                 $infra = new infraestrutura();
                 $infra->setSala();
                 break;
-            case 4:
+            case "selectPredio":
                 $infra = new infraestrutura();
                 echo $infra->getPredios();
                 break;
-            case 5:
+            case "selectSala":
                 $infra = new infraestrutura();
                 echo $infra->getSalas();
                 break;
-            case 6:
+            case "insertPessoa":
                 $pess = new pessoa();
                 $pess->setPessoa();
                 break;
-            case 7:
+            case "selectAdministrador":
                 $pess = new pessoa();
                 echo $pess->getAdministradores();
                 break;
-            case 8:
+            case "selectProfessor":
                 $pess = new pessoa();
                 echo $pess->getProfesores();
                 break;
-            case 9:
+            case "selectCandidato":
                 $pess = new pessoa();
                 echo $pess->getCandidatos();
                 break;
-            case 10:
+            case "insertOficina":
                 $ofic = new oficina();
                 $ofic->setOficina();
                 break;
-            case 11:
+            case "selectOficina":
                 $ofic = new oficina();
                 echo $ofic->getOficina();
                 break;
-            case 12:
+            case "insertTurma":
                 $turma = new turma();
                 $turma->setTurma();
                 break;
-            case 13:
+            case "selectTurma":
                 $turma = new turma();
                 echo $turma->getTurmas();
                 break;
-            case 14:
+            case "selectSalaById":
                 $infra = new infraestrutura();
                 echo $infra->getSalaById($_GET['id']);
                 break;
-            case 98:
+            case "selecUsuarioLogado":
                 if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
                     echo $_SESSION['USER'];
                 }else{
                     header("Location: ../index.php?pag=Login");
                 }
                 break;
-            case 99:
+            case "logout":
                 session_destroy();
                 header("Location: ../index.php?pag=Login");
                 break;
