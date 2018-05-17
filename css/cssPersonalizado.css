@@ -1,5 +1,7 @@
-/**/
+/*Imports*/
 @import "bootstrapExpansion.css";
+@import "printable.css";
+
 /*Globals*/
 body {
     height: 100vh;
