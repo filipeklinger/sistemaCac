@@ -1,3 +1,57 @@
 <body>
 <h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Gerenciando Usuarios</h3>
+<select onchange="carregaUsuarios();" id="tipoUser">
+    <option value="selectCandidato" selected="selected">Alunos</option>
+    <option value="selectProfessor">Professores</option>
+    <option value="selectAdministrador">Administradores</option>
+</select>
+<table width="80%" align="center" class="table-striped">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Nivel</th>
+        <th>Menor de idade</th>
+        <th>Responsavel</th>
+        <th>Ruralino</th>
+        <th>Edit</th>
+    </tr>
+    </thead>
+    <tbody id="usuarios">
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(document).on("load",carregaUsuarios());
+
+    function carregaUsuarios() {
+        var requisicao = $('#tipoUser').val();
+        ajaxLoadGET('control/main.php?req='+requisicao,jsonParteUsuarios,$('#usuarios'));
+    }
+    function jsonParteUsuarios(resposta,corpo) {
+        var objJson = JSON.parse(resposta);
+        for(var i in objJson){
+            if(objJson[i].menor_idade ==='0')objJson[i].responsavel = "-";
+        corpo.append(
+            '<tr>\n' +
+            '     <td>'+ objJson[i].nome +'</td>\n' +
+            '     <td>'+ getNVacesso(objJson[i].nv_acesso) +'</td>\n' +
+            '     <td>'+ isAtivo(objJson[i].menor_idade) +'</td>\n' +
+            '     <td>'+ objJson[i].responsavel +'</td>\n' +
+            '     <td>'+ isAtivo(objJson[i].ruralino) +'</td>\n' +
+            '     <td>--</td>\n' +
+            '</tr>' );
+        }
+        if(objJson.length < 1){
+        corpo.append(
+        '<tr>\n' +
+            '\n' +
+            '                    <td>Nenhum</td>\n' +
+            '                    <td>Usuario</td>\n' +
+            '                    <td>nesta</td>\n' +
+            '                    <td>Categoria</td>\n' +
+            '                    <td>--</td>\n' +
+            '                    <td>---</td>\n' +
+            '                </tr>' );
+        }
+    }
+</script>
 </body>

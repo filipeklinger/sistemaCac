@@ -79,3 +79,15 @@ function getDiaSemana(objdia) {
     }
     return diasSemana;
 }
+function getNVacesso(nv){
+    switch (nv){
+        case '1':
+            return "Administrador";
+        case '2':
+            return "Oficineiro";
+        case '3':
+            return "Aluno";
+        default:
+            return "Visitante";
+    }
+}
