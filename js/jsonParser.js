@@ -46,7 +46,7 @@ function jsonParseSalas(json,corpo) {
 
 function isAtivo(num) {
     if(num === '1') return "Sim";
-    else return "nao";
+    else return "Não";
 }
 
 

@@ -79,6 +79,10 @@ class main{
                 $turma = new turma();
                 echo $turma->getTurmas();
                 break;
+            case "selectTurmaAtiva":
+                $turma = new turma();
+                echo $turma->getTurmasAtivas();
+                break;
             case "selectSalaById":
                 $infra = new infraestrutura();
                 echo $infra->getSalaById($_GET['id']);

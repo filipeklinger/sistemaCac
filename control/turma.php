@@ -70,7 +70,7 @@ class turma{
         }
     }
 
-    public function getTurmas(){
+    public function getTurmasAtivas(){
 
         try {
             $projection =
@@ -79,14 +79,28 @@ class turma{
             $table ="(pessoa,oficina,turma,sala)";
             $joinClause = " LEFT JOIN horario_turma_sala ON id_turma = turma_id";
 
-            $whereClause = "professor=id_pessoa and id_oficina=oficina_id and (sala_id = id_sala or sala_id = null)";
+            $whereClause = "professor=id_pessoa and id_oficina=oficina_id and (sala_id = id_sala or sala_id = null) and turma.is_ativo = ?";
+            $whereArgs = array(SIM);
+            return $this->db->select($projection,$table.$joinClause , $whereClause,$whereArgs);
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
+    public function getTurmas(){
+        //aqui mostramos todas as turmas ativas ou nao
+        try {
+            $projection =
+                "criacao_turma as criacao,oficina.nome as oficina,num_vagas as vagas,nome_turma as turma,".
+                "pessoa.nome as professor,sala.nome as sala,segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim, turma.is_ativo as ativo";
+            $table ="(pessoa,oficina,turma,sala)";
+            $joinClause = " LEFT JOIN horario_turma_sala ON id_turma = turma_id";
 
+            $whereClause = "professor=id_pessoa and id_oficina=oficina_id and (sala_id = id_sala or sala_id = null)";
             return $this->db->select($projection,$table.$joinClause , $whereClause);
         } catch (Exception $e) {
             return $e;
         }
     }
-
     private function redireciona(){
         //depois de inserir redirecionamos para a pagina de infra
         header("Location: ../index.php?pag=DashBoard");

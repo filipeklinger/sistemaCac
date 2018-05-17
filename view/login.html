@@ -44,7 +44,7 @@
         </div>
     </div>
     <script>
-        ajaxLoadGET('control/main.php?req=13',listaMarota,'#t_oficinas');
+        ajaxLoadGET('control/main.php?req=selectTurmaAtiva',listaMarota,'#t_oficinas');
 
         function listaMarota(resposta,corpo) {
             var objJson = JSON.parse(resposta);

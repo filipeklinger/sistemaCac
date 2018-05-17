@@ -1,3 +1,40 @@
 <body>
 <h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Gerenciando Turmas</h3>
+<h3 class="text-center">Todas as turmas cadastradas</h3>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th class='col-md-2'>Oficina</th>
+        <th class='col-md-2'>Dia da semana</th>
+        <th class='col-md-2'>Horario</th>
+        <th class='col-md-2'>Sala</th>
+        <th class='col-md-2'>Professor</th>
+        <th class='col-md-2'>Ativa</th>
+    </tr>
+    </thead>
+    <tbody id="turmas"></tbody>
+</table>
+<script type="text/javascript">
+
+    $(document).on("load", loader());
+
+    function loader() {
+        ajaxLoadGET('control/main.php?req=selectTurma', parseTurmaHorario, '#turmas');
+    }
+
+    function parseTurmaHorario(resposta, corpo) {
+        var objJson = JSON.parse(resposta);
+        for (i in objJson) {
+            corpo.append(
+                '<tr>' +
+                '<td class=\'col-md-2\'>' + objJson[i].oficina + '</td>' +
+                '<td class=\'col-md-2\'>' + getDiaSemana(objJson[i]) + '</td>' +
+                '<td class=\'col-md-2\'>' + objJson[i].inicio + " as " + objJson[i].fim + '</td>' +
+                '<td class=\'col-md-2\'>' + objJson[i].sala + '</td>' +
+                '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
+                '<td class=\'col-md-2\'>' + isAtivo(objJson[i].ativo) + '</td>' +
+                '</tr>');
+        }
+    }
+</script>
 </body>

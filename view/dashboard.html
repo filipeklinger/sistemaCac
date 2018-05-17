@@ -101,7 +101,7 @@
 
     function loader() {
         ajaxLoadGET('control/main.php?req=selecUsuarioLogado', parseUsuario, '#nv');
-        ajaxLoadGET('control/main.php?req=selectTurma', parseTurmaHorario, '#t_oficinas');
+        ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmaHorario, '#t_oficinas');
     }
 
     function parseUsuario(resposta) {
