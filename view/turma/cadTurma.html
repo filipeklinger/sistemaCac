@@ -37,12 +37,30 @@
             <label class="col-md-4 control-label">Sala</label>
             <div class="col-md-4">
                 <div class="input-group">
-                    <select id="selectSala" name="sala_id" class="selectpicker" title="Escolha uma Sala" required="required">
-                        <option value="-1">Selecione um predio</option>
+                    <select id="selectSala" name="sala_id" onchange="disponibilidade();" class="selectpicker" title="Escolha uma Sala" required="required">
+                        <option value="-1">Selecione uma sala</option>
                     </select>
                 </div><!-- /input-group -->
             </div>
         </div><!-- /form-group -->
+        <!---AQUI DEVEMOS MOSTRAR OS HORARIOS DISPONIVEIS DAQUELA SALA -->
+        <thead class="row">
+            <table width="80%" align="center" border="1">
+                <thead>
+                    <tr>
+                        <th>Hora</th>
+                        <th>Segunda</th>
+                        <th>Terça</th>
+                        <th>Quarta</th>
+                        <th>Quinta</th>
+                        <th>Sexta</th>
+                        <th>Sabado</th>
+                    </tr>
+                </thead>
+                <tbody id="horariosDisponiveis">
+                </tbody>
+            </table>
+        <!-- FIM HORARIOS -->
 
         <h3 class="text-center">Escolha o Professor</h3>
         <!-- Professores disponiveis -->
@@ -127,6 +145,7 @@
     var selectSala = $('#selectSala');
     var selectOficina = $('#selectOficina');
     var selectProf = $('#selectProf');
+    var horarios = $('#horariosDisponiveis');
 
     $(document).on("load",carregador());
 
@@ -139,6 +158,7 @@
         ajaxLoadGET('control/main.php?req=selectProfessor',jsonParseProfessor,selectProf);
         //carregando previamente os itens cadastrados no primeiro predio
         SalaFromPredioId();
+        disponibilidade();
 
     }
 
@@ -162,6 +182,39 @@
            corpo.append('<option value="' + objJson[i].id_sala+'">' + objJson[i].nome + '</option>' );
         }
     }
+    function disponibilidade() {
+        var identificador = parseInt(selectSala.val());
+        ajaxLoadGET('control/main.php?req=selectHorario&id='+identificador,jsonParteHorariosDisponiveis,horarios);
+    }
+    function jsonParteHorariosDisponiveis(resposta,corpo) {
+        var objJson = JSON.parse(resposta);
+        for(var i in objJson){
+            corpo.append(
+                '<tr>\n' +
+                '                    <th>'+objJson[i].inicio +' ás '+ objJson[i].fim+'</th>\n' +
+                '\n' +
+                '                    <td>'+isAtivoX(objJson[i].segunda) +'</td>\n' +
+                '                    <td>'+isAtivoX(objJson[i].terca) +'</td>\n' +
+                '                    <td>'+isAtivoX(objJson[i].quarta) +'</td>\n' +
+                '                    <td>'+isAtivoX(objJson[i].quinta) +'</td>\n' +
+                '                    <td>'+isAtivoX(objJson[i].sexta) +'</td>\n' +
+                '                    <td>--</td>\n' +
+                '                </tr>' );
+        }
+        if(objJson.length < 1){
+            corpo.append(
+                '<tr>\n' +
+                '                    <th>--:-- - --:--</th>\n' +
+                '\n' +
+                '                    <td>Nenhuma turma</td>\n' +
+                '                    <td>cadastrada</td>\n' +
+                '                    <td>nesta</td>\n' +
+                '                    <td>sala</td>\n' +
+                '                    <td>--</td>\n' +
+                '                    <td>---</td>\n' +
+                '                </tr>' );
+        }
+    }
 
     function jsonParseProfessor(resposta,corpo) {
         corpo.empty();
@@ -170,7 +223,10 @@
             corpo.append('<option value="' + objJson[i].id_pessoa+'">' + objJson[i].nome + '</option>' );
         }
     }
-
+function isAtivoX(num) {
+    if(num === '1') return "X";
+    else return " ";
+}
 </script>
 <script src="js/checkboxButton.js"></script>
 </body>

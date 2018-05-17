@@ -101,6 +101,16 @@ class turma{
             return $e;
         }
     }
+
+    public function getHorariosBySalaId($identificador){
+        $projection = "segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim";
+        try {
+            return $this->db->select($projection, "horario_turma_sala", "sala_id = ?", array($identificador),"inicio");
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
+
     private function redireciona(){
         //depois de inserir redirecionamos para a pagina de infra
         header("Location: ../index.php?pag=DashBoard");

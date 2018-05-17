@@ -83,6 +83,10 @@ class main{
                 $turma = new turma();
                 echo $turma->getTurmasAtivas();
                 break;
+            case "selectHorario":
+                $turma = new turma();
+                echo $turma->getHorariosBySalaId($_GET['id']);
+                break;
             case "selectSalaById":
                 $infra = new infraestrutura();
                 echo $infra->getSalaById($_GET['id']);
