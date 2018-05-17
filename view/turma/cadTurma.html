@@ -193,11 +193,11 @@
                 '<tr>\n' +
                 '                    <th>'+objJson[i].inicio +' ás '+ objJson[i].fim+'</th>\n' +
                 '\n' +
-                '                    <td>'+isAtivoX(objJson[i].segunda) +'</td>\n' +
-                '                    <td>'+isAtivoX(objJson[i].terca) +'</td>\n' +
-                '                    <td>'+isAtivoX(objJson[i].quarta) +'</td>\n' +
-                '                    <td>'+isAtivoX(objJson[i].quinta) +'</td>\n' +
-                '                    <td>'+isAtivoX(objJson[i].sexta) +'</td>\n' +
+                '                    <td>'+isAtivoX(objJson[i].segunda,objJson[i]) +'</td>\n' +
+                '                    <td>'+isAtivoX(objJson[i].terca,objJson[i]) +'</td>\n' +
+                '                    <td>'+isAtivoX(objJson[i].quarta,objJson[i]) +'</td>\n' +
+                '                    <td>'+isAtivoX(objJson[i].quinta,objJson[i]) +'</td>\n' +
+                '                    <td>'+isAtivoX(objJson[i].sexta,objJson[i]) +'</td>\n' +
                 '                    <td>--</td>\n' +
                 '                </tr>' );
         }
@@ -223,8 +223,8 @@
             corpo.append('<option value="' + objJson[i].id_pessoa+'">' + objJson[i].nome + '</option>' );
         }
     }
-function isAtivoX(num) {
-    if(num === '1') return "X";
+function isAtivoX(num,obj) {
+    if(num === '1') return obj.oficina;
     else return " ";
 }
 </script>
