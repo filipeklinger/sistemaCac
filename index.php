@@ -1,6 +1,6 @@
 <?php
 session_start();
-$titulo = isset($_GET['pag']) ? $_GET['pag'] : 'Sistema CAC';//versao reduzida if
+$titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao reduzida if
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
