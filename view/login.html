@@ -6,8 +6,8 @@
             <div class="panel-body">
                 <form id="form" action="control/main.php?req=login" method="POST">
                     <div id="alertsArea"></div>
-                    <!--TODO: debugar falha de autenticação-->
-                    <input id="user" type="text" name="login" class="form-control" placeholder="Usuário" autocomplete="off">
+                    <input id="user" type="text" name="login" class="form-control" placeholder="Usuário"
+                           autocomplete="off">
                     <br>
                     <input type="password" class="form-control" name="senha" placeholder="Senha" autocomplete="off">
                     <br>
@@ -25,53 +25,46 @@
     </div>
 </div>
 <div id="oficinas" class="lista">
-    <div class="container">
-        <div class="panel panel-default">
-            <div class="panel-heading text-center">Turmas do período atual</div>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th class='col-md-2'>Oficina</th>
-                    <th class='col-md-2'>Dia da semana</th>
-                    <th class='col-md-2'>Horario</th>
-                    <th class='col-md-2'>Sala</th>
-                    <th class='col-md-2'>Professor</th>
-                    <th class='col-md-2'>Vagas</th>
-                </tr>
-                </thead>
-                <tbody id="t_oficinas"></tbody>
-            </table>
-        </div>
+    <div id="t_oficinas" class="container-fluid">
+        <h3>OFICINAS DISPONÍVEIS</h3>
+        <br/>
     </div>
-    <script>
-        ajaxLoadGET('control/main.php?req=selectTurmaAtiva',listaMarota,'#t_oficinas');
+</div>
 
-        function listaMarota(resposta,corpo) {
-            var objJson = JSON.parse(resposta);
-            if(objJson.length > 0){
-                for(var i in objJson){
-                    corpo.append(
-                        '<tr>' +
-                        '<td class=\'col-md-2\'>' + objJson[i].oficina + '</td>' +
-                        '<td class=\'col-md-2\'>' + getDiaSemana(objJson[i]) + '</td>' +
-                        '<td class=\'col-md-2\'>' + objJson[i].inicio + " as " + objJson[i].fim + '</td>' +
-                        '<td class=\'col-md-2\'>' + objJson[i].sala + '</td>' +
-                        '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
-                        '<td class=\'col-md-2\'>' + objJson[i].vagas + '</td>' +
-                        '</tr>');
-                }
-            }
-            else{
+<div class="MainFooter">
+    <!--TODO: adicionar redes sociais no footer -->
+    <span>&copy; 2018 - <?php echo date('Y')?>, CAC, UFRRJ, todos os direitos reservados</span>
+</div>
+
+<script>
+    ajaxLoadGET('control/main.php?req=selectTurmaAtiva', listaMarota, '#t_oficinas');
+
+    function listaMarota(resposta, corpo) {
+        var objJson = JSON.parse(resposta);
+        console.log(objJson);
+        if (objJson.length > 0) {
+            for (var i in objJson) {
                 corpo.append(
-                   '<h2> :( Nenhuma turma disponível</h2>'
-                );
+                '<div class="media">'+
+                    '<div class="media-left">'+
+                    '<span class="media-object" style="font-size: 50px">'+
+                    objJson[i].vagas+'</span>'+
+                    '</span>vagas</div>'+
+                    '<div class="media-body">'+
+                    '<h4 class="media-heading">" + objJson[i].oficina + "</h4>'+
+                    '<p>Professor: ' + objJson[i].professor + '</p>'+
+                    '<p>Local: '+ objJson[i].predio + '  ' + objJson[i].sala + '</p>'+
+                '</div>'+
+                '</div>'
+            );
             }
         }
+        else {
+            corpo.append(
+                '<h2> :( Nenhuma turma disponível</h2>'
+            );
+        }
+    }
 
-    </script>
-    <!--TODO: adicionar redes sociais no footer -->
-    <footer class="text-center panel-footer">
-        <span>&copy; 2018 - <?php echo date('Y')?>, CAC, UFRRJ, todos os direitos reservados</span>
-    </footer>
-</div>
+</script>
 </body>

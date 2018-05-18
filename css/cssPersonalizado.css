@@ -68,7 +68,6 @@ body {
 }
 
 .painel .logo {
-    /*TODO: melhorar estilo de logo, muito para a esquerda e muito pequeno*/
     background-image: url("../img/Logo-web.svg");
     background-repeat: no-repeat;
     background-position: center;
@@ -216,18 +215,27 @@ body {
 
 }
 
-.lista .container {
+.lista .container-fluid {
     padding-top: 5%;
-    height: 100%;
+    height: 100%; /*calc(100% - 41px);*/
+    background-color: #2aabd2;
 
 }
 
-.lista footer {
-    background-color: #2aabd2;
+.lista .container-fluid h3{
     color: white;
 }
 
-.lista .superlista {
+.lista .container-fluid .media{
+    padding: 8px 2px 8px 2px;
+    margin-left: 10%;
+    background-color: #f7f7f7;
+}
+
+/*Login: Rodapé principal com dados e informações para contato*/
+.MainFooter{
+    /*background-color: #72daff;
+    color: white;*/
 
 }
 
@@ -276,7 +284,11 @@ body {
     transition: all 0.3s;
 }
 
-/*Sidebar*/
+/*Sidebar
+TODO: corrigir erro de barra lateral em telas pequenas: Barra Some
+TODO: Aba lateral sempre na posição recolhida
+TODO: Escolher icone melhor para menu Infra
+*/
 .dashboard .sidebar {
     min-width: 250px;
     max-width: 250px;
