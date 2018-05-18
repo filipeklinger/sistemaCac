@@ -204,39 +204,54 @@ body {
 /*TODO: código repetido, otimizar*/
 
 .lista {
-    /*background-image: url("../img/bg-list.jpg");*/
     /*background-color: #ffc987;*/
     background-color: #f7f7f7;
-    background-size: cover;
-    background-position: bottom;
-    background-repeat: no-repeat;
     color: black;
-    height: 100vh;
-
+    min-height: 100vh;
 }
 
 .lista .container-fluid {
-    padding-top: 5%;
-    height: 100%; /*calc(100% - 41px);*/
-    background-color: #2aabd2;
-
-}
+    padding-top: 1%;
+    padding-bottom: 2%;
+    min-height: 100%;
+    background-color: #2aabd2;}
 
 .lista .container-fluid h3{
     color: white;
 }
 
-.lista .container-fluid .media{
-    padding: 8px 2px 8px 2px;
-    margin-left: 10%;
-    background-color: #f7f7f7;
+.lista .media{
+    color: #f7f7f7;
+    /*background-color: #2aabd2;*/
+    border-bottom: 2px solid white;
+    padding-left: 3%;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    transition: 0.1s ease-in-out;
+    font-size: medium;
+}
+.lista .media .media-body{
+    padding-left: 3%;
+}
+.lista .media:hover{
+    border-left: 4px solid #ff7471;
+    border-bottom: 4px solid #ff7471;
+    color: #ff7471;
+    background-color: rgba(244, 255, 252, 0.77);
+}
+.lista .media .media-left{
+    padding-right: 0;
 }
 
+.lista .media .media-body .media-heading{
+    font-size: x-large;
+    font-weight: bold;
+}
 /*Login: Rodapé principal com dados e informações para contato*/
 .MainFooter{
-    /*background-color: #72daff;
-    color: white;*/
-
+    margin: 25px;
 }
 
 /* Estilo do Loader que esta no codigo do ajax */
@@ -345,7 +360,7 @@ TODO: Escolher icone melhor para menu Infra
     padding: 10px !important;
 }
 
-.dashboard .sidebar.active a[aria-expanded="false"]::before, #sidebar.active a[aria-expanded="true"]::before {
+.dashboard .sidebar.active a[aria-expanded="false"]::before, .dashboard #sidebar.active a[aria-expanded="true"]::before {
     top: auto;
     bottom: 5px;
     right: 50%;
@@ -494,4 +509,3 @@ TODO: Escolher icone melhor para menu Infra
 }
 
 /*TODO: estilo de footer do dashboard */
-/*TODO: adicionar estilo para Login: lista*/

@@ -25,35 +25,42 @@
     </div>
 </div>
 <div id="oficinas" class="lista">
-    <div id="t_oficinas" class="container-fluid">
+    <div class="container-fluid">
         <h3>OFICINAS DISPONÍVEIS</h3>
         <br/>
+        <div id="t_oficinas"></div>
+    </div>
+    <div class="MainFooter">
+        <!--TODO: adicionar redes sociais no footer -->
+        <span>&copy; 2018 - <?php echo date('Y')?>, CAC, UFRRJ, todos os direitos reservados</span>
     </div>
 </div>
-
-<div class="MainFooter">
-    <!--TODO: adicionar redes sociais no footer -->
-    <span>&copy; 2018 - <?php echo date('Y')?>, CAC, UFRRJ, todos os direitos reservados</span>
-</div>
-
 <script>
     ajaxLoadGET('control/main.php?req=selectTurmaAtiva', listaMarota, '#t_oficinas');
 
     function listaMarota(resposta, corpo) {
         var objJson = JSON.parse(resposta);
         console.log(objJson);
+        var aux;
         if (objJson.length > 0) {
             for (var i in objJson) {
+                if(objJson[i].vagas < 10){
+                    objJson[i].vagas = '&nbsp;&nbsp;'+objJson[i].vagas;
+                }
+                //console.log(avaliaData(objJson[i]));
+                var aux = JSON.parse(avaliaData(objJson[i]));
+                console.log(aux);
                 corpo.append(
                 '<div class="media">'+
-                    '<div class="media-left">'+
+                    '<div class="media-left text-center">'+
                     '<span class="media-object" style="font-size: 50px">'+
                     objJson[i].vagas+'</span>'+
                     '</span>vagas</div>'+
                     '<div class="media-body">'+
-                    '<h4 class="media-heading">" + objJson[i].oficina + "</h4>'+
+                    '<h4 class="media-heading">' + objJson[i].oficina + ' - '+ objJson[i].inicio +'</h4>'+
+                    '<p>' + "<< Dias da Semana Aqui >>" +  '</p>'+
                     '<p>Professor: ' + objJson[i].professor + '</p>'+
-                    '<p>Local: '+ objJson[i].predio + '  ' + objJson[i].sala + '</p>'+
+                    '<p>Local: '+ objJson[i].predio + ',  ' + objJson[i].sala + '</p>'+
                 '</div>'+
                 '</div>'
             );
@@ -64,6 +71,26 @@
                 '<h2> :( Nenhuma turma disponível</h2>'
             );
         }
+    }
+
+    function avaliaData(jsonObject){
+        var dias = new Array();
+        if(jsonObject.segunda === '1'){
+            dias.push("Seg");
+        }
+        if(jsonObject.terca === '1'){
+            dias.push("Ter");
+        }
+        if(jsonObject.quarta === '1'){
+            dias.push("Qua");
+        }
+        if(jsonObject.quinta === '1'){
+            dias.push("Qui");
+        }
+        if(jsonObject.sexta === '1'){
+            dias.push("Sex");
+        }
+        return JSON.stringify(dias);
     }
 
 </script>
