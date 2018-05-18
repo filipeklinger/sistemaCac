@@ -164,22 +164,27 @@ nascimento_menor0	2008-05-03
 
     /**
      * @return string JSON
-     * @throws Exception
      */
     public function getAdministradores(){
         //Obtemos todos os administradores com left Join em Maior idade pois e obrigatorio ser maior de idade
         //entretando selecionamos tambem os que nao completaram as informacoes
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $adm = $this->db->select("id_pessoa,nome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso = ?",array(1));
+        try {
+            $adm = $this->db->select("id_pessoa,nome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento", "pessoa" . $joinClause, "nv_acesso = ?", array(1));
+        } catch (Exception $e) {
+        }
         //transformamos o JSON em objeto php
         $objAdm = json_decode($adm);
         //verificmos se esse administrador esuda na rural e adicionamos as informacoes necessarias
         for($i=0;$i< sizeof($objAdm);$i++){
-            if($objAdm[$i]->ruralino == 1){
+            if(isset($objAdm[$i]->ruralino) and $objAdm[$i]->ruralino == 1){
                 $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objAdm[$i]->id_pessoa)));
                 $objAdm[$i]->curso = $ruralino[$i]->curso;
                 $objAdm[$i]->bolsista = $ruralino[$i]->bolsista;
 
+            }else{
+                $objAdm[$i]->curso = null;
+                $objAdm[$i]->bolsista = null;
             }
             $adm = json_encode($objAdm,JSON_UNESCAPED_UNICODE);
         }

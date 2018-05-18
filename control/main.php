@@ -80,6 +80,7 @@ class main{
                 echo $turma->getTurmas();
                 break;
             case "selectTurmaAtiva":
+                header("Content-Type: application/json; charset=UTF-8");
                 $turma = new turma();
                 echo $turma->getTurmasAtivas();
                 break;
