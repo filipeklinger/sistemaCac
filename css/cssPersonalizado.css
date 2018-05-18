@@ -229,7 +229,7 @@ body {
     padding-bottom: 1.5%;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
-    transition: 0.1s ease-in-out;
+    transition: 0.3s ease;
     font-size: medium;
 }
 .lista .media .media-body{
@@ -239,7 +239,7 @@ body {
     border-left: 4px solid #ff7471;
     border-bottom: 4px solid #ff7471;
     color: #ff7471;
-    background-color: rgba(244, 255, 252, 0.77);
+    background-color: rgba(244, 255, 252, 0.94);
 }
 .lista .media .media-left{
     padding-right: 0;
