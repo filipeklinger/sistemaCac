@@ -1,3 +1,4 @@
+/*TODO: reformular palheta de cores*/
 /*Imports*/
 @import "bootstrapExpansion.css";
 @import "printable.css";
@@ -6,7 +7,9 @@
 body {
     height: 100vh;
 }
-
+.printOnly{
+    display: none;
+}
 /*Página 404*/
 .page404 .container {
     margin-top: 10%;
@@ -202,7 +205,6 @@ body {
 
 /*Login: lista de oficinas disponíveis*/
 /*TODO: código repetido, otimizar*/
-
 .lista {
     /*background-color: #ffc987;*/
     background-color: #f7f7f7;
@@ -245,13 +247,19 @@ body {
     padding-right: 0;
 }
 
+.lista .media .media-object{
+    font-size: 50px;
+}
+
 .lista .media .media-body .media-heading{
     font-size: x-large;
     font-weight: bold;
 }
 /*Login: Rodapé principal com dados e informações para contato*/
 .MainFooter{
-    margin: 25px;
+    background-color: #d74e3f;
+    color: white;
+    padding: 25px;
 }
 
 /* Estilo do Loader que esta no codigo do ajax */
