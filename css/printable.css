@@ -1,4 +1,8 @@
 @media print{
+    /*Definindo margens*/
+    @page{
+        margin: 1.5cm;
+    }
     /*Resetando os estilos*/
     *{
         border: none;
@@ -7,10 +11,6 @@
         font-size: 20pt !important;
         border: none;
         //border-top: 2px solid black;
-    }
-    /*Definindo margens*/
-    @page{
-        margin: 1.5cm;
     }
 
     /*Removendo tags desnecessárias para impressão*/
@@ -22,6 +22,9 @@
         display: block !important;
     }
     /*Definindo estilos próprios para impressão*/
+    .cabecalho{
+        border-bottom: 2px solid black;
+    }
     .cabecalho h2{
         font-family: Arial, sans-serif;
         font-weight: bold;

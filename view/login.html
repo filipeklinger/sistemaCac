@@ -36,7 +36,6 @@
             </div>
             <br/>
             <br/>
-            <br/>
             <p>
                 Segue a baixo a relação de oficinas ativas em <span id="hoje"></span>, ofertadas pelo centro de Arte e Cultura desta universidade, e suas respectivas informações.
             </p>
@@ -46,17 +45,18 @@
         <br/>
         <div id="t_oficinas"></div>
     </div>
-    <div class="MainFooter text-center">
-        <!--TODO: adicionar redes sociais no footer -->
-        <div class="row">
-            <small>Projetado por Luciano Viana, Filipe Klinger e Vinícius Martins</small>
-            <br/>
-            <!--TODO: mudar line-height direito de cópia-->
-            <span>&copy;CAC CENTRO DE ARTE E CULTURA | TODOS OS DIREITOS RESERVADOS</span>
-        </div>
+</div>
+<div class="MainFooter text-center">
+    <!--TODO: adicionar redes sociais no footer -->
+    <div class="row">
+        <small>Projetado por Luciano Viana, Filipe Klinger e Vinícius Martins</small>
+        <br/>
+        <!--TODO: mudar line-height direito de cópia-->
+        <span>&copy;CAC CENTRO DE ARTE E CULTURA | TODOS OS DIREITOS RESERVADOS</span>
     </div>
 </div>
 <script>
+
     ajaxLoadGET('control/main.php?req=selectTurmaAtiva', listaMarota, '#t_oficinas');
 
     function listaMarota(resposta, corpo) {
@@ -78,8 +78,7 @@
                     objJson[i].vagas+'</span>'+
                     '<span>vagas</span></div>'+
                     '<div class="media-body">'+
-                    '<h4 class="media-heading">' + objJson[i].oficina + ' - '+ objJson[i].inicio +'</h4>'+
-                    '<p>' + "<< Dias da Semana Aqui >>" +  '</p>'+
+                    '<h4 class="media-heading">' + objJson[i].oficina + ' - '+ objJson[i].inicio +'</h4><span><< Dias da Semana Aqui >></span>'+
                     '<p>Professor: ' + objJson[i].professor + '</p>'+
                     '<p>Local: '+ objJson[i].predio + ',  ' + objJson[i].sala + '</p>'+
                     '</div>'+
