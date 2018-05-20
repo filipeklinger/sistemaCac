@@ -23,12 +23,20 @@ class oficina{
 
     private function inserOficina(){
         $params = array($this->nome,$this->preRequisito);
-        $this->db->insert("nome,pre_requisito","oficina",$params);
+        try {
+            $this->db->insert("nome,pre_requisito", "oficina", $params);
+        } catch (Exception $e) {
+            echo $e;
+        }
         $this->redireciona();
     }
 
     public function getOficina(){
-        return $this->db->select("*","oficina");
+        try {
+            return $this->db->select("*", "oficina");
+        } catch (Exception $e) {
+            echo $e;
+        }
     }
 
     private function redireciona(){
