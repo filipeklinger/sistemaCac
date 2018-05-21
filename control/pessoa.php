@@ -7,10 +7,23 @@
  */
 include_once '../model/DatabaseOpenHelper.php';
 include_once 'constantes.php';
+if ( session_status() !== PHP_SESSION_ACTIVE ) {
+    session_start();
+}
 
 class pessoa{
     private $db;
-    private $responsavelID,$parentesco,$user,$senha;
+
+    //Dados basicos
+    private $nv,$respTel,$respTelType,$docNumber,$docType;
+    //Endereco
+    private $rua,$numero,$complemento,$bairro,$cidade,$estado;
+    //ruralino
+    private $matricula,$curso;
+    //Caso menor
+    private $responsavelID,$parentesco;
+    //login
+    private $user,$senha;
 
     public function __construct(){
         $this->db = new Database();
@@ -18,151 +31,135 @@ class pessoa{
 
 
     /**
-     * Esse Metodo recebe primeiro o numero de cadastros pois como foi definida na documentação
      * um usuário pode cadastrar varios dependentes (menores de idade)
-     * @return bool - Cadastrado ou nao
+     * @throws Exception
      */
     public function setPessoa(){
-        /*
-Campos enviados pelo form         *
-menor	1
-nv_acesso	2
-nome	Filipe
-sobrenome	klinger
-ruralino	1
-matricula	2016390288
-curso	Sistemas de informação
-nascimento	1994-08-23
-resp_tel	972935253
-resp_tel_type	2
-doc_type	1
-doc_number	273319186
-rua	Rua das acacias
-numero	12
-complemento	ap 205
-bairro	campo lindo
-cidade	Seropédica
-estado	RJ
-nome_menor0	pedrinho
-sobrenome_menor0	junior
-nascimento_menor0	2008-05-03
 
-        $num_cadastros = isset($_POST['num_cadastros']) ? $_POST['num_cadastros'] : INVALIDO;
-        if($num_cadastros == INVALIDO) return false;
-        //cada cadastro deve ter somente um login
-        $this->user = isset($_POST['usuario']) ? $_POST['usuario'] : '';
+        if (isset($_SESSION['NIVEL']) and $_SESSION['NIVEL'] == "Administrador") {//se não for adm o nivel é automaticamente aluno
+            $this->nv = isset($_POST['nv_acesso']) ? $_POST['nv_acesso'] : VISITANTE;//se der erro fica como visitante
+        } else {
+            $this->nv = ALUNO;
+        }
+        //-----------------DADOS BASICOS------------------------------
+        $nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
+        $sobrenome = isset($_POST['sobrenome']) ? $_POST['sobrenome'] : INVALIDO;
+        $nascimento = isset($_POST['nascimento']) ? $_POST['nascimento'] : INVALIDO;
+        $ruralino = isset($_POST['ruralino']) ? SIM : NAO;
+
+        $this->responsavelID = $this->insertDadosBasicos($nome,$sobrenome,$this->nv,NAO,$ruralino,$nascimento);//recuperamos o ID do adulto cadastrado
+
+        //---------------Documentos-----------------------------------------------------------------
+        $this->respTel = isset($_POST['resp_tel']) ? $_POST['resp_tel'] : INVALIDO;
+        $this->respTelType = isset($_POST['resp_tel_type']) ? $_POST['resp_tel_type'] : INVALIDO;
+        $this->docType = isset($_POST['doc_type']) ? $_POST['doc_type'] : INVALIDO;
+        $this->docNumber = isset($_POST['doc_number']) ? $_POST['doc_number'] : INVALIDO;
+
+        $this->insertDocumento();
+
+        //----------------------Endereço---------------------------------------------
+
+        $this->rua = isset($_POST['rua']) ? $_POST['rua'] : INVALIDO;
+        $this->numero = isset($_POST['numero']) ? $_POST['numero'] : INVALIDO;
+        $this->complemento = isset($_POST['complemento']) ? $_POST['complemento'] : INVALIDO;
+        $this->bairro = isset($_POST['bairro']) ? $_POST['bairro'] : INVALIDO;
+        $this->cidade = isset($_POST['cidade']) ? $_POST['cidade'] : INVALIDO;
+        $this->estado = isset($_POST['estado']) ? $_POST['estado'] : INVALIDO;
+
+        $this->insertEndereco();
+        //---------------------------RURALINO--------------------------
+        if (isset($_POST['ruralino']) and $_POST['ruralino'] == "on") {
+            $this->matricula = isset($_POST['matricula']) ? $_POST['matricula'] : INVALIDO;
+            $this->curso = isset($_POST['curso']) ? $_POST['curso'] : INVALIDO;
+
+            $this->insertRuralino();
+        }
+
+        //-------------------LOGIN-----------------------------
+
+        $this->user = isset($_POST['usuario']) ? $_POST['usuario'] : INVALIDO;
         $this->senha = isset($_POST['senha']) ? $_POST['senha'] : INVALIDO;
 
-        if($this->senha == INVALIDO){return "Erro";}
+        $this->insertLogin();
 
-        $this->parentesco = isset($_POST['parentesco']) ? $_POST['parentesco'] : INVALIDO;
+        //-----------------Menor-Idade------------------------------
+        if (isset($_POST['qtd_menor']) and $_POST['qtd_menor'] > 0) {
+            $this->parentesco = isset($_POST['parentesco']) ? $_POST['parentesco'] : INVALIDO;
+            for ($i = 0; $i < $_POST['qtd_menor']; $i++) {
+                $nomeAtual = 'nome_menor' . ($i + 1);
+                $sobrenomeAtual = 'sobrenome_menor' . ($i + 1);
+                $nascimentoAtual = 'nascimento_menor' . ($i + 1);
+                //-----------recuperando dados
+                $nomeMenor = isset($_POST[$nomeAtual]) ? $_POST[$nomeAtual] : INVALIDO;
+                $sobrenomeMenor = isset($_POST[$sobrenomeAtual]) ? $_POST[$sobrenomeAtual] : INVALIDO;
+                $nascimentoMenor = isset($_POST[$nascimentoAtual]) ? $_POST[$nascimentoAtual] : INVALIDO;
 
-        //aqui iteramos sobre os dados de usuario enviados
-        for($i=0;$i<sizeof($num_cadastros);$i++){
+                $menorID = $this->insertDadosBasicos($nomeMenor,$sobrenomeMenor,ALUNO,SIM,NAO,$nascimentoMenor);
 
-            //iterando sobre a matriz POST
-            $nomeAtual = "nome".$i;
-            $sobrenomeAtual = "sobrenome".$i;
-            $nvAcessoAtual = "nv_acesso".$i;
-            $menorAtual = "menor_idade".$i;
-            $ruralinoAtual = "ruralino".$i;
-            $nascimentoAtual = "data_nascimento".$i;
-
-            //Obtendo variaveis
-            $nome = $_POST[$nomeAtual];
-            $sobrenome = $_POST[$sobrenomeAtual];
-            $nvAcesso = isset($_POST[$nvAcessoAtual]) ? $_POST[$nvAcessoAtual] : VISITANTE;
-            $menor = $_POST[$menorAtual];
-            $ruralino = $_POST[$ruralinoAtual];
-            $nascimento = $_POST[$nascimentoAtual];
-
-            //aqui finalmente inserimos os dados na tabela Pessoa e recuperamos o identificador
-            $pessoaId = $this->insertDadosBasicos($nome,$sobrenome,$nvAcesso,$menor,$ruralino,$nascimento);
-
-            if($menor == NAO){
-                //caso menor sera acessado pelo login do responsavel
-                $this->responsavelID = $this->insertLogin($pessoaId);
-                $this->insertDocumento($pessoaId);
-            }else{
-                $this->insertDependente($pessoaId);
+                $this->insertRelacaoDependente($menorID);
             }
-
-            if($ruralino == SIM){
-                $this->insertRuralino($pessoaId);
-            }
-
         }
-        return true;
-        */
-       echo "<table>";
-            foreach ($_POST as $key => $value) {
-                echo "<tr>";
-                echo "<td>";
-                echo $key;
-                echo "</td>";
-                echo "<td>";
-                echo $value;
-                echo "</td>";
-                echo "</tr>";
-            }
-        echo "</table>";
+
+        $this->redireciona();
+
     }
 
     /**
+     * @param $nome
+     * @param $sobrenome
+     * @param $nv
+     * @param $isMenor
+     * @param $ruralino
+     * @param $nascimento
      * @return bool| integer - Retorna o ID do dado inserido ou falso se der erro
      * @throws Exception
      */
-    private function insertDadosBasicos($nome, $sobre, $nv, $menor, $rural, $nasc){
-        $params = array($nome,$sobre,$nv,$menor,$rural,$nasc);
+    private function insertDadosBasicos($nome,$sobrenome,$nv,$isMenor,$ruralino,$nascimento){
+        $params = array($nome,$sobrenome,$nv,$isMenor,$ruralino,$nascimento);
         $this->db->insert("nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento","pessoa",$params);
         return $this->db->getLastId();
     }
 
     /**
-     * @param $pessoaID
      * @throws Exception
      */
-    private function insertDocumento($pessoaID){
-        $numero = isset($_POST['numero_documento']) ? $_POST['numero_documento'] : INVALIDO;
-        $tipo = isset($_POST['tipo_documento']) ? $_POST['tipo_documento'] : INVALIDO;
-
-        $params = array($pessoaID,$numero,$tipo);
+    private function insertDocumento(){
+        $params = array($this->responsavelID,$this->docNumber,$this->docType);
         $this->db->insert("pessoa_id,numero_documento,tipo_documento","documento",$params);
-
     }
 
     /**
-     * @param $pessoaID
      * @throws Exception
      */
-    private function insertRuralino($pessoaID){
-        $matricula = isset($_POST['matricula']) ? $_POST['matricula'] : INVALIDO;
-        $curso = isset($_POST['curso']) ? $_POST['curso'] : INVALIDO;
-        $bolsista = isset($_POST['bolsista']) ? $_POST['bolsista'] : INVALIDO;
+    private function insertEndereco(){
+        $params = array($this->responsavelID,$this->rua,$this->numero,$this->complemento,$this->bairro,$this->cidade,$this->estado);
+        $this->db->insert("pessoa_id,rua,numero,complemento,bairro,cidade,estado","endereco",$params);
+    }
 
-        $params = array($pessoaID,$matricula,$curso,$bolsista);
+    /**
+     * @throws Exception
+     */
+    private function insertRuralino(){
+        $params = array($this->responsavelID,$this->matricula,$this->curso,NAO);
         $this->db->insert("pessoa_id,matricula,curso,bolsista","ruralino",$params);
     }
 
     /**
-     * @param $pessoa_id int - identificador da pessoa na tabela pessoa
-     * @return bool|integer - Retorna o ID do dado inserido ou falso se der erro
+     * @return void - Retorna o ID do dado inserido ou falso se der erro
      * @throws Exception
      */
-    private function insertLogin($pessoa_id){
-        $params = array($pessoa_id,$this->user,$this->make_hash($this->senha));
+    private function insertLogin(){
+        $params = array($this->responsavelID,$this->user,$this->make_hash($this->senha));
         $this->db->insert("pessoa_id,usuario,senha","login",$params);
-
-        return $this->db->getLastId();
     }
 
     /**
-     * @param $pessoaAtualID
+     * @param $depAtualID - O dependente Atual
      * @return bool
      * @throws Exception
      */
-    private function insertDependente($pessoaAtualID){
-        $paramns = array($pessoaAtualID,$this->responsavelID,$this->parentesco);
+    private function insertRelacaoDependente($depAtualID){
+        $paramns = array($depAtualID,$this->responsavelID,$this->parentesco);
         return $this->db->insert("pessoa_id,responsavel_id,responsavel_parentesco","menor_idade",$paramns);
     }
 
@@ -183,13 +180,11 @@ nascimento_menor0	2008-05-03
         //Obtemos todos os administradores com left Join em Maior idade pois e obrigatorio ser maior de idade
         //entretando selecionamos tambem os que nao completaram as informacoes
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        try {
-            $adm = $this->db->select("id_pessoa,nome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento", "pessoa" . $joinClause, "nv_acesso = ?", array(1));
-        } catch (Exception $e) {
-        }
+        $adm = $this->db->select("id_pessoa,nome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento", "pessoa" . $joinClause, "nv_acesso = ?", array(1));
+
         //transformamos o JSON em objeto php
         $objAdm = json_decode($adm);
-        //verificmos se esse administrador esuda na rural e adicionamos as informacoes necessarias
+        //verificmos se esse usuario esuda na rural e adicionamos as informacoes necessarias
         for($i=0;$i< sizeof($objAdm);$i++){
             if(isset($objAdm[$i]->ruralino) and $objAdm[$i]->ruralino == 1){
                 $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objAdm[$i]->id_pessoa)));
@@ -197,17 +192,14 @@ nascimento_menor0	2008-05-03
                     $objAdm[$i]->curso = $ruralino[$i]->curso;
                     $objAdm[$i]->bolsista = $ruralino[$i]->bolsista;
                 }
-
-
             }
-            $adm = json_encode($objAdm,JSON_UNESCAPED_UNICODE);
         }
-
+        $adm = json_encode($objAdm,JSON_UNESCAPED_UNICODE);
         return $adm;
     }
 
     /**
-     * @return string
+     * @return string JSON
      * @throws Exception
      */
     public function getProfesores(){
@@ -216,7 +208,7 @@ nascimento_menor0	2008-05-03
         $prof = $this->db->select("id_pessoa,nome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso <= ?",array(2));
         //transformamos o JSON em objeto php
         $objProf = json_decode($prof);
-        //verificmos se esse administrador esuda na rural e adicionamos as informacoes necessarias
+        //verificmos se esse usuario esuda na rural e adicionamos as informacoes necessarias
         for($i=0;$i< sizeof($objProf);$i++){
             if($objProf[$i]->ruralino == 1){
                 $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objProf[$i]->id_pessoa)));
@@ -228,17 +220,14 @@ nascimento_menor0	2008-05-03
                     $objProf[$i]->curso = null;
                     $objProf[$i]->bolsista = null;
                 }
-
-
             }
-            $prof = json_encode($objProf,JSON_UNESCAPED_UNICODE);
         }
-
+        $prof = json_encode($objProf,JSON_UNESCAPED_UNICODE);
         return $prof;
     }
 
     /**
-     * @return string
+     * @return string JSON
      * @throws Exception
      */
     public function getCandidatos(){
@@ -262,9 +251,11 @@ nascimento_menor0	2008-05-03
                 $objCand[$i]->responsavel = $respsavel[0]->nome;
                 $objCand[$i]->parentesco = $respsavel[0]->responsavel_parentesco;
             }
-            $cand = json_encode($objCand,JSON_UNESCAPED_UNICODE);
         }
-
+        $cand = json_encode($objCand,JSON_UNESCAPED_UNICODE);
         return $cand;
     }
+
+    private function redireciona(){header("Location: ../index.php?pag=Login");}
+
 }

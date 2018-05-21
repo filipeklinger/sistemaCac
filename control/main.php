@@ -12,7 +12,9 @@ include_once 'oficina.php';
 include_once 'pessoa.php';
 include_once 'turma.php';
 
-session_start();
+if ( session_status() !== PHP_SESSION_ACTIVE ) {
+    session_start();
+}
 class main{
     private $act;
 

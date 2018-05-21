@@ -14,6 +14,9 @@ class login{
         $this->db = new Database();
     }
 
+    /**
+     * @throws Exception
+     */
     public function verifyUser(){
         //Obtendo dados atraves de POST
         $login = isset($_POST['login']) ? $_POST['login'] : INVALIDO;
