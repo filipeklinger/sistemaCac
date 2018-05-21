@@ -38,7 +38,7 @@
             <div class="col-md-4">
                 <div class="input-group">
                     <select id="selectSala" name="sala_id" onchange="disponibilidade();" class="selectpicker" title="Escolha uma Sala" required="required">
-                        <option value="-1">Selecione uma sala</option>
+                        <option value="1">Selecione uma sala</option>
                     </select>
                 </div><!-- /input-group -->
             </div>
@@ -184,6 +184,7 @@
     }
     function disponibilidade() {
         var identificador = parseInt(selectSala.val());
+
         ajaxLoadGET('control/main.php?req=selectHorario&id='+identificador,jsonParteHorariosDisponiveis,horarios);
     }
     function jsonParteHorariosDisponiveis(resposta,corpo) {

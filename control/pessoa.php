@@ -118,6 +118,10 @@ nascimento_menor0	2008-05-03
         return $this->db->getLastId();
     }
 
+    /**
+     * @param $pessoaID
+     * @throws Exception
+     */
     private function insertDocumento($pessoaID){
         $numero = isset($_POST['numero_documento']) ? $_POST['numero_documento'] : INVALIDO;
         $tipo = isset($_POST['tipo_documento']) ? $_POST['tipo_documento'] : INVALIDO;
@@ -127,6 +131,10 @@ nascimento_menor0	2008-05-03
 
     }
 
+    /**
+     * @param $pessoaID
+     * @throws Exception
+     */
     private function insertRuralino($pessoaID){
         $matricula = isset($_POST['matricula']) ? $_POST['matricula'] : INVALIDO;
         $curso = isset($_POST['curso']) ? $_POST['curso'] : INVALIDO;
@@ -148,6 +156,11 @@ nascimento_menor0	2008-05-03
         return $this->db->getLastId();
     }
 
+    /**
+     * @param $pessoaAtualID
+     * @return bool
+     * @throws Exception
+     */
     private function insertDependente($pessoaAtualID){
         $paramns = array($pessoaAtualID,$this->responsavelID,$this->parentesco);
         return $this->db->insert("pessoa_id,responsavel_id,responsavel_parentesco","menor_idade",$paramns);
@@ -164,6 +177,7 @@ nascimento_menor0	2008-05-03
 
     /**
      * @return string JSON
+     * @throws Exception
      */
     public function getAdministradores(){
         //Obtemos todos os administradores com left Join em Maior idade pois e obrigatorio ser maior de idade
@@ -191,6 +205,11 @@ nascimento_menor0	2008-05-03
 
         return $adm;
     }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
     public function getProfesores(){
         //Obtemos todos os professores com left Join em Maior idade
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
@@ -218,6 +237,10 @@ nascimento_menor0	2008-05-03
         return $prof;
     }
 
+    /**
+     * @return string
+     * @throws Exception
+     */
     public function getCandidatos(){
         //Obtemos todos os Candidatos com left Join em Maior idade
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
