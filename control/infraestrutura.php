@@ -23,7 +23,7 @@ class infraestrutura{
         if($nome != INVALIDO){
             try {
                 $this->db->insert("nome,localizacao", "predio", $params);
-                $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\"".$nome." cadastrado com sucesso!!\"}";
+                $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\" Predio: ".$nome." cadastrado com sucesso!!\"}";
             } catch (Exception $e) {
                 $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
             }
