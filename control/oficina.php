@@ -25,8 +25,9 @@ class oficina{
         $params = array($this->nome,$this->preRequisito);
         try {
             $this->db->insert("nome,pre_requisito", "oficina", $params);
+            $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\"".$this->nome." cadastrado com sucesso!!\"}";
         } catch (Exception $e) {
-            echo $e;
+            $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
         }
         $this->redireciona();
     }
@@ -35,7 +36,7 @@ class oficina{
         try {
             return $this->db->select("*", "oficina");
         } catch (Exception $e) {
-            echo $e;
+            $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
         }
     }
 

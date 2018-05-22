@@ -99,7 +99,7 @@ class pessoa{
                 $this->insertRelacaoDependente($menorID);
             }
         }
-
+        $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\"".$nome." cadastrado com sucesso!!\"}";
         $this->redireciona();
 
     }

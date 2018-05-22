@@ -1,5 +1,9 @@
 <body>
 <h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Gerenciando Turmas</h3>
+
+<!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
+<p id="avisos"></p>
+
 <a href="?pag=Cad.Turma" type="button" class="btn btn-primary">Cadastrar Turma</a>
 <h3 class="text-center">Todas as turmas cadastradas</h3>
 <table class="table table-striped">
@@ -21,6 +25,7 @@
 
     function loader() {
         ajaxLoadGET('control/main.php?req=selectTurma', parseTurmaHorario, '#turmas');
+        getMsgs();
     }
 
     function parseTurmaHorario(resposta, corpo) {

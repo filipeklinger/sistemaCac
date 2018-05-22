@@ -51,7 +51,11 @@ class main{
                 break;
             case "insertPessoa":
                 $pess = new pessoa();
-                $pess->setPessoa();
+                try {
+                    $pess->setPessoa();
+                } catch (Exception $e) {
+                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+                }
                 break;
             case "selectAdministrador":
                 $pess = new pessoa();

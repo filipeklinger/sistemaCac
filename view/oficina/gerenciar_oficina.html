@@ -1,5 +1,9 @@
 <body>
 <h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Gerenciando Oficinas</h3>
+
+<!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
+<p id="avisos"></p>
+
 <a href="?pag=Cad.Oficina" type="button" class="btn btn-primary">Cadastrar Oficina</a>
 <table class="table table-striped">
     <thead>
@@ -15,7 +19,14 @@
 <script type="text/javascript">
     // language=JQuery-CSS
     var controlador = "control/main.php?req=selectOficina";
-    $('#tbody').on("load", ajaxLoadGET(controlador,jsonParseOficinas,'#toficinas'));
+
+    $('#tbody').on("load", loader());
+
+    function loader() {
+        getMsgs();
+        ajaxLoadGET(controlador,jsonParseOficinas,'#toficinas')
+    }
+
     function jsonParseOficinas(json,corpo) {
         var objJson = JSON.parse(json);
         for(var i in objJson){

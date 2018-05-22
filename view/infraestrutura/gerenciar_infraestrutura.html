@@ -1,6 +1,10 @@
 <body class="infraestrutura">
 
 <h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Infraestrutura</h3>
+
+<!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
+<p id="avisos"></p>
+
 <div style="overflow-x: auto;">
     <ul style="min-width: 450px;" class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#predios">Predios</a></li>
@@ -48,7 +52,12 @@
 <script type="text/javascript">
     // language=JQuery-CSS
     var controlador = "control/main.php?req=selectPredio";
-    $('#tbody').on("load", ajaxLoadGET(controlador,jsonParsePredios,'#tpredio'));
+    $('#tbody').on("load", loader());
+
+    function loader() {
+        getMsgs();
+        ajaxLoadGET(controlador,jsonParsePredios,'#tpredio')
+    }
 
 
 </script>
