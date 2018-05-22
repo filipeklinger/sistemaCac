@@ -93,11 +93,12 @@
             <thead>
             <tr>
                 <th class='col-md-2'>Oficina</th>
+                <th class='col-md-2'>Turma</th>
                 <th class='col-md-2'>Dia da semana</th>
                 <th class='col-md-2'>Horario</th>
-                <th class='col-md-2'>Sala</th>
+                <th class='col-md-1'>Sala</th>
                 <th class='col-md-2'>Professor</th>
-                <th class='col-md-2'>Vagas</th>
+                <th class='col-md-1'>Vagas</th>
             </tr>
             </thead>
             <tbody id="t_oficinas"></tbody>
@@ -126,11 +127,12 @@
             corpo.append(
                 '<tr>' +
                 '<td class=\'col-md-2\'>' + objJson[i].oficina + '</td>' +
+                '<td class=\'col-md-2\'>' + objJson[i].turma + '</td>' +
                 '<td class=\'col-md-2\'>' + getDiaSemana(objJson[i]) + '</td>' +
                 '<td class=\'col-md-2\'>' + objJson[i].inicio + " as " + objJson[i].fim + '</td>' +
-                '<td class=\'col-md-2\'>' + objJson[i].sala + '</td>' +
+                '<td class=\'col-md-1\'>' + objJson[i].sala + '</td>' +
                 '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
-                '<td class=\'col-md-2\'>' + objJson[i].vagas + '</td>' +
+                '<td class=\'col-md-1\'>' + objJson[i].vagas + '</td>' +
                 '</tr>');
         }
     }
