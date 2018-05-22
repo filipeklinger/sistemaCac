@@ -1,0 +1,37 @@
+<body>
+<h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Inserindo Aluno em Turma</h3>
+
+<!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
+<p id="avisos"></p>
+
+<label for="turma">Selecione a turma</label>
+<select onchange="" id="turma">
+    <option value=1 selected="selected">Dança 1 Seg-QUA</option>
+    <option value=2>Dança 2 TER-QUI</option>
+    <option value=3>Desenho Iniciante</option>
+</select>
+<h5>Legenda:</h5>
+<p id="legenda"></p>
+
+<script type="text/javascript">
+    $(document).on("load", loader());
+
+    function loader() {
+        ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasComVagas, '#turma');
+        getMsgs();
+    }
+
+    function parseTurmasComVagas(resposta, corpo) {
+        var objJson = JSON.parse(resposta);
+        for (i in objJson) {
+            corpo.append(
+                '<option value=' + i + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
+                );
+            $('#legenda').append('->'+ objJson[i].oficina + " - " + objJson[i].turma +
+                    ' Inicio: '+objJson[i].inicio +
+                    ' Local:  '+ objJson[i].predio + ',  ' + objJson[i].sala +
+                '<br/>');
+        }
+    }
+</script>
+</body>

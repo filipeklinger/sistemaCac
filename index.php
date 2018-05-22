@@ -88,7 +88,7 @@ if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
             include "view/aluno/gerenciar_aluno.html";
             break;
         case 'Cad.Aluno':
-            include "view/aluno/cad.Aluno.html";
+            include "view/aluno/inserir_aluno_em_turma.html";
             break;
         //Relatorios
         case 'Relatorios':
