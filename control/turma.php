@@ -94,12 +94,12 @@ class turma{
 
         try {
             $projection =
-                "criacao_turma as criacao,oficina.nome as oficina,num_vagas as vagas,nome_turma as turma,".
+                "predio.nome as predio,criacao_turma as criacao,oficina.nome as oficina,num_vagas as vagas,nome_turma as turma,".
                 "pessoa.nome as professor,sala.nome as sala,segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim";
-            $table ="(pessoa,oficina,turma,sala)";
+            $table ="(pessoa,oficina,turma,sala,predio)";
             $joinClause = " LEFT JOIN horario_turma_sala ON id_turma = turma_id";
 
-            $whereClause = "professor=id_pessoa and id_oficina=oficina_id and (sala_id = id_sala or sala_id = null) and turma.is_ativo = ?";
+            $whereClause = "professor=id_pessoa and id_oficina=oficina_id and sala_id = id_sala and predio_id = id_predio and turma.is_ativo = ?";
             $whereArgs = array(SIM);
             return $this->db->select($projection,$table.$joinClause , $whereClause,$whereArgs);
         } catch (Exception $e) {
