@@ -17,6 +17,9 @@ class turma{
         $this->db = new Database();
     }
 
+    /**
+     * @throws Exception
+     */
     public function setTurma(){
         $this->oficina = $_POST['oficina_id'];
         $this->prof = $_POST['prof_id'];
@@ -41,7 +44,6 @@ class turma{
             $qui = isset($_POST['qui']) ? 1 : 0;
             $sex = isset($_POST['sex']) ? 1 : 0;
 
-
             $ano = date('Y')."";
             $columns = "ano,sala_id,segunda,terca,quarta,quinta,sexta,inicio,fim,turma_id";
             $params = array($ano,$this->sala,$seg,$ter,$qua,$qui,$sex,$this->hinic,$this->hfim,$this->turmaId);
@@ -60,9 +62,13 @@ class turma{
      */
     private function insertTurma(){
         $date = date('Y-m-d');
+        //-------------------criacao do nome----------------------------------------------------------------------------
         $tumasCadastradas = json_decode($this->getTurmaByOficinaId($this->oficina));
         $numTurma = sizeof($tumasCadastradas)+1;//aqui setamos um numero para a turma de acordo com as tumas ja cadastradas para uma determinada oficina
+        //$nomeOficina = strtoupper((json_decode($this->getOficinaById($this->oficina)))[0]->nome);
+
         $nome_turma = "T0".$numTurma."-".date('Y');//nome automatico da turma
+        //--------------------------------------------------------------------------------------------------------------
         $criacao_turma = $date."";
         $is_ativo = SIM;
         $columns = "criacao_turma,oficina_id,num_vagas,nome_turma,professor,is_ativo";
@@ -125,6 +131,15 @@ class turma{
         }
     }
 
+    /**
+     * @param $oficinaId
+     * @return string
+     * @throws Exception
+     */
+    private function getOficinaById($oficinaId){
+        return $this->db->select("nome","oficina","id_oficina = ?",array($oficinaId));
+
+    }
     private function redireciona(){
         //depois de inserir redirecionamos para a pagina de infra
         header("Location: ../index.php?pag=DashBoard");

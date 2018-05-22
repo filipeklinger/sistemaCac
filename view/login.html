@@ -4,6 +4,9 @@
         <div class="col-lg-6 logo"></div>
         <div class="col-lg-6">
             <div class="panel-body">
+                <!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
+                <p id="avisos"></p>
+
                 <form id="form" action="control/main.php?req=login" method="POST">
                     <div id="alertsArea"></div>
                     <input id="user" type="text" name="login" class="form-control" placeholder="Usuário"
@@ -56,7 +59,7 @@
     </div>
 </div>
 <script>
-
+    document.onload(getMsgs());
     ajaxLoadGET('control/main.php?req=selectTurmaAtiva', listaMarota, '#t_oficinas');
 
     function listaMarota(resposta, corpo) {

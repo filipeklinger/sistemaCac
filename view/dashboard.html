@@ -79,7 +79,8 @@
     <div class="content">
         <!--h2>DashBoard</h2-->
 
-        <!--TODO: PROGRAMAR QUADRO DE AVISOS-->
+        <!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
+        <p id="avisos"></p>
 
         <p id="usr">
             Olá <span id="user"></span>, seu nivel de acesso é <b><span id="nv"></span></b>
@@ -113,7 +114,10 @@
     function loader() {
         ajaxLoadGET('control/main.php?req=selecUsuarioLogado', parseUsuario, '#nv');
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmaHorario, '#t_oficinas');
+        getMsgs();
     }
+
+
 
     function parseUsuario(resposta) {
         var jsonObj = JSON.parse(resposta);

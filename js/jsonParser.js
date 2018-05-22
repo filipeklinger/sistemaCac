@@ -93,3 +93,18 @@ function getNVacesso(nv){
             return "Visitante";
     }
 }
+
+function getMsgs() {
+    var aviso = $('#avisos');
+    var msg = JSON.parse(mensagem);
+    switch (msg.tipo){
+        case "erro":
+            aviso.append(msg.desc);
+            break;
+        case "sucesso":
+            aviso.append(msg.desc);
+            break;
+        default:
+            aviso.append("Err");
+    }
+}

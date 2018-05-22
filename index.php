@@ -27,6 +27,17 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao r
     <script src="bootstrap3.3.7/js/bootstrap.min.js"></script>
     <!-- estiliza o seletor script src="bootstrap3.3.7/select/js/bootstrap-select.min.js"></script -->
     <script src="js/jsonParser.js"></script>
+    <!-- Aqui recebemos as msg do PHP e inserimos numa variavel JS chamada mensagem -->
+    <script type="application/x-javascript">
+        var mensagem =
+        <?php
+        if(isset($_SESSION['MSG'])){
+            echo  '\''.$_SESSION['MSG'].'\'';
+            $_SESSION['MSG'] = null;//apos mostrar msg devemos remover
+        }else{
+            echo '\'{"tipo":"erro","desc":" "}\'';
+        } ?>;
+    </script>
 </head>
 <?php
 //aqui recebemos por get a pagina de conteudo escolhida
