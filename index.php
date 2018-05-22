@@ -76,6 +76,9 @@ if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
         case 'Alunos':
             include "view/aluno/gerenciar_aluno.html";
             break;
+        case 'Cad.Aluno':
+            include "view/aluno/cad.Aluno.html";
+            break;
         //Relatorios
         case 'Relatorios':
             include "view/relatorio/gerenciar_relatorio.html";

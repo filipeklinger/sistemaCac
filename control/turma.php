@@ -55,9 +55,14 @@ class turma{
 
     }
 
+    /**
+     * @throws Exception
+     */
     private function insertTurma(){
         $date = date('Y-m-d');
-        $nome_turma = "t01-".date('Y');//nome automatico da turma
+        $tumasCadastradas = json_decode($this->getTurmaByOficinaId($this->oficina));
+        $numTurma = sizeof($tumasCadastradas)+1;//aqui setamos um numero para a turma de acordo com as tumas ja cadastradas para uma determinada oficina
+        $nome_turma = "T0".$numTurma."-".date('Y');//nome automatico da turma
         $criacao_turma = $date."";
         $is_ativo = SIM;
         $columns = "criacao_turma,oficina_id,num_vagas,nome_turma,professor,is_ativo";
@@ -68,6 +73,15 @@ class turma{
         } catch (Exception $e) {
             //todo msg de erro $e
         }
+    }
+
+    /**
+     * @param $oficinaId Integer
+     * @return string
+     * @throws Exception
+     */
+    private function getTurmaByOficinaId($oficinaId){
+        return $this->db->select("id_turma,oficina_id,num_vagas,nome_turma,professor,is_ativo","turma","oficina_id = ? and is_ativo = ?",array($oficinaId,1));
     }
 
     public function getTurmasAtivas(){
