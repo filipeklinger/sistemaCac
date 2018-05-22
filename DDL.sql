@@ -285,3 +285,11 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`telefone` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- ----------------------------------
+--  Inserindo o administrador padrao
+-- ----------------------------------
+INSERT INTO `pessoa` (`nome`, `sobrenome`, `nv_acesso`, `menor_idade`,`ruralino`,`data_nascimento`) VALUES
+  ('Master', 'adm', 1, 0, 0,CURRENT_DATE);
+INSERT INTO `login` (`pessoa_id`, `usuario`, `senha`) VALUES
+  (1,'master','$2y$10$symYmm2UiLcdcHcTExnixu4QSR8e/v1jDB8ailHm2BfhFH1dDHrlC');
