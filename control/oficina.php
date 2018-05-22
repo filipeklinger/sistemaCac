@@ -41,6 +41,6 @@ class oficina{
 
     private function redireciona(){
         //depois de inserir redirecionamos para a pagina de infra
-        header("Location: ../index.php?pag=DashBoard");
+        header("Location: ../index.php?pag=Oficinas");
     }
 }

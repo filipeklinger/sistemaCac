@@ -52,7 +52,7 @@ if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
             include "view/infraestrutura/cadSala.html";
             break;
         //Oficina
-        case 'Oficina':
+        case 'Oficinas':
             include "view/oficina/gerenciar_oficina.html";
             break;
         case 'Cad.Oficina':
