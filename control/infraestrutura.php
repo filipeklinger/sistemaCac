@@ -22,8 +22,12 @@ class infraestrutura{
 
         if($nome != INVALIDO){
             try {
-                $this->db->insert("nome,localizacao", "predio", $params);
-                $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\" Predio: ".$nome." cadastrado com sucesso!!\"}";
+                if($this->db->insert("nome,localizacao", "predio", $params)){
+                    $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\" Predio: ".$nome." cadastrado com sucesso!!\"}";
+                }else{
+                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: Problema ao inserir, gerado Log de erro\"}";
+                }
+
             } catch (Exception $e) {
                 $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
             }
@@ -67,7 +71,7 @@ class infraestrutura{
                 if($this->db->insert("predio_id,nome,is_ativo", "sala", $params)){
                     $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\" Sala de ".$nome." cadastrado com sucesso!!\"}";
                 }else{
-                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: Problema ao atualizar,gerado Log de erro\"}";
+                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: Problema ao inserir, gerado Log de erro\"}";
                 }
 
             } catch (Exception $e) {
