@@ -26,7 +26,7 @@ function jsonParsePredios(json,corpo) {
             '<td class=\'col-md-5\'> '+ objJson[i].nome + '</td>' +
             '<td class=\'col-md-5\'> '+ objJson[i].localizacao + '</td>' +
             '<td class=\'col-md-1\'> '+ isAtivo(objJson[i].is_ativo) + '</td>' +
-            '<td class=\'col-md-1\'> <a href="#" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
+            '<td class=\'col-md-1\'> <a href="?pag=Edit.Predio&id='+objJson[i].id_predio+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
             '</tr>');
     }
 }
@@ -39,7 +39,7 @@ function jsonParseSalas(json,corpo) {
             '<td class=\'col-md-5\'> '+ objJson[i].sala + '</td>' +
             '<td class=\'col-md-5\'> '+ objJson[i].predio + '</td>' +
             '<td class=\'col-md-1\'> '+ isAtivo(objJson[i].is_ativo) + '</td>' +
-            '<td class=\'col-md-1\'> <a href="#" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
+            '<td class=\'col-md-1\'> <a href="?pag=Edit.Sala&id='+objJson[i].id_sala+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
             '</tr>');
     }
 }
@@ -107,4 +107,15 @@ function getMsgs() {
         default:
             aviso.append("Err");
     }
+}
+
+//recuperando o tag por GET com Javascript
+function getParameterByName(name) {
+    var url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
 }

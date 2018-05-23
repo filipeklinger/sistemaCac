@@ -1,0 +1,53 @@
+<body>
+<h3><a href="index.php?pag=Infraestrutura"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Editando Predio <span id="nomeHeader"></span></h3>
+
+<form class="form-horizontal" action="control/main.php?req=updatePredio" method="POST">
+    <div id="carregador"></div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="nome">Nome</label>
+        <div class="col-md-4">
+            <input id="nome" name="nome" type="text" placeholder="Ginásio"  class="form-control input-md" required="">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="localizacao">Localização</label>
+        <div class="col-md-4">
+            <input id="localizacao" name="localizacao" type="text" placeholder="Rua x, numero 1"  class="form-control input-md" required="">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="ativo">Ativo</label>
+        <div class="col-md-4">
+            <input id="ativo" name="ativo" type="text"  class="form-control input-md" required="">
+        </div>
+    </div>
+    <div class="col-md-4 col-md-offset-4"><!-- Submit -->
+        <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Atualizar" />
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    var controlador = 'control/main.php?req=selectPredioById&id='+getParameterByName('id');
+
+    $('#tbody').on("load", loader());
+
+    function loader() {
+        getMsgs();
+        //language=Jquery
+        ajaxLoadGET(controlador,jsonParseEditPredio,'#carregador');
+    }
+
+    function jsonParseEditPredio(resposta,corpo) {
+            var jsonObj = JSON.parse(resposta);
+            $('#nome').val(jsonObj[0].nome);
+            $('#nomeHeader').append(jsonObj[0].nome);
+            $('#localizacao').val(jsonObj[0].localizacao);
+            $('#ativo').val(jsonObj[0].is_ativo);
+    }
+
+
+</script>
+</body>

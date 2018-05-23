@@ -68,6 +68,14 @@ class infraestrutura{
     }
 
     /**
+     * @param $identificador Integer
+     * @return string
+     * @throws Exception
+     */
+    public function getPredioById($identificador){
+        return $this->db->select("nome,localizacao,is_ativo","predio","id_predio = ?",array($identificador));
+    }
+    /**
      * @param $identificador
      * @return string
      * @throws Exception

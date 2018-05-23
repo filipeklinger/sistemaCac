@@ -45,6 +45,14 @@ class main{
                 $infra = new infraestrutura();
                 echo $infra->getPredios();
                 break;
+            case "selectPredioById":
+                $infra = new infraestrutura();
+                try {
+                    echo $infra->getPredioById($_GET['id']);
+                } catch (Exception $e) {
+                    echo $e;
+                }
+                break;
             case "selectSala":
                 $infra = new infraestrutura();
                 echo $infra->getSalas();
