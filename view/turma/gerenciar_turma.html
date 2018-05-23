@@ -9,12 +9,13 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th class='col-md-2'>Oficina</th>
+        <th class='col-md-1'>Oficina</th>
         <th class='col-md-2'>Dia da semana</th>
         <th class='col-md-2'>Horario</th>
         <th class='col-md-2'>Sala</th>
-        <th class='col-md-2'>Professor</th>
+        <th class='col-md-1'>Professor</th>
         <th class='col-md-2'>Ativa</th>
+        <th class='col-md-2'>Edit</th>
     </tr>
     </thead>
     <tbody id="turmas"></tbody>
@@ -39,6 +40,7 @@
                 '<td class=\'col-md-2\'>' + objJson[i].sala + '</td>' +
                 '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
                 '<td class=\'col-md-2\'>' + isAtivo(objJson[i].ativo) + '</td>' +
+                '<td class=\'col-md-2\'>--</td>' +
                 '</tr>');
         }
     }
