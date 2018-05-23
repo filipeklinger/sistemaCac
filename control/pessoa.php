@@ -7,9 +7,6 @@
 include_once '../model/DatabaseOpenHelper.php';
 include_once 'constantes.php';
 include_once 'mensagem.php';
-if ( session_status() !== PHP_SESSION_ACTIVE ) {
-    session_start();
-}
 
 class pessoa{
     private $db;

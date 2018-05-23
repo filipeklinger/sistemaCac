@@ -13,9 +13,6 @@ include_once 'pessoa.php';
 include_once 'turma.php';
 include_once 'mensagem.php';
 
-if ( session_status() !== PHP_SESSION_ACTIVE ) {
-    session_start();
-}
 class main{
     private $act;
 
