@@ -37,6 +37,10 @@ class main{
                 $infra = new infraestrutura();
                 $infra->setPredio();
                 break;
+            case "updatePredio":
+                $infra = new infraestrutura();
+                $infra->updatePredio($_GET['id']);
+                break;
             case "insertSala":
                 $infra = new infraestrutura();
                 $infra->setSala();

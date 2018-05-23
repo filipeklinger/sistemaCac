@@ -32,6 +32,30 @@ class infraestrutura{
         $this->redireciona();
     }
 
+    public function updatePredio($identificador){
+        $nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
+        $localizacao = isset($_POST['localizacao']) ? $_POST['localizacao'] : INVALIDO;
+        $ativo = isset($_POST['ativo']) ? $_POST['ativo'] : NAO;
+        $params = array($nome,$localizacao,$ativo);
+
+        if($nome != INVALIDO){
+            try {
+                $columns = array("nome","localizacao","is_ativo");
+
+                if($this->db->update($columns,"predio",$params,"id_predio=?",array($identificador))){
+                    $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\" Predio: ".$nome." atualizado com sucesso!!\"}";
+                }else{
+                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: Problema ao atualizar,gerado Log de erro\"}";
+                }
+
+            } catch (Exception $e) {
+                $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+            }
+        }
+
+        $this->redireciona();
+    }
+
     public function setSala(){
         $predioId = isset($_POST['predio_id']) ? $_POST['predio_id'] : INVALIDO;;
         $nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
@@ -48,6 +72,7 @@ class infraestrutura{
         }
         $this->redireciona();
     }
+
 
     /**
      * @return string

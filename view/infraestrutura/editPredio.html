@@ -1,7 +1,7 @@
 <body>
 <h3><a href="index.php?pag=Infraestrutura"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Editando Predio <span id="nomeHeader"></span></h3>
 
-<form class="form-horizontal" action="control/main.php?req=updatePredio" method="POST">
+<form id="editPredio" class="form-horizontal" action="" method="POST">
     <div id="carregador"></div>
     <div class="form-group">
         <label class="col-md-4 control-label" for="nome">Nome</label>
@@ -18,9 +18,14 @@
     </div>
 
     <div class="form-group">
-        <label class="col-md-4 control-label" for="ativo">Ativo</label>
+        <label class="col-md-4 control-label" >Ativo</label>
         <div class="col-md-4">
-            <input id="ativo" name="ativo" type="text"  class="form-control input-md" required="">
+            <label class="radio-inline">
+                <input type="radio" name="ativo" value="1">SIM
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="ativo" value="0">NÃO
+            </label>
         </div>
     </div>
     <div class="col-md-4 col-md-offset-4"><!-- Submit -->
@@ -36,8 +41,8 @@
 
     function loader() {
         getMsgs();
-        //language=Jquery
         ajaxLoadGET(controlador,jsonParseEditPredio,'#carregador');
+        $('#editPredio').attr('action', 'control/main.php?req=updatePredio&id='+getParameterByName('id'));
     }
 
     function jsonParseEditPredio(resposta,corpo) {
@@ -45,7 +50,6 @@
             $('#nome').val(jsonObj[0].nome);
             $('#nomeHeader').append(jsonObj[0].nome);
             $('#localizacao').val(jsonObj[0].localizacao);
-            $('#ativo').val(jsonObj[0].is_ativo);
     }
 
 
