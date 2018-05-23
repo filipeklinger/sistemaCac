@@ -40,7 +40,7 @@
                 '<td class=\'col-md-2\'>' + objJson[i].sala + '</td>' +
                 '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
                 '<td class=\'col-md-2\'>' + isAtivo(objJson[i].ativo) + '</td>' +
-                '<td class=\'col-md-2\'>--</td>' +
+                '<td class=\'col-md-2\'><a href="?pag=Edit.Turma&id='+objJson[i].id_turma+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
                 '</tr>');
         }
     }
