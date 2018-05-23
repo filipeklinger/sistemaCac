@@ -45,6 +45,10 @@ class main{
                 $infra = new infraestrutura();
                 $infra->setSala();
                 break;
+            case "updateSala":
+                $infra = new infraestrutura();
+                $infra->updateSala($_GET['id']);
+                break;
             case "selectPredio":
                 $infra = new infraestrutura();
                 echo $infra->getPredios();
@@ -106,9 +110,21 @@ class main{
                 $turma = new turma();
                 echo $turma->getHorariosBySalaId($_GET['id']);
                 break;
+            case "selectSalaByPredioId":
+                $infra = new infraestrutura();
+                try {
+                    echo $infra->getSalaByPredioId($_GET['id']);
+                } catch (Exception $e) {
+                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+                }
+                break;
             case "selectSalaById":
                 $infra = new infraestrutura();
-                echo $infra->getSalaById($_GET['id']);
+                try {
+                    echo $infra->getSalaById($_GET['id']);
+                } catch (Exception $e) {
+                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+                }
                 break;
             case "selecUsuarioLogado":
                 if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){

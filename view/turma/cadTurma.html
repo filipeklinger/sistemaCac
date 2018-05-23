@@ -173,7 +173,7 @@
 
     function SalaFromPredioId() {
         var identificador = parseInt(selectPredio.val());
-        ajaxLoadGET('control/main.php?req=selectSalaById&id='+identificador,jsonParseSalas,selectSala);
+        ajaxLoadGET('control/main.php?req=selectSalaByPredioId&id='+identificador,jsonParseSalas,selectSala);
     }
 
     function jsonParseSalas(resposta,corpo) {

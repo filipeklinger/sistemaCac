@@ -1,3 +1,50 @@
 <body>
 <h3><a href="index.php?pag=Infraestrutura"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Editando Sala</h3>
+<!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
+<p id="avisos"></p>
+<div id="carregador"></div>
+<form id="editSala" class="form-horizontal" action="" method="POST">
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="nome">Nome</label>
+        <div class="col-md-4">
+            <input id="nome" name="nome" type="text" placeholder="Sala de desenho"  class="form-control input-md" required="">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" >Ativo</label>
+        <div class="col-md-4">
+            <label class="radio-inline">
+                <input type="radio" name="ativo" value="1">SIM
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="ativo" value="0">NÃO
+            </label>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-md-offset-4"><!-- Submit -->
+        <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Atualizar" />
+    </div>
+</form>
+</div>
+
+<script type="text/javascript">
+
+    var controlador = 'control/main.php?req=selectSalaById&id='+getParameterByName('id');
+
+    $('#tbody').on("load", loader());
+
+    function loader() {
+        getMsgs();
+        ajaxLoadGET(controlador,jsonParseEditSala,'#carregador');
+        $('#editSala').attr('action', 'control/main.php?req=updateSala&id='+getParameterByName('id'));
+    }
+
+    function jsonParseEditSala(resposta,corpo) {
+        var jsonObj = JSON.parse(resposta);
+        $('#nome').val(jsonObj[0].nome);
+    }
+</script>
 </body>
