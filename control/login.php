@@ -6,6 +6,7 @@
  */
 include_once '../model/DatabaseOpenHelper.php';
 include_once 'constantes.php';
+include_once 'mensagem.php';
 
 class login{
     private $db;
@@ -61,7 +62,7 @@ class login{
         if($is_logado){
             header("Location: ../index.php?pag=DashBoard");
         }else{
-            $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Login ou senha Incorretos!\"}";
+            new mensagem(ERRO,"Login ou senha Incorretos");
             header("Location: " . $_SERVER['HTTP_REFERER'] . "");//MANDA DE VOLTA PARA O login
         }
     }

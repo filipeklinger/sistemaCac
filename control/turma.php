@@ -48,9 +48,13 @@ class turma{
             $columns = "ano,sala_id,segunda,terca,quarta,quinta,sexta,inicio,fim,turma_id";
             $params = array($ano,$this->sala,$seg,$ter,$qua,$qui,$sex,$this->hinic,$this->hfim,$this->turmaId);
             try {
-                $this->db->insert($columns, "horario_turma_sala", $params);
+                if($this->db->insert($columns, "horario_turma_sala", $params)){
+                    new mensagem(SUCESSO,"Cadastrado com sucesso");
+                }else{
+                    new mensagem(INSERT_ERRO,"Erro ao cadastrar");
+                }
             } catch (Exception $e) {
-                //TODO msg de erro $e
+                new mensagem(ERRO,"Erro: ".$e);
             }
         }
 
@@ -75,9 +79,11 @@ class turma{
         $params = array($criacao_turma,$this->oficina,$this->vagas,$nome_turma,$this->prof,$is_ativo);
         print_r($params);
         try {
-            $this->db->insert($columns, "turma", $params);
+            if($this->db->insert($columns, "turma", $params)){
+                new mensagem(SUCESSO,"Turma cadastrada com sucesso");
+            }
         } catch (Exception $e) {
-            //todo msg de erro $e
+            new mensagem(ERRO,"Erro: ".$e);
         }
     }
 
@@ -103,7 +109,8 @@ class turma{
             $whereArgs = array(SIM);
             return $this->db->select($projection,$table.$joinClause , $whereClause,$whereArgs);
         } catch (Exception $e) {
-            return $e;
+            new mensagem(ERRO,"Erro: ".$e);
+            return "";
         }
     }
     public function getTurmas(){
@@ -118,7 +125,8 @@ class turma{
             $whereClause = "professor=id_pessoa and id_oficina=oficina_id and (sala_id = id_sala or sala_id = null)";
             return $this->db->select($projection,$table.$joinClause , $whereClause);
         } catch (Exception $e) {
-            return $e;
+            new mensagem(ERRO,"Erro: ".$e);
+            return "";
         }
     }
 
@@ -127,7 +135,8 @@ class turma{
         try {
             return $this->db->select($projection, "horario_turma_sala,turma,oficina", "sala_id = ? and turma_id = id_turma and oficina_id=id_oficina", array($identificador),"inicio");
         } catch (Exception $e) {
-            return $e;
+            new mensagem(ERRO,"Erro: ".$e);
+            return "";
         }
     }
 

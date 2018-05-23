@@ -11,6 +11,7 @@ include_once 'infraestrutura.php';
 include_once 'oficina.php';
 include_once 'pessoa.php';
 include_once 'turma.php';
+include_once 'mensagem.php';
 
 if ( session_status() !== PHP_SESSION_ACTIVE ) {
     session_start();
@@ -89,9 +90,17 @@ class main{
                 $ofic = new oficina();
                 $ofic->setOficina();
                 break;
+            case "updateOficina":
+                $ofic = new oficina();
+                $ofic->updateOficina($_GET['id']);
+                break;
             case "selectOficina":
                 $ofic = new oficina();
                 echo $ofic->getOficina();
+                break;
+            case "selectOficinaById":
+                $ofic = new oficina();
+                echo $ofic->getOficinaById($_GET['id']);
                 break;
             case "insertTurma":
                 $turma = new turma();

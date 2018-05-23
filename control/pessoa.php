@@ -1,12 +1,12 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: filipe
+ * Created by Filipe
  * Date: 28/04/18
  * Time: 15:39
  */
 include_once '../model/DatabaseOpenHelper.php';
 include_once 'constantes.php';
+include_once 'mensagem.php';
 if ( session_status() !== PHP_SESSION_ACTIVE ) {
     session_start();
 }
@@ -21,7 +21,7 @@ class pessoa{
     //ruralino
     private $matricula,$curso;
     //Caso menor
-    private $responsavelID,$parentesco;
+    private $responsavelID,$parentesco = INVALIDO;//inicializamos como invalido
     //login
     private $user,$senha;
 
@@ -48,7 +48,11 @@ class pessoa{
         $ruralino = isset($_POST['ruralino']) ? SIM : NAO;
 
         $this->responsavelID = $this->insertDadosBasicos($nome,$sobrenome,$this->nv,NAO,$ruralino,$nascimento);//recuperamos o ID do adulto cadastrado
-
+        if($this->responsavelID != null and $this->responsavelID != INVALIDO){
+            new mensagem(SUCESSO,$nome." cadastrado com sucesso");
+        }else{
+            new mensagem(INSERT_ERRO,"Erro ao cadastrar");
+        }
         //---------------Documentos-----------------------------------------------------------------
         $this->respTel = isset($_POST['resp_tel']) ? $_POST['resp_tel'] : INVALIDO;
         $this->respTelType = isset($_POST['resp_tel_type']) ? $_POST['resp_tel_type'] : INVALIDO;
@@ -99,7 +103,6 @@ class pessoa{
                 $this->insertRelacaoDependente($menorID);
             }
         }
-        $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\"".$nome." cadastrado com sucesso!!\"}";
         $this->redireciona();
 
     }

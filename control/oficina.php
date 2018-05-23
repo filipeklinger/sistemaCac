@@ -8,6 +8,7 @@
 
 include_once '../model/DatabaseOpenHelper.php';
 include_once 'constantes.php';
+include_once 'mensagem.php';
 
 class oficina{
     private $db;
@@ -24,20 +25,54 @@ class oficina{
     private function inserOficina(){
         $params = array($this->nome,$this->preRequisito);
         try {
-            $this->db->insert("nome,pre_requisito", "oficina", $params);
-            $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\"".$this->nome." cadastrado com sucesso!!\"}";
+            if($this->db->insert("nome,pre_requisito", "oficina", $params)){
+                new mensagem(SUCESSO,$this->nome." cadastrado com sucesso.");
+            }else{
+                new mensagem(INSERT_ERRO,"Erro ao inserir: ".$this->nome);
+            }
+
         } catch (Exception $e) {
-            $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+            new mensagem(ERRO,"Erro: ".$e);
+        }
+        $this->redireciona();
+    }
+
+    public function updateOficina($identificador){
+        $this->nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;;
+        $this->preRequisito = isset($_POST['pre_requisito']) ? $_POST['pre_requisito'] : INVALIDO;
+
+        $columns = array("nome","pre_requisito");
+        $params = array($this->nome,$this->preRequisito);
+        try {
+            if($this->db->update($columns,"oficina",$params,"id_oficina = ?",array($identificador))){
+                new mensagem(SUCESSO,$this->nome." atualizado com sucesso.");
+            }else{
+                new mensagem(INSERT_ERRO,"Erro ao atualizar: ".$this->nome);
+            }
+
+        } catch (Exception $e) {
+            new mensagem(ERRO,"Erro: ".$e);
         }
         $this->redireciona();
     }
 
     public function getOficina(){
+        $json = "";
         try {
-            return $this->db->select("*", "oficina");
+            $json = $this->db->select("*", "oficina");
         } catch (Exception $e) {
-            $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+            new mensagem(ERRO,"Erro: ".$e);
         }
+        return $json;
+    }
+    public function getOficinaById($identificador){
+        $json = "";
+        try {
+            $json = $this->db->select("*", "oficina","id_oficina = ?",array($identificador));
+        } catch (Exception $e) {
+            new mensagem(ERRO,"Erro: ".$e);
+        }
+        return $json;
     }
 
     private function redireciona(){

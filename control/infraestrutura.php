@@ -7,6 +7,7 @@
 
 include_once '../model/DatabaseOpenHelper.php';
 include_once 'constantes.php';
+include_once 'mensagem.php';
 
 class infraestrutura{
     private $db;
@@ -23,13 +24,13 @@ class infraestrutura{
         if($nome != INVALIDO){
             try {
                 if($this->db->insert("nome,localizacao", "predio", $params)){
-                    $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\" Predio: ".$nome." cadastrado com sucesso!!\"}";
+                    new mensagem(SUCESSO,"Predio: ".$nome." cadastrado com sucesso!!");
                 }else{
-                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: Problema ao inserir, gerado Log de erro\"}";
+                    new mensagem(INSERT_ERRO,"Erro ao inserir");
                 }
 
             } catch (Exception $e) {
-                $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+                new mensagem(ERRO,"Erro: ".$e);
             }
         }
 
@@ -47,13 +48,13 @@ class infraestrutura{
                 $columns = array("nome","localizacao","is_ativo");
 
                 if($this->db->update($columns,"predio",$params,"id_predio=?",array($identificador))){
-                    $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\" Predio: ".$nome." atualizado com sucesso!!\"}";
+                    new mensagem(SUCESSO," Predio: ".$nome." atualizado com sucesso!!");
                 }else{
-                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: Problema ao atualizar,gerado Log de erro\"}";
+                    new mensagem(INSERT_ERRO,"Erro ao atualizar");
                 }
 
             } catch (Exception $e) {
-                $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+                new mensagem(ERRO,"Erro: ".$e);
             }
         }
 
@@ -69,13 +70,13 @@ class infraestrutura{
         if($nome != INVALIDO){
             try {
                 if($this->db->insert("predio_id,nome,is_ativo", "sala", $params)){
-                    $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\" Sala de ".$nome." cadastrado com sucesso!!\"}";
+                    new mensagem(SUCESSO," Sala de ".$nome." cadastrado com sucesso!!");
                 }else{
-                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: Problema ao inserir, gerado Log de erro\"}";
+                    new mensagem(INSERT_ERRO,"Erro ao inserir");
                 }
 
             } catch (Exception $e) {
-                $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+                new mensagem(ERRO,"Erro: ".$e);
             }
         }
         $this->redireciona();
@@ -90,13 +91,13 @@ class infraestrutura{
             try {
                 $columns = array("nome","is_ativo");
                 if($this->db->update($columns,"sala",$params,"id_sala = ?",array($identificador))){
-                    $_SESSION['MSG'] = "{\"tipo\":\"sucesso\",\"desc\":\" Sala de ".$nome." atualizado com sucesso!!\"}";
+                    new mensagem(SUCESSO," Sala de ".$nome." atualizado com sucesso!!");
                 }else{
-                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: Problema ao atualizar,gerado Log de erro\"}";
+                    new mensagem(INSERT_ERRO,"Erro ao atualizar");
                 }
 
             } catch (Exception $e) {
-                $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+                new mensagem(ERRO,"Erro: ".$e);
             }
         }
         $this->redireciona();
