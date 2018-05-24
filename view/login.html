@@ -6,10 +6,12 @@
             <div class="panel-body">
 
                 <!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
-                <p id="avisos"></p>
+
 
                 <form id="form" action="control/main.php?req=login" method="POST">
-                    <div id="alertsArea"></div>
+                    <div>
+                        <p id="avisos" class=""></p>
+                    </div>
                     <input id="user" type="text" name="login" class="form-control" placeholder="Usuário"
                            autocomplete="off">
                     <br>
@@ -82,7 +84,7 @@
                     objJson[i].vagas+'</span>'+
                     '<span>vagas</span></div>'+
                     '<div class="media-body">'+
-                    '<h4 class="media-heading">' + objJson[i].oficina + ' - '+ objJson[i].inicio +'</h4><span><< Dias da Semana Aqui >></span>'+
+                    '<h4 class="media-heading">' + objJson[i].oficina + ' - '+ objJson[i].inicio +'</h4><span>'+aux+'</span>'+
                     '<p>Professor: ' + objJson[i].professor + '</p>'+
                     '<p>Local: '+ objJson[i].predio + ',  ' + objJson[i].sala + '</p>'+
                     '</div>'+

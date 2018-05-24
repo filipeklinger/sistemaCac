@@ -97,15 +97,19 @@ function getNVacesso(nv){
 function getMsgs() {
     var aviso = $('#avisos');
     var msg = JSON.parse(mensagem);
+
     switch (msg.tipo){
         case "erro":
             aviso.append(msg.desc);
+            aviso.addClass("alert alert-danger");
             break;
         case "sucesso":
             aviso.append(msg.desc);
+            aviso.addClass("alert alert-success");
             break;
         default:
-            aviso.append("Err");
+            //aviso.append("Err");
+            aviso.removeAttr("class");
     }
 }
 
