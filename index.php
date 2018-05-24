@@ -35,7 +35,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao r
             echo  '\''.$_SESSION['MSG'].'\'';
             $_SESSION['MSG'] = null;//apos mostrar msg devemos remover
         }else{
-            echo '\'{"tipo":"erro","desc":" "}\'';
+            echo '\'{"tipo":" ","desc":" "}\'';
         } ?>;
     </script>
 </head>
