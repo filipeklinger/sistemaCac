@@ -12,7 +12,9 @@ class pessoa{
     private $db;
 
     //Dados basicos
-    private $nv,$respTel,$respTelType,$docNumber,$docType;
+    private $nv,$docNumber,$docType;
+    //contato
+    private $respTel,$respTelType;
     //Endereco
     private $rua,$numero,$complemento,$bairro,$cidade,$estado;
     //ruralino
@@ -50,9 +52,12 @@ class pessoa{
         }else{
             new mensagem(INSERT_ERRO,"Erro ao cadastrar");
         }
-        //---------------Documentos-----------------------------------------------------------------
+        //---------------Contato------------------------------------------------------------------
         $this->respTel = isset($_POST['resp_tel']) ? $_POST['resp_tel'] : INVALIDO;
         $this->respTelType = isset($_POST['resp_tel_type']) ? $_POST['resp_tel_type'] : INVALIDO;
+        
+        $this->insertContato();
+        //---------------Documentos-----------------------------------------------------------------
         $this->docType = isset($_POST['doc_type']) ? $_POST['doc_type'] : INVALIDO;
         $this->docNumber = isset($_POST['doc_number']) ? $_POST['doc_number'] : INVALIDO;
 
@@ -126,6 +131,13 @@ class pessoa{
     private function insertDocumento(){
         $params = array($this->responsavelID,$this->docNumber,$this->docType);
         $this->db->insert("pessoa_id,numero_documento,tipo_documento","documento",$params);
+    }
+	/**
+     * @throws Exception
+     */
+    private function insertContato(){
+    	$params = array($this->responsavelID,$this->respTel,$this->respTelType);
+    	$this->db->insert("pessoa_id,numero,tipo_telefone","telefone",$params);
     }
 
     /**

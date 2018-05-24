@@ -68,7 +68,7 @@ class main{
                 try {
                     $pess->setPessoa();
                 } catch (Exception $e) {
-                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+                    new mensagem(ERRO,"Erro: ".$e);
                 }
                 break;
             case "selectAdministrador":
