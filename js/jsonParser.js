@@ -45,8 +45,8 @@ function jsonParseSalas(json,corpo) {
 }
 
 function isAtivo(num) {
-    if(num === '1') return "Sim";
-    else return "Não";
+    if(num === '1') return "Ativo";
+    else return "Inativo";
 }
 
 
@@ -54,11 +54,12 @@ function jsonParseNomePredios(resposta,corpo) {
     var objJson = JSON.parse(resposta);
     for(var i in objJson){
         corpo.append(
-            '<option value="' + objJson[i].id_predio+'">' + objJson[i].nome + '</option>' );
+            '<li value="' + objJson[i].id_predio+'">' + objJson[i].nome + '</li>'
+        );
     }
 }
 
-/*TODO: SUBSTITUR A FUNÇÃO GETdIAsEMANA*/
+/*TODO: SUBSTITUR A FUNÇÃO getDiaSemana*/
 
 function getDiaSemana(objdia) {
     var diasSemana = "";

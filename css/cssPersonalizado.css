@@ -7,9 +7,13 @@
 body {
     height: 100vh;
 }
+.container-fluid{
+    padding: 0;
+}
 .printOnly{
     display: none;
 }
+
 /*Página 404*/
 .page404 .container {
     margin-top: 10%;
@@ -61,7 +65,7 @@ body {
 /*Login: página principal*/
 
 .painel {
-    background-image: url("../img/bg-main.jpg");
+    background-image: url("../img/bg-main-verDualtone.png");
     background-color: #72daff;
     background-size: cover;
     background-position: bottom;
@@ -314,10 +318,9 @@ body {
 }
 
 /*Sidebar
-TODO: corrigir erro de barra lateral em telas pequenas: Barra Some
-TODO: Aba lateral sempre na posição recolhida
-TODO: Escolher icone melhor para menu Infra
+TODO: REFAZER A ABA LATERAL
 */
+/*
 .dashboard .sidebar {
     min-width: 250px;
     max-width: 250px;
@@ -520,6 +523,59 @@ TODO: Escolher icone melhor para menu Infra
     .dashboard .sidebarCollapse span {
         display: none;
     }
+
+}
+*/
+/*TODO: estilo de footer do dashboard */
+
+/*Aluno: Gerenciar*/
+
+.aluno{
+    color: black;
+    background-color: darkslategray;
+    background-image: url("../img/pattern.svg");
+    background-repeat: repeat;
+    background-size: 700px;
+    min-height: 100%;
+    color: white;
 }
 
-/*TODO: estilo de footer do dashboard */
+.aluno .header{
+    background-color: #2aabd2; /*TODO: CHANGE COLOR */
+}
+
+/*Infraestrutura: gerenciar*/
+
+.infra{
+    color: black;
+    background-color: darkslategray;
+    background-image: url("../img/pattern.svg");
+    background-repeat: repeat;
+    background-size: 700px;
+    min-height: 100%;
+    color: white;
+}
+
+.infra .header{
+    background-color: #2aabd2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

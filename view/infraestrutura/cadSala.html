@@ -1,35 +1,52 @@
-<body>
-<div class="row" style="padding: 16px;">
-    <!-- Form Name -->
-    <legend><a href="index.php?pag=Infraestrutura"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Cadastro de Novas Salas</legend>
+<body class="container-fluid">
 
-    <!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
-    <p id="avisos"></p>
+<div class=" infra">
+    <div class="header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid" style="overflow-x: hidden">
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.php?pag=Infraestrutura"><i class="glyphicon glyphicon-chevron-left"></i> Voltar a Infraestrutura</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
 
-    <form class="form-horizontal" action="control/main.php?req=insertSala" method="POST">
+    <div class="container" style="overflow-x: hidden;">
+        <h2 class="" style="">Cadastro de Novas Salas</h2>
+        <br><br>
+        <form class="form-horizontal col-md-12" action="control/main.php?req=insertSala" method="POST">
+            <!--div id="tbody" class="form-group">
+                <div class="" style="color: black">
+                    <div class="input-group">
+                        <select id="tipoPredio" name="predio_id" class="selectpicker" title="Escolha um predio" required="required"></select>
+                    </div>
+                </div>
+            </div-->
 
-        <div id="tbody" class="form-group">
-            <label class="col-md-4 control-label"></label>
-            <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label" for="nome">NOME</label>
+                <!--div class="">
+                    <input id="nome" name="nome" type="text" placeholder="Ex. Sala de desenho"  class="form-control input-md" required="">
+                </div-->
                 <div class="input-group">
-                    <select id="tipoPredio" name="predio_id" class="selectpicker" title="Escolha um predio" required="required">
-
-                    </select>
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nome do Prédio <span class="caret"></span></button>
+                        <ul id="tipoPredio" class="dropdown-menu">
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <!--TODO: TRANSFORMAR EM SELEÇÃO COM BASE NO PRÉDIO-->
+                    <input id="nome" name="nome" type="text" placeholder="Ex. Sala de desenho"  class="form-control input-md" required="">
                 </div><!-- /input-group -->
             </div>
-        </div><!-- /form-group -->
 
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="nome">Nome</label>
-            <div class="col-md-4">
-                <input id="nome" name="nome" type="text" placeholder="Sala de desenho"  class="form-control input-md" required="">
+            <div class="form-group">
+                <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Cadastrar" />
             </div>
-        </div>
 
-        <div class="col-md-4 col-md-offset-4"><!-- Submit -->
-            <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Cadastrar" />
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 <script type="text/javascript">
