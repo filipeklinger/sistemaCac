@@ -2,6 +2,7 @@
 /*Imports*/
 @import "bootstrapExpansion.css";
 @import "printable.css";
+@import "calendar.css";
 
 /*Globals*/
 body {
@@ -544,7 +545,7 @@ TODO: REFAZER A ABA LATERAL
     background-color: #2aabd2; /*TODO: CHANGE COLOR */
 }
 
-/*Infraestrutura: gerenciar*/
+/*Infraestrutura*/
 
 .infra{
     color: black;
@@ -556,6 +557,7 @@ TODO: REFAZER A ABA LATERAL
     color: white;
 }
 
+/*Oficinas */
 .oficinas {
     color: black;
     background-color: #4f3c4b;
@@ -566,14 +568,21 @@ TODO: REFAZER A ABA LATERAL
     color: white;
 }
 
+/*Turmas*/
 .turmas {
     color: black;
-    background-color: #4f4f31;
+    background-color: #2f354f;
     background-image: url("../img/pattern.svg");
     background-repeat: repeat;
     background-size: 700px;
     min-height: 100%;
     color: white;
+}
+
+/*Turmas: quadro de horário*/
+
+.scheduler{
+
 }
 
 

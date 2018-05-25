@@ -1,4 +1,6 @@
 //Recuperando as informações
+//import 'calendar.js';
+
 function ajaxLoadGET(destino,funcaoParse,corpo){
     var body = $(corpo);
     //colocando uma mensagem de load para o usuario
