@@ -31,15 +31,17 @@ function jsonParsePredios(json,corpo) {
     }
 }
 
+/*TODO: reduzir tamanho de colunas da função jsonParseSalas e jsonParsePredios*/
+
 function jsonParseSalas(json,corpo) {
     var objJson = JSON.parse(json);
     for(var i in objJson){
         corpo.append(
             '<tr>' +
-            '<td class=\'col-md-5\'> '+ objJson[i].sala + '</td>' +
-            '<td class=\'col-md-5\'> '+ objJson[i].predio + '</td>' +
-            '<td class=\'col-md-1\'> '+ isAtivo(objJson[i].is_ativo) + '</td>' +
-            '<td class=\'col-md-1\'> <a href="?pag=Edit.Sala&id='+objJson[i].id_sala+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
+            '<td class=\'col-md-4\'> '+ objJson[i].sala + '</td>' +
+            '<td class=\'col-md-4\'> '+ objJson[i].predio + '</td>' +
+            '<td class=\'col-md-2\'> '+ isAtivo(objJson[i].is_ativo) + '</td>' +
+            '<td class=\'col-md-2\'> <a href="?pag=Edit.Sala&id='+objJson[i].id_sala+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
             '</tr>');
     }
 }
@@ -54,12 +56,11 @@ function jsonParseNomePredios(resposta,corpo) {
     var objJson = JSON.parse(resposta);
     for(var i in objJson){
         corpo.append(
-            '<li value="' + objJson[i].id_predio+'">' + objJson[i].nome + '</li>'
-        );
+            '<option value="' + objJson[i].id_predio+'">' + objJson[i].nome + '</option>' );
     }
 }
 
-/*TODO: SUBSTITUR A FUNÇÃO getDiaSemana*/
+/*TODO: SUBSTITUR A FUNÇÃO GETdIAsEMANA*/
 
 function getDiaSemana(objdia) {
     var diasSemana = "";

@@ -1,37 +1,40 @@
-<body>
-
-<div class="row" style="padding: 16px;">
-    <legend><a href="index.php?pag=Oficinas"><span class="glyphicon glyphicon-chevron-left"></span> Gerenciar </a> | Cadastro de Novas Oficinas</legend>
-
-    <!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
-    <p id="avisos"></p>
-
-    <p>
-        Obs.: Aqui é somente para cadastro de Oficinas<br/>
-        cadastro de uma turma é na guia cadastro de Novas turmas.
-    </p>
-
-
-
-    <form class="form-horizontal" action="control/main.php?req=insertOficina" method="POST">
-
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="nome">Nome</label>
-            <div class="col-md-4">
-                <input id="nome" name="nome" type="text" placeholder="Oficina de Desenho"  class="form-control input-md" required="">
+<body class="container-fluid">
+<div class="oficinas">
+    <div class="header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid" style="overflow-x: hidden">
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.php?pag=Oficinas"><i class="glyphicon glyphicon-chevron-left"></i> Voltar a Gerência de Oficinas</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </nav>
+    </div>
+    <div class="container" style="overflow-x: hidden">
+        <form class="form-horizontal" action="control/main.php?req=insertOficina" method="POST">
 
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="pre_requisito">Pré-requisito</label>
-            <div class="col-md-4">
-                <input id="pre_requisito" name="pre_requisito" type="text" placeholder="necessário ter conhecimeno prévio em..."  class="form-control input-md" required="">
+            <div class="form-group">
+                <h2 class="" style="">Cadastro de Oficinas</h2>
+                <br><br>
+                <label class="control-label" for="nome">NOME</label>
+                <div class="">
+                    <input id="nome" name="nome" type="text" autocomplete="off" placeholder="Ex. Oficina de Desenho"  class="form-control input-md" required="">
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-4 col-md-offset-4"><!-- Submit -->
-            <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Cadastrar" />
-        </div>
-    </form>
+            <div class="form-group">
+                <label class="control-label" for="pre_requisito">PRÉ-REQUISITOS</label>
+                <div class="">
+                    <input id="pre_requisito" name="pre_requisito" type="text" autocomplete="off" placeholder="Ex. Aluno deve ter feito DANÇA 1"  class="form-control input-md" required="">
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="form-group"><!-- Submit -->
+                <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Cadastrar" />
+            </div>
+        </form>
+    </div>
 </div>
 </body>

@@ -1,21 +1,46 @@
-<body>
-<h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Gerenciando Oficinas</h3>
+<body class="container-fluid">
+<!--div class="col-md-0-5 sidebar">
+    sidebar place -holder
+</div-->
+<div class=" oficinas">
 
-<!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
-<p id="avisos"></p>
+    <div class="header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página
+                            Inicial</a></li>
+                        <li class="active"><a data-toggle="tab" href="#oficina">Gerenciar Oficinas</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div style="overflow-x: hidden;">
 
-<a href="?pag=Cad.Oficina" type="button" class="btn btn-primary">Cadastrar Oficina</a>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th class='col-md-5'>Nome</th>
-        <th class='col-md-5'>Pre Requisito</th>
-        <th class='col-md-1'>Ação</th>
-    </tr>
-    </thead>
-    <tbody id="toficinas"></tbody>
-</table>
+        <p id="avisos"></p>
 
+        <div id="contTab" class="tab-content" style="padding: 20px;">
+
+
+                    <a href="?pag=Cad.Oficina" type="button" class="btn btn-primary" style="margin: 0px 0 50px 0"><i
+                        class="glyphicon glyphicon-plus"></i> Nova Oficina</a>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class=''>NOME</th>
+                            <th class=''>PRÉ REQUISITOS</th>
+                            <th class=''></th>
+                        </tr>
+                        </thead>
+                        <tbody id="toficinas"></tbody>
+                    </table>
+
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
 
     var controlador = "control/main.php?req=selectOficina";
@@ -24,18 +49,18 @@
 
     function loader() {
         getMsgs();
-        ajaxLoadGET(controlador,jsonParseOficinas,'#toficinas')
+        ajaxLoadGET(controlador, jsonParseOficinas, '#toficinas')
     }
 
-    function jsonParseOficinas(json,corpo) {
+    function jsonParseOficinas(json, corpo) {
         var objJson = JSON.parse(json);
-        for(var i in objJson){
+        for (var i in objJson) {
             corpo.append(
                 '<tr>' +
-                '<td class=\'col-md-5\'> '+ objJson[i].nome + '</td>' +
-                '<td class=\'col-md-5\'> '+ objJson[i].pre_requisito + '</td>' +
+                '<td class=\'col-md-5\'> ' + objJson[i].nome + '</td>' +
+                '<td class=\'col-md-5\'> ' + objJson[i].pre_requisito + '</td>' +
                 //'<td class=\'col-md-1\'> '+ objJson[i].id_oficina + '</td>' +
-                '<td class=\'col-md-1\'> <a href="?pag=Edit.Oficina&id='+objJson[i].id_oficina+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
+                '<td class=\'col-md-1\'> <a href="?pag=Edit.Oficina&id=' + objJson[i].id_oficina + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
                 '</tr>');
         }
     }

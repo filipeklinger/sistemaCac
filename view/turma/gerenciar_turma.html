@@ -1,25 +1,45 @@
-<body>
-<h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Gerenciando Turmas</h3>
+<body class="container-fluid">
+<!--div class="col-md-0-5 sidebar">
+    sidebar place -holder
+</div-->
+<div class=" turmas">
 
-<!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
-<p id="avisos"></p>
+    <div class="header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página Inicial</a></li>
+                        <li class="active"><a data-toggle="tab" href="#predios">Gerenciar Turmas</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <p id="avisos"></p>
 
-<a href="?pag=Cad.Turma" type="button" class="btn btn-primary">Cadastrar Turma</a>
-<h3 class="text-center">Todas as turmas cadastradas</h3>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th class='col-md-1'>Oficina</th>
-        <th class='col-md-2'>Dia da semana</th>
-        <th class='col-md-2'>Horario</th>
-        <th class='col-md-2'>Sala</th>
-        <th class='col-md-1'>Professor</th>
-        <th class='col-md-2'>Ativa</th>
-        <th class='col-md-2'>Edit</th>
-    </tr>
-    </thead>
-    <tbody id="turmas"></tbody>
-</table>
+    <div style="overflow-x: hidden;">
+        <div id="" class="" style="padding: 20px;">
+
+                <a href="?pag=Cad.Turmas" type="button" class="btn btn-primary" style="margin: 0px 0 50px 0"><i class="glyphicon glyphicon-plus"></i> Nova Turma</a>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class=''>OFICINA</th>
+                    <th class=''>DIA DA SEMANA</th>
+                    <th class=''>HORÁRIO</th>
+                    <th class=''>SALA</th>
+                    <th class=''>PROFESSOR</th>
+                    <th class=''>ATIVA / INATIVA</th>
+                    <th class=''></th>
+                </tr>
+                </thead>
+                <tbody id="turmas"></tbody>
+            </table>
+        </div>
+    </div>
+
 <script type="text/javascript">
 
     $(document).on("load", loader());

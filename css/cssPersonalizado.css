@@ -556,10 +556,25 @@ TODO: REFAZER A ABA LATERAL
     color: white;
 }
 
-.infra .header{
-    background-color: #2aabd2;
+.oficinas {
+    color: black;
+    background-color: #4f3c4b;
+    background-image: url("../img/pattern.svg");
+    background-repeat: repeat;
+    background-size: 700px;
+    min-height: 100%;
+    color: white;
 }
 
+.turmas {
+    color: black;
+    background-color: #4f4f31;
+    background-image: url("../img/pattern.svg");
+    background-repeat: repeat;
+    background-size: 700px;
+    min-height: 100%;
+    color: white;
+}
 
 
 
