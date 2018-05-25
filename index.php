@@ -119,9 +119,6 @@ if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
         case 'Cad.Candidato':
             include "view/usuario/cadCandidato.html";
             break;
-	    case 'Testes':
-		    include "view/Testes.html";
-		    break;
         default:
             header("Location: ?pag=Login");
             break;
