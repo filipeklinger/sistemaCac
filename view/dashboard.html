@@ -1,22 +1,24 @@
 <body>
 <div class="dashboard">
     <!-- Sidebar Holder -->
-    <nav class="sidebar">
-        <!--TODO: refazer sidebar-->
+    <div class="sidebar col-md-1">
         <br>
+
         <div class="sidebar-header">
         </div>
-        <ul class="list-unstyled components">
-            <li class="active">
+
+        <ul class="list-unstyled">
+            <!--li class="text-center">
                 <a href="#homeSubmenu">
                     <i class="glyphicon glyphicon-home"></i>
+                    <br>
                     Home
                 </a>
-            </li>
-            <li>
+            </li-->
+            <li class="text-center submenu">
                 <a href="#infraSubmenu" data-toggle="collapse" aria-expanded="false">
                     <i class="glyphicon glyphicon-dashboard"></i>
-                    Infra
+                    <br>Infra
                 </a>
                 <ul class="collapse list-unstyled" id="infraSubmenu">
                     <li><a href="?pag=Infraestrutura">Gerenciar</a></li>
@@ -24,30 +26,30 @@
                     <li><a href="?pag=Cad.Sala">Nova sala</a></li>
                 </ul>
             </li>
-            <li>
+            <li class="text-center">
                 <a href="#oficinasSubmenu" data-toggle="collapse" aria-expanded="false">
                     <i class="glyphicon glyphicon-knight"></i>
-                    oficinas
+                    <br>oficinas
                 </a>
                 <ul class="collapse list-unstyled" id="oficinasSubmenu">
                     <li><a href="?pag=Oficinas">Gerenciar</a></li>
                     <li><a href="?pag=Cad.Oficina">Nova Oficina</a></li>
                 </ul>
             </li>
-            <li>
+            <li class="text-center">
                 <a href="#turmasSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-education"></i>
-                    Turmas
+                    <i class="glyphicon glyphicon-bell"></i>
+                    <br>Turmas
                 </a>
                 <ul class="collapse list-unstyled" id="turmasSubmenu">
                     <li><a href="?pag=Turmas">Gerenciar</a></li>
                     <li><a href="?pag=Cad.Turma">Nova turma</a></li>
                 </ul>
             </li>
-            <li>
+            <li class="text-center">
                 <a href="#usuariosSubmenu" data-toggle="collapse" aria-expanded="false">
                     <i class="glyphicon glyphicon-user"></i>
-                    Usuários
+                    <br>Usuários
                 </a>
                 <ul class="collapse list-unstyled" id="usuariosSubmenu">
                     <li><a href="?pag=Usuarios">Gerenciar</a></li>
@@ -55,50 +57,67 @@
                 </ul>
             </li>
 
-            <li>
+            <li class="text-center">
                 <a href="#alunosSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-user"></i>
-                    Alunos
+                    <i class="glyphicon glyphicon-education"></i>
+                    <br>Alunos
                 </a>
                 <ul class="collapse list-unstyled" id="alunosSubmenu">
                     <li><a href="?pag=Alunos">Gerenciar</a></li>
                     <li><a href="?pag=Cad.Aluno">Cad. Aluno em Turma</a></li>
                 </ul>
             </li>
-            <li>
+            <li class="text-center">
                 <a href="control/main.php?req=logout">
                     <i class="glyphicon glyphicon-log-out"></i>
-                    Sair
+                    <br>Sair
                 </a>
             </li>
         </ul>
-    </nav>
-
+    </div>
     <!-- Page Content Holder -->
-    <div class="content">
-        <!--h2>DashBoard</h2-->
-
-        <!--TODO: TERMINAR DE PROGRAMAR QUADRO DE AVISOS-->
+    <div class="content container-fluid">
         <p id="avisos"></p>
 
         <p id="usr">
-            Olá <span id="user"></span>, seu nivel de acesso é <b><span id="nv"></span></b>
+            Seja bem vindo <span id="user"></span>. <br> Você está logado como usuário <b><span id="nv"></span></b>
         </p>
+        <hr>
+        <!--TODO: Ponderar sobre quadros de avisos-->
 
-        <p class="text-center">
-            Turmas Ativas
-        </p>
+        <!--div class="row quadros">
+            <div class="col-md-4 sqr">
+                <div class="" style="background-color: #0f0f0f;">
+                    Isto é um teste, deve-se notar a expansão dos quadros de avisos, que provavelmente não serão
+                    utilizados nesta versão
+                </div>
+            </div>
+            <div class="col-md-4 sqr">
+                <div class="" style="background-color: #0f0f0f;">
+                    b
+                </div>
+            </div>
+            <div class="col-md-4 sqr">
+                <div class="" style="background-color: #0f0f0f;">
+                    c
+                </div>
+            </div>
+        </div-->
 
-        <table class="table table-striped">
+        <br>
+        <h2> Consulta de Turmas Ativas </h2>
+        <br>
+
+        <table class="table">
             <thead>
             <tr>
-                <th class='col-md-2'>Oficina</th>
-                <th class='col-md-2'>Turma</th>
-                <th class='col-md-2'>Dia da semana</th>
-                <th class='col-md-2'>Horario</th>
-                <th class='col-md-1'>Sala</th>
-                <th class='col-md-2'>Professor</th>
-                <th class='col-md-1'>Vagas</th>
+                <th class='col-md-2'>OFICINAS</th>
+                <th class='col-md-2'>TURMA</th>
+                <th class='col-md-2'>DIA DA SEMANA</th>
+                <th class='col-md-2'>HORÁRIO</th>
+                <th class='col-md-1'>SALA</th>
+                <th class='col-md-2'>PPROFESSOR</th>
+                <th class='col-md-1'>VAGAS</th>
             </tr>
             </thead>
             <tbody id="t_oficinas"></tbody>
@@ -115,7 +134,6 @@
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmaHorario, '#t_oficinas');
         getMsgs();
     }
-
 
 
     function parseUsuario(resposta) {
@@ -139,20 +157,5 @@
                 '</tr>');
         }
     }
-
-
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('.sidebar').toggleClass('active');
-            $('#arrow').toggleClass('glyphicon-chevron-left');
-
-            if (($('#arrow').hasClass('glyphicon-chevron-left'))) {
-                $('#arrow').removeClass('glyphicon-chevron-right');
-            }
-            else {
-                $('#arrow').addClass('glyphicon-chevron-right');
-            }
-        });
-    });
 </script>
 </body>
