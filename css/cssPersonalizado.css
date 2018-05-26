@@ -528,16 +528,7 @@ TODO: REFAZER A ABA LATERAL
 */
 /*TODO: estilo de footer do dashboard */
 
-/*Usuário: Gerenciar*/
-
-.aluno{
-    background-color: darkslategray;
-    background-image: url("../img/pattern.svg");
-    background-repeat: repeat;
-    background-size: 700px;
-    min-height: 100%;
-    color: white;
-}
+/*TODO: Aperfeiçoar estilo de formulários*/
 
 /*Infraestrutura*/
 
@@ -587,7 +578,16 @@ TODO: REFAZER A ABA LATERAL
     color: white;
 }
 
+/*Usuário: Gerenciar*/
 
+.aluno{
+    background-color: #4f2327;
+    background-image: url("../img/pattern.svg");
+    background-repeat: repeat;
+    background-size: 700px;
+    min-height: 100%;
+    color: white;
+}
 
 
 

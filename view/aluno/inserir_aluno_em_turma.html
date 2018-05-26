@@ -1,19 +1,42 @@
-<body class="aluno">
-<div class="page-header">
-    <h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Inserindo Aluno em Turma</h3>
+<body class="container-fluid">
+<div class="aluno">
+    <div class="header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid" style="overflow-x: hidden">
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.php?pag=Alunos"><i class="glyphicon glyphicon-chevron-left"></i> Voltar a Gerência de Alunos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container" style="overflow-x: hidden">
+        <p id="avisos"></p>
+        <h2 class="" style="">Cadastro de Aluno em Uma Turma</h2>
+        <br><br>
+        <form class="form-horizontal col-md-12" action="control/main.php?req=insertPredio" method="POST">
+            <div class="form-group">
+                <label for="turma">Selecione a turma</label>
+                <select onchange="" id="turma" style="color: black">
+                    <option value=1 selected="selected">Dança 1 Seg-QUA</option>
+                    <option value=2>Dança 2 TER-QUI</option>
+                    <option value=3>Desenho Iniciante</option>
+                </select>
+            </div>
+
+            <h5>Legenda:</h5>
+            <p id="legenda"></p>
+
+            <div class="form-group"><!-- Submit -->
+                <br>
+                <br>
+                <br>
+                <input id="enviar" type="submit" class="btn btn-primary btn-block" value="CADASTRAR ALUNO" />
+            </div>
+        </form>
+    </div>
 </div>
-
-<p id="avisos"></p>
-
-<label for="turma">Selecione a turma</label>
-<select onchange="" id="turma">
-    <option value=1 selected="selected">Dança 1 Seg-QUA</option>
-    <option value=2>Dança 2 TER-QUI</option>
-    <option value=3>Desenho Iniciante</option>
-</select>
-<h5>Legenda:</h5>
-<p id="legenda"></p>
-
 <script type="text/javascript">
     $(document).on("load", loader());
 
