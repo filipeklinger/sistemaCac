@@ -48,8 +48,8 @@ function jsonParseSalas(json,corpo) {
 }
 
 function isAtivo(num) {
-    if(num === '1') return "Ativo";
-    else return "Inativo";
+    if(num === '1') return "sim";
+    else return "não";
 }
 
 

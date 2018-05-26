@@ -1,56 +1,90 @@
-<body>
-<h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Gerenciando Usuarios</h3>
-<select onchange="carregaUsuarios();" id="tipoUser">
-    <option value="selectCandidato" selected="selected">Alunos</option>
-    <option value="selectProfessor">Professores</option>
-    <option value="selectAdministrador">Administradores</option>
-</select>
-<table width="80%" align="center" class="table-striped">
-    <thead>
-    <tr>
-        <th>Nome</th>
-        <th>Nivel</th>
-        <th>Menor de idade</th>
-        <th>Responsavel</th>
-        <th>Ruralino</th>
-        <th>Edit</th>
-    </tr>
-    </thead>
-    <tbody id="usuarios">
-    </tbody>
-</table>
-<script type="text/javascript">
-    $(document).on("load",carregaUsuarios());
+<body class="container-fluid">
+<!--div class="col-md-0-5 sidebar">
+    sidebar place -holder
+</div-->
+<div class=" usuario">
 
-    function carregaUsuarios() {
-        var requisicao = $('#tipoUser').val();
-        ajaxLoadGET('control/main.php?req='+requisicao,jsonParteUsuarios,$('#usuarios'));
+    <div class="header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página
+                            Inicial</a></li>
+                        <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectCandidato')" href="">Gerenciar Aluno</a></li>
+                        <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectProfessor')" href="">Gerenciar Professores</a></li>
+                        <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectAdministrador')" value="selectCandidato" href="">Gerenciar Adminstradores</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <p id="avisos"></p>
+    <div style="overflow-x: hidden;">
+        <div id="contTab" class="tab-content" style="padding: 20px;">
+            <div id="users" class="tab-pane fade in active">
+
+                <a href="?pag=Cad.Pessoa" type="button" class="btn btn-primary" style="margin: 0px 0 50px 0"><i
+                        class="glyphicon glyphicon-plus"></i> Novo Usuário</a>
+
+                <!--select onchange="carregaUsuarios();" id="tipoUser">
+                    <option value="selectCandidato" selected="selected">Alunos</option>
+                    <option value="selectProfessor">Professores</option>
+                    <option value="selectAdministrador">Administradores</option>
+                </select-->
+                <table width="80%" align="center" class="">
+                    <thead>
+                    <tr>
+                        <th>NOME</th>
+                        <th>TIPO DE ACESSO</th>
+                        <th>É MENOR DE IDADE?</th>
+                        <th>RESPONSÁVEL</th>
+                        <th>DISCENTE DA UFRRJ?</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="usuarios">
+                    </tbody>
+                </table>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    /*TODO: MELHORAR CAPTURA DE AÇÃO DA NAVEGAÇÃO*/
+    $(document).on("load", carregaUsuarios("selectCandidato"));
+
+    function carregaUsuarios(value) {
+        var requisicao = value;//$('#tipoUser').val();
+        ajaxLoadGET('control/main.php?req=' + requisicao, jsonParseUsuarios, $('#usuarios'));
     }
-    function jsonParteUsuarios(resposta,corpo) {
+
+    function jsonParseUsuarios(resposta, corpo) {
         var objJson = JSON.parse(resposta);
-        for(var i in objJson){
-            if(objJson[i].menor_idade ==='0')objJson[i].responsavel = "-";
-        corpo.append(
-            '<tr>\n' +
-            '     <td>'+ objJson[i].nome +'</td>\n' +
-            '     <td>'+ getNVacesso(objJson[i].nv_acesso) +'</td>\n' +
-            '     <td>'+ isAtivo(objJson[i].menor_idade) +'</td>\n' +
-            '     <td>'+ objJson[i].responsavel +'</td>\n' +
-            '     <td>'+ isAtivo(objJson[i].ruralino) +'</td>\n' +
-            '     <td>--</td>\n' +
-            '</tr>' );
+        for (var i in objJson) {
+            if (objJson[i].menor_idade === '0') objJson[i].responsavel = "-";
+            console.log(objJson);
+            corpo.append(
+                '<tr>\n' +
+                '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n' +
+                '     <td>' + getNVacesso(objJson[i].nv_acesso) + '</td>\n' +
+                '     <td>' + isAtivo(objJson[i].menor_idade) + '</td>\n' +
+                '     <td>' + objJson[i].responsavel + '</td>\n' +
+                '     <td>' + isAtivo(objJson[i].ruralino) + '</td>\n' +
+                '     <td>---</td>\n' +
+                '</tr>');
         }
-        if(objJson.length < 1){
-        corpo.append(
-        '<tr>\n' +
-            '\n' +
-            '                    <td>Nenhum</td>\n' +
-            '                    <td>Usuario</td>\n' +
-            '                    <td>nesta</td>\n' +
-            '                    <td>Categoria</td>\n' +
-            '                    <td>--</td>\n' +
-            '                    <td>---</td>\n' +
-            '                </tr>' );
+        if (objJson.length < 1) {
+            corpo.append(
+                '<tr>\n' +
+                '\n' +
+                '                    <td>:( NÃO</td>\n' +
+                '                    <td>ESIXTEM</td>\n' +
+                '                    <td>USUÁRIOS </td>\n' +
+                '                    <td>NESTA</td>\n' +
+                '                    <td>CATEGORIA</td>\n' +
+                '                    <td>---</td>\n' +
+                '                </tr>');
         }
     }
 </script>

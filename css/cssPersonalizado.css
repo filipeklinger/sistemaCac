@@ -528,10 +528,9 @@ TODO: REFAZER A ABA LATERAL
 */
 /*TODO: estilo de footer do dashboard */
 
-/*Aluno: Gerenciar*/
+/*Usuário: Gerenciar*/
 
 .aluno{
-    color: black;
     background-color: darkslategray;
     background-image: url("../img/pattern.svg");
     background-repeat: repeat;
@@ -540,14 +539,9 @@ TODO: REFAZER A ABA LATERAL
     color: white;
 }
 
-.aluno .header{
-    background-color: #2aabd2; /*TODO: CHANGE COLOR */
-}
-
 /*Infraestrutura*/
 
 .infra{
-    color: black;
     background-color: darkslategray;
     background-image: url("../img/pattern.svg");
     background-repeat: repeat;
@@ -558,7 +552,6 @@ TODO: REFAZER A ABA LATERAL
 
 /*Oficinas */
 .oficinas {
-    color: black;
     background-color: #4f3c4b;
     background-image: url("../img/pattern.svg");
     background-repeat: repeat;
@@ -569,7 +562,6 @@ TODO: REFAZER A ABA LATERAL
 
 /*Turmas*/
 .turmas {
-    color: black;
     background-color: #2f354f;
     background-image: url("../img/pattern.svg");
     background-repeat: repeat;
@@ -584,7 +576,16 @@ TODO: REFAZER A ABA LATERAL
 
 }
 
+/*Usuário */
 
+.usuario{
+    background-color: #4f4d1f;
+    background-image: url("../img/pattern.svg");
+    background-repeat: repeat;
+    background-size: 700px;
+    min-height: 100%;
+    color: white;
+}
 
 
 

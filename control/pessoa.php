@@ -192,7 +192,7 @@ class pessoa{
         //Obtemos todos os administradores com left Join em Maior idade pois e obrigatorio ser maior de idade
         //entretando selecionamos tambem os que nao completaram as informacoes
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $adm = $this->db->select("id_pessoa,nome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento", "pessoa" . $joinClause, "nv_acesso = ?", array(1));
+        $adm = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento", "pessoa" . $joinClause, "nv_acesso = ?", array(1));
 
         //transformamos o JSON em objeto php
         $objAdm = json_decode($adm);
@@ -217,7 +217,7 @@ class pessoa{
     public function getProfesores(){
         //Obtemos todos os professores com left Join em Maior idade
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $prof = $this->db->select("id_pessoa,nome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso <= ?",array(2));
+        $prof = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso <= ?",array(2));
         //transformamos o JSON em objeto php
         $objProf = json_decode($prof);
         //verificmos se esse usuario esuda na rural e adicionamos as informacoes necessarias
@@ -245,7 +245,7 @@ class pessoa{
     public function getCandidatos(){
         //Obtemos todos os Candidatos com left Join em Maior idade
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $cand = $this->db->select("id_pessoa,nome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso >= ?",array(3));
+        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso >= ?",array(3));
         //transformamos o JSON em objeto php
         $objCand = json_decode($cand);
         //verificmos se esse administrador esuda na rural e adicionamos as informacoes necessarias
