@@ -1,7 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: filipe
+ * Created by Filipe
  * Date: 26/05/18
  * Time: 19:05
  */
@@ -31,7 +30,7 @@ class aluno{
             //buscando se o aluno já esta cadasrado nessa turma
             $jaNaTurma = json_decode($this->db->select("count(*) as n","aluno_turma","turma_id = ? and pessoa_id = ?",array($idTurma,$idPessoa)));
             $jaNaTurma = $jaNaTurma[0]->n;
-            if($jaNaTurma == null or $jaNaTurma == 0){
+            if($jaNaTurma == null or $jaNaTurma == NAO){
                 //obtendo num de vagas cadastradas na turma
                 $numVagas = json_decode($this->db->select("num_vagas","turma","id_turma = ?",array($idTurma)));
                 $numVagas = $numVagas[0]->num_vagas;
@@ -60,14 +59,16 @@ class aluno{
             }else{
                 new mensagem(ERRO,"Aluno Já está nessa turma");
             }
-
-
         }else{
             new mensagem(ERRO,"Aluno já esta participando de ".$estaParticipando." Oficinas");
         }
         $this->redireciona();
     }
 
+    /**
+     * Buscando os alunos de turma especifica
+     * @param $identificador Integer - Id da turma
+     */
     public function getAlunoByTurmaId($identificador){
         //$this->db->select("")
     }
