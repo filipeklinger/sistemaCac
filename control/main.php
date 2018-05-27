@@ -11,6 +11,7 @@ include_once 'infraestrutura.php';
 include_once 'oficina.php';
 include_once 'pessoa.php';
 include_once 'turma.php';
+include_once 'aluno.php';
 include_once 'mensagem.php';
 
 class main{
@@ -31,6 +32,7 @@ class main{
                 $login = new login();
                 $login->verifyUser();
                 break;
+                //Infraestrutura
             case "insertPredio":
                 $infra = new infraestrutura();
                 $infra->setPredio();
@@ -63,6 +65,7 @@ class main{
                 $infra = new infraestrutura();
                 echo $infra->getSalas();
                 break;
+                //Pessoa
             case "insertPessoa":
                 $pess = new pessoa();
                 try {
@@ -83,6 +86,7 @@ class main{
                 $pess = new pessoa();
                 echo $pess->getCandidatos();
                 break;
+                //Oficina
             case "insertOficina":
                 $ofic = new oficina();
                 $ofic->setOficina();
@@ -99,6 +103,7 @@ class main{
                 $ofic = new oficina();
                 echo $ofic->getOficinaById($_GET['id']);
                 break;
+                //TURMA
             case "insertTurma":
                 $turma = new turma();
                 $turma->setTurma();
@@ -132,6 +137,13 @@ class main{
                     $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
                 }
                 break;
+                //Aluno
+            case "insertAluno":
+                $aluno = new aluno();
+                $aluno->setAluno();
+                break;
+
+            //USUARIO
             case "selecUsuarioLogado":
                 if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
                     echo $_SESSION['USER'];

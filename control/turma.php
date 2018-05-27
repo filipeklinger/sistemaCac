@@ -100,7 +100,7 @@ class turma{
 
         try {
             $projection =
-                "predio.nome as predio,criacao_turma as criacao,oficina.nome as oficina,num_vagas as vagas,nome_turma as turma,".
+                "id_turma,predio.nome as predio,criacao_turma as criacao,oficina.nome as oficina,num_vagas as vagas,nome_turma as turma,".
                 "pessoa.nome as professor,sala.nome as sala,segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim";
             $table ="(pessoa,oficina,turma,sala,predio)";
             $joinClause = " LEFT JOIN horario_turma_sala ON id_turma = turma_id";

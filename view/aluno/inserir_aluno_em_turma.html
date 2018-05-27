@@ -15,19 +15,23 @@
         <p id="avisos"></p>
         <h2 class="" style="">Cadastro de Aluno em Uma Turma</h2>
         <br><br>
-        <form class="form-horizontal col-md-12" action="control/main.php?req=insertPredio" method="POST">
+        <form class="form-horizontal col-md-12" action="control/main.php?req=insertAluno" method="POST">
             <div class="form-group">
                 <label for="turma">Selecione a turma</label>
-                <select onchange="" id="turma" style="color: black">
+                <select onchange="" name="turma" id="turma" style="color: black">
                     <option value=1 selected="selected">Dança 1 Seg-QUA</option>
-                    <option value=2>Dança 2 TER-QUI</option>
-                    <option value=3>Desenho Iniciante</option>
                 </select>
             </div>
 
             <h5>Legenda:</h5>
             <p id="legenda"></p>
-
+            <h3>Selecione um Candidato</h3>
+            <div class="form-group">
+                <label for="candidato">Candidato</label>
+                <select onchange="" name="candidato" id="candidato" style="color: black">
+                    <option value=1 selected="selected">Fulaninho</option>
+                </select>
+            </div>
             <div class="form-group"><!-- Submit -->
                 <br>
                 <br>
@@ -42,6 +46,7 @@
 
     function loader() {
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasComVagas, '#turma');
+        ajaxLoadGET('control/main.php?req=selectCandidato', parseCandidatos, '#candidato');
         getMsgs();
     }
 
@@ -49,12 +54,20 @@
         var objJson = JSON.parse(resposta);
         for (i in objJson) {
             corpo.append(
-                '<option value=' + i + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
+                '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
                 );
             $('#legenda').append('->'+ objJson[i].oficina + " - " + objJson[i].turma +
                     ' Inicio: '+objJson[i].inicio +
                     ' Local:  '+ objJson[i].predio + ',  ' + objJson[i].sala +
                 '<br/>');
+        }
+    }
+    function parseCandidatos(resposta,corpo) {
+        var objJson = JSON.parse(resposta);
+        for (i in objJson) {
+            corpo.append(
+                '<option value=' + objJson[i].id_pessoa + ' >' + objJson[i].nome + " " + objJson[i].sobrenome + '</option>'
+            );
         }
     }
 </script>
