@@ -1,0 +1,131 @@
+<body>
+<div class="usuario">
+    <div class="header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid" style="overflow-x: hidden">
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="?pag=Usuarios"><i class="glyphicon glyphicon-chevron-left"></i> Voltar a Gerência de Usuarios</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+</div>
+    <h3 class="text-center">Vendo dados de <span class="nome"></span></h3>
+
+    <h4>Dados Básicos</h4>
+    <hr/>
+    <p>Nome: <span class="nome"> </span> <span id="sobrenome"></span> </p>
+    <p>data nascimento: <span id="nasc"></span> </p>
+    <div id="tels">
+
+    </div>
+
+    <div id="menorIdade" hidden="hidden" style="padding-top: 15px;">
+        <div class="carr"></div>
+        <h4 >Dados do Responsavel</h4>
+        <hr/>
+        <p>Nome: <span id="respnome"></span> <span id="respsobrenome"></span> </p>
+        <p>Parentesco: <span id="parentesco"></span> </p>
+
+    </div>
+    <div id="ruralino" hidden="hidden" style="padding-top: 15px;">
+        <div class="carr"></div>
+        <h4 >Aluno da Rural</h4>
+        <hr/>
+        <p>Curso: <span id="curso"></span></p>
+        <p>Matricula: <span id="matricula"></span> </p>
+        <p>Bolsista do CAC: <span id="bolsista"></span> </p>
+    </div>
+
+    <div id="dependentes" hidden="hidden">
+
+    </div>
+
+</div>
+<script type="text/javascript">
+$('#tbody').on("load", loader());
+
+var identificador;
+
+
+function loader() {
+    identificador = parseInt(getParameterByName('id'));
+    getMsgs();
+    ajaxLoadGET('control/main.php?req=selectPessoaById&id='+identificador, jsonParseInfoPessoa, '#toficinas');
+}
+
+function jsonParseInfoPessoa(json, corpo) {
+    var objJson = JSON.parse(json);
+    $('.nome').append(objJson[0].nome);
+    $('#sobrenome').append(objJson[0].sobrenome);
+    $('#nasc').append(objJson[0].data_nascimento);
+    if(objJson[0].menor_idade === "1"){
+        loadMenor();
+    } else{
+        loadTel(identificador);
+    }
+    if(objJson[0].ruralino === "1") loadRuralino();
+}
+
+function loadMenor() {
+    $('#menorIdade').removeAttr("hidden");
+    ajaxLoadGET('control/main.php?req=selectResponsavelByMenorId&id='+identificador, parseMenor, '.carr');
+    function parseMenor(json,corpo) {
+        var objJson = JSON.parse(json);
+        $('#menorIdade').removeAttr("hidden");
+        $('#respnome').append(objJson[0].nome);
+        $('#respsobrenome').append(objJson[0].sobrenome);
+        $('#parentesco').append(objJson[0].parentesco);
+
+        loadTel(objJson[0].responsavel_id);
+    }
+}
+
+function loadRuralino() {
+    $('#ruralino').removeAttr("hidden");
+    ajaxLoadGET('control/main.php?req=selectRuralinoByPessoaId&id='+identificador, parseRuralino, '.carr');
+    function parseRuralino(json,corpo) {
+        var objJson = JSON.parse(json);
+        $('#matricula').append(objJson[0].matricula);
+        $('#curso').append(objJson[0].curso);
+        $('#bolsista').append(isAtivo(objJson[0].bolsista));
+    }
+}
+
+
+function loadTel(id) {
+    ajaxLoadGET('control/main.php?req=selectTelefoneByPessoaId&id='+id, parseTel, '#tels');
+
+    function parseTel(json,corpo) {
+        var objJson = JSON.parse(json);
+        for(i in objJson){
+            corpo.append('<p>Telefone ('+getTelType(objJson[i].tipo)+'): '+objJson[i].numero+'</p>');
+        }
+    }
+
+    function getTelType(num) {
+        num = parseInt(num);
+        switch (num){
+            case 1:
+                return "celular";
+                break;
+            case 2:
+                return "Whatsapp";
+            case 3:
+                return "Fixo";
+            case 4:
+                return "Recados";
+            default:
+                return "...";
+        }
+
+    }
+}
+
+
+</script>
+
+</body>

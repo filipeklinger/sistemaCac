@@ -11,7 +11,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página
                             Inicial</a></li>
-                        <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectCandidato')" href="">Gerenciar Aluno</a></li>
+                        <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectCandidato')" href="">Gerenciar Candidato</a></li>
                         <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectProfessor')" href="">Gerenciar Professores</a></li>
                         <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectAdministrador')" href="">Gerenciar Adminstradores</a></li>
                     </ul>
@@ -32,21 +32,22 @@
                     <option value="selectProfessor">Professores</option>
                     <option value="selectAdministrador">Administradores</option>
                 </select-->
-                <table width="80%" align="center" class="">
-                    <thead>
-                    <tr>
-                        <th>NOME</th>
-                        <th>TIPO DE ACESSO</th>
-                        <th>É MENOR DE IDADE?</th>
-                        <th>RESPONSÁVEL</th>
-                        <th>DISCENTE DA UFRRJ?</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody id="usuarios">
-                    </tbody>
-                </table>
-
+                <div class="row">
+                    <table width="80%" align="center" class="">
+                        <thead>
+                        <tr>
+                            <th class="col-md-4">NOME</th>
+                            <th class="col-md-2">TIPO DE ACESSO</th>
+                            <th class="col-md-2">É MENOR DE IDADE?</th>
+                            <th class="col-md-2">DISCENTE DA UFRRJ?</th>
+                            <th class="col-md-1">Ver</th>
+                            <th class="col-md-1">Editar</th>
+                        </tr>
+                        </thead>
+                        <tbody id="usuarios">
+                        </tbody>
+                    </table>
+                </div>
         </div>
     </div>
 </div>
@@ -55,24 +56,23 @@
     /*TODO: MELHORAR CAPTURA DE AÇÃO DA NAVEGAÇÃO*/
     $(document).on("load", carregaUsuarios("selectCandidato"));
 
-    function carregaUsuarios(value) {
-        var requisicao = value;//$('#tipoUser').val();
+    function carregaUsuarios(requisicao) {
         ajaxLoadGET('control/main.php?req=' + requisicao, jsonParseUsuarios, $('#usuarios'));
     }
 
     function jsonParseUsuarios(resposta, corpo) {
         var objJson = JSON.parse(resposta);
         for (var i in objJson) {
-            if (objJson[i].menor_idade === '0') objJson[i].responsavel = "-";
+
             console.log(objJson);
             corpo.append(
                 '<tr>\n' +
-                '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n' +
-                '     <td>' + getNVacesso(objJson[i].nv_acesso) + '</td>\n' +
-                '     <td>' + isAtivo(objJson[i].menor_idade) + '</td>\n' +
-                '     <td>' + objJson[i].responsavel + '</td>\n' +
-                '     <td>' + isAtivo(objJson[i].ruralino) + '</td>\n' +
-                '     <td>---</td>\n' +
+                '     <td class="col-md-4">' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n' +
+                '     <td class="col-md-2">' + getNVacesso(objJson[i].nv_acesso) + '</td>\n' +
+                '     <td class="col-md-2">' + isAtivo(objJson[i].menor_idade) + '</td>\n' +
+                '     <td class="col-md-2">' + isAtivo(objJson[i].ruralino) + '</td>\n' +
+                '<td  class="col-md-1"> <a href="?pag=Info.Pessoa&id=' + objJson[i].id_pessoa + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-eye-open\'></span></a> </td>' +
+                '<td  class="col-md-1"> <a href="?pag=Edit.Pessoa&id=' + objJson[i].id_pessoa + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a></td>' +
                 '</tr>');
         }
         if (objJson.length < 1) {

@@ -90,6 +90,18 @@ class main{
                 $pess = new pessoa();
                 echo $pess->getPessoaById($_GET['id']);
                 break;
+            case "selectRuralinoByPessoaId":
+                $pess = new pessoa();
+                echo $pess->getRuralinoByPessoaId($_GET['id']);
+                break;
+            case "selectResponsavelByMenorId":
+                $pess = new pessoa();
+                echo $pess->getResponsavelByMenorId($_GET['id']);
+                break;
+            case "selectTelefoneByPessoaId":
+                $pess = new pessoa();
+                echo $pess->getTelefoneByPessoaId($_GET['id']);
+                break;
                 //Oficina
             case "insertOficina":
                 $ofic = new oficina();

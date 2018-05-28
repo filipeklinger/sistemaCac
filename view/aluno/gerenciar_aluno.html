@@ -64,7 +64,6 @@
             var objJson = JSON.parse(resposta);
             for (var i in objJson) {
                 if (objJson[i].menor_idade === '0') objJson[i].responsavel = "-";
-                console.log(objJson);
                 corpo.append(
                     '<tr>\n' +
                     '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n' +

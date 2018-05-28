@@ -268,6 +268,42 @@ class pessoa{
         return $cand;
     }
 
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function getPessoaById($identificador){
+        return $this->db->select("nome,sobrenome,menor_idade,ruralino,data_nascimento","pessoa","id_pessoa = ?",array($identificador));
+    }
+
+    /**
+     * @param $identificador
+     * @return string
+     * @throws Exception
+     */
+    public function getRuralinoByPessoaId($identificador){
+        return $this->db->select("matricula,curso,bolsista","ruralino","pessoa_id = ?",array($identificador));
+    }
+
+    /**
+     * @param $identificador
+     * @return string
+     * @throws Exception
+     */
+    public function getResponsavelByMenorId($identificador){
+        $projection = "responsavel_parentesco as parentesco,nome,sobrenome,menor_idade.responsavel_id";
+        $whereClause = "menor_idade.pessoa_id = ? and responsavel_id = pessoa.id_pessoa";
+        return $this->db->select($projection,"menor_idade,pessoa",$whereClause,array($identificador));
+    }
+
+    /**
+     * @param $identificador
+     * @return string
+     * @throws Exception
+     */
+    public function getTelefoneByPessoaId($identificador){
+        return $this->db->select("numero,tipo_telefone as tipo","telefone","pessoa_id = ?",array($identificador));
+    }
     private function redireciona(){header("Location: ../index.php?pag=Login");}
 
 }
