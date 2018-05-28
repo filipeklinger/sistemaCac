@@ -32,22 +32,20 @@ class aluno{
             $jaNaTurma = $jaNaTurma[0]->n;
             if($jaNaTurma == null or $jaNaTurma == NAO){
                 //obtendo num de vagas cadastradas na turma
-                $numVagas = json_decode($this->db->select("num_vagas","turma","id_turma = ?",array($idTurma)));
-                $numVagas = $numVagas[0]->num_vagas;
+                $projection = "turma.id_turma,num_vagas as vagas,".
+                    "(SELECT count(*) as n from aluno_turma where aluno_turma.turma_id = id_turma and lista_espera = 0) as ocupadas";
+                $turma = json_decode($this->db->select($projection,"turma","id_turma = ?",array($idTurma)));
+                $turma = $turma[0];
                 //inserindo aluno em turma
                 $mens = "";
-                if($numVagas > 0){
+                if(($turma->ocupadas) < ($turma->vagas)){
                     //pessoa dentro do numero de vagas
                     $params = array($idTurma,$idPessoa,NAO,SIM);
-                    //atualizamos o valor de vagas
-                    $paramsUpdate = array(($numVagas-1));
-                    $this->db->update(array("num_vagas"),"turma",$paramsUpdate,"id_turma = ?",array($idTurma));
                 }else{
                     //pessoas na lista de espera
                     $params = array($idTurma,$idPessoa,SIM,SIM);
-
-                    $this->db->select("count(*) as n","aluno_turma","id_turma = ? and lista_espera = ?",array($idTurma,));
-                    $mens = "na lista de espera ";
+                    //$posicao = json_decode($this->db->select("count(*) as n","aluno_turma","id_turma = ? and lista_espera = ?",array($idTurma,SIM)));
+                    $mens = "na lista de espera";
                 }
 
                 //tentando inserir o aluno na turma
@@ -64,13 +62,17 @@ class aluno{
         }
         $this->redireciona();
     }
-
+//SELECT turma.id_turma,num_vagas, (SELECT count(*) as n from aluno_turma where aluno_turma.turma_id = id_turma) as ocupadas
+//from turma
     /**
      * Buscando os alunos de turma especifica
      * @param $identificador Integer - Id da turma
+     * @throws Exception
      */
     public function getAlunoByTurmaId($identificador){
-        //$this->db->select("")
+        $columns = "pessoa.nome,pessoa.sobrenome,turma.nome_turma as turma,lista_espera,aluno_turma.is_ativo";
+        $whereClause = "aluno_turma.turma_id = turma.id_turma and aluno_turma.pessoa_id = pessoa.id_pessoa and turma.id_turma = ?";
+        echo $this->db->select($columns,"pessoa,turma,aluno_turma",$whereClause,array($identificador));
     }
 
     private function redireciona(){header("Location: ../index.php?pag=Cad.Aluno");}

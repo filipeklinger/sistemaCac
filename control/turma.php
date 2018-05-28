@@ -101,6 +101,8 @@ class turma{
         try {
             $projection =
                 "id_turma,predio.nome as predio,criacao_turma as criacao,oficina.nome as oficina,num_vagas as vagas,nome_turma as turma,".
+                //selecionando vagas disponiveis
+                "(SELECT count(*) as n from aluno_turma where aluno_turma.turma_id = id_turma and lista_espera = 0) as ocupadas,".
                 "pessoa.nome as professor,sala.nome as sala,segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim";
             $table ="(pessoa,oficina,turma,sala,predio)";
             $joinClause = " LEFT JOIN horario_turma_sala ON id_turma = turma_id";

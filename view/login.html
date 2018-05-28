@@ -71,6 +71,8 @@
         var aux;
         if (objJson.length > 0) {
             for (var i in objJson) {
+                //aqui obtemos o numero real de vagas disponiveis
+                objJson[i].vagas = parseInt(objJson[i].vagas) - parseInt(objJson[i].ocupadas);
                 if(objJson[i].vagas < 10){
                     objJson[i].vagas = '&nbsp;&nbsp;'+objJson[i].vagas;
                 }
@@ -81,7 +83,8 @@
                     '<div class="media">'+
                     '<div class="media-left text-center">'+
                     '<span class="media-object">'+
-                    objJson[i].vagas+'</span>'+
+                    objJson[i].vagas
+                    +'</span>'+
                     '<span>vagas</span></div>'+
                     '<div class="media-body">'+
                     '<h4 class="media-heading">' + objJson[i].oficina + ' - '+ objJson[i].inicio +'</h4><span>'+aux+'</span>'+

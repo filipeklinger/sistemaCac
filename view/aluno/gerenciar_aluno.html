@@ -16,7 +16,72 @@
         <p id="avisos"></p>
     </div>
         <a href="?pag=Cad.Aluno" type="button" class="btn btn-primary" style="margin: 0px 0 50px 0"><i class="glyphicon glyphicon-plus"></i>Inserir Aluno em Turma</a>
-        <h3 class="text-center">Turmas</h3>
 
+        <select onchange="obterAlunos();" id="turma">
+            <option value="1" selected="selected">T01</option>
+        </select>
+
+        <h3 class="text-center">Alunos Matriculados na turma</h3>
+
+        <table width="80%" align="center" class="">
+            <thead>
+            <tr>
+                <th>NOME</th>
+                <th>Lista de espera</th>
+                <th>Ativo?</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="alunos">
+            </tbody>
+        </table>
     </div>
+
+    <script type="text/javascript">
+        $(document).on("load", loader());
+
+        function loader() {
+            ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasAtivas, '#turma');
+            obterAlunos();
+            getMsgs();
+        }
+
+        function obterAlunos() {
+            var turma = $('#turma').val();
+            ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id='+turma, parseAlunosMatriculados, '#alunos');
+        }
+
+        function parseTurmasAtivas(resposta, corpo) {
+            var objJson = JSON.parse(resposta);
+            for (i in objJson) {
+                corpo.append(
+                    '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
+                );
+            }
+        }
+
+        function parseAlunosMatriculados(resposta,corpo) {
+            var objJson = JSON.parse(resposta);
+            for (var i in objJson) {
+                if (objJson[i].menor_idade === '0') objJson[i].responsavel = "-";
+                console.log(objJson);
+                corpo.append(
+                    '<tr>\n' +
+                    '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n' +
+                    '     <td>' + isAtivo(objJson[i].lista_espera) + '</td>\n' +
+                    '     <td>' + isAtivo(objJson[i].is_ativo) + '</td>\n' +
+                    '     <td>---</td>\n' +
+                    '</tr>');
+            }
+            if (objJson.length < 1) {
+                corpo.append(
+                    '<tr>\n' +
+                    '                    <td>:( NÃO EXISTEM ALUNOS NESTA Turma</td>\n' +
+                    '                    <td>-</td>\n' +
+                    '                    <td>-</td>\n' +
+                    '                    <td>---</td>\n' +
+                    '                </tr>');
+            }
+        }
+    </script>
 </body>

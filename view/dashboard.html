@@ -145,6 +145,8 @@
     function parseTurmaHorario(resposta, corpo) {
         var objJson = JSON.parse(resposta);
         for (i in objJson) {
+            //aqui obtemos o numero real de vagas disponiveis
+            objJson[i].vagas = parseInt(objJson[i].vagas) - parseInt(objJson[i].ocupadas);
             corpo.append(
                 '<tr>' +
                 '<td class=\'col-md-2\'>' + objJson[i].oficina + '</td>' +

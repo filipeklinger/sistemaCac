@@ -58,7 +58,7 @@ class main{
                 try {
                     echo $infra->getPredioById($_GET['id']);
                 } catch (Exception $e) {
-                    echo $e;
+                    new mensagem(ERRO,$e);
                 }
                 break;
             case "selectSala":
@@ -126,7 +126,7 @@ class main{
                 try {
                     echo $infra->getSalaByPredioId($_GET['id']);
                 } catch (Exception $e) {
-                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+                    new mensagem(ERRO,$e);
                 }
                 break;
             case "selectSalaById":
@@ -134,15 +134,26 @@ class main{
                 try {
                     echo $infra->getSalaById($_GET['id']);
                 } catch (Exception $e) {
-                    $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\"Erro: ".$e."\"}";
+                    new mensagem(ERRO,$e);
                 }
                 break;
                 //Aluno
             case "insertAluno":
                 $aluno = new aluno();
-                $aluno->setAluno();
+                try {
+                    $aluno->setAluno();
+                } catch (Exception $e) {
+                    new mensagem(ERRO,$e);
+                }
                 break;
-
+            case "selectAlunosByTurmaId":
+                $aluno = new aluno();
+                try {
+                    $aluno->getAlunoByTurmaId($_GET['id']);
+                } catch (Exception $e) {
+                    new mensagem(ERRO,$e);
+                }
+                break;
             //USUARIO
             case "selecUsuarioLogado":
                 if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
