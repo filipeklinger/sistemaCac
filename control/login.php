@@ -66,4 +66,17 @@ class login{
             header("Location: " . $_SERVER['HTTP_REFERER'] . "");//MANDA DE VOLTA PARA O login
         }
     }
+
+    public static function logout(){
+        session_destroy();
+        header("Location: ../index.php?pag=Login");
+    }
+
+    public static function getUser(){
+        if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
+            echo $_SESSION['USER'];
+        }else{
+            header("Location: ../index.php?pag=Login");
+        }
+    }
 }

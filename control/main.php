@@ -86,6 +86,10 @@ class main{
                 $pess = new pessoa();
                 echo $pess->getCandidatos();
                 break;
+            case "selectPessoaById":
+                $pess = new pessoa();
+                echo $pess->getPessoaById($_GET['id']);
+                break;
                 //Oficina
             case "insertOficina":
                 $ofic = new oficina();
@@ -156,15 +160,10 @@ class main{
                 break;
             //USUARIO
             case "selecUsuarioLogado":
-                if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
-                    echo $_SESSION['USER'];
-                }else{
-                    header("Location: ../index.php?pag=Login");
-                }
+                login::getUser();
                 break;
             case "logout":
-                session_destroy();
-                header("Location: ../index.php?pag=Login");
+                login::logout();
                 break;
             default:
                     header("Location: ../index.php?pag=Login");
