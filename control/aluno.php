@@ -37,7 +37,7 @@ class aluno{
                 //inserindo aluno em turma
                 $mens = "";
                 if($numVagas > 0){
-                    //pessoas dentro do numero de vagas
+                    //pessoa dentro do numero de vagas
                     $params = array($idTurma,$idPessoa,NAO,SIM);
                     //atualizamos o valor de vagas
                     $paramsUpdate = array(($numVagas-1));
