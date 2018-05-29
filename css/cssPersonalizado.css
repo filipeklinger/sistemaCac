@@ -3,6 +3,9 @@
 @import "bootstrapExpansion.css";
 @import "printable.css";
 
+/*Fontes*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 /*Globals*/
 body {
     height: 100vh;
@@ -301,11 +304,16 @@ body {
     }
 }
 
-/*Dashboard: Tela inicial, pós login*/
+/*Dashboard: Tela inicial pós login*/
 
 .dashboard {
     display: flex;
     align-items: stretch;
+    background-color: #dbe8e8;
+    background-image: url("../img/pattern.svg");
+    background-repeat: repeat;
+    background-size: 700px;
+    color: #575557;
 }
 
 .dashboard .content {
@@ -313,18 +321,59 @@ body {
     min-height: 100vh;
     transition: all 0.3s;
     width: 100%;
-    background-color: #444244;
-    background-image: url("../img/pattern.svg");
-    background-repeat: repeat;
-    background-size: 700px;
-    color: white;
+    /*background-color: #444244;*/
+}
+.dashboard #usr{
+    color: #575557;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+}
+.dashboard #user, #nv{
+    color: rgb(255, 88, 105);
 }
 
+.dashboard .content hr {
+    border-color: #8b9189;
+}
+
+.dashboard .table{
+    background-color: rgb(255, 88, 105);
+    color: rgb(218, 231, 231);
+}
+
+.dashboard .table td{
+    /*color: #444244;*/
+    padding: 15px;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+}
+
+.dashboard .table td{
+    /*color: #444244;*/
+    border-top: 3px solid white;
+}
+
+.dashboard .table tbody tr:hover{
+    background-color: rgb(0, 174, 176);
+}
+
+.dashboard .table th{
+    padding: 15px;
+    /*color: rgb(237, 243, 234);*/
+    /*background-color: rgba(0, 46, 49, 0.41);*/
+    color: rgb(239, 245, 236);
+    background-color: rgb(179, 177, 179);
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+}
+
+/*
 .dashboard .content .wells {
     background-color: #2aabd2;
     max-width: 50px;
 }
-
+*/
 .dashboard a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;
@@ -332,13 +381,11 @@ body {
 }
 
 /*Sidebar*/
-
 .dashboard .sidebar {
-    background-color: black;
-    /*padding-left: 0;
-    padding-right: 0;*/
-    border-right: 2px solid #ff412d;
-    color: #a2a2a2;
+    border-right: 1px solid #747474;
+    color: #575557;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
 }
 
 .dashboard .sidebar ul li {
@@ -352,13 +399,11 @@ body {
 }
 
 .dashboard .sidebar ul .collapse a:hover {
-    padding-top: 7px;
-    color: #ff412d;
+    /*padding-top: 7px;*/
 }
 
 .dashboard .sidebar ul li a:hover {
-    background-color: black;
-    color: white;
+    color: rgb(255, 88, 105);
 }
 
 /*TODO: Aperfeiçoar estilo de formulários*/
