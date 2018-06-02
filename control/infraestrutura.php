@@ -70,7 +70,7 @@ class infraestrutura{
         if($nome != INVALIDO){
             try {
                 if($this->db->insert("predio_id,nome,is_ativo", "sala", $params)){
-                    new mensagem(SUCESSO," Sala de ".$nome." cadastrado com sucesso!!");
+                    new mensagem(SUCESSO," ".$nome." cadastrado com sucesso!!");
                 }else{
                     new mensagem(INSERT_ERRO,"Erro ao inserir");
                 }
