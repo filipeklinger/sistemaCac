@@ -1,6 +1,6 @@
 -- MySQL Script
--- Sáb 28 Abr 2018 10:45:45 -03
--- Model: Sistema CAC    Version: 12.0
+-- Sáb 02 Jun 2018 15:43:45 -03
+-- Model: Sistema CAC    Version: 12.03
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`predio` (
   `localizacao` VARCHAR(60) NOT NULL,
   `is_ativo` TINYINT NOT NULL DEFAULT 1 COMMENT '1 sim\n0 nao',
   PRIMARY KEY (`id_predio`))
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -39,11 +39,11 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`sala` (
   PRIMARY KEY (`id_sala`),
   INDEX `predio_sala_idx` (`predio_id` ASC),
   CONSTRAINT `predio_sala`
-  FOREIGN KEY (`predio_id`)
-  REFERENCES `sistema_cac`.`predio` (`id_predio`)
+    FOREIGN KEY (`predio_id`)
+    REFERENCES `sistema_cac`.`predio` (`id_predio`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`oficina` (
   `nome` VARCHAR(60) NOT NULL,
   `pre_requisito` TEXT(255) NOT NULL,
   PRIMARY KEY (`id_oficina`))
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`pessoa` (
   `ruralino` TINYINT NOT NULL DEFAULT 0 COMMENT '1 sim\n0 nao',
   `data_nascimento` DATE NOT NULL,
   PRIMARY KEY (`id_pessoa`))
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -82,27 +82,28 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`turma` (
   `num_vagas` INT NOT NULL,
   `nome_turma` VARCHAR(45) NOT NULL,
   `professor` INT NOT NULL,
-  `is_ativo` TINYINT NOT NULL DEFAULT 1 COMMENT '1 sim\n0 nao',
+  `is_ativo` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id_turma`),
   INDEX `turma_oficina_idx` (`oficina_id` ASC),
   INDEX `professor_idx` (`professor` ASC),
   CONSTRAINT `turma_oficina`
-  FOREIGN KEY (`oficina_id`)
-  REFERENCES `sistema_cac`.`oficina` (`id_oficina`)
+    FOREIGN KEY (`oficina_id`)
+    REFERENCES `sistema_cac`.`oficina` (`id_oficina`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `professor`
-  FOREIGN KEY (`professor`)
-  REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
+    FOREIGN KEY (`professor`)
+    REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `sistema_cac`.`horario_turma_sala`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sistema_cac`.`horario_turma_sala` (
+  `id_horario` INT NOT NULL AUTO_INCREMENT,
   `ano` YEAR NOT NULL,
   `sala_id` INT NOT NULL,
   `segunda` TINYINT NOT NULL,
@@ -113,19 +114,20 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`horario_turma_sala` (
   `inicio` TIME(2) NOT NULL,
   `fim` TIME(2) NOT NULL,
   `turma_id` INT NOT NULL,
-  PRIMARY KEY (`ano`, `sala_id`, `segunda`, `terca`, `quarta`, `quinta`, `sexta`, `inicio`),
   INDEX `horario_turma_idx` (`turma_id` ASC),
+  UNIQUE INDEX `turma_id_UNIQUE` (`turma_id` ASC),
+  PRIMARY KEY (`id_horario`),
   CONSTRAINT `horario_turma`
-  FOREIGN KEY (`turma_id`)
-  REFERENCES `sistema_cac`.`turma` (`id_turma`)
+    FOREIGN KEY (`turma_id`)
+    REFERENCES `sistema_cac`.`turma` (`id_turma`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `horario_sala`
-  FOREIGN KEY (`sala_id`)
-  REFERENCES `sistema_cac`.`sala` (`id_sala`)
+    FOREIGN KEY (`sala_id`)
+    REFERENCES `sistema_cac`.`sala` (`id_sala`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -138,16 +140,16 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`menor_idade` (
   PRIMARY KEY (`pessoa_id`, `responsavel_id`),
   INDEX `fk_responsavel_idx` (`responsavel_id` ASC),
   CONSTRAINT `fk_menor_idade`
-  FOREIGN KEY (`pessoa_id`)
-  REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
+    FOREIGN KEY (`pessoa_id`)
+    REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_responsavel`
-  FOREIGN KEY (`responsavel_id`)
-  REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
+    FOREIGN KEY (`responsavel_id`)
+    REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -163,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`documento` (
   REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -176,11 +178,11 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`ruralino` (
   `bolsista` TINYINT NOT NULL DEFAULT 0 COMMENT '1 sim\n0 nao',
   PRIMARY KEY (`pessoa_id`, `matricula`),
   CONSTRAINT `pessoa_ruralina`
-  FOREIGN KEY (`pessoa_id`)
-  REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
+    FOREIGN KEY (`pessoa_id`)
+    REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -196,16 +198,16 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`aluno_turma` (
   INDEX `aluno_pessoa_idx` (`pessoa_id` ASC),
   INDEX `aluno_turma_idx` (`turma_id` ASC),
   CONSTRAINT `aluno_pessoa`
-  FOREIGN KEY (`pessoa_id`)
-  REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
+    FOREIGN KEY (`pessoa_id`)
+    REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `aluno_turma`
-  FOREIGN KEY (`turma_id`)
-  REFERENCES `sistema_cac`.`turma` (`id_turma`)
+    FOREIGN KEY (`turma_id`)
+    REFERENCES `sistema_cac`.`turma` (`id_turma`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -217,11 +219,11 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`lista_presenca` (
   `is_presente` TINYINT NOT NULL DEFAULT 1 COMMENT '1 sim\n0 nao',
   PRIMARY KEY (`aluno_id`, `data`),
   CONSTRAINT `presenca_aluno`
-  FOREIGN KEY (`aluno_id`)
-  REFERENCES `sistema_cac`.`aluno_turma` (`id_aluno`)
+    FOREIGN KEY (`aluno_id`)
+    REFERENCES `sistema_cac`.`aluno_turma` (`id_aluno`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -238,11 +240,11 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`endereco` (
   PRIMARY KEY (`pessoa_id`),
   INDEX `contato_pessoa` (`pessoa_id` ASC),
   CONSTRAINT `fk_contato_pessoa`
-  FOREIGN KEY (`pessoa_id`)
-  REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
+    FOREIGN KEY (`pessoa_id`)
+    REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -256,12 +258,12 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`login` (
   UNIQUE INDEX `usuario_UNIQUE` USING BTREE (`usuario` ASC),
   UNIQUE INDEX `pessoa_id_UNIQUE` (`pessoa_id` ASC),
   CONSTRAINT `fk_login_pessoa`
-  FOREIGN KEY (`pessoa_id`)
-  REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
+    FOREIGN KEY (`pessoa_id`)
+    REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB
-  COMMENT = 'dados de login no sistema\npode ser a combinacao de \nemail e senha ou\ntelefone e senha';
+ENGINE = InnoDB
+COMMENT = 'dados de login no sistema\npode ser a combinacao de \nemail e senha ou\ntelefone e senha';
 
 
 -- -----------------------------------------------------
@@ -275,11 +277,11 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`telefone` (
   PRIMARY KEY (`id_telefone`),
   INDEX `numero` (`numero` ASC),
   CONSTRAINT `fk_telefone_pessoa`
-  FOREIGN KEY (`pessoa_id`)
-  REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
+    FOREIGN KEY (`pessoa_id`)
+    REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-  ENGINE = InnoDB;
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
