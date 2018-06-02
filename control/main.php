@@ -65,6 +65,22 @@ class main{
                 $infra = new infraestrutura();
                 echo $infra->getSalas();
                 break;
+            case "selectSalaByPredioId":
+                $infra = new infraestrutura();
+                try {
+                    echo $infra->getSalaByPredioId($_GET['id']);
+                } catch (Exception $e) {
+                    new mensagem(ERRO,$e);
+                }
+                break;
+            case "selectSalaById":
+                $infra = new infraestrutura();
+                try {
+                    echo $infra->getSalaById($_GET['id']);
+                } catch (Exception $e) {
+                    new mensagem(ERRO,$e);
+                }
+                break;
                 //Pessoa
             case "insertPessoa":
                 $pess = new pessoa();
@@ -132,6 +148,10 @@ class main{
                 $turma = new turma();
                 echo $turma->getTurmas();
                 break;
+            case "updateTurma":
+                $turma = new turma();
+                $turma->updateTurma($_GET['id']);
+                break;
             case "selectTurmaAtiva":
                 header("Content-Type: application/json; charset=UTF-8");
                 $turma = new turma();
@@ -141,21 +161,9 @@ class main{
                 $turma = new turma();
                 echo $turma->getHorariosBySalaId($_GET['id']);
                 break;
-            case "selectSalaByPredioId":
-                $infra = new infraestrutura();
-                try {
-                    echo $infra->getSalaByPredioId($_GET['id']);
-                } catch (Exception $e) {
-                    new mensagem(ERRO,$e);
-                }
-                break;
-            case "selectSalaById":
-                $infra = new infraestrutura();
-                try {
-                    echo $infra->getSalaById($_GET['id']);
-                } catch (Exception $e) {
-                    new mensagem(ERRO,$e);
-                }
+            case "selectTurmaById":
+                $turma = new turma();
+                echo $turma->getTurmaById($_GET['id']);
                 break;
                 //Aluno
             case "insertAluno":

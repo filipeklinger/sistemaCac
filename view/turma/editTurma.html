@@ -15,16 +15,205 @@
     </div>
 
     <div class="container" style="overflow-x: hidden">
-        <form>
+        <form id="formEditTurma" action="" method="POST">
             <div class="form-group">
                 <h3>Edição de Turmas - <span id="nomeHeader"></span></h3>
             </div>
+
+            <div class="form-group">
+                <label class="control-label">OFICINA: <span id="oficina_name"></span></label>
+                <div class="input-group" style="color: black">
+                    <select id="selectOficina" name="oficina_id" class="selectpicker" title="Escolha uma oficina"
+                            hidden="hidden">
+                        <option value="1">Selecione uma Oficina</option>
+                    </select>
+
+                </div><!-- /input-group -->
+            </div><!-- /form-group -->
+
+            <!-- Predios disponiveis -->
+            <div id="tbody" class="form-group">
+                <label class="control-label">ESCOLHA DE PRÉDIO</label>
+                <div class="">
+                    <div class="input-group" style="color: black">
+                        <select id="selectPredio" onchange="SalaFromPredioId();" class="selectpicker"
+                                title="Escolha um predio" required="required">
+                            <option value="1">Selecione um Prédio</option>
+                        </select>
+                    </div><!-- /input-group -->
+                </div>
+            </div><!-- /form-group -->
+
+            <!-- Salas disponiveis -->
+            <div id="tsala" class="form-group">
+                <label class="control-label">ESCOLHA DE SALA</label>
+                <div class="">
+                    <div class="input-group" style="color: black">
+                        <select id="selectSala" name="sala_id" onchange="disponibilidade();" class="selectpicker"
+                                title="Escolha uma Sala" required="required">
+                            <option value="1">Selecione uma sala</option>
+                        </select>
+                    </div><!-- /input-group -->
+                </div>
+            </div><!-- /form-group -->
+
+            <div id="tprof" class="form-group">
+                <label class="4 control-label">ESCOLHA UM PROFESSOR</label>
+                <div class="">
+                    <div class="input-group">
+                        <select id="selectProf" name="prof_id" style="color: black" class="selectpicker"
+                                title="Escolha uma Professor" required="required">
+                            <option value="-1">Selecione um professor</option>
+                        </select>
+                    </div><!-- /input-group -->
+                </div>
+            </div><!-- /form-group -->
+
+            <!---AQUI DEVEMOS MOSTRAR OS HORARIOS DISPONIVEIS DAQUELA SALA -->
+            <br>
+
+            <h3 class="">Escolha os dias da semana</h3>
+            <hr>
+            <div class="form-group">
+                <div class="col-lg-offset-4">
+
+                <span class="button-checkbox">
+                    <button id="seg" type="button" class="btn" data-color="primary">Segunda</button>
+                    <input type="checkbox" name="seg" class="hidden"/>
+                </span>
+
+                    <span class="button-checkbox">
+                    <button id="ter" type="button" class="btn" data-color="primary">Terça</button>
+                    <input type="checkbox" name="ter" class="hidden"/>
+                </span>
+
+                    <span class="button-checkbox">
+                    <button id="qua" type="button" class="btn" data-color="primary">Quarta</button>
+                    <input type="checkbox" name="qua" class="hidden"/>
+                </span>
+
+                    <span class="button-checkbox">
+                    <button id="qui" type="button" class="btn" data-color="primary">Quinta</button>
+                    <input type="checkbox" name="qui" class="hidden"/>
+                </span>
+
+                    <span class="button-checkbox">
+                    <button id="sex" type="button" class="btn" data-color="primary">Sexta</button>
+                    <input type="checkbox" name="sex" class="hidden"/>
+                </span>
+
+                </div>
+            </div>
+
+            <div class="row" style="color: white">
+                <table class="scheduler" width="80%" align="center" cellspacing="12">
+                    <thead>
+                    <tr>
+                        <th>Hora</th>
+                        <th>Segunda</th>
+                        <th>Terça</th>
+                        <th>Quarta</th>
+                        <th>Quinta</th>
+                        <th>Sexta</th>
+                        <th>Sabado</th>
+                    </tr>
+                    </thead>
+                    <tbody id="horariosDisponiveis">
+                    </tbody>
+                </table>
+            </div>
+            <!-- FIM HORARIOS -->
+            <hr>
+            <br>
+            <!-- Horario -->
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="horarioInic">HORÁRIO DE INÍCIO</label>
+                    <div class="">
+                        <input id="horarioInic" name="horario_inic" type="time" placeholder="" class="form-control input-md"
+                               required="">
+                    </div>
+                </div><!-- /form-group -->
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="horarioFim">HORÁRIO DE FIM</label>
+                    <div class="">
+                        <input id="horarioFim" name="horario_fim" type="time" placeholder="Início (--:--)"
+                               class="form-control input-md" required="">
+                    </div>
+                </div><!-- /form-group -->
+            </div>
+            <!-- Num de vagas -->
+            <div class="form-group">
+                <label class="control-label" for="vagas">NÚMERO DE VAGAS</label>
+                <div class="">
+                    <input id="vagas" name="vagas" type="number" placeholder="numero de vagas" class="form-control input-md"
+                           required="">
+                </div>
+            </div><!-- /form-group -->
+            <br>
+            <br>
+            <div class=""><!-- Submit -->
+                <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Atualizar"/>
+            </div>
+
         </form>
+        <p id="teste"></p>
     </div>
 </div>
 
 <script>
+    //carregando as opcoes de troca
+    var selectPredioTurma = $('#selectPredio');
+    var selectSalaTurma = $('#selectSala');
+    var selectOficinaTurma = $('#selectOficina');
+    var selectProfTurma = $('#selectProf');
+    var horariosTurma = $('#horariosDisponiveis');
+    $(document).on("load", carregadorCadTurmas());
+
+    //carregando as opcoes atuais
+    var oficinaAtual = 0;
+    var salaAtual = 0;
+    var predioAtual = 0;
+    var professorAtual = 0;
+    $(document).ready(carregador());
+
+    function carregador() {
+        //setando ação de atualizar
+        $('#formEditTurma').attr('action', 'control/main.php?req=updateTurma&id='+getParameterByName('id'));
+        //obtendo Informações da oficina selecionada
+        ajaxLoadGET('control/main.php?req=selectTurmaById&id='+getParameterByName('id'), jsonParseSelectedOficina, '#teste');
+
+        function jsonParseSelectedOficina(resposta,corpo) {
+            const json = JSON.parse(resposta);
+            $('#horarioInic').val(json[0].inicio);
+            $('#horarioFim').val(json[0].fim);
+            $('#vagas').val(json[0].num_vagas);
+            oficinaAtual = json[0].oficina_id;
+            salaAtual = json[0].sala_id;
+            predioAtual = json[0].predio_id;
+            professorAtual = json[0].professor;
+            //selecionando os dias da semana
+            if(json[0].segunda === "1") $('#seg').click();
+            if(json[0].terca === "1") $('#ter').click();
+            if(json[0].quarta === "1") $('#qua').click();
+            if(json[0].quinta === "1") $('#qui').click();
+            if(json[0].sexta === "1") $('#sex').click();
+
+            //oficina
+            $('#oficina_name').append(json[0].oficina);
+
+            $('#selectPredio option[value='+predioAtual+']').attr('selected','selected');
+            selectPredioTurma.change();
+            $('#selectSala option[value='+salaAtual+']').attr('selected','selected');
+            selectSalaTurma.change();
+            $('#selectProf option[value='+professorAtual+']').attr('selected','selected');
+            selectProfTurma.change();
+            $('#selectOficina option[value='+oficinaAtual+']').attr('selected','selected');
+            selectOficinaTurma.change();
+
+        }
+    }
 
 </script>
-
+<script src="js/checkboxButton.js"></script>
 </body>

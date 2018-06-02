@@ -29,7 +29,7 @@
                     </select>
 
                 </div><!-- /input-group -->
-        </div><!-- /form-group -->
+                </div><!-- /form-group -->
 
         <!-- Predios disponiveis -->
         <div id="tbody" class="form-group">
@@ -168,96 +168,14 @@
 </div>
 
 <script type="text/javascript">
-    var selectPredio = $('#selectPredio');
-    var selectSala = $('#selectSala');
-    var selectOficina = $('#selectOficina');
-    var selectProf = $('#selectProf');
-    var horarios = $('#horariosDisponiveis');
+    var selectPredioTurma = $('#selectPredio');
+    var selectSalaTurma = $('#selectSala');
+    var selectOficinaTurma = $('#selectOficina');
+    var selectProfTurma = $('#selectProf');
+    var horariosTurma = $('#horariosDisponiveis');
 
-    $(document).on("load", carregador());
+    $(document).on("load", carregadorCadTurmas());
 
-    function carregador() {
-        //obtendo oficinas
-        ajaxLoadGET('control/main.php?req=selectOficina', jsonParseOficinas, selectOficina);
-        //obtendo predios
-        ajaxLoadGET('control/main.php?req=selectPredio', jsonParseNomePredios, selectPredio);
-        //obtendo professores
-        ajaxLoadGET('control/main.php?req=selectProfessor', jsonParseProfessor, selectProf);
-        //carregando previamente os itens cadastrados no primeiro predio
-        SalaFromPredioId();
-        disponibilidade();
-
-    }
-
-    function jsonParseOficinas(resposta, corpo) {
-        corpo.empty();
-        var objJson = JSON.parse(resposta);
-        for (var i in objJson) {
-            corpo.append('<option value="' + objJson[i].id_oficina + '">' + objJson[i].nome + '</option>');
-        }
-    }
-
-    function SalaFromPredioId() {
-        var identificador = parseInt(selectPredio.val());
-        ajaxLoadGET('control/main.php?req=selectSalaByPredioId&id=' + identificador, jsonParseSalas, selectSala);
-    }
-
-    function jsonParseSalas(resposta, corpo) {
-        corpo.empty();
-        var objJson = JSON.parse(resposta);
-        for (var i in objJson) {
-            corpo.append('<option value="' + objJson[i].id_sala + '">' + objJson[i].nome + '</option>');
-        }
-    }
-
-    function disponibilidade() {
-        var identificador = parseInt(selectSala.val());
-
-        ajaxLoadGET('control/main.php?req=selectHorario&id=' + identificador, jsonParteHorariosDisponiveis, horarios);
-    }
-
-    function jsonParteHorariosDisponiveis(resposta, corpo) {
-        var objJson = JSON.parse(resposta);
-        for (var i in objJson) {
-            corpo.append(
-                '<tr>\n' +
-                '                    <th>' + objJson[i].inicio + ' ás ' + objJson[i].fim + '</th>\n' +
-                '\n' +
-                '                    <td>' + isAtivoX(objJson[i].segunda, objJson[i]) + '</td>\n' +
-                '                    <td>' + isAtivoX(objJson[i].terca, objJson[i]) + '</td>\n' +
-                '                    <td>' + isAtivoX(objJson[i].quarta, objJson[i]) + '</td>\n' +
-                '                    <td>' + isAtivoX(objJson[i].quinta, objJson[i]) + '</td>\n' +
-                '                    <td>' + isAtivoX(objJson[i].sexta, objJson[i]) + '</td>\n' +
-                '                    <td>--</td>\n' +
-                '                </tr>');
-        }
-        if (objJson.length < 1) {
-            corpo.append(
-                '<tr>\n' +
-                '                    <th>--:-- - --:--</th>\n' +
-                '\n' +
-                '                    <td>Nenhuma turma</td>\n' +
-                '                    <td>cadastrada</td>\n' +
-                '                    <td>nesta</td>\n' +
-                '                    <td>sala</td>\n' +
-                '                    <td>--</td>\n' +
-                '                    <td>---</td>\n' +
-                '                </tr>');
-        }
-    }
-
-    function jsonParseProfessor(resposta, corpo) {
-        corpo.empty();
-        var objJson = JSON.parse(resposta);
-        for (var i in objJson) {
-            corpo.append('<option value="' + objJson[i].id_pessoa + '">' + objJson[i].nome + '</option>');
-        }
-    }
-
-    function isAtivoX(num, obj) {
-        if (num === '1') return obj.oficina;
-        else return " ";
-    }
 </script>
 <script src="js/checkboxButton.js"></script>
 

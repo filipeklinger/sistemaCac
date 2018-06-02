@@ -142,17 +142,54 @@ class turma{
         }
     }
 
-    /**
-     * @param $oficinaId
-     * @return string
-     * @throws Exception
-     */
-    private function getOficinaById($oficinaId){
-        return $this->db->select("nome","oficina","id_oficina = ?",array($oficinaId));
-
-    }
     private function redireciona(){
         //depois de inserir redirecionamos para a pagina de infra
         header("Location: ../index.php?pag=DashBoard");
+    }
+
+    /**
+     * @param $turmaId
+     * @return string
+     * @throws Exception
+     */
+    public function getTurmaById($turmaId){
+        $columns =
+            /* turma */
+            "turma.num_vagas,turma.nome_turma,turma.professor,turma.is_ativo,turma.oficina_id,".
+            /* horario_turma_sala */
+            "ano,segunda,terca,quarta,quinta,sexta,inicio,fim,".
+            /* sala */
+            "horario_turma_sala.sala_id,".
+            /* Predio */
+            "sala.predio_id,".
+            /* Oficina */
+            "oficina.nome as oficina"
+        ;
+        $whereClause =
+            "turma.id_turma = horario_turma_sala.turma_id ".
+            " and horario_turma_sala.sala_id = sala.id_sala ".
+            " and turma.oficina_id = oficina.id_oficina".
+            "  and id_turma = ?";
+        return $this->db->select($columns,"turma,horario_turma_sala,sala,oficina",$whereClause,array($turmaId));
+    }
+
+    public function updateTurma($turmaId){
+        echo "Id recebido: ".$turmaId."<br/>";
+        //atualiza turma
+        //atualiza horario da turma
+        //atualiza
+        echo "<table>";
+            foreach ($_POST as $key => $value) {
+                echo "<tr>";
+                echo "<td>";
+                echo $key;
+                echo "</td>";
+                echo "<td>";
+                echo $value;
+                echo "</td>";
+                echo "</tr>";
+            }
+        echo "</table>";
+
     }
 }

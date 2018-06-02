@@ -126,3 +126,88 @@ function getParameterByName(name) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
+/* -----------------------------------------TURMAS--------------------------------------------- */
+
+function carregadorCadTurmas() {
+    //obtendo oficinas
+    ajaxLoadGET('control/main.php?req=selectOficina', jsonParseOficinasTurma, selectOficinaTurma);
+    //obtendo predios
+    ajaxLoadGET('control/main.php?req=selectPredio', jsonParseNomePredios, selectPredioTurma);
+    //obtendo professores
+    ajaxLoadGET('control/main.php?req=selectProfessor', jsonParseProfessorTurma, selectProfTurma);
+    //carregando previamente os itens cadastrados no primeiro predio
+    SalaFromPredioId();
+    disponibilidade();
+
+}
+
+function jsonParseOficinasTurma(resposta, corpo) {
+    corpo.empty();
+    var objJson = JSON.parse(resposta);
+    for (var i in objJson) {
+        corpo.append('<option value="' + objJson[i].id_oficina + '">' + objJson[i].nome + '</option>');
+    }
+}
+
+function SalaFromPredioId() {
+    var identificador = parseInt(selectPredioTurma.val());
+    ajaxLoadGET('control/main.php?req=selectSalaByPredioId&id=' + identificador, jsonParseSalasTurma, selectSala);
+}
+
+function jsonParseSalasTurma(resposta, corpo) {
+    corpo.empty();
+    var objJson = JSON.parse(resposta);
+    for (var i in objJson) {
+        corpo.append('<option value="' + objJson[i].id_sala + '">' + objJson[i].nome + '</option>');
+    }
+}
+
+function disponibilidade() {
+    var identificador = parseInt(selectSalaTurma.val());
+
+    ajaxLoadGET('control/main.php?req=selectHorario&id=' + identificador, jsonParteHorariosDisponiveis, horariosTurma);
+}
+
+function jsonParteHorariosDisponiveis(resposta, corpo) {
+    let objJson = JSON.parse(resposta);
+    for (let i in objJson) {
+        corpo.append(
+            '<tr>\n' +
+            '                    <th>' + objJson[i].inicio + ' ás ' + objJson[i].fim + '</th>\n' +
+            '\n' +
+            '                    <td>' + isAtivoX(objJson[i].segunda, objJson[i]) + '</td>\n' +
+            '                    <td>' + isAtivoX(objJson[i].terca, objJson[i]) + '</td>\n' +
+            '                    <td>' + isAtivoX(objJson[i].quarta, objJson[i]) + '</td>\n' +
+            '                    <td>' + isAtivoX(objJson[i].quinta, objJson[i]) + '</td>\n' +
+            '                    <td>' + isAtivoX(objJson[i].sexta, objJson[i]) + '</td>\n' +
+            '                    <td>--</td>\n' +
+            '                </tr>');
+    }
+    if (objJson.length < 1) {
+        corpo.append(
+            '<tr>\n' +
+            '                    <th>--:-- - --:--</th>\n' +
+            '\n' +
+            '                    <td>Nenhuma turma</td>\n' +
+            '                    <td>cadastrada</td>\n' +
+            '                    <td>nesta</td>\n' +
+            '                    <td>sala</td>\n' +
+            '                    <td>--</td>\n' +
+            '                    <td>---</td>\n' +
+            '                </tr>');
+    }
+}
+
+function jsonParseProfessorTurma(resposta, corpo) {
+    corpo.empty();
+    let objJson = JSON.parse(resposta);
+    for (let i in objJson) {
+        corpo.append('<option value="' + objJson[i].id_pessoa + '">' + objJson[i].nome + '</option>');
+    }
+}
+
+function isAtivoX(num, obj) {
+    if (num === '1') return obj.oficina;
+    else return " ";
+}

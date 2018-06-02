@@ -91,7 +91,7 @@ class infraestrutura{
             try {
                 $columns = array("nome","is_ativo");
                 if($this->db->update($columns,"sala",$params,"id_sala = ?",array($identificador))){
-                    new mensagem(SUCESSO," Sala de ".$nome." atualizado com sucesso!!");
+                    new mensagem(SUCESSO," ".$nome." atualizado com sucesso!!");
                 }else{
                     new mensagem(INSERT_ERRO,"Erro ao atualizar");
                 }
