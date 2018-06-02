@@ -17,11 +17,11 @@
     <div class="container" style="overflow-x: hidden">
         <form id="formEditTurma" action="" method="POST">
             <div class="form-group">
-                <h3>Edição de Turmas - <span id="nomeHeader"></span></h3>
+                <h3>Edição de Turma - <span id="nomeHeader"></span></h3>
             </div>
 
             <div class="form-group">
-                <label class="control-label">OFICINA: <span id="oficina_name"></span></label>
+
                 <div class="input-group" style="color: black">
                     <select id="selectOficina" name="oficina_id" class="selectpicker" title="Escolha uma oficina"
                             hidden="hidden">
@@ -163,11 +163,11 @@
 
 <script>
     //carregando as opcoes de troca
-    var selectPredioTurma = $('#selectPredio');
-    var selectSalaTurma = $('#selectSala');
-    var selectOficinaTurma = $('#selectOficina');
-    var selectProfTurma = $('#selectProf');
-    var horariosTurma = $('#horariosDisponiveis');
+    let selectPredioTurma = $('#selectPredio');
+    let selectSalaTurma = $('#selectSala');
+    let selectOficinaTurma = $('#selectOficina');
+    let selectProfTurma = $('#selectProf');
+    let horariosTurma = $('#horariosDisponiveis');
     $(document).on("load", carregadorCadTurmas());
 
     //carregando as opcoes atuais
@@ -200,17 +200,16 @@
             if(json[0].sexta === "1") $('#sex').click();
 
             //oficina
-            $('#oficina_name').append(json[0].oficina);
-
+            $('#nomeHeader').append(json[0].oficina);
+            //velho e bom JS puro
+            //document.getElementById("selectSala").selectedIndex = 1;//index comeca de zero
             $('#selectPredio option[value='+predioAtual+']').attr('selected','selected');
-            selectPredioTurma.change();
-            $('#selectSala option[value='+salaAtual+']').attr('selected','selected');
-            selectSalaTurma.change();
-            $('#selectProf option[value='+professorAtual+']').attr('selected','selected');
-            selectProfTurma.change();
-            $('#selectOficina option[value='+oficinaAtual+']').attr('selected','selected');
-            selectOficinaTurma.change();
 
+            $('#selectSala option[value='+salaAtual+']').attr('selected','selected');
+
+            $('#selectProf option[value='+professorAtual+']').attr('selected','selected');
+
+            $('#selectOficina option[value='+oficinaAtual+']').attr('selected','selected');
         }
     }
 

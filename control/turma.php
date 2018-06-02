@@ -12,6 +12,7 @@ include_once 'mensagem.php';
 class turma{
     private $db;
     private $oficina,$hinic,$hfim,$vagas,$prof,$sala,$turmaId;
+    private $seg,$ter,$qua,$qui,$sex;
 
     public function __construct(){
         $this->db = new Database();
@@ -21,11 +22,7 @@ class turma{
      * @throws Exception
      */
     public function setTurma(){
-        $this->oficina = $_POST['oficina_id'];
-        $this->prof = $_POST['prof_id'];
-        $this->vagas = $_POST['vagas'];
-        $this->hinic = $_POST['horario_inic'];
-        $this->hfim = $_POST['horario_fim'];
+        $this->getCommonData();
         //inserindo turma
         $this->insertTurma();
         $this->turmaId = $this->db->getLastId();
@@ -35,33 +32,27 @@ class turma{
         $this->redireciona();
     }
 
-    private function insertHorario(){
+    /**
+     * CommonData são os dados que são utilizados no insert e no update
+     */
+    private function getCommonData(){
+        $this->oficina = $_POST['oficina_id'];
+        $this->prof = $_POST['prof_id'];
+        $this->vagas = $_POST['vagas'];
+        $this->hinic = $_POST['horario_inic'];
+        $this->hfim = $_POST['horario_fim'];
+
         $this->sala = isset($_POST['sala_id']) ? $_POST['sala_id'] : INVALIDO;
-        if($this->sala != INVALIDO){
-            $seg = isset($_POST['seg']) ? 1 : 0;
-            $ter = isset($_POST['ter']) ? 1 : 0;
-            $qua = isset($_POST['qua']) ? 1 : 0;
-            $qui = isset($_POST['qui']) ? 1 : 0;
-            $sex = isset($_POST['sex']) ? 1 : 0;
-
-            $ano = date('Y')."";
-            $columns = "ano,sala_id,segunda,terca,quarta,quinta,sexta,inicio,fim,turma_id";
-            $params = array($ano,$this->sala,$seg,$ter,$qua,$qui,$sex,$this->hinic,$this->hfim,$this->turmaId);
-            try {
-                if($this->db->insert($columns, "horario_turma_sala", $params)){
-                    new mensagem(SUCESSO,"Cadastrado com sucesso");
-                }else{
-                    new mensagem(INSERT_ERRO,"Erro ao cadastrar");
-                }
-            } catch (Exception $e) {
-                new mensagem(ERRO,"Erro: ".$e);
-            }
-        }
-
-
+        //horario
+        $this->seg = isset($_POST['seg']) ? 1 : 0;
+        $this->ter = isset($_POST['ter']) ? 1 : 0;
+        $this->qua = isset($_POST['qua']) ? 1 : 0;
+        $this->qui = isset($_POST['qui']) ? 1 : 0;
+        $this->sex = isset($_POST['sex']) ? 1 : 0;
     }
 
     /**
+     * Popula a Tabela de Turmas
      * @throws Exception
      */
     private function insertTurma(){
@@ -77,7 +68,6 @@ class turma{
         $is_ativo = SIM;
         $columns = "criacao_turma,oficina_id,num_vagas,nome_turma,professor,is_ativo";
         $params = array($criacao_turma,$this->oficina,$this->vagas,$nome_turma,$this->prof,$is_ativo);
-        print_r($params);
         try {
             if($this->db->insert($columns, "turma", $params)){
                 new mensagem(SUCESSO,"Turma cadastrada com sucesso");
@@ -88,12 +78,31 @@ class turma{
     }
 
     /**
+     * Popula a tabela horario_turma_sala
+     * @throws Exception
+     */
+    private function insertHorario(){
+        if ($this->sala != INVALIDO) {
+            $ano = date('Y') . "";
+            $columns = "ano,sala_id,segunda,terca,quarta,quinta,sexta,inicio,fim,turma_id";
+            $params = array($ano, $this->sala, $this->seg, $this->ter, $this->qua, $this->qui, $this->sex, $this->hinic, $this->hfim, $this->turmaId);
+            if ($this->db->insert($columns, "horario_turma_sala", $params)) {
+                new mensagem(SUCESSO, "Cadastrado com sucesso");
+            } else {
+                new mensagem(INSERT_ERRO, "Erro ao cadastrar");
+            }
+        }
+    }
+
+
+    /**
      * @param $oficinaId Integer
      * @return string
      * @throws Exception
      */
     private function getTurmaByOficinaId($oficinaId){
-        return $this->db->select("id_turma,oficina_id,num_vagas,nome_turma,professor,is_ativo","turma","oficina_id = ? and is_ativo = ?",array($oficinaId,1));
+        $projection = "id_turma,oficina_id,num_vagas,nome_turma,professor,is_ativo";
+        return $this->db->select($projection,"turma","oficina_id = ? and is_ativo = ?",array($oficinaId,1));
     }
 
     public function getTurmasAtivas(){
@@ -108,13 +117,14 @@ class turma{
             $joinClause = " LEFT JOIN horario_turma_sala ON id_turma = turma_id";
 
             $whereClause = "professor=id_pessoa and id_oficina=oficina_id and sala_id = id_sala and predio_id = id_predio and turma.is_ativo = ?";
-            $whereArgs = array(SIM);
+            $whereArgs = array(SIM);//Ativo = Sim
             return $this->db->select($projection,$table.$joinClause , $whereClause,$whereArgs);
         } catch (Exception $e) {
             new mensagem(ERRO,"Erro: ".$e);
             return "";
         }
     }
+
     public function getTurmas(){
         //aqui mostramos todas as turmas ativas ou nao
         try {
@@ -142,10 +152,6 @@ class turma{
         }
     }
 
-    private function redireciona(){
-        //depois de inserir redirecionamos para a pagina de infra
-        header("Location: ../index.php?pag=DashBoard");
-    }
 
     /**
      * @param $turmaId
@@ -154,17 +160,11 @@ class turma{
      */
     public function getTurmaById($turmaId){
         $columns =
-            /* turma */
-            "turma.num_vagas,turma.nome_turma,turma.professor,turma.is_ativo,turma.oficina_id,".
-            /* horario_turma_sala */
-            "ano,segunda,terca,quarta,quinta,sexta,inicio,fim,".
-            /* sala */
-            "horario_turma_sala.sala_id,".
-            /* Predio */
-            "sala.predio_id,".
-            /* Oficina */
-            "oficina.nome as oficina"
-        ;
+            "turma.num_vagas,turma.nome_turma,turma.professor,turma.is_ativo,turma.oficina_id,"./* turma */
+            "ano,segunda,terca,quarta,quinta,sexta,inicio,fim,"./* horario_turma_sala */
+            "horario_turma_sala.sala_id,"./* sala */
+            "sala.predio_id,"./* Predio */
+            "oficina.nome as oficina";/* Oficina */
         $whereClause =
             "turma.id_turma = horario_turma_sala.turma_id ".
             " and horario_turma_sala.sala_id = sala.id_sala ".
@@ -179,29 +179,17 @@ class turma{
      */
     public function updateTurma($turmaId){
         //recebendo dados
-        $this->vagas = $_POST['vagas'];
-        $this->prof = $_POST['prof_id'];
+        $this->getCommonData();
         $ativo = SIM;
 
         //atualiza turma
         $turmaColumns = array("num_vagas","professor","is_ativo");
         $turmaParams = array($this->vagas,$this->prof,$ativo);
         if($this->db->update($turmaColumns,"turma",$turmaParams,"id_turma = ?",array($turmaId))){
-
             //Somente vai tentar atualizar os horarios se a tuma for atualizada
-            //recebendo dados
-            $this->sala = isset($_POST['sala_id']) ? $_POST['sala_id'] : INVALIDO;
-            $seg = isset($_POST['seg']) ? 1 : 0;
-            $ter = isset($_POST['ter']) ? 1 : 0;
-            $qua = isset($_POST['qua']) ? 1 : 0;
-            $qui = isset($_POST['qui']) ? 1 : 0;
-            $sex = isset($_POST['sex']) ? 1 : 0;
-
-            $this->hinic = $_POST['horario_inic'];
-            $this->hfim = $_POST['horario_fim'];
-
             $horarioColumns = array("sala_id","segunda","terca","quarta","quinta","sexta","inicio","fim");
-            $horarioParams = array($this->sala,$seg,$ter,$qua,$qui,$sex,$this->hinic,$this->hfim);
+            $horarioParams = array($this->sala,$this->seg,$this->ter,$this->qua,$this->qui,$this->sex,$this->hinic,$this->hfim);
+
             if($this->db->update($horarioColumns,"horario_turma_sala",$horarioParams,"turma_id = ?",array($turmaId))){
                 new mensagem(SUCESSO,"Turma e Horarios Atualizados");
             }else{
@@ -211,7 +199,6 @@ class turma{
         }else{
             new mensagem(INSERT_ERRO,"Não foi possivel atualizar");
         }
-
         $this->redireciona();
 
         /*/atualiza
@@ -229,5 +216,10 @@ class turma{
         echo "</table>";
         */
 
+    }
+
+    private function redireciona(){
+        //depois de inserir redirecionamos para a pagina de infra
+        header("Location: ../index.php?pag=DashBoard");
     }
 }
