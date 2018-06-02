@@ -16,20 +16,19 @@
     <div class="container" style="overflow-x: hidden">
         <h2 class="" style="">Cadastro de Turmas</h2>
         <br><br>
-        <div class="form-group">
-            <label class="control-label">ESCOLHA DE OFICINA</label>
-            <div class="">
+
 
              <form action="control/main.php?req=insertTurma" method="POST">
+                 <div class="form-group">
+                     <label class="control-label">ESCOLHA DE OFICINA</label>
 
-                <div class="input-group" style="color: black">
+                     <div class="input-group" style="color: black">
                     <select id="selectOficina" name="oficina_id" class="selectpicker" title="Escolha uma oficina"
                             required="required">
                         <option value="1">Selecione uma Oficina</option>
                     </select>
 
                 </div><!-- /input-group -->
-            </div>
         </div><!-- /form-group -->
 
         <!-- Predios disponiveis -->
