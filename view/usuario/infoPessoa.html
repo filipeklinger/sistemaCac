@@ -31,6 +31,13 @@
         <p>Parentesco: <span id="parentesco"></span> </p>
 
     </div>
+
+    <h4 style="padding-top: 15px;">Endereço</h4>
+    <hr/>
+    <p> <span id="rua"></span> <span id="numero"></span>, <span id="complemento"></span> </p>
+    <p>Bairro: <span id="bairro"></span>, <span id="cidade"></span> - <span id="estado"></span> </p>
+
+
     <div id="ruralino" hidden="hidden" style="padding-top: 15px;">
         <div class="carr"></div>
         <h4 >Aluno da Rural</h4>
@@ -39,6 +46,10 @@
         <p>Matricula: <span id="matricula"></span> </p>
         <p>Bolsista do CAC: <span id="bolsista"></span> </p>
     </div>
+
+    <h4 style="padding-top: 15px;">Documentação</h4>
+    <hr/>
+    <p> <span id="tipoDoc"></span> <span id="numeroDoc"></span></p>
 
     <div id="dependentes" hidden="hidden">
 
@@ -66,6 +77,7 @@ function jsonParseInfoPessoa(json, corpo) {
         loadMenor();
     } else{
         loadTel(identificador);
+        loadEnd(identificador);
     }
     if(objJson[0].ruralino === "1") loadRuralino();
 }
@@ -81,6 +93,7 @@ function loadMenor() {
         $('#parentesco').append(objJson[0].parentesco);
 
         loadTel(objJson[0].responsavel_id);
+        loadEnd(objJson[0].responsavel_id);
     }
 }
 
@@ -121,6 +134,21 @@ function loadTel(id) {
             default:
                 return "...";
         }
+
+    }
+}
+
+function loadEnd(id) {
+    ajaxLoadGET('control/main.php?req=selectEndereco&id='+id, parseEnd, '.carr');
+
+    function parseEnd(json,corpo) {
+        var objJson = JSON.parse(json);
+        $('#rua').append(objJson[0].rua);
+        $('#numero').append(objJson[0].numero);
+        $('#complemento').append(objJson[0].complemento);
+        $('#bairro').append(objJson[0].bairro);
+        $('#cidade').append(objJson[0].cidade);
+        $('#estado').append(objJson[0].estado);
 
     }
 }

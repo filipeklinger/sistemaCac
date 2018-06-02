@@ -297,13 +297,23 @@ class pessoa{
     }
 
     /**
-     * @param $identificador
+     * @param $pessoaId
      * @return string
      * @throws Exception
      */
-    public function getTelefoneByPessoaId($identificador){
-        return $this->db->select("numero,tipo_telefone as tipo","telefone","pessoa_id = ?",array($identificador));
+    public function getTelefone($pessoaId){
+        return $this->db->select("numero,tipo_telefone as tipo","telefone","pessoa_id = ?",array($pessoaId));
     }
+
+    /**
+     * @param $pessoaId
+     * @return string
+     * @throws Exception
+     */
+    public function getEndereco($pessoaId){
+        return $this->db->select("rua,numero,complemento,bairro,cidade,estado","endereco","pessoa_id = ?",array($pessoaId));
+    }
+
     private function redireciona(){header("Location: ../index.php?pag=Login");}
 
 }
