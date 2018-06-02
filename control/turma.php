@@ -173,11 +173,48 @@ class turma{
         return $this->db->select($columns,"turma,horario_turma_sala,sala,oficina",$whereClause,array($turmaId));
     }
 
+    /**
+     * @param $turmaId
+     * @throws Exception
+     */
     public function updateTurma($turmaId){
-        echo "Id recebido: ".$turmaId."<br/>";
+        //recebendo dados
+        $this->vagas = $_POST['vagas'];
+        $this->prof = $_POST['prof_id'];
+        $ativo = SIM;
+
         //atualiza turma
-        //atualiza horario da turma
-        //atualiza
+        $turmaColumns = array("num_vagas","professor","is_ativo");
+        $turmaParams = array($this->vagas,$this->prof,$ativo);
+        if($this->db->update($turmaColumns,"turma",$turmaParams,"id_turma = ?",array($turmaId))){
+
+            //Somente vai tentar atualizar os horarios se a tuma for atualizada
+            //recebendo dados
+            $this->sala = isset($_POST['sala_id']) ? $_POST['sala_id'] : INVALIDO;
+            $seg = isset($_POST['seg']) ? 1 : 0;
+            $ter = isset($_POST['ter']) ? 1 : 0;
+            $qua = isset($_POST['qua']) ? 1 : 0;
+            $qui = isset($_POST['qui']) ? 1 : 0;
+            $sex = isset($_POST['sex']) ? 1 : 0;
+
+            $this->hinic = $_POST['horario_inic'];
+            $this->hfim = $_POST['horario_fim'];
+
+            $horarioColumns = array("sala_id","segunda","terca","quarta","quinta","sexta","inicio","fim");
+            $horarioParams = array($this->sala,$seg,$ter,$qua,$qui,$sex,$this->hinic,$this->hfim);
+            if($this->db->update($horarioColumns,"horario_turma_sala",$horarioParams,"turma_id = ?",array($turmaId))){
+                new mensagem(SUCESSO,"Turma e Horarios Atualizados");
+            }else{
+                new mensagem(INSERT_ERRO,"Erro ao atualizar horario da turma");
+            }
+
+        }else{
+            new mensagem(INSERT_ERRO,"Não foi possivel atualizar");
+        }
+
+        $this->redireciona();
+
+        /*/atualiza
         echo "<table>";
             foreach ($_POST as $key => $value) {
                 echo "<tr>";
@@ -190,6 +227,7 @@ class turma{
                 echo "</tr>";
             }
         echo "</table>";
+        */
 
     }
 }
