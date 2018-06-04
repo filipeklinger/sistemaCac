@@ -211,3 +211,103 @@ function isAtivoX(num, obj) {
     if (num === '1') return obj.oficina;
     else return " ";
 }
+
+/* ------------------------------------------------USUARIOS-----------------------------------------------------------*/
+
+function loadMenor() {
+    $('#menorIdade').removeAttr("hidden");
+    ajaxLoadGET('control/main.php?req=selectResponsavelByMenorId&id='+identificador, parseMenor, '.carr');
+    function parseMenor(json,corpo) {
+        var objJson = JSON.parse(json);
+        $('#menorIdade').removeAttr("hidden");
+        $('#respnome').append(objJson[0].nome);
+        $('#respsobrenome').append(objJson[0].sobrenome);
+        $('#parentesco').append(objJson[0].parentesco);
+
+        loadTel(objJson[0].responsavel_id);
+        loadEnd(objJson[0].responsavel_id);
+    }
+}
+
+function loadRuralino() {
+    $('#ruralino').removeAttr("hidden");
+    ajaxLoadGET('control/main.php?req=selectRuralinoByPessoaId&id='+identificador, parseRuralino, '.carr');
+    function parseRuralino(json,corpo) {
+        var objJson = JSON.parse(json);
+        $('#matricula').append(objJson[0].matricula);
+        $('#curso').append(objJson[0].curso);
+        $('#bolsista').append(isAtivo(objJson[0].bolsista));
+    }
+}
+
+
+function loadTel(id) {
+    ajaxLoadGET('control/main.php?req=selectTelefoneByPessoaId&id='+id, parseTel, '#tels');
+
+    function parseTel(json,corpo) {
+        jsonContato = json;
+        var objJson = JSON.parse(json);
+        for(i in objJson){
+            corpo.append('<p>Telefone ('+getTelType(objJson[i].tipo)+'): '+objJson[i].numero+'</p>');
+        }
+    }
+
+    function getTelType(num) {
+        num = parseInt(num);
+        switch (num){
+            case 1:
+                return "celular";
+            case 2:
+                return "Whatsapp";
+            case 3:
+                return "Fixo";
+            case 4:
+                return "Recados";
+            default:
+                return "...";
+        }
+
+    }
+}
+
+function loadEnd(id) {
+    ajaxLoadGET('control/main.php?req=selectEndereco&id='+id, parseEnd, '.carr');
+
+    function parseEnd(json,corpo) {
+        var objJson = JSON.parse(json);
+        $('#rua').append(objJson[0].rua);
+        $('#numero').append(objJson[0].numero);
+        $('#complemento').append(objJson[0].complemento);
+        $('#bairro').append(objJson[0].bairro);
+        $('#cidade').append(objJson[0].cidade);
+        $('#estado').append(objJson[0].estado);
+
+    }
+}
+
+function loadDocument() {
+    ajaxLoadGET('control/main.php?req=selectDocumento&id='+identificador, parseDocumento, '.carr');
+    $('#documentos').removeAttr("hidden");
+    function parseDocumento(resposta,corpo){
+        let json = JSON.parse(resposta);
+        $('#tipoDoc').append(documenTipo(json[0].tipo_documento));
+        $('#numeroDoc').append(json[0].numero_documento);
+    }
+
+    function documenTipo(num) {
+        if(num === "1") return "Registro Geral (RG)";
+        return "Passaporte";
+    }
+}
+
+function loadDepententes() {
+    ajaxLoadGET('control/main.php?req=selectDependentes&id='+identificador, parseDependentes,'#dep');
+    $('#dependentes').removeAttr("hidden");
+
+    function parseDependentes(resposta,corpo) {
+        let json = JSON.parse(resposta);
+        for(i in json){
+            corpo.append('<p>Nome: '+json[i].nome + "&nbsp;" + json[i].sobrenome + "</p>");
+        }
+    }
+}

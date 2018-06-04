@@ -12,7 +12,9 @@ class pessoa{
     private $db;
 
     //Dados basicos
-    private $nv,$docNumber,$docType;
+    private $nome,$sobrenome,$nascimento,$nv;
+    //Documentos
+    private $docNumber,$docType;
     //contato
     private $respTel,$respTelType;
     //Endereco
@@ -28,50 +30,62 @@ class pessoa{
         $this->db = new Database();
     }
 
-
-    /**
-     * um usuário pode cadastrar varios dependentes (menores de idade)
-     * @throws Exception
-     */
-    public function setPessoa(){
-
+    private function checkAcessLevel(){
         if (isset($_SESSION['NIVEL']) and $_SESSION['NIVEL'] == "Administrador") {//se não for adm o nivel é automaticamente aluno
             $this->nv = isset($_POST['nv_acesso']) ? $_POST['nv_acesso'] : VISITANTE;//se der erro fica como visitante
         } else {
             $this->nv = ALUNO;
         }
-        //-----------------DADOS BASICOS------------------------------
-        $nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
-        $sobrenome = isset($_POST['sobrenome']) ? $_POST['sobrenome'] : INVALIDO;
-        $nascimento = isset($_POST['nascimento']) ? $_POST['nascimento'] : INVALIDO;
-        $ruralino = isset($_POST['ruralino']) ? SIM : NAO;
+    }
 
-        $this->responsavelID = $this->insertDadosBasicos($nome,$sobrenome,$this->nv,NAO,$ruralino,$nascimento);//recuperamos o ID do adulto cadastrado
-        if($this->responsavelID != null and $this->responsavelID != INVALIDO){
-            new mensagem(SUCESSO,$nome." cadastrado com sucesso");
-        }else{
-            new mensagem(INSERT_ERRO,"Erro ao cadastrar");
-        }
-        //---------------Contato------------------------------------------------------------------
-        $this->respTel = isset($_POST['resp_tel']) ? $_POST['resp_tel'] : INVALIDO;
-        $this->respTelType = isset($_POST['resp_tel_type']) ? $_POST['resp_tel_type'] : INVALIDO;
-        
-        $this->insertContato();
-        //---------------Documentos-----------------------------------------------------------------
-        $this->docType = isset($_POST['doc_type']) ? $_POST['doc_type'] : INVALIDO;
-        $this->docNumber = isset($_POST['doc_number']) ? $_POST['doc_number'] : INVALIDO;
+    private function receiveDadosBasicos(){
+        $this->nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
+        $this->sobrenome = isset($_POST['sobrenome']) ? $_POST['sobrenome'] : INVALIDO;
+        $this->nascimento = isset($_POST['nascimento']) ? $_POST['nascimento'] : INVALIDO;
+    }
 
-        $this->insertDocumento();
-
-        //----------------------Endereço---------------------------------------------
-
+    private function receiveEndereco(){
         $this->rua = isset($_POST['rua']) ? $_POST['rua'] : INVALIDO;
         $this->numero = isset($_POST['numero']) ? $_POST['numero'] : INVALIDO;
         $this->complemento = isset($_POST['complemento']) ? $_POST['complemento'] : INVALIDO;
         $this->bairro = isset($_POST['bairro']) ? $_POST['bairro'] : INVALIDO;
         $this->cidade = isset($_POST['cidade']) ? $_POST['cidade'] : INVALIDO;
         $this->estado = isset($_POST['estado']) ? $_POST['estado'] : INVALIDO;
+    }
 
+    private function receiveDocumento(){
+        $this->docType = isset($_POST['doc_type']) ? $_POST['doc_type'] : INVALIDO;
+        $this->docNumber = isset($_POST['doc_number']) ? $_POST['doc_number'] : INVALIDO;
+    }
+
+    private function receiveContato(){
+        $this->respTel = isset($_POST['resp_tel']) ? $_POST['resp_tel'] : INVALIDO;
+        $this->respTelType = isset($_POST['resp_tel_type']) ? $_POST['resp_tel_type'] : INVALIDO;
+    }
+
+    /**
+     * um usuário pode cadastrar varios dependentes (menores de idade)
+     * @throws Exception
+     */
+    public function setPessoa(){
+        $this->checkAcessLevel();
+        $this->receiveDadosBasicos();
+        $ruralino = isset($_POST['ruralino']) ? SIM : NAO;
+
+        $this->responsavelID = $this->insertDadosBasicos($this->nome,$this->sobrenome,$this->nv,NAO,$ruralino,$this->nascimento);//recuperamos o ID do adulto cadastrado
+        if($this->responsavelID != null and $this->responsavelID != INVALIDO){
+            new mensagem(SUCESSO,$this->nome." cadastrado com sucesso");
+        }else{
+            new mensagem(INSERT_ERRO,"Erro ao cadastrar");
+        }
+        //---------------Contato------------------------------------------------------------------
+        $this->receiveContato();
+        $this->insertContato();
+        //---------------Documentos-----------------------------------------------------------------
+        $this->receiveDocumento();
+        $this->insertDocumento();
+
+        $this->receiveEndereco();
         $this->insertEndereco();
         //---------------------------RURALINO--------------------------
         if (isset($_POST['ruralino']) and $_POST['ruralino'] == "on") {
@@ -269,6 +283,7 @@ class pessoa{
     }
 
     /**
+     * @param $identificador
      * @return string
      * @throws Exception
      */
@@ -314,6 +329,99 @@ class pessoa{
         return $this->db->select("rua,numero,complemento,bairro,cidade,estado","endereco","pessoa_id = ?",array($pessoaId));
     }
 
+    /**
+     * @param $pessoaId
+     * @return string
+     * @throws Exception
+     */
+    public function getDocumento($pessoaId){
+        return $this->db->select("numero_documento,tipo_documento","documento","pessoa_id = ?",array($pessoaId));
+    }
+
+    /**
+     * @param $responsavelId
+     * @return string
+     */
+    public function getDependentes($responsavelId){
+        try {
+            return $this->db->select("nome,sobrenome,responsavel_parentesco", "menor_idade,pessoa", "responsavel_id = ? and pessoa_id = id_pessoa", array($responsavelId));
+        } catch (Exception $e) {
+            return "";
+        }
+    }
+
+    //---------------------------------------------UPDATE---------------------------------------------------------------
+
+    /**
+     * @param $pessoaId
+     * @throws Exception
+     */
+    public function updateDadosBasicos($pessoaId){
+        $this->checkAcessLevel();
+        $this->receiveDadosBasicos();
+        $colunms = array("nome","sobrenome","nv_acesso","data_nascimento");
+        $params =array($this->nome,$this->sobrenome,$this->nv,$this->nascimento);
+
+        if($this->db->update($colunms,"pessoa",$params,"id_pessoa = ?",array($pessoaId))){
+            new mensagem(SUCESSO,"Cadastro Atualizado");
+        }else{
+            new mensagem(INSERT_ERRO,"Não foi possivel atualizar");
+        }
+
+        $this->redirecionaPagAnterior();
+    }
+
+    public function updateContato($pessoaId){
+        $this->receiveContato();
+        $columns = array("numero","tipo_telefone");
+        $params = array($this->respTel,$this->respTelType);
+
+        if($this->db->update($columns,"telefone",$params,"pessoa_id = ?",array($pessoaId))){
+            new mensagem(SUCESSO,"Telefone atualizado");
+        }else{
+            new mensagem(INSERT_ERRO,"Erro ao atualizar telefone");
+        }
+
+        $this->redirecionaPagAnterior();
+    }
+
+    /**
+     * @param $pessoaId
+     * @throws Exception
+     */
+    public function updateEndereco($pessoaId){
+        $this->receiveEndereco();
+        $columns = array("rua","numero","complemento","bairro","cidade","estado");
+        $params = array($this->rua,$this->numero,$this->complemento,$this->bairro,$this->cidade,$this->estado);
+
+        if($this->db->update($columns,"endereco",$params,"pessoa_id = ?",array($pessoaId))){
+            new mensagem(SUCESSO,"Cadastro Atualizado com Sucesso");
+        }else{
+            new mensagem(INSERT_ERRO,"Erro ao atualizar endereço");
+        }
+        $this->redirecionaPagAnterior();
+    }
+
+    /**
+     * @param $pessoaId
+     * @throws Exception
+     */
+    public function updateDocument($pessoaId){
+        $this->receiveDocumento();
+        $columns = array("numero_documento","tipo_documento");
+        $params = array($this->docNumber,$this->docType);
+
+        if($this->db->update($columns,"documento",$params,"pessoa_id = ?",array($pessoaId))){
+            new mensagem(SUCESSO,"Documento atualizado");
+        }else{
+            new mensagem(INSERT_ERRO,"Não foi possivel atualizar");
+        }
+        $this->redirecionaPagAnterior();
+    }
+
+    //---------------------------------------------REDIRECT-------------------------------------------------------------
     private function redireciona(){header("Location: ../index.php?pag=Login");}
+
+    private function redirecionaPagAnterior(){header("Location: " . $_SERVER['HTTP_REFERER'] . "");}
 
 }

@@ -122,6 +122,30 @@ class main{
                 $pess = new pessoa();
                 echo $pess->getEndereco($_GET['id']);
                 break;
+            case "selectDocumento":
+                $pess = new pessoa();
+                echo $pess->getDocumento($_GET['id']);
+                break;
+            case "selectDependentes":
+                $pess = new pessoa();
+                echo $pess->getDependentes($_GET['id']);
+                break;
+            case "updateDadosBasicos":
+                $pess = new pessoa();
+                $pess->updateDadosBasicos($_GET['id']);
+                break;
+            case "updateEndereco":
+                $pess = new pessoa();
+                $pess->updateEndereco($_GET['id']);
+                break;
+            case "updateDoc":
+                $pess = new pessoa();
+                $pess->updateDocument($_GET['id']);
+                break;
+            case "updateContato":
+                $pess = new pessoa();
+                $pess->updateContato($_GET['id']);
+                break;
             //Oficina
             case "insertOficina":
                 $ofic = new oficina();

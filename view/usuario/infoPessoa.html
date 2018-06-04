@@ -1,4 +1,12 @@
 <body>
+
+<!-- TODO remover essa gambiarra aqui  -->
+<style>
+    .usuario input,select{
+        color: #0f0f0f;
+    }
+</style>
+
 <div class="usuario">
     <div class="header">
         <nav class="navbar navbar-default">
@@ -11,32 +19,37 @@
             </div>
         </nav>
 
-
+        <p id="avisos"></p>
 </div>
     <h3 class="text-center">Visualizando dados de <span class="nome"></span></h3>
 
-    <h4>Dados Básicos</h4>
+    <h4 id="dadosBasicos">Dados Básicos</h4>
     <hr/>
+    <div id="nomeNasc">
     <p>Nome: <span class="nome"> </span> <span id="sobrenome"></span> </p>
     <p>data nascimento: <span id="nasc"></span> </p>
-    <div id="tels">
-
     </div>
 
+    <div style="padding-top: 15px;">
+        <h4 id="contato">Telefone</h4>
+        <hr/>
+        <div id="tels"></div>
+    </div>
     <div id="menorIdade" hidden="hidden" style="padding-top: 15px;">
         <div class="carr"></div>
-        <h4 >Dados do Responsavel</h4>
+        <h4 class="text-center">Dados do Responsavel</h4>
         <hr/>
         <p>Nome: <span id="respnome"></span> <span id="respsobrenome"></span> </p>
         <p>Parentesco: <span id="parentesco"></span> </p>
 
     </div>
 
-    <h4 style="padding-top: 15px;">Endereço</h4>
+    <h4 id="endereco" style="padding-top: 15px;">Endereço</h4>
     <hr/>
-    <p> <span id="rua"></span> <span id="numero"></span>, <span id="complemento"></span> </p>
-    <p>Bairro: <span id="bairro"></span>, <span id="cidade"></span> - <span id="estado"></span> </p>
-
+    <div id="end">
+        <p> <span id="rua"></span>, <span id="numero"></span> <span id="complemento"></span> </p>
+        <p>Bairro: <span id="bairro"></span>, <span id="cidade"></span> - <span id="estado"></span> </p>
+    </div>
 
     <div id="ruralino" hidden="hidden" style="padding-top: 15px;">
         <div class="carr"></div>
@@ -47,11 +60,19 @@
         <p>Bolsista do CAC: <span id="bolsista"></span> </p>
     </div>
 
-    <h4 style="padding-top: 15px;">Documentação</h4>
-    <hr/>
-    <p> <span id="tipoDoc"></span> <span id="numeroDoc"></span></p>
+    <div id="documentos" hidden="hidden" style="padding-top: 15px;">
+        <h4 id="docLabel">Documentação</h4>
+        <hr/>
+        <div id="docs">
+            <p>Tipo: <span id="tipoDoc"></span></p>
+            <p> Numeração: <span id="numeroDoc"></span></p>
+        </div>
+    </div>
 
-    <div id="dependentes" hidden="hidden">
+    <div id="dependentes" hidden="hidden" style="padding-top: 15px;">
+        <h4 >Dependentes </h4>
+        <hr/>
+        <div id="dep"></div>
 
     </div>
 
@@ -60,17 +81,19 @@
 $('#tbody').on("load", loader());
 
 var identificador;
-
+var jsonContato;
 
 function loader() {
     identificador = parseInt(getParameterByName('id'));
     getMsgs();
     ajaxLoadGET('control/main.php?req=selectPessoaById&id='+identificador, jsonParseInfoPessoa, '#toficinas');
+    addBtnEdicaoPessoa();
 }
 
 function jsonParseInfoPessoa(json, corpo) {
-    var objJson = JSON.parse(json);
-    $('.nome').append(objJson[0].nome);
+    let objJson = JSON.parse(json);
+    nome = objJson[0].nome
+    $('.nome').append(nome);
     $('#sobrenome').append(objJson[0].sobrenome);
     $('#nasc').append(objJson[0].data_nascimento);
     if(objJson[0].menor_idade === "1"){
@@ -78,81 +101,109 @@ function jsonParseInfoPessoa(json, corpo) {
     } else{
         loadTel(identificador);
         loadEnd(identificador);
+        loadDocument();
+        loadDepententes();
     }
     if(objJson[0].ruralino === "1") loadRuralino();
 }
 
-function loadMenor() {
-    $('#menorIdade').removeAttr("hidden");
-    ajaxLoadGET('control/main.php?req=selectResponsavelByMenorId&id='+identificador, parseMenor, '.carr');
-    function parseMenor(json,corpo) {
-        var objJson = JSON.parse(json);
-        $('#menorIdade').removeAttr("hidden");
-        $('#respnome').append(objJson[0].nome);
-        $('#respsobrenome').append(objJson[0].sobrenome);
-        $('#parentesco').append(objJson[0].parentesco);
-
-        loadTel(objJson[0].responsavel_id);
-        loadEnd(objJson[0].responsavel_id);
-    }
+function addBtnEdicaoPessoa() {
+    $('#dadosBasicos').append('&nbsp; <button id="btNome" onclick="editUsuarioNome()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
+    $('#contato').append('&nbsp; <button id="btnCont" onclick="editUsuarioContato()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
+    $('#endereco').append('&nbsp; <button id="btnEnd" onclick="editUsuarioEndereco()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
+    $('#docLabel').append('&nbsp; <button id="btnDoc" onclick="editUsuarioDocumento()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
+    $('#dependentes h4').append('&nbsp; <button id="btnDeps" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
+    $('#dependentes h4').append('&nbsp; <button id="btnDeps" class="btn btn-primary"><span class=\'glyphicon glyphicon-plus\'></span></button>');
 }
 
-function loadRuralino() {
-    $('#ruralino').removeAttr("hidden");
-    ajaxLoadGET('control/main.php?req=selectRuralinoByPessoaId&id='+identificador, parseRuralino, '.carr');
-    function parseRuralino(json,corpo) {
-        var objJson = JSON.parse(json);
-        $('#matricula').append(objJson[0].matricula);
-        $('#curso').append(objJson[0].curso);
-        $('#bolsista').append(isAtivo(objJson[0].bolsista));
-    }
+function editUsuarioNome() {
+    $('#btNome').removeAttr("onclick");
+    let dadosBasicos = $('#nomeNasc');
+    let sobrenome = $('#sobrenome').text();
+    let nasc = $('#nasc').text();
+    dadosBasicos.empty();
+    dadosBasicos.append(
+        '<form action="control/main.php?req=updateDadosBasicos&id='+identificador+'" method="POST">' +
+        '<p>Nome: <input type=\'text\' name=\'nome\' value="'+nome+'" required="required"></p>' +
+        '<p>Sobrenome: <input type="text" name="sobrenome" value="'+sobrenome+'" required="required"></p>' +
+        '<p>Data nascimento: <input type="date" name="nascimento" value="'+nasc+'" required="required"> </p>' +
+        '<br/><input type="submit" class="btn btn-primary" value="Gravar"/>' +
+        '</form>');
 }
 
-
-function loadTel(id) {
-    ajaxLoadGET('control/main.php?req=selectTelefoneByPessoaId&id='+id, parseTel, '#tels');
-
-    function parseTel(json,corpo) {
-        var objJson = JSON.parse(json);
-        for(i in objJson){
-            corpo.append('<p>Telefone ('+getTelType(objJson[i].tipo)+'): '+objJson[i].numero+'</p>');
+function editUsuarioContato() {
+    $('#btnCont').removeAttr("onclick");
+    let tels = $('#tels');
+    let acm = '<form action="control/main.php?req=updateContato&id='+identificador+'" method="POST">';
+    let tipo = 0;
+    tels.empty();
+    if(jsonContato !== null){
+        jsonContato = JSON.parse(jsonContato);
+        for(i in jsonContato){
+            tipo = jsonContato[i].tipo;
+            acm += '<p>Tel: <input type="number" name="resp_tel" value="'+jsonContato[i].numero+'" required="required">' +
+                'Tipo: <select id="resp_tel_type" name="resp_tel_type">\n' +
+                '                        <option value="2" '+verTp(tipo,2)+'>Whatsapp</option>\n' +
+                '                        <option value="1"'+verTp(tipo,1)+'>Celular</option>\n' +
+                '                        <option value="3"'+verTp(tipo,3)+'>Fixo (residencial)</option>\n' +
+                '                        <option value="4"'+verTp(tipo,4)+'>Recados</option>\n' +
+                '                    </select>' +
+                '</p>';
         }
     }
+    acm += '<br/><input type="submit" class="btn btn-primary" value="Gravar"/></form>';
+    tels.append(acm);
 
-    function getTelType(num) {
-        num = parseInt(num);
-        switch (num){
-            case 1:
-                return "celular";
-                break;
-            case 2:
-                return "Whatsapp";
-            case 3:
-                return "Fixo";
-            case 4:
-                return "Recados";
-            default:
-                return "...";
-        }
-
+    function verTp(tp,val) {
+        if(parseInt(tp) === parseInt(val)) return 'selected';
+        return '';
     }
 }
 
-function loadEnd(id) {
-    ajaxLoadGET('control/main.php?req=selectEndereco&id='+id, parseEnd, '.carr');
-
-    function parseEnd(json,corpo) {
-        var objJson = JSON.parse(json);
-        $('#rua').append(objJson[0].rua);
-        $('#numero').append(objJson[0].numero);
-        $('#complemento').append(objJson[0].complemento);
-        $('#bairro').append(objJson[0].bairro);
-        $('#cidade').append(objJson[0].cidade);
-        $('#estado').append(objJson[0].estado);
-
-    }
+function editUsuarioEndereco() {
+    $('#btnEnd').removeAttr("onclick");
+    let end = $('#end');
+    //Obtendo dados atuais
+    let rua = $('#rua').text();
+    let numero = $('#numero').text();
+    let complemento = $('#complemento').text();
+    let bairro = $('#bairro').text();
+    let cidade = $('#cidade').text();
+    let estado = $('#estado').text();
+    end.empty();
+    //Inserindo campos de edicao
+    end.append(
+        '<form action="control/main.php?req=updateEndereco&id='+identificador+'" method="POST">' +
+        '<p>Rua: <input type=\'text\' name=\'rua\' value="'+rua+'" required="required"></p>' +
+        '<p>Numero: <input type="number" name="numero" value="'+numero+'" required="required"></p>' +
+        '<p>Complemento: <input type="text" name="complemento" value="'+complemento+'" ></p>' +
+        '<p>Bairro: <input type="text" name="bairro" value="'+bairro+'" required="required"></p>' +
+        '<p>Cidade: <input type="text" name="cidade" value="'+cidade+'" required="required"></p>' +
+        '<p>Estado: <input type="text" name="estado" value="'+estado+'" required="required"></p>' +
+        '<br/><input type="submit" class="btn btn-primary" value="Gravar"/>' +
+        '</form>');
 }
 
+function editUsuarioDocumento() {
+    $('#btnDoc').removeAttr("onclick");
+    let docs = $('#docs');
+    //obtendo dados atuais
+    let tipo = $('#tipoDoc').text();
+    let numero = $('#numeroDoc').text();
+    docs.empty();
+
+    docs.append(
+        '<form action="control/main.php?req=updateDoc&id='+identificador+'" method="POST">' +
+        '<p>Tipo: ' +
+        '   <select id="doc_type" name="doc_type">\n' +
+        '       <option value="1">Registro geral (RG)</option>\n' +
+        '       <option value="2">Passaporte</option>\n' +
+        '   </select>' +
+        '</p>' +
+        '<p>Numero: <input type="number" name="doc_number" value="'+numero+'" required="required"></p>' +
+        '<br/><input type="submit" class="btn btn-primary" value="Gravar"/>' +
+        '</form>');
+}
 
 </script>
 

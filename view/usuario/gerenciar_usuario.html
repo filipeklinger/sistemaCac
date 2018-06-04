@@ -40,8 +40,7 @@
                             <th class="col-md-2">TIPO DE ACESSO</th>
                             <th class="col-md-2">É MENOR DE IDADE?</th>
                             <th class="col-md-2">DISCENTE DA UFRRJ?</th>
-                            <th class="col-md-1">Ver</th>
-                            <th class="col-md-1">Editar</th>
+                            <th class="col-md-2">Ver / Editar dados</th>
                         </tr>
                         </thead>
                         <tbody id="usuarios">
@@ -71,8 +70,7 @@
                 '     <td class="col-md-2">' + getNVacesso(objJson[i].nv_acesso) + '</td>\n' +
                 '     <td class="col-md-2">' + isAtivo(objJson[i].menor_idade) + '</td>\n' +
                 '     <td class="col-md-2">' + isAtivo(objJson[i].ruralino) + '</td>\n' +
-                '<td  class="col-md-1"> <a href="?pag=Info.Pessoa&id=' + objJson[i].id_pessoa + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-eye-open\'></span></a> </td>' +
-                '<td  class="col-md-1"> <a href="?pag=Edit.Pessoa&id=' + objJson[i].id_pessoa + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a></td>' +
+                '<td  class="col-md-2"> <a href="?pag=Info.Pessoa&id=' + objJson[i].id_pessoa + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-eye-open\'></span></a> </td>' +
                 '</tr>');
         }
         if (objJson.length < 1) {
