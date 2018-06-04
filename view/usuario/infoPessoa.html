@@ -124,6 +124,13 @@ function editUsuarioNome() {
     dadosBasicos.empty();
     dadosBasicos.append(
         '<form action="control/main.php?req=updateDadosBasicos&id='+identificador+'" method="POST">' +
+        '<p>Nível de Acesso: <select id="nv_acesso" name="nv_acesso">\n' +
+        '                        <option value=4>Visitante</option>\n' +
+        '                        <option value=3>Aluno</option>\n' +
+        '                        <option value=2>Oficineiro</option>\n' +
+        '                        <option value=1>Administrador</option>\n' +
+        '                    </select>' +
+        '</p>' +
         '<p>Nome: <input type=\'text\' name=\'nome\' value="'+nome+'" required="required"></p>' +
         '<p>Sobrenome: <input type="text" name="sobrenome" value="'+sobrenome+'" required="required"></p>' +
         '<p>Data nascimento: <input type="date" name="nascimento" value="'+nasc+'" required="required"> </p>' +
@@ -154,12 +161,12 @@ function editUsuarioContato() {
     acm += '<br/><input type="submit" class="btn btn-primary" value="Gravar"/></form>';
     tels.append(acm);
 
-    function verTp(tp,val) {
-        if(parseInt(tp) === parseInt(val)) return 'selected';
-        return '';
-    }
-}
 
+}
+function verTp(tp,val) {
+    if(parseInt(tp) === parseInt(val)) return 'selected';
+    return '';
+}
 function editUsuarioEndereco() {
     $('#btnEnd').removeAttr("onclick");
     let end = $('#end');

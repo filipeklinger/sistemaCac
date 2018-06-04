@@ -30,8 +30,8 @@ class pessoa{
         $this->db = new Database();
     }
 
-    private function checkAcessLevel(){
-        if (isset($_SESSION['NIVEL']) and $_SESSION['NIVEL'] == "Administrador") {//se não for adm o nivel é automaticamente aluno
+    private function receiveAccessLevel(){
+        if (isset($_SESSION['NIVEL']) and $_SESSION['NIVEL'] == ADMINISTRADOR) {//se não for adm o nivel é automaticamente aluno
             $this->nv = isset($_POST['nv_acesso']) ? $_POST['nv_acesso'] : VISITANTE;//se der erro fica como visitante
         } else {
             $this->nv = ALUNO;
@@ -68,7 +68,7 @@ class pessoa{
      * @throws Exception
      */
     public function setPessoa(){
-        $this->checkAcessLevel();
+        $this->receiveAccessLevel();
         $this->receiveDadosBasicos();
         $ruralino = isset($_POST['ruralino']) ? SIM : NAO;
 
@@ -352,12 +352,22 @@ class pessoa{
 
     //---------------------------------------------UPDATE---------------------------------------------------------------
 
+    private function hasUpdatePermission($pessoaId){
+        if($pessoaId == $_SESSION['ID'] or $_SESSION['NIVEL'] == ADMINISTRADOR){
+            return true;
+        }else{
+            new mensagem(ERRO,"Permissão Insuficiente para a operação requerida");
+            $this->redirecionaPagAnterior();
+            return false;
+        }
+    }
     /**
      * @param $pessoaId
      * @throws Exception
      */
     public function updateDadosBasicos($pessoaId){
-        $this->checkAcessLevel();
+        $this->receiveAccessLevel();
+        if($this->hasUpdatePermission($pessoaId) == false)return;
         $this->receiveDadosBasicos();
         $colunms = array("nome","sobrenome","nv_acesso","data_nascimento");
         $params =array($this->nome,$this->sobrenome,$this->nv,$this->nascimento);
@@ -371,8 +381,13 @@ class pessoa{
         $this->redirecionaPagAnterior();
     }
 
+    /**
+     * @param $pessoaId
+     * @throws Exception
+     */
     public function updateContato($pessoaId){
         $this->receiveContato();
+        if($this->hasUpdatePermission($pessoaId) == false)return;
         $columns = array("numero","tipo_telefone");
         $params = array($this->respTel,$this->respTelType);
 
@@ -391,6 +406,7 @@ class pessoa{
      */
     public function updateEndereco($pessoaId){
         $this->receiveEndereco();
+        if($this->hasUpdatePermission($pessoaId) == false)return;
         $columns = array("rua","numero","complemento","bairro","cidade","estado");
         $params = array($this->rua,$this->numero,$this->complemento,$this->bairro,$this->cidade,$this->estado);
 
@@ -408,6 +424,7 @@ class pessoa{
      */
     public function updateDocument($pessoaId){
         $this->receiveDocumento();
+        if($this->hasUpdatePermission($pessoaId) == false)return;
         $columns = array("numero_documento","tipo_documento");
         $params = array($this->docNumber,$this->docType);
 
