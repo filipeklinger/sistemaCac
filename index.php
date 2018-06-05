@@ -36,7 +36,16 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao r
             $_SESSION['MSG'] = null;//apos mostrar msg devemos remover
         }else{
             echo '\'{"tipo":" ","desc":" "}\'';
-        } ?>;
+        }
+        ?>;
+        var menuPrincipal =
+        <?php
+        if(isset($_SESSION['MENU'])){
+                echo  '\''.$_SESSION['MENU'].'\'';
+        }else{
+                echo '\'{"tipo":" ","desc":" "}\'';
+        }
+        ?>;
     </script>
 </head>
 <?php

@@ -38,7 +38,7 @@ class login{
             $user[0]->nv_acesso = $this->getNVacesso($user[0]->nv_acesso);
 
             $_SESSION['USER'] = json_encode($user[0],JSON_UNESCAPED_UNICODE);
-
+            $this->getMenu();
             $this->redireciona(true);
         }else{
             $_SESSION['LOGADO'] = false;
@@ -79,5 +79,88 @@ class login{
         }else{
             header("Location: ../index.php?pag=Login");
         }
+    }
+
+    private function getMenu(){
+        $_SESSION['MENU'] =
+            "{
+   \"menu\":[
+      {
+         \"nome\":\"infra\",
+         \"link\":\"#\",
+         \"submenu\":[
+            {
+               \"nome\":\"Gerenciar\",
+               \"link\":\"?pag=Ger.Infra\"
+            },
+            {
+               \"nome\":\"Novo Predio\",
+               \"link\":\"?pag=NovoPredio\"
+            },
+            {
+               \"nome\":\"Nova Sala\",
+               \"link\":\"?pag=NovaSala\"
+            }
+         ]
+      },
+      {
+         \"nome\":\"Oficinas\",
+         \"link\":\"#\",
+         \"submenu\":[
+            {
+               \"nome\":\"Gerenciar\",
+               \"link\":\"?pag=Ger.Oficinas\"
+            },
+            {
+               \"nome\":\"Nova Oficina\",
+               \"link\":\"?pag=NovaOficina\"
+            }
+         ]
+      },
+      {
+         \"nome\":\"Turmas\",
+         \"link\":\"#\",
+         \"submenu\":[
+            {
+               \"nome\":\"Gerenciar\",
+               \"link\":\"?pag=Ger.Turmas\"
+            },
+            {
+               \"nome\":\"Nova Turma\",
+               \"link\":\"?pag=NovaTurma\"
+            }
+         ]
+      },
+      {
+         \"nome\":\"Usuarios\",
+         \"link\":\"#\",
+         \"submenu\":[
+            {
+               \"nome\":\"Gerenciar\",
+               \"link\":\"?pag=Ger.Usuarios\"
+            },
+            {
+               \"nome\":\"Novo Usuário\",
+               \"link\":\"?pag=NovoUsuario\"
+            }
+         ]
+      },
+      {
+         \"nome\":\"Alunos\",
+         \"link\":\"#\",
+         \"submenu\":[
+            {
+               \"nome\":\"Gerenciar\",
+               \"link\":\"?pag=Alunos\"
+            },
+            {
+               \"nome\":\"Cad. Aluno em Turma\",
+               \"link\":\"?pag=Cad.Aluno\"
+            }
+         ]
+      }
+   ]
+}"
+        ;
     }
 }
