@@ -29,23 +29,12 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao r
     <script src="js/jsonParser.js"></script>
     <!-- Aqui recebemos as msg do PHP e inserimos numa variavel JS chamada mensagem -->
     <script type="application/x-javascript">
-        var mensagem =
         <?php
-        if(isset($_SESSION['MSG'])){
-            echo  '\''.$_SESSION['MSG'].'\'';
-            $_SESSION['MSG'] = null;//apos mostrar msg devemos remover
-        }else{
-            echo '\'{"tipo":" ","desc":" "}\'';
-        }
-        ?>;
-        var menuPrincipal =
-        <?php
-        if(isset($_SESSION['MENU'])){
-                echo  '\''.$_SESSION['MENU'].'\'';
-        }else{
-                echo '\'{"tipo":" ","desc":" "}\'';
-        }
-        ?>;
+        $msg = isset($_SESSION['MSG']) ? $_SESSION['MSG'] : '{"tipo":" ","desc":" "}';
+        echo "var mensagem = '".$msg."';";
+        $menu = isset($_SESSION['MENU']) ? $_SESSION['MENU'] : '{"nome":" ","link":" "}';
+        echo "\nvar menuPrincipal = '".$menu."';";
+        ?>
     </script>
 </head>
 <?php
