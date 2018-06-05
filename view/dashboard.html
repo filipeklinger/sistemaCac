@@ -98,23 +98,26 @@
 //        console.log(menu.menu.length);
 
         let menuString = '' ;
-        console.log(menu[0].submenu[0].nome);
+        //console.log(menu[0].submenu[0].nome);
         for (i in menu) {
 
             menuString += '        <li class="text-center submenu">\n' +
-                '                <a href="#' + menu[i].nome + '" data-toggle="collapse" aria-expanded="false">\n' +
-                '                    <i class="glyphicon'+menu[i].icone+'"></i>\n' +
-                '                    <br>' + menu[i].nome + '\n' +
-                '                </a>\n' +
-                '                <ul class="collapse list-unstyled" id="' + menu[i].nome + '">';
+                '                       <a href="#' + menu[i].nome + '" data-toggle="collapse" aria-expanded="false">\n' +
+                '                           <i class="glyphicon'+menu[i].icone+'"></i>\n' +
+                '                           <br>' + menu[i].nome + '\n' +
+                '                       </a>\n' +
+                '                       <ul class="collapse list-unstyled" id="' + menu[i].nome + '">';
 
-            for (j in menu[i]){
-                console.log(menu[i].submenu[j]);
+            for (j in menu[i].submenu){
+                menuString += '          <li><a href="?pag=Infraestrutura">Gerenciar</a></li>\n' +
+                    '                    <li><a href="?pag=Cad.Predio">Novo Prédio</a></li>\n' +
+                    '                    <li><a href="?pag=Cad.Sala">Nova Sala</a></li>';
+                //menu[i].submenu[j].nome;
             }
 
             menuString += '</ul></li>';
         }
-            console.log(menu[i]);
+            //console.log(menu[i]);
             $('#menu').prepend(menuString);
 
         /*
