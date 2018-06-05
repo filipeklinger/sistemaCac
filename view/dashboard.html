@@ -7,7 +7,7 @@
         <div class="sidebar-header">
         </div>
 
-        <ul class="list-unstyled">
+        <ul class="list-unstyled" id="menu">
             <!--li class="text-center">
                 <a href="#homeSubmenu">
                     <i class="glyphicon glyphicon-home"></i>
@@ -15,58 +15,6 @@
                     Home
                 </a>
             </li-->
-            <li class="text-center submenu">
-                <a href="#infraSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-dashboard"></i>
-                    <br>Infra
-                </a>
-                <ul class="collapse list-unstyled" id="infraSubmenu">
-                    <li><a href="?pag=Infraestrutura">Gerenciar</a></li>
-                    <li><a href="?pag=Cad.Predio">Novo Prédio</a></li>
-                    <li><a href="?pag=Cad.Sala">Nova Sala</a></li>
-                </ul>
-            </li>
-            <li class="text-center">
-                <a href="#oficinasSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-knight"></i>
-                    <br>Oficinas
-                </a>
-                <ul class="collapse list-unstyled" id="oficinasSubmenu">
-                    <li><a href="?pag=Oficinas">Gerenciar</a></li>
-                    <li><a href="?pag=Cad.Oficina">Nova Oficina</a></li>
-                </ul>
-            </li>
-            <li class="text-center">
-                <a href="#turmasSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-bell"></i>
-                    <br>Turmas
-                </a>
-                <ul class="collapse list-unstyled" id="turmasSubmenu">
-                    <li><a href="?pag=Turmas">Gerenciar</a></li>
-                    <li><a href="?pag=Cad.Turma">Nova Turma</a></li>
-                </ul>
-            </li>
-            <li class="text-center">
-                <a href="#usuariosSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-user"></i>
-                    <br>Usuários
-                </a>
-                <ul class="collapse list-unstyled" id="usuariosSubmenu">
-                    <li><a href="?pag=Usuarios">Gerenciar</a></li>
-                    <li><a href="?pag=Cad.Pessoa">Novo Usuário</a></li>
-                </ul>
-            </li>
-
-            <li class="text-center">
-                <a href="#alunosSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-education"></i>
-                    <br>Alunos
-                </a>
-                <ul class="collapse list-unstyled" id="alunosSubmenu">
-                    <li><a href="?pag=Alunos">Gerenciar</a></li>
-                    <li><a href="?pag=Cad.Aluno">Cad. Aluno em Turma</a></li>
-                </ul>
-            </li>
             <br>
             <br>
             <li class="text-center">
@@ -109,10 +57,12 @@
 
     $(document).on("load", loader());
 
+
     function loader() {
         ajaxLoadGET('control/main.php?req=selecUsuarioLogado', parseUsuario, '#nv');
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmaHorario, '#t_oficinas');
         getMsgs();
+        getMenu();
     }
 
 
@@ -138,6 +88,93 @@
                 '<td class=\'col-md-1\'>' + objJson[i].vagas + '</td>' +
                 '</tr>');
         }
+
     }
+
+    function getMenu() {
+        let menu = JSON.parse(menuPrincipal);
+
+//        console.log(menu.menu[0]);
+//        console.log(menu.menu.length);
+
+        let menuString = '' ;
+        console.log(menu[0].submenu[0].nome);
+        for (i in menu) {
+
+            menuString += '        <li class="text-center submenu">\n' +
+                '                <a href="#' + menu[i].nome + '" data-toggle="collapse" aria-expanded="false">\n' +
+                '                    <i class="glyphicon'+menu[i].icone+'"></i>\n' +
+                '                    <br>' + menu[i].nome + '\n' +
+                '                </a>\n' +
+                '                <ul class="collapse list-unstyled" id="' + menu[i].nome + '">';
+
+            for (j in menu[i]){
+                console.log(menu[i].submenu[j]);
+            }
+
+            menuString += '</ul></li>';
+        }
+            console.log(menu[i]);
+            $('#menu').prepend(menuString);
+
+        /*
+        <li class="text-center submenu">
+                <a href="#infraSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="glyphicon glyphicon-dashboard"></i>
+                    <br>Infra
+                </a>
+                <ul class="collapse list-unstyled" id="infraSubmenu">
+                <li><a href="?pag=Infraestrutura">Gerenciar</a></li>
+                    <li><a href="?pag=Cad.Predio">Novo Prédio</a></li>
+                    <li><a href="?pag=Cad.Sala">Nova Sala</a></li>
+                </ul>
+       </li>
+            <li class="text-center">
+                <a href="#oficinasSubmenu" data-toggle="collapse" aria-expanded="false">
+                <i class="glyphicon glyphicon-knight"></i>
+                <br>Oficinas
+                </a>
+                <ul class="collapse list-unstyled" id="oficinasSubmenu">
+                <li><a href="?pag=Oficinas">Gerenciar</a></li>
+            <li><a href="?pag=Cad.Oficina">Nova Oficina</a></li>
+            </ul>
+            </li>
+            <li class="text-center">
+                <a href="#turmasSubmenu" data-toggle="collapse" aria-expanded="false">
+                <i class="glyphicon glyphicon-bell"></i>
+                <br>Turmas
+                </a>
+                <ul class="collapse list-unstyled" id="turmasSubmenu">
+                <li><a href="?pag=Turmas">Gerenciar</a></li>
+            <li><a href="?pag=Cad.Turma">Nova Turma</a></li>
+            </ul>
+            </li>
+            <li class="text-center">
+                <a href="#usuariosSubmenu" data-toggle="collapse" aria-expanded="false">
+                <i class="glyphicon glyphicon-user"></i>
+                <br>Usuários
+                </a>
+                <ul class="collapse list-unstyled" id="usuariosSubmenu">
+                <li><a href="?pag=Usuarios">Gerenciar</a></li>
+            <li><a href="?pag=Cad.Pessoa">Novo Usuário</a></li>
+            </ul>
+            </li>
+
+            <li class="text-center">
+                <a href="#alunosSubmenu" data-toggle="collapse" aria-expanded="false">
+                <i class="glyphicon glyphicon-education"></i>
+                <br>Alunos
+                </a>
+                <ul class="collapse list-unstyled" id="alunosSubmenu">
+                <li><a href="?pag=Alunos">Gerenciar</a></li>
+            <li><a href="?pag=Cad.Aluno">Cad. Aluno em Turma</a></li>
+            </ul>
+            </li>
+
+
+
+        */
+    }
+
 </script>
 </body>

@@ -9,6 +9,13 @@
 /*Globals*/
 body {
     height: 100vh;
+    /*display: flex;*/
+    align-items: stretch;
+    background-color: #dbe8e8;
+    background-image: url("../img/pattern.svg");
+    background-repeat: repeat;
+    background-size: 700px;
+    color: #575557;
 }
 
 .container-fluid {
@@ -19,11 +26,41 @@ body {
     display: none;
 }
 
+/*PADRÕES GLOBAIS*/
+/*Tabelas*/
+.table{
+    background-color: rgb(255, 88, 105);
+    color: rgb(218, 231, 231);
+}
+.table td{
+    /*color: #444244;*/
+    padding: 15px;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+}
+.table td{
+    /*color: #444244;*/
+    border-top: 3px solid white;
+}
+.table tbody tr:hover{
+    background-color: rgb(178, 176, 178);
+}
+.table th{
+    padding: 15px;
+    /*color: rgb(237, 243, 234);*/
+    /*background-color: rgba(0, 46, 49, 0.41);*/
+    color: rgb(239, 245, 236);
+    background-color: rgb(179, 177, 179);
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+}
+
+
 /*Página 404*/
 .page404 .container {
     margin-top: 10%;
 }
-
 .page404 {
     background-image: url("../img/bg-main.jpg");
     background-color: #72daff;
@@ -33,16 +70,13 @@ body {
     background-repeat: no-repeat;
     overflow: hidden;
 }
-
 .page404 h1 {
     color: white;
     font-size: 200px;
 }
-
 .page404 h2 {
     color: white;
 }
-
 .page404 a {
     color: white;
     border: 1px solid white;
@@ -55,7 +89,6 @@ body {
     -o-transition: 0.4s ease-in-out;
     transition: 0.4s ease-in-out;
 }
-
 .page404 a:hover {
     color: #56abff;
     border: 1px solid #d7d7d7;
@@ -66,9 +99,7 @@ body {
     -o-transition: 0.4s ease-in-out;
     transition: 0.4s ease-in-out;
 }
-
 /*Login: página principal*/
-
 .painel {
     background-image: url("../img/bg-main.jpg");
     background-color: #72daff;
@@ -78,64 +109,75 @@ body {
     color: white;
     height: 100vh;
 }
-
 .painel .logo {
     background-image: url("../img/Logo-web.svg");
     background-repeat: no-repeat;
     background-position: center;
     min-height: 50%;
 }
-
 .painel input {
     background-color: rgba(31, 31, 31, 0.7);
     border: 0;
     /*max-height: 100%;*/
     color: white;
 }
-
 .painel input:focus {
     border: 1px solid #8f8f8f;
 }
-
 .painel .container {
     padding-top: 11%;
     height: 100%;
 }
-
 .painel .navbar-fixed-bottom {
     padding-bottom: 3%;
 }
-
 .painel .continue {
     font-size: 20px;
 }
-
 .painel form {
     padding-top: 9%;
 }
-
 .painel form > a {
     color: white;
     padding-left: 10px;
 }
-
 .painel .navbar-fixed-bottom {
     position: absolute;
 }
-
 .painel .continue {
     animation-name: fade-in-out;
     animation-duration: 1s;
     animation-iteration-count: infinite;
     display: unset;
 }
-
 @media screen and (max-height: 772px) {
     .painel .continue {
         display: none;
     }
+    .painel{
+        /*min-height: 412px;*/
+    }
+    .painel .logo{
+        /*background-size: 200px;*/
+    }
 }
+/*
+@media screen and (max-height: 772px) and (orientation: landscape){
+    .painel .continue {
+        display: none;
+    }
+    .painel{
+        min-height: 250px;
+    }
+    .painel{
+        min-height: 25px;
+    }
 
+    .painel .logo{
+        /*background-size: 200px;display: none;
+    }
+}
+*/
 @keyframes fade-in-out {
     0% {
         color: darkgrey
@@ -147,7 +189,6 @@ body {
         color: darkgrey
     }
 }
-
 /*Login: Compatibilidade entre navegadores*/
 @keyframes fade-in-out {
     0% {
@@ -160,7 +201,6 @@ body {
         color: darkgrey
     }
 }
-
 @-moz-keyframes fade-in-out /* Firefox */
 {
     0% {
@@ -173,7 +213,6 @@ body {
         color: darkgrey
     }
 }
-
 @-webkit-keyframes fade-in-out /* Safari and Chrome */
 {
     0% {
@@ -186,7 +225,6 @@ body {
         color: darkgrey
     }
 }
-
 @-o-keyframes fade-in-out /* Opera */
 {
     0% {
@@ -199,7 +237,6 @@ body {
         color: darkgrey
     }
 }
-
 @-ms-keyframes fade-in-out /* IE */
 {
     0% {
@@ -212,7 +249,6 @@ body {
         color: darkgrey
     }
 }
-
 /*Login: lista de oficinas disponíveis*/
 /*TODO: código repetido, otimizar*/
 .lista {
@@ -221,24 +257,20 @@ body {
     height: auto;
     min-height: 100%;
 }
-
 #titulo-lista {
     border-top: 3px solid #000;
     border-bottom: 5px solid #000;
     padding: 10px;
 }
-
 .lista .container-fluid {
     padding-top: 1%;
     padding-bottom: 2%;
     min-height: 100%;
 }
-
 .lista .container-fluid h3 {
     color: #000;
     font-weight: bold;
 }
-
 .lista .media {
     color: #000;
     /*background-color: #2aabd2;*/
@@ -250,31 +282,25 @@ body {
     transition: 0.3s ease;
     font-size: medium;
 }
-
 .lista .media .media-body {
     padding-left: 3%;
 }
-
 .lista .media:hover {
     border-left: 4px solid #ff7471;
     border-bottom: 4px solid #ff7471;
     color: #ff7471;
     background-color: rgba(244, 255, 252, 0.94);
 }
-
 .lista .media .media-left {
     padding-right: 0;
 }
-
 .lista .media .media-object {
     font-size: 50px;
 }
-
 .lista .media .media-body .media-heading {
     font-size: x-large;
     font-weight: bold;
 }
-
 /*Login: Rodapé principal com dados e informações para contato*/
 .MainFooter {
     background-color: #88bbd6;
@@ -282,7 +308,6 @@ body {
     padding: 25px;
     box-shadow: 0px 20px 20px 20px #000000;
 }
-
 /* Estilo do Loader que esta no codigo do ajax */
 .loader {
     margin: 0 auto;
@@ -294,7 +319,6 @@ body {
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
 }
-
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -303,19 +327,12 @@ body {
         transform: rotate(360deg);
     }
 }
-
 /*Dashboard: Tela inicial pós login*/
-
 .dashboard {
-    display: flex;
-    align-items: stretch;
+    display: flex; /*TODO: mexer no display mode, não responsivo*/
     background-color: #dbe8e8;
-    background-image: url("../img/pattern.svg");
-    background-repeat: repeat;
-    background-size: 700px;
     color: #575557;
 }
-
 .dashboard .content {
     padding: 20px;
     min-height: 100vh;
@@ -331,55 +348,15 @@ body {
 .dashboard #user, #nv{
     color: rgb(255, 88, 105);
 }
-
 .dashboard .content hr {
     border-color: #8b9189;
 }
 
-.dashboard .table{
-    background-color: rgb(255, 88, 105);
-    color: rgb(218, 231, 231);
-}
-
-.dashboard .table td{
-    /*color: #444244;*/
-    padding: 15px;
-    color: white;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 500;
-}
-
-.dashboard .table td{
-    /*color: #444244;*/
-    border-top: 3px solid white;
-}
-
-.dashboard .table tbody tr:hover{
-    background-color: rgb(0, 174, 176);
-}
-
-.dashboard .table th{
-    padding: 15px;
-    /*color: rgb(237, 243, 234);*/
-    /*background-color: rgba(0, 46, 49, 0.41);*/
-    color: rgb(239, 245, 236);
-    background-color: rgb(179, 177, 179);
-    font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
-}
-
-/*
-.dashboard .content .wells {
-    background-color: #2aabd2;
-    max-width: 50px;
-}
-*/
 .dashboard a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
 }
-
 /*Sidebar*/
 .dashboard .sidebar {
     border-right: 1px solid #747474;
@@ -387,84 +364,50 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-weight: normal;
 }
-
 .dashboard .sidebar ul li {
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: medium;
 }
-
 .dashboard .sidebar ul li i {
     font-size: x-large;
 }
-
 .dashboard .sidebar ul .collapse a:hover {
     /*padding-top: 7px;*/
 }
-
 .dashboard .sidebar ul li a:hover {
     color: rgb(255, 88, 105);
 }
-
 /*TODO: Aperfeiçoar estilo de formulários*/
-
 /*Infraestrutura*/
-
 .infra {
-    background-color: darkslategray;
-    background-image: url("../img/pattern.svg");
-    background-repeat: repeat;
-    background-size: 700px;
-    min-height: 100%;
-    color: white;
+}
+.infra .table {
 }
 
 /*Oficinas */
 .oficinas {
-    background-color: #4f3c4b;
-    background-image: url("../img/pattern.svg");
-    background-repeat: repeat;
-    background-size: 700px;
-    min-height: 100%;
-    color: white;
+    background-color: rgba(0, 154, 156, 0.53);
+}
+.oficinas .table{
+
 }
 
 /*Turmas*/
 .turmas {
-    background-color: #2f354f;
-    background-image: url("../img/pattern.svg");
-    background-repeat: repeat;
-    background-size: 700px;
-    min-height: 100%;
-    color: white;
 }
 
 /*Turmas: quadro de horário*/
-
 .scheduler {
 
 }
-
 /*Usuário */
-
 .usuario {
-    background-color: #4f4d1f;
-    background-image: url("../img/pattern.svg");
-    background-repeat: repeat;
-    background-size: 700px;
-    min-height: 100%;
-    color: white;
 }
 
 /*Usuário: Gerenciar*/
-
 .aluno {
-    background-color: #4f2327;
-    background-image: url("../img/pattern.svg");
-    background-repeat: repeat;
-    background-size: 700px;
-    min-height: 100%;
-    color: white;
+
 }
 
 
