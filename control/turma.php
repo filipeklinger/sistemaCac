@@ -19,6 +19,37 @@ class turma{
     }
 
     /**
+     * @throws Exception
+     */
+    public function setPeriodo(){
+        $tempoAtual = self::getTempoStatic($this->db);
+        $ano = isset($_GET['ano']) ? $_GET['ano'] : INVALIDO;
+        $periodo = isset($_GET['periodo']) ? $_GET['periodo'] : INVALIDO;
+
+        if($ano > $tempoAtual->ano){//Ano setado e maior que ano atual - ok
+            $this->avancaPeriodo($ano,$periodo);
+        }elseif ($periodo > $tempoAtual->periodo){//Periodo maior que periodo atual - ok
+            $this->avancaPeriodo($ano,$periodo);
+        }else{
+            echo "Retrocedendo periodo =( isso não pode.";
+        }
+        $this->redireciona();
+    }
+
+    /**
+     * @param $ano
+     * @param $periodo
+     * @throws Exception
+     */
+    private function avancaPeriodo($ano, $periodo){
+        if($this->db->insert('ano,periodo','tempo',array($ano,$periodo))){
+            new mensagem(SUCESSO,"Uhulll Avançamos mais um periodo");
+        }else{
+            new mensagem(INSERT_ERRO,"Não foi possivel avançar o periodo");
+        }
+    }
+
+    /**
      * Essa envia o periodo atual como Objeto PHP
      * @param Database $db
      * @return object
@@ -26,7 +57,7 @@ class turma{
      */
     public static function getTempoStatic(Database $db){
         $tempo = json_decode($db->select("id_tempo,ano,periodo","tempo"));
-        $tempo = $tempo[sizeof($tempo)-1];
+        $tempo = $tempo[sizeof($tempo)-1];//tempo ultimo adicionado
         return $tempo;
     }
 

@@ -1,0 +1,51 @@
+<body>
+<div class="header">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página
+                        Inicial</a></li>
+                    <li class="active"><a data-toggle="tab" href="#periodo">Trocando Periodo</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<p id="avisos"></p>
+
+<H3 class="text-center">Periodo Atual: <span id="anoAtual"></span> - <span id="periodoAtual"></span></H3>
+<p>Somente é possivel Avançar periodos</p>
+<p>muito cuidado ao utilizar essa função pois todas as turmas atuais sem exceção irão ser colocadas no Histórico.</p>
+
+<p class="text-center">Avançar para:</p>
+<p class="text-center"> <a href="" id="op1" class="btn btn-primary"></a> <a href="#" id="op2" class="btn btn-primary"></a></p>
+<script type="text/javascript">
+
+    $(document).on("load", loader());
+
+
+    function loader() {
+        ajaxLoadGET('control/main.php?req=selectPeriodoAtual', parsePeriodoButton, '#periodoAtual');
+        getMsgs();
+    }
+
+    function parsePeriodoButton(resposta,corpo) {
+        let json = JSON.parse(resposta);
+        $('#anoAtual').append(json.ano);
+        corpo.append(json.periodo);
+
+        let ano = parseInt(json.ano);
+        let periodo = parseInt(json.periodo);
+        let op1 = $('#op1');
+        op1.append(ano + ' - ' + (periodo+1));
+        op1.attr('href','control/main.php?req=setPeriodo&ano='+ano+'&periodo='+(periodo+1));
+
+        let op2 = $('#op2');
+        op2.append((ano+1) + ' - 1');
+        op2.attr('href','control/main.php?req=setPeriodo&ano='+(ano+1)+'&periodo=1');
+    }
+</script>
+
+</body>

@@ -217,6 +217,12 @@ function isAtivoX(num, obj) {
     else return " ";
 }
 
+function parsePeriodoText(resposta,corpo) {
+    let json = JSON.parse(resposta);
+    $('#anoAtual').append(json.ano);
+    corpo.append(json.periodo);
+}
+
 /* ------------------------------------------------USUARIOS-----------------------------------------------------------*/
 
 function loadMenor() {

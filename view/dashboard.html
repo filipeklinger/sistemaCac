@@ -31,7 +31,7 @@
         <p id="usr">
             Seja bem vindo <span id="user"></span>. <br> Você está logado como <b><span id="nv"></span></b>.
         </p>
-        <p>Periodo Atual: <span id="periodoAtual"></span></p>
+        <p>Periodo Atual: <span id="anoAtual"></span> - <span id="periodoAtual"></span></p>
         <hr>
         <br>
         <h2> Consulta de Turmas Ativas </h2>
@@ -62,15 +62,12 @@
     function loader() {
         ajaxLoadGET('control/main.php?req=selecUsuarioLogado', parseUsuario, '#nv');
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmaHorario, '#t_oficinas');
-        ajaxLoadGET('control/main.php?req=selectPeriodoAtual', parsePeriodo, '#periodoAtual');
+        ajaxLoadGET('control/main.php?req=selectPeriodoAtual', parsePeriodoText, '#periodoAtual');
         getMsgs();
         getMenu();
     }
 
-    function parsePeriodo(resposta,corpo) {
-            let json = JSON.parse(resposta);
-            corpo.append(json.ano +" - "+json.periodo);
-    }
+
 
 
     function parseUsuario(resposta) {

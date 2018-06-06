@@ -197,6 +197,10 @@ class main{
                 $turma = new turma();
                 echo $turma->getTempoHistorico();
                 break;
+            case "setPeriodo":
+                $turma = new turma();
+                $turma->setPeriodo();
+                break;
                 //Aluno
             case "insertAluno":
                 $aluno = new aluno();

@@ -91,9 +91,10 @@ class aluno{
      * @throws Exception
      */
     public function getAlunos($turmaId){
+        $tempo = turma::getTempoStatic($this->db);
         $columns = "aluno_turma.id_aluno,pessoa.nome,pessoa.sobrenome,turma.nome_turma as turma,lista_espera,aluno_turma.trancado";
-        $whereClause = "aluno_turma.turma_id = turma.id_turma and aluno_turma.pessoa_id = pessoa.id_pessoa and turma.id_turma = ?";
-        echo $this->db->select($columns,"pessoa,turma,aluno_turma",$whereClause,array($turmaId),"pessoa.nome",ASC);
+        $whereClause = "aluno_turma.turma_id = turma.id_turma and aluno_turma.pessoa_id = pessoa.id_pessoa and turma.tempo_id = ? and turma.id_turma = ?";
+        echo $this->db->select($columns,"pessoa,turma,aluno_turma",$whereClause,array($tempo->id_tempo,$turmaId),"pessoa.nome",ASC);
     }
 
     /**
@@ -114,7 +115,7 @@ class aluno{
     public function trancarMatricula($alunoId){
         $mensagenAcumulada = "";
         //trancamos a matricula do aluno informado
-        if($this->db->update(array("is_ativo"),"aluno_turma",array(NAO),"id_aluno = ?",array($alunoId))){
+        if($this->db->update(array("trancado"),"aluno_turma",array(SIM),"id_aluno = ?",array($alunoId))){
             $mensagenAcumulada .= "Matricula trancada";
             //se trancamento deu certo vamos verificar os alunos na lista de espera
 
@@ -143,7 +144,7 @@ class aluno{
             }
 
         }else{
-            new mensagem(ERRO,"Não foi possivel trancar a matricula");
+            new mensagem(INSERT_ERRO,"Não foi possivel trancar a matricula");
         }
 
        $this->redirecionaPagAnterior();

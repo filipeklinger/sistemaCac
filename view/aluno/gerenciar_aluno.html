@@ -71,13 +71,7 @@
 
         function loader() {
             ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasAtivas, '#turma');
-            obterAlunos();
             getMsgs();
-        }
-
-        function obterAlunos() {
-            var turma = $('#turma').val();
-            ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id='+turma, parseAlunos, '#alunos');
         }
 
         function parseTurmasAtivas(resposta, corpo) {
@@ -87,7 +81,16 @@
                     '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
                 );
             }
+            obterAlunos();
         }
+
+        function obterAlunos() {
+            let turma = $('#turma').val();
+            console.log(turma);
+            ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id='+turma, parseAlunos, '#alunos');
+        }
+
+
 
         function parseAlunos(resposta,corpo) {
             let objJson = JSON.parse(resposta);
