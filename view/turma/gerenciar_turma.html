@@ -17,6 +17,11 @@
         </nav>
     </div>
     <p id="avisos"></p>
+    <p>Periodo:
+        <select id="periodo" onchange="loadTurmaHistorico();">
+
+        </select>
+    </p>
 
     <div style="overflow-x: hidden;">
         <div id="" class="" style="padding: 20px;">
@@ -45,24 +50,41 @@
     $(document).on("load", loader());
 
     function loader() {
-        ajaxLoadGET('control/main.php?req=selectTurma', parseTurmaHorario, '#turmas');
+        ajaxLoadGET('control/main.php?req=selectTempoHistorico', parsePeriodos, '#periodo');
+        setTimeout(loadTurmaHistorico, 300);
         getMsgs();
     }
 
-    function parseTurmaHorario(resposta, corpo) {
-        var objJson = JSON.parse(resposta);
-        for (i in objJson) {
-            corpo.append(
-                '<tr>' +
-                '<td class=\'col-md-2\'>' + objJson[i].oficina + '</td>' +
-                '<td class=\'col-md-2\'>' + getDiaSemana(objJson[i]) + '</td>' +
-                '<td class=\'col-md-2\'>' + objJson[i].inicio + " as " + objJson[i].fim + '</td>' +
-                '<td class=\'col-md-2\'>' + objJson[i].sala + '</td>' +
-                '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
-                '<td class=\'col-md-2\'>' + isAtivo(objJson[i].ativo) + '</td>' +
-                '<td class=\'col-md-2\'><a href="?pag=Edit.Turma&id='+objJson[i].id_turma+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
-                '</tr>');
+    function loadTurmaHistorico() {
+        let periodo = $('#periodo').val();
+        ajaxLoadGET('control/main.php?req=selectTurma&id='+periodo, parseTurmaHorario, '#turmas');
+        function parseTurmaHorario(resposta, corpo) {
+            let objJson = JSON.parse(resposta);
+            for (i in objJson) {
+                corpo.append(
+                    '<tr>' +
+                    '<td class=\'col-md-2\'>' + objJson[i].oficina + '</td>' +
+                    '<td class=\'col-md-2\'>' + getDiaSemana(objJson[i]) + '</td>' +
+                    '<td class=\'col-md-2\'>' + objJson[i].inicio + " as " + objJson[i].fim + '</td>' +
+                    '<td class=\'col-md-2\'>' + objJson[i].sala + '</td>' +
+                    '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
+                    '<td class=\'col-md-2\'>' + isAtivo(objJson[i].ativo) + '</td>' +
+                    '<td class=\'col-md-2\'><a href="?pag=Edit.Turma&id='+objJson[i].id_turma+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
+                    '</tr>');
+            }
         }
+    }
+
+    function parsePeriodos(resposta,corpo) {
+        let objJson = JSON.parse(resposta);
+        let opcoes = '';
+        for (i in objJson) {
+            console.log(i);
+            if(i === objJson.length-1) opcoes += '<option value="'+objJson[i].id_tempo+'" selected="selected">';
+            else opcoes += '<option value="'+objJson[i].id_tempo+'">';
+            opcoes += objJson[i].ano +' - '+ objJson[i].periodo+ '</option>';
+        }
+        corpo.append(opcoes);
     }
 </script>
 </body>

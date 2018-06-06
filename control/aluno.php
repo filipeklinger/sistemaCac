@@ -22,9 +22,8 @@ class aluno{
         $idPessoa = isset($_POST['candidato']) ? $_POST['candidato'] : INVALIDO;
         $idTurma = isset($_POST['turma']) ? $_POST['turma'] : INVALIDO;
 
-        //verificando se o aluno já esta cadastrado em 2 oficinas
-        $estaParticipando = json_decode($this->db->select("count(*) as n","aluno_turma","pessoa_id = ? and is_ativo = ?",array($idPessoa,SIM)));
-        $estaParticipando = $estaParticipando[0]->n;
+        //verificando se o aluno já esta cadastrado em 2 oficinas do periodo atual
+         $estaParticipando = $this->getParticipacaoPeriodoAtual($idPessoa);
 
         if($estaParticipando < 2){
             //buscando se o aluno já esta cadasrado nessa turma
@@ -32,24 +31,22 @@ class aluno{
             $jaNaTurma = $jaNaTurma[0]->n;
             if($jaNaTurma == null or $jaNaTurma == NAO){
                 //obtendo num de vagas cadastradas na turma
-                $projection = "turma.id_turma,num_vagas as vagas,".
-                    "(SELECT count(*) as n from aluno_turma where aluno_turma.turma_id = id_turma and lista_espera = 0) as ocupadas";
-                $turma = json_decode($this->db->select($projection,"turma","id_turma = ?",array($idTurma)));
+                $turma = json_decode($this->getVagasDisponiveis($idTurma));
                 $turma = $turma[0];
                 //inserindo aluno em turma
                 $mens = "";
                 if(($turma->ocupadas) < ($turma->vagas)){
                     //pessoa dentro do numero de vagas
-                    $params = array($idTurma,$idPessoa,NAO,SIM);
+                    $params = array($idTurma,$idPessoa,NAO);
                 }else{
                     //pessoas na lista de espera
-                    $params = array($idTurma,$idPessoa,SIM,SIM);
+                    $params = array($idTurma,$idPessoa,SIM);
                     //$posicao = json_decode($this->db->select("count(*) as n","aluno_turma","id_turma = ? and lista_espera = ?",array($idTurma,SIM)));
                     $mens = "na lista de espera";
                 }
 
                 //tentando inserir o aluno na turma
-                if($this->db->insert("turma_id,pessoa_id,lista_espera,is_ativo","aluno_turma",$params)){
+                if($this->db->insert("turma_id,pessoa_id,lista_espera","aluno_turma",$params)){
                     new mensagem(SUCESSO,"Aluno inserido com sucesso ".$mens);
                 }else{
                     new mensagem(INSERT_ERRO,"Não foi possivel inserir o aluno");
@@ -62,17 +59,41 @@ class aluno{
         }
         $this->redireciona();
     }
-//SELECT turma.id_turma,num_vagas, (SELECT count(*) as n from aluno_turma where aluno_turma.turma_id = id_turma) as ocupadas
-//from turma
+
+    /**
+     * aqui conseguimos obter a parcicipacao do aluno em turmas do periodo atual
+     * @param $idPessoa
+     * @return object
+     * @throws Exception
+     */
+    private function getParticipacaoPeriodoAtual($idPessoa){
+        $tempoAtual = turma::getTempoStatic($this->db);
+        $whereCLause = "id_turma = turma_id and turma.tempo_id = ? and pessoa_id = ?";
+        $estaParticipando = json_decode($this->db->select("count(*) as n","aluno_turma,turma",$whereCLause,array($tempoAtual->id_tempo,$idPessoa)));
+        $estaParticipando = $estaParticipando[0]->n;
+        return $estaParticipando;
+    }
+
+    /**
+     * @param $turmaId
+     * @return string
+     * @throws Exception
+     */
+    private function getVagasDisponiveis($turmaId){
+        $projection = "turma.id_turma,num_vagas as vagas,".
+            "(SELECT count(*) as n from aluno_turma where aluno_turma.turma_id = id_turma and lista_espera = 0 and trancado = 0) as ocupadas";
+        return $this->db->select($projection,"turma","id_turma = ?",array($turmaId));
+    }
+
     /**
      * Buscando os alunos de turma especifica
      * @param $turmaId Integer - Id da turma
      * @throws Exception
      */
     public function getAlunos($turmaId){
-        $columns = "aluno_turma.id_aluno,pessoa.nome,pessoa.sobrenome,turma.nome_turma as turma,lista_espera,aluno_turma.is_ativo";
+        $columns = "aluno_turma.id_aluno,pessoa.nome,pessoa.sobrenome,turma.nome_turma as turma,lista_espera,aluno_turma.trancado";
         $whereClause = "aluno_turma.turma_id = turma.id_turma and aluno_turma.pessoa_id = pessoa.id_pessoa and turma.id_turma = ?";
-        echo $this->db->select($columns,"pessoa,turma,aluno_turma",$whereClause,array($turmaId));
+        echo $this->db->select($columns,"pessoa,turma,aluno_turma",$whereClause,array($turmaId),"pessoa.nome",ASC);
     }
 
     /**
@@ -81,9 +102,9 @@ class aluno{
      * @throws Exception
      */
     public function getAlunoListaEspera($turmaId){
-        $columns = "id_aluno,pessoa_id";
-        $whereClause = "lista_espera = ? and turma_id = ?";
-        return $this->db->select($columns,"aluno_turma",$whereClause,array(SIM,$turmaId),"id_aluno");
+        $columns = "id_aluno,pessoa_id,nome,sobrenome";
+        $whereClause = "pessoa_id = id_pessoa and lista_espera = ? and turma_id = ?";
+        return $this->db->select($columns,"aluno_turma,pessoa",$whereClause,array(SIM,$turmaId),"id_aluno");
     }
 
     /**
@@ -91,13 +112,43 @@ class aluno{
      * @throws Exception
      */
     public function trancarMatricula($alunoId){
+        $mensagenAcumulada = "";
         //trancamos a matricula do aluno informado
         if($this->db->update(array("is_ativo"),"aluno_turma",array(NAO),"id_aluno = ?",array($alunoId))){
-            new mensagem(SUCESSO,"MAtricula trancada");
+            $mensagenAcumulada .= "Matricula trancada";
+            //se trancamento deu certo vamos verificar os alunos na lista de espera
+
+            //buscando a turma do aluno
+            $turma = json_decode($this->db->select("turma_id","aluno_turma","id_aluno = ?",array($alunoId)));
+
+            $turma = $turma[0]->turma_id;
+            $vagas = json_decode($this->getVagasDisponiveis($turma));
+            if(($vagas[0]->vagas - $vagas->ocupadas) > 0)
+            $alunoSelecionado = json_decode($this->getAlunoListaEspera($turma));
+            else $alunoSelecionado = 0 ;
+            //Verificamos se existe lista de Espera
+            if(sizeof($alunoSelecionado) > 0){
+                $alunoSelecionado = $alunoSelecionado[0];
+
+                //colocamos o primeiro aluno da lista de espera na turma
+                if($this->db->update(array("lista_espera"),"aluno_turma",array(NAO),"id_aluno = ?",array($alunoSelecionado->id_aluno))){
+                    $mensagenAcumulada.= ", Aluno ".$alunoSelecionado->nome." ".$alunoSelecionado->sobrenome." que estava na lista de espera foi Inserido na Turma";
+                    new mensagem(SUCESSO,$mensagenAcumulada);
+
+                }else{
+                    new mensagem(ERRO,"Matricula trancada mas lista de espera não pôde andar");
+                }
+            }else{
+                new mensagem(SUCESSO,$mensagenAcumulada);
+            }
+
         }else{
             new mensagem(ERRO,"Não foi possivel trancar a matricula");
         }
+
+       $this->redirecionaPagAnterior();
     }
 
     private function redireciona(){header("Location: ../index.php?pag=Cad.Aluno");}
+    private function redirecionaPagAnterior(){header("Location: " . $_SERVER['HTTP_REFERER'] . "");}
 }

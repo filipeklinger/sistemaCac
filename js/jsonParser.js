@@ -52,6 +52,11 @@ function isAtivo(num) {
     else return "não";
 }
 
+function trancado(num) {
+    if(num === '1') return "Sim";
+    else return "Não";
+}
+
 
 function jsonParseNomePredios(resposta,corpo) {
     var objJson = JSON.parse(resposta);

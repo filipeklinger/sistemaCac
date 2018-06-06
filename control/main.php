@@ -170,7 +170,7 @@ class main{
                 break;
             case "selectTurma":
                 $turma = new turma();
-                echo $turma->getTurmas();
+                echo $turma->getTurmas($_GET['id']);
                 break;
             case "updateTurma":
                 $turma = new turma();
@@ -188,6 +188,14 @@ class main{
             case "selectTurmaById":
                 $turma = new turma();
                 echo $turma->getTurmaById($_GET['id']);
+                break;
+            case "selectPeriodoAtual":
+                $turma = new turma();
+                echo $turma->getTempo();
+                break;
+            case "selectTempoHistorico":
+                $turma = new turma();
+                echo $turma->getTempoHistorico();
                 break;
                 //Aluno
             case "insertAluno":
@@ -214,6 +222,15 @@ class main{
                     new mensagem(ERRO,$e);
                 }
                 break;
+            case "trancarMatricula":
+                $aluno = new aluno();
+                try {
+                    $aluno->trancarMatricula($_GET['id']);
+                } catch (Exception $e) {
+                    echo($e);
+                }
+                break;
+
             //USUARIO
             case "selecUsuarioLogado":
                 login::getUser();

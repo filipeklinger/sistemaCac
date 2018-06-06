@@ -27,12 +27,41 @@
             <thead>
             <tr>
                 <th>NOME</th>
-                <th>Lista de espera</th>
-                <th>Ativo?</th>
+                <th> </th>
+                <th> </th>
                 <th></th>
             </tr>
             </thead>
             <tbody id="alunos">
+            </tbody>
+        </table>
+        <h3 class="text-center">Alunos Na lista de Espera</h3>
+
+        <table width="80%" align="center" class="">
+            <thead>
+            <tr>
+                <th>NOME</th>
+                <th>  </th>
+                <th> </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="listaEspera">
+            </tbody>
+        </table>
+
+        <h3 class="text-center">Alunos Matricula Trancada</h3>
+
+        <table width="80%" align="center" class="">
+            <thead>
+            <tr>
+                <th>NOME</th>
+                <th></th>
+                <th> </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="matTrancada">
             </tbody>
         </table>
     </div>
@@ -48,7 +77,7 @@
 
         function obterAlunos() {
             var turma = $('#turma').val();
-            ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id='+turma, parseAlunosMatriculados, '#alunos');
+            ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id='+turma, parseAlunos, '#alunos');
         }
 
         function parseTurmasAtivas(resposta, corpo) {
@@ -60,27 +89,51 @@
             }
         }
 
-        function parseAlunosMatriculados(resposta,corpo) {
-            var objJson = JSON.parse(resposta);
-            for (var i in objJson) {
-                if (objJson[i].menor_idade === '0') objJson[i].responsavel = "-";
-                corpo.append(
-                    '<tr>\n' +
-                    '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n' +
-                    '     <td>' + isAtivo(objJson[i].lista_espera) + '</td>\n' +
-                    '     <td>' + isAtivo(objJson[i].is_ativo) + '</td>\n' +
-                    '     <td><a href="?pag=Edit.Aluno&id='+objJson[i].id_aluno+'" class="btn btn-primary">Trancar Matricula</a></td>\n' +
-                    '</tr>');
+        function parseAlunos(resposta,corpo) {
+            let objJson = JSON.parse(resposta);
+            let listaAlunos = '';
+            let listaEspera = '';
+            let listaTrancados = '';
+            for (let i in objJson) {
+
+                if(objJson[i].trancado === '0' && objJson[i].lista_espera === '0'){
+                    listaAlunos += '<tr>\n' + '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n';
+                    listaAlunos +=
+                        '     <td></td>\n' +
+
+                        '     <td><a href="control/main.php?req=trancarMatricula&id='+objJson[i].id_aluno+'" class="btn btn-primary">Trancar Matricula</a></td>\n' +
+                        '</tr>';
+                }else if(objJson[i].trancado === '1'){
+                    listaTrancados +='<tr>\n' + '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n';
+                    listaTrancados +=
+                        '     <td>' + isAtivo(objJson[i].lista_espera) + '</td>\n' +
+                        '     <td>Matricula Trancada</a></td>\n' +
+                        '</tr>';
+                }else{
+                    listaEspera +='<tr>\n' + '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n';
+                    listaEspera +=
+                        '     <td> -- </td>\n' +
+                        '     <td>Lista de Espera</td>\n' +
+                        '</tr>';
+                }
             }
+
             if (objJson.length < 1) {
-                corpo.append(
+                listaAlunos = listaEspera = listaTrancados =
                     '<tr>\n' +
-                    '                    <td>:( NÃO EXISTEM ALUNOS NESTA Turma</td>\n' +
-                    '                    <td>-</td>\n' +
-                    '                    <td>-</td>\n' +
-                    '                    <td>---</td>\n' +
-                    '                </tr>');
+                    '                    <td>:( NÃO EXISTEM ALUNOS NESTA Categoria</td>\n' +
+                    '                    <td> </td>\n' +
+                    '                    <td> </td>\n' +
+                    '                    <td> </td>\n' +
+                    '                </tr>';
             }
+            corpo.append(listaAlunos);
+            let espera = $('#listaEspera');
+            espera.empty()
+            espera.append(listaEspera);
+            let trancada = $('#matTrancada');
+            trancada.empty();
+            trancada.append(listaTrancados);
         }
     </script>
 </body>
