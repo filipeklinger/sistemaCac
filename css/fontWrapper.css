@@ -1,0 +1,12 @@
+/*Seletor de fontes*/
+
+
+
+/*font-family: 'Open Sans', sans-serif;*/
+
+@font-face {
+    font-family: 'Open Sans';
+    font-weight: 400;
+    src:url(fonts/OpenSans-Light.ttf);
+}
+
