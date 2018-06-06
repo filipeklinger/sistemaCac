@@ -1,6 +1,6 @@
 -- MySQL Script
 -- Sáb 02 Jun 2018 15:43:45 -03
--- Model: Sistema CAC    Version: 13.00
+-- Model: Sistema CAC    Version: 13.01
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -9,7 +9,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema sistema_cac
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `sistema_cac` DEFAULT CHARACTER SET utf8mb4 ;
+CREATE SCHEMA IF NOT EXISTS `sistema_cac` DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ;
 USE `sistema_cac` ;
 
 -- -----------------------------------------------------
