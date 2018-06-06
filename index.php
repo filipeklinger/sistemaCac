@@ -1,6 +1,6 @@
 <?php
 session_start();
-$titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao reduzida if
+$titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -32,6 +32,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao r
         <?php
         $msg = isset($_SESSION['MSG']) ? $_SESSION['MSG'] : '{"tipo":" ","desc":" "}';
         echo "var mensagem = '".$msg."';";
+        unset($_SESSION['MSG']);
         $menu = isset($_SESSION['MENU']) ? $_SESSION['MENU'] : '{"nome":" ","link":" "}';
         echo "\nvar menuPrincipal = '".$menu."';";
         ?>
