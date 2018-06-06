@@ -66,13 +66,37 @@ class aluno{
 //from turma
     /**
      * Buscando os alunos de turma especifica
-     * @param $identificador Integer - Id da turma
+     * @param $turmaId Integer - Id da turma
      * @throws Exception
      */
-    public function getAlunoByTurmaId($identificador){
-        $columns = "pessoa.nome,pessoa.sobrenome,turma.nome_turma as turma,lista_espera,aluno_turma.is_ativo";
+    public function getAlunos($turmaId){
+        $columns = "aluno_turma.id_aluno,pessoa.nome,pessoa.sobrenome,turma.nome_turma as turma,lista_espera,aluno_turma.is_ativo";
         $whereClause = "aluno_turma.turma_id = turma.id_turma and aluno_turma.pessoa_id = pessoa.id_pessoa and turma.id_turma = ?";
-        echo $this->db->select($columns,"pessoa,turma,aluno_turma",$whereClause,array($identificador));
+        echo $this->db->select($columns,"pessoa,turma,aluno_turma",$whereClause,array($turmaId));
+    }
+
+    /**
+     * @param $turmaId
+     * @return string
+     * @throws Exception
+     */
+    public function getAlunoListaEspera($turmaId){
+        $columns = "id_aluno,pessoa_id";
+        $whereClause = "lista_espera = ? and turma_id = ?";
+        return $this->db->select($columns,"aluno_turma",$whereClause,array(SIM,$turmaId),"id_aluno");
+    }
+
+    /**
+     * @param $alunoId
+     * @throws Exception
+     */
+    public function trancarMatricula($alunoId){
+        //trancamos a matricula do aluno informado
+        if($this->db->update(array("is_ativo"),"aluno_turma",array(NAO),"id_aluno = ?",array($alunoId))){
+            new mensagem(SUCESSO,"MAtricula trancada");
+        }else{
+            new mensagem(ERRO,"Não foi possivel trancar a matricula");
+        }
     }
 
     private function redireciona(){header("Location: ../index.php?pag=Cad.Aluno");}

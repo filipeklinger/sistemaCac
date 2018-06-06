@@ -69,7 +69,7 @@
                     '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n' +
                     '     <td>' + isAtivo(objJson[i].lista_espera) + '</td>\n' +
                     '     <td>' + isAtivo(objJson[i].is_ativo) + '</td>\n' +
-                    '     <td>---</td>\n' +
+                    '     <td><a href="?pag=Edit.Aluno&id='+objJson[i].id_aluno+'" class="btn btn-primary">Trancar Matricula</a></td>\n' +
                     '</tr>');
             }
             if (objJson.length < 1) {

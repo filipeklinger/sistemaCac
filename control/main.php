@@ -201,7 +201,15 @@ class main{
             case "selectAlunosByTurmaId":
                 $aluno = new aluno();
                 try {
-                    $aluno->getAlunoByTurmaId($_GET['id']);
+                    $aluno->getAlunos($_GET['id']);
+                } catch (Exception $e) {
+                    new mensagem(ERRO,$e);
+                }
+                break;
+            case "selectAlunosListaEspera":
+                $aluno = new aluno();
+                try {
+                    echo $aluno->getAlunoListaEspera($_GET['id']);
                 } catch (Exception $e) {
                     new mensagem(ERRO,$e);
                 }
