@@ -98,11 +98,11 @@
         for (i in menu) {
 
             menuString += '        <li class="text-center submenu">\n' +
-                '                       <a href="' + menu[i].link + '" data-toggle="collapse" aria-expanded="false">\n' +
+                '                       <a href="#' + menu[i].link + '" data-toggle="collapse" aria-expanded="false">\n' +
                 '                           <i class="glyphicon '+menu[i].icone+'"></i>\n' +
                 '                           <br>' + menu[i].nome + '\n' +
                 '                       </a>\n' +
-                '                       <ul class="collapse list-unstyled" id="' + menu[i].nome + 'Submenu">';
+                '                       <ul class="collapse list-unstyled" id="' + menu[i].link + '">';
 
             for (j in menu[i].submenu){
                 menuString += '          <li><a href="'+menu[i].submenu[j].link+'">'+menu[i].submenu[j].nome+'</a></li>';
