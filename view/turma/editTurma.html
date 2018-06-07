@@ -201,8 +201,7 @@
 
             //oficina
             $('#nomeHeader').append(json[0].oficina);
-            //velho e bom JS puro
-            //document.getElementById("selectSala").selectedIndex = 1;//index comeca de zero
+            //Setando os selects na posicao correta dos dados
             $('#selectPredio option[value='+predioAtual+']').attr('selected','selected');
 
             $('#selectSala option[value='+salaAtual+']').attr('selected','selected');

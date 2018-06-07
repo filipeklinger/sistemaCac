@@ -80,7 +80,7 @@
         let opcoes = '';
         for (i in objJson) {
             console.log(i);
-            if(i === objJson.length-1) opcoes += '<option value="'+objJson[i].id_tempo+'" selected="selected">';
+            if(i == (objJson.length-1)) opcoes += '<option value="'+objJson[i].id_tempo+'" selected="selected">';
             else opcoes += '<option value="'+objJson[i].id_tempo+'">';
             opcoes += objJson[i].ano +' - '+ objJson[i].periodo+ '</option>';
         }
