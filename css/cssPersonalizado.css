@@ -15,7 +15,7 @@ body {
 #page404, #main{
     height: 100%;
     background:
-            #009d9f
+            #009092
             url("../img/bg-main.jpg")
             no-repeat;
 }
@@ -70,14 +70,13 @@ input[type=text], input[type=password]{
 }
 
 /*Dashboard pages*/
-#dashboard, .infra, .oficinas, .turmas, .usuario, .aluno {
+#dashboard, .infra, .oficinas, .turmas, .usuario, .aluno, #relatorios {
     min-height: 100%;
-    /*background:
-            #dbe8e8
-            url("../img/pattern.svg")
+    background:
+            #359c8f
+            /*url("../img/pattern.svg")*/
             repeat
             700px;
-            */
     color: #575557; /*color white*/
 }
 .infra, .oficinas, .turmas, .usuario, .aluno{
@@ -240,8 +239,9 @@ input[type=text], input[type=password]{
     background-color: #dbe8e8;
     color: #575557;
 }
-#dashboard p, #dashboard h1, #dashboard h2, #dashboard h2, #dashboard h4{
-    color: #575557
+#dashboard p, #dashboard h1, #dashboard h2, #dashboard h2, #dashboard h4,
+#relatorios span, #relatorios h1 , #relatorios h2, #relatorios h3, #relatorios h4, #relatorios p{
+    color: #404040
 }
 #dashboard .content {
     padding: 20px;
