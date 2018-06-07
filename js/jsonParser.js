@@ -1,6 +1,6 @@
 //Recuperando as informações
 
-function ajaxLoadGET(destino,funcaoParse,corpo){
+function ajaxLoadGET(destino,funcaoParse,corpo,funcaoEncadeada){
     var body = $(corpo);
     //colocando uma mensagem de load para o usuario
     body.append('<div class="loader"></div>');
@@ -9,9 +9,7 @@ function ajaxLoadGET(destino,funcaoParse,corpo){
         if(xhttp.readyState === 4){//estado 4 é quando recebe a resposta
             $(".loader").remove();
             body.empty();
-            funcaoParse(this.responseText,body);
-            //body.append(this.responseText);
-
+            funcaoParse(this.responseText,body,funcaoEncadeada);
         }
     };
     xhttp.open("GET", destino);
@@ -222,6 +220,19 @@ function parsePeriodoText(resposta,corpo) {
     let json = JSON.parse(resposta);
     $('#anoAtual').append(json.ano);
     corpo.append(json.periodo);
+}
+
+function parsePeriodosSelect(resposta, corpo,funcaoEncadeada) {
+    let objJson = JSON.parse(resposta);
+    let opcoes = '';
+    for (i in objJson) {
+        if (i == objJson.length - 1) opcoes += '<option value="' + objJson[i].id_tempo + '" selected="selected">';
+        else opcoes += '<option value="' + objJson[i].id_tempo + '">';
+        opcoes += objJson[i].ano + ' - ' + objJson[i].periodo + '</option>';
+    }
+    corpo.append(opcoes);
+    //aqui executamos uma funcao 5ms apos o parse de periodo
+    setTimeout(funcaoEncadeada,5);
 }
 
 /* ------------------------------------------------USUARIOS-----------------------------------------------------------*/

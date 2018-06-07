@@ -1,17 +1,21 @@
 <body class="container-fluid" id="relatorios">
 
-<h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Gerenciando Relatórios</h3>
+
+<h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Relatórios</h3>
 
 <p>Total de Alunos atualmente em Oficinas: <span id="totalAlunosAtivos"></span></p>
-<h3>Alunos por Oficina (De todas as turmas)</h3>
+<h3 class="text-center">Alunos por Oficina</h3>
+<p>Periodo:
+    <select id="periodo" onchange="getPeriodoSelecionado();">
 
+    </select>
+</p>
 <div class="row">
     <table width="80%" align="center" class="">
         <thead>
         <tr>
-            <th class="col-md-4">Oficna</th>
+            <th class="col-md-2">Oficna</th>
             <th class="col-md-2">Número de Alunos</th>
-            <th class="col-md-2">Lista de Espera</th>
         </tr>
         </thead>
         <tbody id="alunosPorOficina">
@@ -23,23 +27,30 @@
     $(document).ready(loaderRelatorios);
 
     function loaderRelatorios() {
+        ajaxLoadGET('control/main.php?req=selectTempoHistorico', parsePeriodosSelect, '#periodo',getPeriodoSelecionado);
         ajaxLoadGET('control/main.php?req=relAlunosAtivos', jsonParseTotalAlunosAtivos, '#toficinas');
     }
 
-    function jsonParseTotalAlunosAtivos(resposta,corpo) {
+    function jsonParseTotalAlunosAtivos(resposta) {
         let json = JSON.parse(resposta);
         $('#totalAlunosAtivos').append(json[0].numAlunos);
     }
-    function jsonParseAlunosPorOficinas(resposta,corpo) {
-        let json = JSON.parse(resposta);
-        for(i in json){
-            corpo.append(
-                '<tr>\n' +
-                '     <td class="col-md-4">' + objJson[i].oficina + '</td>\n' +
-                '     <td class="col-md-2">' + objJson[i].num_alunos + '</td>\n' +
-                '     <td class="col-md-2">' + objJson[i].lista_espera + '</td>\n' +
-                '</tr>');
+
+    function getPeriodoSelecionado() {
+        let periodo = $('#periodo').val();
+
+        ajaxLoadGET('control/main.php?req=relAlunosPorTurmaPeriodo&id='+periodo, jsonParseAlunosPorOficinas, '#alunosPorOficina');
+        function jsonParseAlunosPorOficinas(resposta,corpo) {
+            let objJson = JSON.parse(resposta);
+            for(i in objJson){
+                corpo.append(
+                    '<tr>\n' +
+                    '     <td class="col-md-2">' + objJson[i].oficina + '</td>\n' +
+                    '     <td class="col-md-2">' + objJson[i].alunos + '</td>\n' +
+                    '</tr>');
+            }
         }
     }
+
 </script>
 </body>

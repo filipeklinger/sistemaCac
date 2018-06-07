@@ -48,8 +48,7 @@
     $(document).on("load", loader());
 
     function loader() {
-        ajaxLoadGET('control/main.php?req=selectTempoHistorico', parsePeriodos, '#periodo');
-        setTimeout(loadTurmaHistorico, 300);
+        ajaxLoadGET('control/main.php?req=selectTempoHistorico', parsePeriodosSelect, '#periodo',loadTurmaHistorico);
         getMsgs();
     }
 
@@ -74,16 +73,6 @@
         }
     }
 
-    function parsePeriodos(resposta, corpo) {
-        let objJson = JSON.parse(resposta);
-        let opcoes = '';
-        for (i in objJson) {
-            console.log(i);
-            if (i === objJson.length - 1) opcoes += '<option value="' + objJson[i].id_tempo + '" selected="selected">';
-            else opcoes += '<option value="' + objJson[i].id_tempo + '">';
-            opcoes += objJson[i].ano + ' - ' + objJson[i].periodo + '</option>';
-        }
-        corpo.append(opcoes);
-    }
+
 </script>
 </body>

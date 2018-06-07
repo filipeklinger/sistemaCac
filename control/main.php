@@ -240,6 +240,10 @@ class main{
                 $relatorio = new relatorio();
                 echo $relatorio->getTotalAlunosAtivos();
                 break;
+            case "relAlunosPorTurmaPeriodo":
+                $relatorio = new relatorio();
+                echo $relatorio->getAlunosPorOficina($_GET['id']);
+                break;
             //USUARIO
             case "selecUsuarioLogado":
                 login::getUser();

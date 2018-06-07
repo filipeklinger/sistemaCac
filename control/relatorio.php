@@ -41,4 +41,17 @@ da lista de espera em relação a quantidade de vagas disponibilizadas;
     $whereClause = "aluno_turma.turma_id = turma.id_turma AND turma.tempo_id = tempo.id_tempo AND tempo.id_tempo = 3 AND aluno_turma.lista_espera = 0 AND aluno_turma.trancado = 0";
     return $this->db->select($projection,$table,$whereClause);
  }
+
+    /**
+     * @param $tempoId
+     * @return string
+     * @throws Exception
+     */
+    public function getAlunosPorOficina($tempoId){
+        $projection = "oficina.nome as oficina,count(aluno_turma.id_aluno) as alunos";
+        $table = "turma,aluno_turma,oficina";
+        $whereClause = "turma.tempo_id = ? AND turma.id_turma = aluno_turma.turma_id and aluno_turma.lista_espera = 0 and aluno_turma.trancado = 0 and turma.oficina_id = oficina.id_oficina";
+        $groupBy = " GROUP BY id_turma";
+        return $this->db->select($projection,$table,$whereClause.$groupBy,array($tempoId));
+ }
 }
