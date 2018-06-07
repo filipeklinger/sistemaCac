@@ -1,55 +1,55 @@
-<body class="container-fluid">
+<body class="container-fluid usuario">
 <!--div class="col-md-0-5 sidebar">
     sidebar place -holder
 </div-->
-<div class="usuario">
-
-    <div class="header">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div>
-                    <ul class="nav navbar-nav">
-                        <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página
-                            Inicial</a></li>
-                        <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectCandidato')" href="">Gerenciar Candidato</a></li>
-                        <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectProfessor')" href="">Gerenciar Professores</a></li>
-                        <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectAdministrador')" href="">Gerenciar Adminstradores</a></li>
-                    </ul>
-                </div>
+<div class="header">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página
+                        Inicial</a></li>
+                    <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectCandidato')" href="">Gerenciar
+                        Candidato</a></li>
+                    <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectProfessor')" href="">Gerenciar
+                        Professores</a></li>
+                    <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectAdministrador')" href="">Gerenciar
+                        Adminstradores</a></li>
+                </ul>
             </div>
-        </nav>
-    </div>
-    <p id="avisos"></p>
-    <div style="overflow-x: hidden;">
-        <div id="contTab" class="tab-content" style="padding: 20px;">
-            <div id="users" class="tab-pane fade in active">
+        </div>
+    </nav>
+</div>
+<p id="avisos"></p>
+<div style="overflow-x: hidden;">
+    <div id="contTab" class="tab-content" style="padding: 20px;">
+        <div id="users" class="tab-pane fade in active">
 
-                <a href="?pag=Cad.Pessoa" type="button" class="btn btn-primary" style="margin: 0px 0 50px 0"><i
-                        class="glyphicon glyphicon-plus"></i> Novo Usuário</a>
+            <a href="?pag=Cad.Pessoa" type="button" class="btn btn-primary" style="margin: 0px 0 50px 0"><i
+                    class="glyphicon glyphicon-plus"></i> Novo Usuário</a>
 
-                <!--select onchange="carregaUsuarios();" id="tipoUser">
-                    <option value="selectCandidato" selected="selected">Alunos</option>
-                    <option value="selectProfessor">Professores</option>
-                    <option value="selectAdministrador">Administradores</option>
-                </select-->
-                <div class="row">
-                    <table width="80%" align="center" class="">
-                        <thead>
-                        <tr>
-                            <th class="col-md-4">NOME</th>
-                            <th class="col-md-2">TIPO DE ACESSO</th>
-                            <th class="col-md-2">É MENOR DE IDADE?</th>
-                            <th class="col-md-2">DISCENTE DA UFRRJ?</th>
-                            <th class="col-md-2">Ver / Editar dados</th>
-                        </tr>
-                        </thead>
-                        <tbody id="usuarios">
-                        </tbody>
-                    </table>
-                </div>
+            <!--select onchange="carregaUsuarios();" id="tipoUser">
+                <option value="selectCandidato" selected="selected">Alunos</option>
+                <option value="selectProfessor">Professores</option>
+                <option value="selectAdministrador">Administradores</option>
+            </select-->
+            <div class="row">
+                <table width="80%" align="center" class="">
+                    <thead>
+                    <tr>
+                        <th class="col-md-4">NOME</th>
+                        <th class="col-md-2">TIPO DE ACESSO</th>
+                        <th class="col-md-2">É MENOR DE IDADE?</th>
+                        <th class="col-md-2">DISCENTE DA UFRRJ?</th>
+                        <th class="col-md-2">Ver / Editar dados</th>
+                    </tr>
+                    </thead>
+                    <tbody id="usuarios">
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 </div>
 <script type="text/javascript">
     /*TODO: MELHORAR CAPTURA DE AÇÃO DA NAVEGAÇÃO*/
@@ -66,7 +66,7 @@
             console.log(objJson);
             corpo.append(
                 '<tr>\n' +
-                '     <td class="col-md-4">' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n' +
+                '     <td class="col-md-4">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n' +
                 '     <td class="col-md-2">' + getNVacesso(objJson[i].nv_acesso) + '</td>\n' +
                 '     <td class="col-md-2">' + isAtivo(objJson[i].menor_idade) + '</td>\n' +
                 '     <td class="col-md-2">' + isAtivo(objJson[i].ruralino) + '</td>\n' +
