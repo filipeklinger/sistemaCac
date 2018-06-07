@@ -185,7 +185,6 @@ function jsonParteHorariosDisponiveis(resposta, corpo) {
             '                    <td>' + isAtivoX(objJson[i].quarta, objJson[i]) + '</td>\n' +
             '                    <td>' + isAtivoX(objJson[i].quinta, objJson[i]) + '</td>\n' +
             '                    <td>' + isAtivoX(objJson[i].sexta, objJson[i]) + '</td>\n' +
-            '                    <td>--</td>\n' +
             '                </tr>');
     }
     if (objJson.length < 1) {
