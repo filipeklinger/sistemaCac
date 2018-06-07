@@ -1,48 +1,46 @@
-<body class="container-fluid">
+<body class="container-fluid turmas">
 <!--div class="col-md-0-5 sidebar">
     sidebar place -holder
 </div-->
-<div class=" turmas">
-
-    <div class="header">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div>
-                    <ul class="nav navbar-nav">
-                        <li><a href="?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página Inicial</a></li>
-                        <li class="active"><a data-toggle="" href="#turmas">Gerenciar Turmas</a></li>
-                    </ul>
-                </div>
+<div class="header">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a href="?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página Inicial</a></li>
+                    <li class="active"><a data-toggle="" href="#turmas">Gerenciar Turmas</a></li>
+                </ul>
             </div>
-        </nav>
-    </div>
-    <p id="avisos"></p>
-    <p>Periodo:
-        <select id="periodo" onchange="loadTurmaHistorico();">
-
-        </select>
-    </p>
-
-    <div style="overflow-x: hidden;">
-        <div id="" class="" style="padding: 20px;">
-
-                <a href="?pag=Cad.Turma" type="button" class="btn btn-primary" style="margin: 0px 0 50px 0"><i class="glyphicon glyphicon-plus"></i> Nova Turma</a>
-
-            <table class="table">
-                <thead>
-                <tr>
-                    <th class=''>OFICINA</th>
-                    <th class=''>DIA DA SEMANA</th>
-                    <th class=''>HORÁRIO</th>
-                    <th class=''>SALA</th>
-                    <th class=''>PROFESSOR</th>
-                    <th class=''>ATIVA / INATIVA</th>
-                    <th class=''></th>
-                </tr>
-                </thead>
-                <tbody id="turmas"></tbody>
-            </table>
         </div>
+    </nav>
+</div>
+<p id="avisos"></p>
+<p>Periodo:
+    <select id="periodo" onchange="loadTurmaHistorico();">
+
+    </select>
+</p>
+
+<div style="overflow-x: hidden;">
+    <div id="" class="" style="padding: 20px;">
+
+        <a href="?pag=Cad.Turma" type="button" class="btn btn-primary" style="margin: 0px 0 50px 0"><i
+                class="glyphicon glyphicon-plus"></i> Nova Turma</a>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class=''>OFICINA</th>
+                <th class=''>DIA DA SEMANA</th>
+                <th class=''>HORÁRIO</th>
+                <th class=''>SALA</th>
+                <th class=''>PROFESSOR</th>
+                <th class=''>ATIVA / INATIVA</th>
+                <th class=''></th>
+            </tr>
+            </thead>
+            <tbody id="turmas"></tbody>
+        </table>
     </div>
 </div>
 <script type="text/javascript">
@@ -57,7 +55,8 @@
 
     function loadTurmaHistorico() {
         let periodo = $('#periodo').val();
-        ajaxLoadGET('control/main.php?req=selectTurma&id='+periodo, parseTurmaHorario, '#turmas');
+        ajaxLoadGET('control/main.php?req=selectTurma&id=' + periodo, parseTurmaHorario, '#turmas');
+
         function parseTurmaHorario(resposta, corpo) {
             let objJson = JSON.parse(resposta);
             for (i in objJson) {
@@ -69,20 +68,20 @@
                     '<td class=\'col-md-2\'>' + objJson[i].sala + '</td>' +
                     '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
                     '<td class=\'col-md-2\'>' + isAtivo(objJson[i].ativo) + '</td>' +
-                    '<td class=\'col-md-2\'><a href="?pag=Edit.Turma&id='+objJson[i].id_turma+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
+                    '<td class=\'col-md-2\'><a href="?pag=Edit.Turma&id=' + objJson[i].id_turma + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
                     '</tr>');
             }
         }
     }
 
-    function parsePeriodos(resposta,corpo) {
+    function parsePeriodos(resposta, corpo) {
         let objJson = JSON.parse(resposta);
         let opcoes = '';
         for (i in objJson) {
             console.log(i);
-            if(i === objJson.length-1) opcoes += '<option value="'+objJson[i].id_tempo+'" selected="selected">';
-            else opcoes += '<option value="'+objJson[i].id_tempo+'">';
-            opcoes += objJson[i].ano +' - '+ objJson[i].periodo+ '</option>';
+            if (i === objJson.length - 1) opcoes += '<option value="' + objJson[i].id_tempo + '" selected="selected">';
+            else opcoes += '<option value="' + objJson[i].id_tempo + '">';
+            opcoes += objJson[i].ano + ' - ' + objJson[i].periodo + '</option>';
         }
         corpo.append(opcoes);
     }
