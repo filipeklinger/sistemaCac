@@ -136,7 +136,7 @@ class infraestrutura{
      */
     public function getSalaById($identificador){
         //retornamos uma sala especifica
-        return $this->db->select("id_sala,nome","sala","id_sala = ?",array($identificador));
+        return $this->db->select("id_sala,nome,is_ativo","sala","id_sala = ?",array($identificador));
     }
     /**
      * @param $identificador
