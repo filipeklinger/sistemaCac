@@ -12,6 +12,7 @@ include_once 'oficina.php';
 include_once 'pessoa.php';
 include_once 'turma.php';
 include_once 'aluno.php';
+include_once 'relatorio.php';
 include_once 'mensagem.php';
 
 class main{
@@ -234,7 +235,11 @@ class main{
                     echo($e);
                 }
                 break;
-
+            //Relatorio
+            case "relAlunosAtivos":
+                $relatorio = new relatorio();
+                echo $relatorio->getTotalAlunosAtivos();
+                break;
             //USUARIO
             case "selecUsuarioLogado":
                 login::getUser();
