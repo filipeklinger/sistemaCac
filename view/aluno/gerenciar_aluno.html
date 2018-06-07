@@ -1,139 +1,143 @@
-<body class="aluno">
-    <div class="container-fluid">
-    <div class="aluno">
-        <div class="header">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div>
-                        <ul class="nav navbar-nav">
-                            <li><a href="?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página Inicial</a></li>
-                            <li class="active"><a data-toggle="" href="#turmas">Gerenciar Alunos</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+<body class="container-fluid aluno">
+<div class="header">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a href="?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página Inicial</a></li>
+                    <li class="active"><a data-toggle="" href="#turmas">Gerenciar Alunos</a></li>
+                </ul>
+            </div>
         </div>
-        <p id="avisos"></p>
+    </nav>
+</div>
+<p id="avisos"></p>
+<div style="overflow-x: hidden;">
+    <div id="contTab" class="tab-content">
+        <div id="" class="tab-pane fade in active">
+            <a href="?pag=Cad.Aluno" type="button" class="btn btn-primary"><i
+                    class="glyphicon glyphicon-plus"></i>Inserir Aluno em Turma</a>
+
+            <select onchange="obterAlunos();" id="turma">
+                <option value="1" selected="selected">T01</option>
+            </select>
+
+            <h3 class="text-center">Alunos Matriculados na turma</h3>
+
+            <table width="80%" align="center" class="table">
+                <thead>
+                <tr>
+                    <th>NOME</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="alunos">
+                </tbody>
+            </table>
+            <h3 class="text-center">Alunos Na lista de Espera</h3>
+
+            <table width="80%" align="center" class="table">
+                <thead>
+                <tr>
+                    <th>NOME</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="listaEspera">
+                </tbody>
+            </table>
+
+            <h3 class="text-center">Alunos Matricula Trancada</h3>
+
+            <table width="80%" align="center" class="table">
+                <thead>
+                <tr>
+                    <th>NOME</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="matTrancada">
+                </tbody>
+            </table>
+        </div>
     </div>
-        <a href="?pag=Cad.Aluno" type="button" class="btn btn-primary" style="margin: 0px 0 50px 0"><i class="glyphicon glyphicon-plus"></i>Inserir Aluno em Turma</a>
+</div>
+<script type="text/javascript">
+    $(document).on("load", loader());
 
-        <select onchange="obterAlunos();" id="turma">
-            <option value="1" selected="selected">T01</option>
-        </select>
+    function loader() {
+        ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasAtivas, '#turma');
+        getMsgs();
+    }
 
-        <h3 class="text-center">Alunos Matriculados na turma</h3>
-
-        <table width="80%" align="center" class="">
-            <thead>
-            <tr>
-                <th>NOME</th>
-                <th> </th>
-                <th> </th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody id="alunos">
-            </tbody>
-        </table>
-        <h3 class="text-center">Alunos Na lista de Espera</h3>
-
-        <table width="80%" align="center" class="">
-            <thead>
-            <tr>
-                <th>NOME</th>
-                <th>  </th>
-                <th> </th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody id="listaEspera">
-            </tbody>
-        </table>
-
-        <h3 class="text-center">Alunos Matricula Trancada</h3>
-
-        <table width="80%" align="center" class="">
-            <thead>
-            <tr>
-                <th>NOME</th>
-                <th></th>
-                <th> </th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody id="matTrancada">
-            </tbody>
-        </table>
-    </div>
-
-    <script type="text/javascript">
-        $(document).on("load", loader());
-
-        function loader() {
-            ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasAtivas, '#turma');
-            getMsgs();
+    function parseTurmasAtivas(resposta, corpo) {
+        var objJson = JSON.parse(resposta);
+        for (i in objJson) {
+            corpo.append(
+                '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
+            );
         }
+        obterAlunos();
+    }
 
-        function parseTurmasAtivas(resposta, corpo) {
-            var objJson = JSON.parse(resposta);
-            for (i in objJson) {
-                corpo.append(
-                    '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
-                );
+    function obterAlunos() {
+        let turma = $('#turma').val();
+        console.log(turma);
+        ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id=' + turma, parseAlunos, '#alunos');
+    }
+
+
+    function parseAlunos(resposta, corpo) {
+        let objJson = JSON.parse(resposta);
+        let listaAlunos = '';
+        let listaEspera = '';
+        let listaTrancados = '';
+        for (let i in objJson) {
+
+            if (objJson[i].trancado === '0' && objJson[i].lista_espera === '0') {
+                listaAlunos += '<tr>\n' + '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
+                listaAlunos +=
+                    '     <td></td>\n' +
+
+                    '     <td><a href="control/main.php?req=trancarMatricula&id=' + objJson[i].id_aluno + '" class="btn btn-primary">Trancar Matricula</a></td>\n' +
+                    '</tr>';
+            } else if (objJson[i].trancado === '1') {
+                listaTrancados += '<tr>\n' + '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
+                listaTrancados +=
+                    '     <td>' + isAtivo(objJson[i].lista_espera) + '</td>\n' +
+                    '     <td>Matricula Trancada</a></td>\n' +
+                    '</tr>';
+            } else {
+                listaEspera += '<tr>\n' + '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
+                listaEspera +=
+                    '     <td> -- </td>\n' +
+                    '     <td>Lista de Espera</td>\n' +
+                    '</tr>';
             }
-            obterAlunos();
         }
 
-        function obterAlunos() {
-            let turma = $('#turma').val();
-            ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id='+turma, parseAlunos, '#alunos');
+        if (objJson.length < 1) {
+            listaAlunos = listaEspera = listaTrancados =
+                '<tr>\n' +
+                '                    <td>:( NÃO EXISTEM ALUNOS NESTA Categoria</td>\n' +
+                '                    <td> </td>\n' +
+                '                    <td> </td>\n' +
+                '                    <td> </td>\n' +
+                '                </tr>';
         }
-
-
-
-        function parseAlunos(resposta,corpo) {
-            let objJson = JSON.parse(resposta);
-            let listaAlunos = '';
-            let listaEspera = '';
-            let listaTrancados = '';
-            for (let i in objJson) {
-
-                if(objJson[i].trancado === '0' && objJson[i].lista_espera === '0'){
-                    listaAlunos += '<tr>\n' + '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n';
-                    listaAlunos +=
-                        '     <td></td>\n' +
-
-                        '     <td><a href="control/main.php?req=trancarMatricula&id='+objJson[i].id_aluno+'" class="btn btn-primary">Trancar Matricula</a></td>\n' +
-                        '</tr>';
-                }else if(objJson[i].trancado === '1'){
-                    listaTrancados +='<tr>\n' + '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n'+
-                        '     <td>Matricula Trancada</a></td>\n' +
-                        '</tr>';
-                }else{
-                    listaEspera +='<tr>\n' + '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n';
-                    listaEspera +=
-                        '     <td> -- </td>\n' +
-                        '     <td>Lista de Espera</td>\n' +
-                        '</tr>';
-                }
-            }
-
-            if (objJson.length < 1) {
-                listaAlunos = listaEspera = listaTrancados =
-                    '<tr>\n' +
-                    '                    <td>:( NÃO EXISTEM ALUNOS NESTA Categoria</td>\n' +
-                    '                    <td> </td>\n' +
-                    '                    <td> </td>\n' +
-                    '                    <td> </td>\n' +
-                    '                </tr>';
-            }
-            corpo.append(listaAlunos);
-            let espera = $('#listaEspera');
-            espera.empty()
-            espera.append(listaEspera);
-            let trancada = $('#matTrancada');
-            trancada.empty();
-            trancada.append(listaTrancados);
-        }
-    </script>
+        corpo.append(listaAlunos);
+        let espera = $('#listaEspera');
+        espera.empty()
+        espera.append(listaEspera);
+        let trancada = $('#matTrancada');
+        trancada.empty();
+        trancada.append(listaTrancados);
+    }
+</script>
 </body>
