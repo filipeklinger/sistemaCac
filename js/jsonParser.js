@@ -60,6 +60,7 @@ function trancado(num) {
 
 function jsonParseNomePredios(resposta,corpo) {
     var objJson = JSON.parse(resposta);
+    corpo.append('<option value="" disabled selected>Selecione o prédio ao qual a sala pertence</option>');
     for(var i in objJson){
         corpo.append(
             '<option value="' + objJson[i].id_predio+'">' + objJson[i].nome + '</option>' );

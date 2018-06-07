@@ -9,13 +9,13 @@ body {
     min-height: 570px; /*tamanho real 640, remove barra de endereços*/
     min-width: 360px;
     height: 100vh;
-    align-items: stretch;
+    /*align-items: stretch;*/
 }
 
 #page404, #main{
     height: 100%;
     background:
-            #dbe8e8
+            #009d9f
             url("../img/bg-main.jpg")
             no-repeat;
 }
@@ -71,13 +71,17 @@ input[type=text], input[type=password]{
 
 /*Dashboard pages*/
 #dashboard, .infra, .oficinas, .turmas, .usuario, .aluno {
-    height: 100%;
-    background:
+    min-height: 100%;
+    /*background:
             #dbe8e8
             url("../img/pattern.svg")
             repeat
             700px;
+            */
     color: #575557; /*color white*/
+}
+.infra, .oficinas, .turmas, .usuario, .aluno{
+    /*input styles in here!!!!!*/
 }
 /*Tabelas*/
 .table{
@@ -125,6 +129,9 @@ input[type=text], input[type=password]{
     min-height: 50%;
 }
 
+#mainAvisos{
+    margin-bottom: 20px;
+}
 #main .container {
     padding-top: 11%;
 }
@@ -135,9 +142,6 @@ input[type=text], input[type=password]{
 #main #avisos{
     margin-bottom: 0;
 }
-#mainAvisos{
-    margin-bottom: 20px;
-}
 #main form {
     padding-top: calc(9% - 52px);
 }
@@ -147,7 +151,6 @@ input[type=text], input[type=password]{
 }
 
 /*Login: lista de oficinas disponíveis*/
-/*TODO: código repetido, otimizar*/
 #listaOficinas {
     /*background-color: #ffc987;*/
     background-color: #fff;
@@ -237,6 +240,9 @@ input[type=text], input[type=password]{
     background-color: #dbe8e8;
     color: #575557;
 }
+#dashboard p, #dashboard h1, #dashboard h2, #dashboard h2, #dashboard h4{
+    color: #575557
+}
 #dashboard .content {
     padding: 20px;
     min-height: 100vh;
@@ -244,12 +250,12 @@ input[type=text], input[type=password]{
     width: 100%;
     /*background-color: #444244;*/
 }
-#dashboard #usr{
+#usr{
     color: #575557;
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
 }
-#dashboard #user, #nv{
+#user, #nv, #anoAtual, #periodoAtual{
     color: rgb(255, 88, 105);
 }
 #dashboard .content hr {
@@ -284,31 +290,22 @@ input[type=text], input[type=password]{
 }
 /*TODO: Aperfeiçoar estilo de formulários*/
 /*Infraestrutura*/
-.infra h1,.infra h2,.infra span,.infra p, .oficinas h1,.oficinas h2,.oficinas span,.oficinas p,
-.turmas h1,.turmas h2,.turmas span,.turmas p, .usuario h1,.usuario h2,.usuario span,.usuario p,
-.aluno h1,.aluno h2,.aluno span,.aluno p{
+.infra h1,.infra h2,.infra h3,.infra h4,.infra span,.infra p, .oficinas h1,.oficinas h2,.oficinas h3,.oficinas h4,.oficinas span,.oficinas p,
+.turmas h1,.turmas h2,.turmas h3,.turmas h4,.turmas span,.turmas p, .usuario h1,.usuario h2,.usuario h3,.usuario h4,.usuario span,.usuario p,
+.aluno h1,.aluno h2,.aluno h3,.aluno h4,.aluno span,.aluno p{
     color: #404040;
 }
-.infra {
-    color: #404040;
-}
+.infra {}
 /*Oficinas */
-.oficinas {
-    color: #404040;
-}
+.oficinas {}
 /*Turmas*/
-.turmas {
-    color: #404040;
-}
+.turmas {}
 /*Usuário */
-.usuario {
-    color: #404040;
-}
+.usuario {}
 /*Usuário: Gerenciar*/
-.aluno {
-    color: #404040;
-}
-/*SCREEN SIZE*/
+.aluno {}
+
+/*SCREEN SIZE - responsivo*/
 @media screen and (max-height: 640px) {
     #page404, #main{
         height: calc(100% - 57px);
