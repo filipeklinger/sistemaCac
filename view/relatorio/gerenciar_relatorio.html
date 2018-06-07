@@ -15,10 +15,18 @@
 </div>
 
 <p id="avisos"></p>
+
+<p>Periodo:
+    <select id="periodo" onchange="getPeriodoSelecionado();">
+
+    </select>
+</p>
 <div style="overflow-x: hidden;">
     <div id="contTab" class="tab-content">
-        <p>Total de Alunos atualmente em Oficinas: <span id="totalAlunosAtivos"></span></p>
-        <h3>Alunos por Oficina (De todas as turmas)</h3>
+
+        <p>Total de Alunos: <span id="totalAlunosAtivos"></span> Alunos.</p>
+
+        <h3>Alunos por Oficina</h3>
 
         <div class="row">
             <table width="80%" align="center" class="table">
@@ -26,7 +34,6 @@
                 <tr>
                     <th class="col-md-4">Oficina</th>
                     <th class="col-md-2">Número de Alunos</th>
-                    <th class="col-md-2">Lista de Espera</th>
                 </tr>
                 </thead>
                 <tbody id="alunosPorOficina">
@@ -39,24 +46,28 @@
     $(document).ready(loaderRelatorios);
 
     function loaderRelatorios() {
-        ajaxLoadGET('control/main.php?req=relAlunosAtivos', jsonParseTotalAlunosAtivos, '#toficinas');
+        ajaxLoadGET('control/main.php?req=selectTempoHistorico', parsePeriodosSelect, '#periodo',getPeriodoSelecionado);
     }
 
-    function jsonParseTotalAlunosAtivos(resposta, corpo) {
-        let json = JSON.parse(resposta);
-        $('#totalAlunosAtivos').append(json[0].numAlunos);
-    }
+    function getPeriodoSelecionado() {
+        let periodo = $('#periodo').val();
 
-    function jsonParseAlunosPorOficinas(resposta, corpo) {
-        let json = JSON.parse(resposta);
-        for (i in json) {
-            corpo.append(
-                '<tr>\n' +
-                '     <td class="col-md-4">' + objJson[i].oficina + '</td>\n' +
-                '     <td class="col-md-2">' + objJson[i].num_alunos + '</td>\n' +
-                '     <td class="col-md-2">' + objJson[i].lista_espera + '</td>\n' +
-                '</tr>');
+        ajaxLoadGET('control/main.php?req=relAlunosPorTurmaPeriodo&id='+periodo, jsonParseAlunosPorOficinas, '#alunosPorOficina');
+        function jsonParseAlunosPorOficinas(resposta,corpo) {
+            let objJson = JSON.parse(resposta);
+            let soma = 0;
+            for(i in objJson){
+                corpo.append(
+                    '<tr>\n' +
+                    '     <td class="col-md-2">' + objJson[i].oficina + '</td>\n' +
+                    '     <td class="col-md-2">' + objJson[i].alunos + '</td>\n' +
+                    '</tr>');
+                soma += parseInt(objJson[i].alunos);
+            }
+            $('#totalAlunosAtivos').empty().
+            append(soma);
         }
     }
+
 </script>
 </body>

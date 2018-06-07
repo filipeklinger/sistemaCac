@@ -27,9 +27,8 @@
             <table width="80%" align="center" class="table">
                 <thead>
                 <tr>
+                    <th></th>
                     <th>NOME</th>
-                    <th></th>
-                    <th></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -41,9 +40,8 @@
             <table width="80%" align="center" class="table">
                 <thead>
                 <tr>
+                    <th></th>
                     <th>NOME</th>
-                    <th></th>
-                    <th></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -56,9 +54,8 @@
             <table width="80%" align="center" class="table">
                 <thead>
                 <tr>
+                    <th></th>
                     <th>NOME</th>
-                    <th></th>
-                    <th></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -101,22 +98,24 @@
         for (let i in objJson) {
 
             if (objJson[i].trancado === '0' && objJson[i].lista_espera === '0') {
-                listaAlunos += '<tr>\n' + '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
                 listaAlunos +=
-                    '     <td></td>\n' +
-
+                    '<tr>\n' +
+                    '     <td> </td>\n'+
+                    '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
                     '     <td><a href="control/main.php?req=trancarMatricula&id=' + objJson[i].id_aluno + '" class="btn btn-primary">Trancar Matricula</a></td>\n' +
                     '</tr>';
             } else if (objJson[i].trancado === '1') {
-                listaTrancados += '<tr>\n' + '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
                 listaTrancados +=
-                    '     <td>' + isAtivo(objJson[i].lista_espera) + '</td>\n' +
+                    '<tr>\n' +
+                    '     <td> </td>\n'+
+                    '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
                     '     <td>Matricula Trancada</a></td>\n' +
                     '</tr>';
             } else {
-                listaEspera += '<tr>\n' + '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
                 listaEspera +=
-                    '     <td> -- </td>\n' +
+                    '<tr>\n' +
+                    '     <td> </td>\n'+
+                    '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
                     '     <td>Lista de Espera</td>\n' +
                     '</tr>';
             }
