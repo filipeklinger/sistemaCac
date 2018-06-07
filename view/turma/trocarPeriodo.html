@@ -1,4 +1,4 @@
-<body>
+<body class="turmas container-fluid">
 <div class="header">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -17,10 +17,12 @@
 
 <H3 class="text-center">Periodo Atual: <span id="anoAtual"></span> - <span id="periodoAtual"></span></H3>
 <p>Somente é possivel Avançar periodos</p>
-<p>muito cuidado ao utilizar essa função pois todas as turmas atuais sem exceção irão ser colocadas no Histórico.</p>
+<p>muito cuidado ao utilizar essa função pois todas as turmas atuais sem exceção irão ser colocadas no
+    Histórico.</p>
 
 <p class="text-center">Avançar para:</p>
-<p class="text-center"> <a href="" id="op1" class="btn btn-primary"></a> <a href="#" id="op2" class="btn btn-primary"></a></p>
+<p class="text-center"><a href="" id="op1" class="btn btn-primary"></a> <a href="#" id="op2"
+                                                                           class="btn btn-primary"></a></p>
 <script type="text/javascript">
 
     $(document).on("load", loader());
@@ -31,7 +33,7 @@
         getMsgs();
     }
 
-    function parsePeriodoButton(resposta,corpo) {
+    function parsePeriodoButton(resposta, corpo) {
         let json = JSON.parse(resposta);
         $('#anoAtual').append(json.ano);
         corpo.append(json.periodo);
@@ -39,13 +41,12 @@
         let ano = parseInt(json.ano);
         let periodo = parseInt(json.periodo);
         let op1 = $('#op1');
-        op1.append(ano + ' - ' + (periodo+1));
-        op1.attr('href','control/main.php?req=setPeriodo&ano='+ano+'&periodo='+(periodo+1));
+        op1.append(ano + ' - ' + (periodo + 1));
+        op1.attr('href', 'control/main.php?req=setPeriodo&ano=' + ano + '&periodo=' + (periodo + 1));
 
         let op2 = $('#op2');
-        op2.append((ano+1) + ' - 1');
-        op2.attr('href','control/main.php?req=setPeriodo&ano='+(ano+1)+'&periodo=1');
+        op2.append((ano + 1) + ' - 1');
+        op2.attr('href', 'control/main.php?req=setPeriodo&ano=' + (ano + 1) + '&periodo=1');
     }
 </script>
-
 </body>

@@ -116,8 +116,8 @@ function getMsgs() {
             aviso.addClass("alert alert-success");
             break;
         default:
-            //aviso.append("Err");
             aviso.removeAttr("class");
+
     }
 }
 

@@ -38,7 +38,9 @@ input[type=text], input[type=password]{
 .printOnly {
     display: none;
 }
-
+#mainAvisos{
+    min-height: 52px;
+}
 /*PADRÕES GLOBAIS*/
 /*Estilo de botões*/
 .coolButton {
@@ -62,6 +64,9 @@ input[type=text], input[type=password]{
     -ms-transition: 0.4s ease-in-out;
     -o-transition: 0.4s ease-in-out;
     transition: 0.4s ease-in-out;
+}
+.coolButton:active {
+    color: #56abff;
 }
 
 /*Dashboard pages*/
@@ -127,8 +132,14 @@ input[type=text], input[type=password]{
 #main .continue {
     font-size: 20px;
 }
+#main #avisos{
+    margin-bottom: 0;
+}
+#mainAvisos{
+    margin-bottom: 20px;
+}
 #main form {
-    padding-top: 9%;
+    padding-top: calc(9% - 52px);
 }
 #main form > a {
     color: white;
@@ -273,19 +284,29 @@ input[type=text], input[type=password]{
 }
 /*TODO: Aperfeiçoar estilo de formulários*/
 /*Infraestrutura*/
-infra {
+.infra h1,.infra h2,.infra span,.infra p, .oficinas h1,.oficinas h2,.oficinas span,.oficinas p,
+.turmas h1,.turmas h2,.turmas span,.turmas p, .usuario h1,.usuario h2,.usuario span,.usuario p,
+.aluno h1,.aluno h2,.aluno span,.aluno p{
+    color: #404040;
+}
+.infra {
+    color: #404040;
 }
 /*Oficinas */
 .oficinas {
+    color: #404040;
 }
 /*Turmas*/
 .turmas {
+    color: #404040;
 }
 /*Usuário */
 .usuario {
+    color: #404040;
 }
 /*Usuário: Gerenciar*/
 .aluno {
+    color: #404040;
 }
 /*SCREEN SIZE*/
 @media screen and (max-height: 640px) {

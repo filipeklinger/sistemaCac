@@ -6,7 +6,7 @@
             <div class="panel-body">
 
                 <form id="form" action="control/main.php?req=login" method="POST">
-                    <div>
+                    <div id="mainAvisos">
                         <p id="avisos" class=""></p>
                     </div>
                     <input id="user" type="text" name="login" class="form-control" placeholder="Usuário"
@@ -19,7 +19,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-lg-12 text-center">
+        <div class="row text-center">
             <br/>
             <a href="#listaOficinas" class="coolButton"> Oficinas Disponíveis </a>
         </div>
@@ -38,7 +38,8 @@
             <br/>
             <br/>
             <p>
-                Segue abaixo a relação de oficinas ativas em <span id="hoje"></span>, ofertadas pelo centro de Arte e Cultura desta universidade, e suas respectivas informações.
+                Segue abaixo a relação de oficinas ativas em <span id="hoje"></span>, ofertadas pelo centro de Arte e
+                Cultura desta universidade, e suas respectivas informações.
             </p>
             <br/>
         </div>
@@ -50,7 +51,9 @@
 <div id="MainFooter" class="text-center">
     <!--TODO: adicionar redes sociais no footer (colocado nomes em ordem alfabetica) -->
     <div class="row">
-        <small>Projetado por <a href="http://filipeklinger.16mb.com/">Filipe Klinger</a>, Luciano Viana,  e Vinícius Martins</small>
+        <small>Projetado por <a href="http://filipeklinger.16mb.com/">Filipe Klinger</a>, Luciano Viana, e Vinícius
+            Martins
+        </small>
         <br/>
         <!--TODO: mudar line-height direito de cópia-->
         <span>&copy;CAC CENTRO DE ARTE E CULTURA | TODOS OS DIREITOS RESERVADOS</span>
@@ -58,34 +61,35 @@
 </div>
 <script>
     $(document).on("load", getMsgs());
+
     ajaxLoadGET('control/main.php?req=selectTurmaAtiva', listaMarota, '#t_oficinas');
+
 
     function listaMarota(resposta, corpo) {
         var objJson = JSON.parse(resposta);
-        console.log(objJson);
         var aux;
         if (objJson.length > 0) {
             for (var i in objJson) {
                 //aqui obtemos o numero real de vagas disponiveis
                 objJson[i].vagas = parseInt(objJson[i].vagas) - parseInt(objJson[i].ocupadas);
-                if(objJson[i].vagas < 10){
-                    objJson[i].vagas = '&nbsp;&nbsp;'+objJson[i].vagas;
+                if (objJson[i].vagas < 10) {
+                    objJson[i].vagas = '&nbsp;&nbsp;' + objJson[i].vagas;
                 }
                 //console.log(avaliaData(objJson[i]));
                 var aux = JSON.parse(avaliaData(objJson[i]));
                 //console.log(aux);
                 corpo.append(
-                    '<div class="media">'+
-                    '<div class="media-left text-center">'+
-                    '<span class="media-object">'+
+                    '<div class="media">' +
+                    '<div class="media-left text-center">' +
+                    '<span class="media-object">' +
                     objJson[i].vagas
-                    +'</span>'+
-                    '<span>vagas</span></div>'+
-                    '<div class="media-body">'+
-                    '<h4 class="media-heading">' + objJson[i].oficina + ' - '+ objJson[i].inicio +'</h4><span>'+aux+'</span>'+
-                    '<p>Professor: ' + objJson[i].professor + '</p>'+
-                    '<p>Local: '+ objJson[i].predio + ',  ' + objJson[i].sala + '</p>'+
-                    '</div>'+
+                    + '</span>' +
+                    '<span>vagas</span></div>' +
+                    '<div class="media-body">' +
+                    '<h4 class="media-heading">' + objJson[i].oficina + ' - ' + objJson[i].inicio + '</h4><span>' + aux + '</span>' +
+                    '<p>Professor: ' + objJson[i].professor + '</p>' +
+                    '<p>Local: ' + objJson[i].predio + ',  ' + objJson[i].sala + '</p>' +
+                    '</div>' +
                     '</div>'
                 );
             }
@@ -97,35 +101,36 @@
         }
     }
 
-    function avaliaData(jsonObject){
+    function avaliaData(jsonObject) {
         var dias = new Array();
-        if(jsonObject.segunda === '1'){
+        if (jsonObject.segunda === '1') {
             dias.push("Seg");
         }
-        if(jsonObject.terca === '1'){
+        if (jsonObject.terca === '1') {
             dias.push("Ter");
         }
-        if(jsonObject.quarta === '1'){
+        if (jsonObject.quarta === '1') {
             dias.push("Qua");
         }
-        if(jsonObject.quinta === '1'){
+        if (jsonObject.quinta === '1') {
             dias.push("Qui");
         }
-        if(jsonObject.sexta === '1'){
+        if (jsonObject.sexta === '1') {
             dias.push("Sex");
         }
         return JSON.stringify(dias);
     }
+
     //function currDate(){
-        const now = new Date();
-        var periodo;
-        if(now.getMonth() > 6){
-            periodo = 2;
-        }
-        else{
-            periodo = 1;
-        }
-        document.getElementById('hoje').innerHTML = now.getUTCFullYear()+'-'+periodo;
+    const now = new Date();
+    var periodo;
+    if (now.getMonth() > 6) {
+        periodo = 2;
+    }
+    else {
+        periodo = 1;
+    }
+    document.getElementById('hoje').innerHTML = now.getUTCFullYear() + '-' + periodo;
     //}
 </script>
 </body>
