@@ -12,10 +12,7 @@ class relatorio{
      $this->db = new Database();
  }
  /*
-  * Contabilizar o total de alunos do CAC calculado através do somatório de
-todos os alunos atualmente ativos nas oficinas;
-2. Contabilizar quantidade de alunos por oficina que é demonstrado
-recuperando os alunos de todas as turmas atualmente ativas;
+  *
 3. Contabilizar alunos aptos a receber certificado (1 por oficina concluída
 corretamente);
 4. Recuperar histórico de um aluno específico em oficinas já concluídas ou
@@ -31,17 +28,7 @@ período consultado;
 da lista de espera em relação a quantidade de vagas disponibilizadas;
   */
 
-    /**
-     * @return string
-     * @throws Exception
-     */
-    public function getTotalAlunosAtivos(){
-    $projection = "count(*) as numAlunos";
-    $table = "aluno_turma,turma,tempo";
-    $whereClause = "aluno_turma.turma_id = turma.id_turma AND turma.tempo_id = tempo.id_tempo AND tempo.id_tempo = 3 AND aluno_turma.lista_espera = 0 AND aluno_turma.trancado = 0";
-    return $this->db->select($projection,$table,$whereClause);
- }
-
+    //o total de alunos pode ser obtdo atraves da soma dos alunos por oficina no front-end diminuindo processamento
     /**
      * @param $tempoId
      * @return string

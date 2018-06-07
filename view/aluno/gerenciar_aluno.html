@@ -86,7 +86,6 @@
 
         function obterAlunos() {
             let turma = $('#turma').val();
-            console.log(turma);
             ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id='+turma, parseAlunos, '#alunos');
         }
 
@@ -107,9 +106,7 @@
                         '     <td><a href="control/main.php?req=trancarMatricula&id='+objJson[i].id_aluno+'" class="btn btn-primary">Trancar Matricula</a></td>\n' +
                         '</tr>';
                 }else if(objJson[i].trancado === '1'){
-                    listaTrancados +='<tr>\n' + '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n';
-                    listaTrancados +=
-                        '     <td>' + isAtivo(objJson[i].lista_espera) + '</td>\n' +
+                    listaTrancados +='<tr>\n' + '     <td>' + objJson[i].nome + " " +objJson[i].sobrenome +'</td>\n'+
                         '     <td>Matricula Trancada</a></td>\n' +
                         '</tr>';
                 }else{

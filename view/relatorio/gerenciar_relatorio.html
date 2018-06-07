@@ -3,13 +3,15 @@
 
 <h3><a href="index.php?pag=DashBoard"><span class="glyphicon glyphicon-chevron-left"></span> Voltar </a> | Relatórios</h3>
 
-<p>Total de Alunos atualmente em Oficinas: <span id="totalAlunosAtivos"></span></p>
-<h3 class="text-center">Alunos por Oficina</h3>
 <p>Periodo:
     <select id="periodo" onchange="getPeriodoSelecionado();">
 
     </select>
 </p>
+
+<p>Total de Alunos :  <span id="totalAlunosAtivos"></span> Alunos.</p>
+<h3 class="text-center">Alunos por Oficina</h3>
+
 <div class="row">
     <table width="80%" align="center" class="">
         <thead>
@@ -28,12 +30,6 @@
 
     function loaderRelatorios() {
         ajaxLoadGET('control/main.php?req=selectTempoHistorico', parsePeriodosSelect, '#periodo',getPeriodoSelecionado);
-        ajaxLoadGET('control/main.php?req=relAlunosAtivos', jsonParseTotalAlunosAtivos, '#toficinas');
-    }
-
-    function jsonParseTotalAlunosAtivos(resposta) {
-        let json = JSON.parse(resposta);
-        $('#totalAlunosAtivos').append(json[0].numAlunos);
     }
 
     function getPeriodoSelecionado() {
@@ -42,13 +38,17 @@
         ajaxLoadGET('control/main.php?req=relAlunosPorTurmaPeriodo&id='+periodo, jsonParseAlunosPorOficinas, '#alunosPorOficina');
         function jsonParseAlunosPorOficinas(resposta,corpo) {
             let objJson = JSON.parse(resposta);
+            let soma = 0;
             for(i in objJson){
                 corpo.append(
                     '<tr>\n' +
                     '     <td class="col-md-2">' + objJson[i].oficina + '</td>\n' +
                     '     <td class="col-md-2">' + objJson[i].alunos + '</td>\n' +
                     '</tr>');
+                soma += parseInt(objJson[i].alunos);
             }
+            $('#totalAlunosAtivos').empty().
+            append(soma);
         }
     }
 

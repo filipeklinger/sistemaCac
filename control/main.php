@@ -236,10 +236,6 @@ class main{
                 }
                 break;
             //Relatorio
-            case "relAlunosAtivos":
-                $relatorio = new relatorio();
-                echo $relatorio->getTotalAlunosAtivos();
-                break;
             case "relAlunosPorTurmaPeriodo":
                 $relatorio = new relatorio();
                 echo $relatorio->getAlunosPorOficina($_GET['id']);
