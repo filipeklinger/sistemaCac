@@ -2,20 +2,33 @@
 /*Imports*/
 @import "bootstrapExpansion.css";
 @import "printable.css";
-
-/*Fontes*/
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import "fontWrapper.css";
 
 /*Globals*/
 body {
+    min-height: 570px; /*tamanho real 640, remove barra de endereços*/
+    min-width: 360px;
     height: 100vh;
-    /*display: flex;*/
     align-items: stretch;
-    background-color: #dbe8e8;
-    background-image: url("../img/pattern.svg");
-    background-repeat: repeat;
-    background-size: 700px;
-    color: #575557;
+}
+
+#page404, #main{
+    height: 100%;
+    background:
+            #dbe8e8
+            url("../img/bg-main.jpg")
+            no-repeat;
+}
+#page404 .container, #main .container {
+    height: 100%;
+}
+h1,h2,h3,h4,span,p,a{
+    color: white;
+}
+input[type=text], input[type=password]{
+    background-color: rgba(31, 31, 31, 0.7) !important;
+    border: 0 !important;
+    color: white !important; /*verificar por que funciona apenas com important */
 }
 
 .container-fluid {
@@ -27,6 +40,40 @@ body {
 }
 
 /*PADRÕES GLOBAIS*/
+/*Estilo de botões*/
+.coolButton {
+    border: 1px solid white;
+    border-radius: 25px;
+    padding: 8px 20px;
+    text-decoration: none;
+    -webkit-transition: 0.4s ease-in-out;
+    -moz-transition: 0.4s ease-in-out;
+    -ms-transition: 0.4s ease-in-out;
+    -o-transition: 0.4s ease-in-out;
+    transition: 0.4s ease-in-out;
+    font-size: large;
+}
+.coolButton:hover {
+    color: #56abff;
+    border: 1px solid #d7d7d7;
+    background-color: rgba(0, 0, 0, 0.14);
+    -webkit-transition: 0.4s ease-in-out;
+    -moz-transition: 0.4s ease-in-out;
+    -ms-transition: 0.4s ease-in-out;
+    -o-transition: 0.4s ease-in-out;
+    transition: 0.4s ease-in-out;
+}
+
+/*Dashboard pages*/
+#dashboard, .infra, .oficinas, .turmas, .usuario, .aluno {
+    height: 100%;
+    background:
+            #dbe8e8
+            url("../img/pattern.svg")
+            repeat
+            700px;
+    color: #575557; /*color white*/
+}
 /*Tabelas*/
 .table{
     background-color: rgb(255, 88, 105);
@@ -40,7 +87,6 @@ body {
     font-weight: 500;
 }
 .table td{
-    /*color: #444244;*/
     border-top: 3px solid white;
 }
 .table tbody tr:hover{
@@ -48,230 +94,77 @@ body {
 }
 .table th{
     padding: 15px;
-    /*color: rgb(237, 243, 234);*/
-    /*background-color: rgba(0, 46, 49, 0.41);*/
     color: rgb(239, 245, 236);
     background-color: rgb(179, 177, 179);
     font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
+    font-weight: 700;
 }
-
 
 /*Página 404*/
-.page404 .container {
+#page404 .container {
     margin-top: 10%;
 }
-.page404 {
-    background-image: url("../img/bg-main.jpg");
-    background-color: #72daff;
-    background-size: cover;
-    min-height: 100vh;
-    min-width: 100%;
-    background-repeat: no-repeat;
+#page404 {
     overflow: hidden;
 }
-.page404 h1 {
-    color: white;
+#page404 h1 {
     font-size: 200px;
 }
-.page404 h2 {
-    color: white;
-}
-.page404 a {
-    color: white;
-    border: 1px solid white;
-    border-radius: 25px 25px 25px 25px;
-    padding: 8px 20px 8px 20px;
-    text-decoration: none;
-    -webkit-transition: 0.4s ease-in-out;
-    -moz-transition: 0.4s ease-in-out;
-    -ms-transition: 0.4s ease-in-out;
-    -o-transition: 0.4s ease-in-out;
-    transition: 0.4s ease-in-out;
-}
-.page404 a:hover {
-    color: #56abff;
-    border: 1px solid #d7d7d7;
-    background-color: rgba(0, 0, 0, 0.14);
-    -webkit-transition: 0.4s ease-in-out;
-    -moz-transition: 0.4s ease-in-out;
-    -ms-transition: 0.4s ease-in-out;
-    -o-transition: 0.4s ease-in-out;
-    transition: 0.4s ease-in-out;
-}
+
 /*Login: página principal*/
-.painel {
-    background-image: url("../img/bg-main.jpg");
-    background-color: #72daff;
-    background-size: cover;
-    background-position: bottom;
-    background-repeat: no-repeat;
-    color: white;
-    height: 100vh;
-}
-.painel .logo {
-    background-image: url("../img/Logo-web.svg");
-    background-repeat: no-repeat;
-    background-position: center;
+.logo {
+    background:
+            url("../img/Logo-web.svg")
+            no-repeat
+            center;
     min-height: 50%;
 }
-.painel input {
-    background-color: rgba(31, 31, 31, 0.7);
-    border: 0;
-    /*max-height: 100%;*/
-    color: white;
-}
-.painel input:focus {
-    border: 1px solid #8f8f8f;
-}
-.painel .container {
+
+#main .container {
     padding-top: 11%;
-    height: 100%;
 }
-.painel .navbar-fixed-bottom {
-    padding-bottom: 3%;
-}
-.painel .continue {
+
+#main .continue {
     font-size: 20px;
 }
-.painel form {
+#main form {
     padding-top: 9%;
 }
-.painel form > a {
+#main form > a {
     color: white;
     padding-left: 10px;
 }
-.painel .navbar-fixed-bottom {
-    position: absolute;
-}
-.painel .continue {
-    animation-name: fade-in-out;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    display: unset;
-}
-@media screen and (max-height: 772px) {
-    .painel .continue {
-        display: none;
-    }
-    .painel{
-        /*min-height: 412px;*/
-    }
-    .painel .logo{
-        /*background-size: 200px;*/
-    }
-}
-/*
-@media screen and (max-height: 772px) and (orientation: landscape){
-    .painel .continue {
-        display: none;
-    }
-    .painel{
-        min-height: 250px;
-    }
-    .painel{
-        min-height: 25px;
-    }
 
-    .painel .logo{
-        /*background-size: 200px;display: none;
-    }
-}
-*/
-@keyframes fade-in-out {
-    0% {
-        color: darkgrey
-    }
-    50% {
-        color: white
-    }
-    100% {
-        color: darkgrey
-    }
-}
-/*Login: Compatibilidade entre navegadores*/
-@keyframes fade-in-out {
-    0% {
-        color: darkgrey
-    }
-    50% {
-        color: white
-    }
-    100% {
-        color: darkgrey
-    }
-}
-@-moz-keyframes fade-in-out /* Firefox */
-{
-    0% {
-        color: darkgrey
-    }
-    50% {
-        color: white
-    }
-    100% {
-        color: darkgrey
-    }
-}
-@-webkit-keyframes fade-in-out /* Safari and Chrome */
-{
-    0% {
-        color: darkgrey
-    }
-    50% {
-        color: white
-    }
-    100% {
-        color: darkgrey
-    }
-}
-@-o-keyframes fade-in-out /* Opera */
-{
-    0% {
-        color: darkgrey
-    }
-    50% {
-        color: white
-    }
-    100% {
-        color: darkgrey
-    }
-}
-@-ms-keyframes fade-in-out /* IE */
-{
-    0% {
-        color: darkgrey
-    }
-    50% {
-        color: white
-    }
-    100% {
-        color: darkgrey
-    }
-}
 /*Login: lista de oficinas disponíveis*/
 /*TODO: código repetido, otimizar*/
-.lista {
+#listaOficinas {
     /*background-color: #ffc987;*/
     background-color: #fff;
     height: auto;
     min-height: 100%;
 }
+#listaOficinas h4, #listaOficinas span, #listaOficinas p{
+    color: black;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+}
+
 #titulo-lista {
     border-top: 3px solid #000;
     border-bottom: 5px solid #000;
     padding: 10px;
+    color: black;
 }
-.lista .container-fluid {
+#listaOficinas .container-fluid {
     padding-top: 1%;
     padding-bottom: 2%;
     min-height: 100%;
 }
-.lista .container-fluid h3 {
+#listaOficinas .container-fluid h3 {
     color: #000;
     font-weight: bold;
 }
-.lista .media {
+#listaOficinas .media {
     color: #000;
     /*background-color: #2aabd2;*/
     border-bottom: 4px solid #000;
@@ -282,27 +175,27 @@ body {
     transition: 0.3s ease;
     font-size: medium;
 }
-.lista .media .media-body {
+#listaOficinas .media .media-body {
     padding-left: 3%;
 }
-.lista .media:hover {
+#listaOficinas .media:hover {
     border-left: 4px solid #ff7471;
     border-bottom: 4px solid #ff7471;
     color: #ff7471;
     background-color: rgba(244, 255, 252, 0.94);
 }
-.lista .media .media-left {
+#listaOficinas .media .media-left {
     padding-right: 0;
 }
-.lista .media .media-object {
+#listaOficinas .media .media-object {
     font-size: 50px;
 }
-.lista .media .media-body .media-heading {
+#listaOficinas .media .media-body .media-heading {
     font-size: x-large;
     font-weight: bold;
 }
 /*Login: Rodapé principal com dados e informações para contato*/
-.MainFooter {
+#MainFooter {
     background-color: #88bbd6;
     color: white;
     padding: 25px;
@@ -328,99 +221,78 @@ body {
     }
 }
 /*Dashboard: Tela inicial pós login*/
-.dashboard {
+#dashboard {
     display: flex; /*TODO: mexer no display mode, não responsivo*/
     background-color: #dbe8e8;
     color: #575557;
 }
-.dashboard .content {
+#dashboard .content {
     padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
     width: 100%;
     /*background-color: #444244;*/
 }
-.dashboard #usr{
+#dashboard #usr{
     color: #575557;
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
 }
-.dashboard #user, #nv{
+#dashboard #user, #nv{
     color: rgb(255, 88, 105);
 }
-.dashboard .content hr {
+#dashboard .content hr {
     border-color: #8b9189;
 }
 
-.dashboard a, a:hover, a:focus {
+#dashboard a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
 }
 /*Sidebar*/
-.dashboard .sidebar {
+.sidebar {
     border-right: 1px solid #747474;
     color: #575557;
     font-family: 'Open Sans', sans-serif;
     font-weight: normal;
 }
-.dashboard .sidebar ul li {
+.sidebar ul li {
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: medium;
 }
-.dashboard .sidebar ul li i {
+.sidebar ul li i {
     font-size: x-large;
 }
-.dashboard .sidebar ul .collapse a:hover {
+.sidebar ul .collapse a:hover {
     /*padding-top: 7px;*/
 }
-.dashboard .sidebar ul li a:hover {
+.sidebar ul li a:hover {
     color: rgb(255, 88, 105);
 }
 /*TODO: Aperfeiçoar estilo de formulários*/
 /*Infraestrutura*/
-.infra {
+infra {
 }
-.infra .table {
-}
-
 /*Oficinas */
 .oficinas {
-    background-color: rgba(0, 154, 156, 0.53);
 }
-.oficinas .table{
-
-}
-
 /*Turmas*/
 .turmas {
-}
-
-/*Turmas: quadro de horário*/
-.scheduler {
-
 }
 /*Usuário */
 .usuario {
 }
-
 /*Usuário: Gerenciar*/
 .aluno {
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*SCREEN SIZE*/
+@media screen and (max-height: 640px) {
+    #page404, #main{
+        height: calc(100% - 57px);
+    }
+    #main div a.coolButton{
+        display: none;
+    }
+}
