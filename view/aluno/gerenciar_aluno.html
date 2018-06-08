@@ -85,7 +85,6 @@
 
     function obterAlunos() {
         let turma = $('#turma').val();
-        console.log(turma);
         ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id=' + turma, parseAlunos, '#alunos');
     }
 
