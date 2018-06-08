@@ -16,7 +16,7 @@
 
 <p id="avisos"></p>
 
-<p>Periodo:
+<p><label for="periodo">Periodo:</label>
     <select id="periodo" onchange="getPeriodoSelecionado();">
     </select>
 </p>
@@ -42,19 +42,17 @@
 </div>
 <script type="application/javascript">
     $(document).ready(loaderRelatorios);
-
     function loaderRelatorios() {
         ajaxLoadGET('control/main.php?req=selectTempoHistorico', parsePeriodosSelect, '#periodo',getPeriodoSelecionado);
     }
 
     function getPeriodoSelecionado() {
         let periodo = $('#periodo').val();
-
         ajaxLoadGET('control/main.php?req=relAlunosPorTurmaPeriodo&id='+periodo, jsonParseAlunosPorOficinas, '#alunosPorOficina');
         function jsonParseAlunosPorOficinas(resposta,corpo) {
             let objJson = JSON.parse(resposta);
             let soma = 0;
-            for(i in objJson){
+            for(let i in objJson){
                 corpo.append(
                     '<tr>\n' +
                     '     <td class="col-md-4">' + objJson[i].oficina + '</td>\n' +
@@ -66,6 +64,5 @@
             append(soma);
         }
     }
-
 </script>
 </body>
