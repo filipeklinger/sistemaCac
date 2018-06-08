@@ -25,9 +25,7 @@
     <div id="contTab" class="tab-content">
 
         <p>Total: <span id="totalAlunosAtivos"></span> Alunos.</p>
-
         <h3>Alunos por Oficina</h3>
-
         <div class="row">
             <table width="80%" align="center" class="table">
                 <thead>
@@ -59,7 +57,7 @@
             for(i in objJson){
                 corpo.append(
                     '<tr>\n' +
-                    '     <td class="col-md-2">' + objJson[i].oficina + '</td>\n' +
+                    '     <td class="col-md-4">' + objJson[i].oficina + '</td>\n' +
                     '     <td class="col-md-2">' + objJson[i].alunos + '</td>\n' +
                     '</tr>');
                 soma += parseInt(objJson[i].alunos);
