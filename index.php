@@ -113,7 +113,7 @@ if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
             break;
         //Relatorios
         case 'Relatorios':
-            include "view/relatorio/gerenciar_relatorio.html";
+            include "view/relatorio/relatorio.html";
             break;
         default:
             include "view/404.html";
