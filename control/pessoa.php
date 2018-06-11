@@ -30,6 +30,8 @@ class pessoa{
         $this->db = new Database();
     }
 
+//------------Recebe Dados do Form ------------------------------------------------
+
     private function receiveAccessLevel(){
         if (isset($_SESSION['NIVEL']) and $_SESSION['NIVEL'] == ADMINISTRADOR) {//se não for adm o nivel é automaticamente aluno
             $this->nv = isset($_POST['nv_acesso']) ? $_POST['nv_acesso'] : VISITANTE;//se der erro fica como visitante
@@ -62,6 +64,8 @@ class pessoa{
         $this->respTel = isset($_POST['resp_tel']) ? $_POST['resp_tel'] : INVALIDO;
         $this->respTelType = isset($_POST['resp_tel_type']) ? $_POST['resp_tel_type'] : INVALIDO;
     }
+
+//---------------------------------------------Procedimento de cadastrar pessoa-----------------------------------------
 
     /**
      * um usuário pode cadastrar varios dependentes (menores de idade)
@@ -103,6 +107,18 @@ class pessoa{
         $this->insertLogin();
 
         //-----------------Menor-Idade------------------------------
+        $this->insertMenor();
+        //----------------------------------------------------------
+        $this->redireciona();
+
+    }
+
+    /**
+     * @throws Exception
+     * @return bool Inserido ou nao no banco
+     */
+    function insertMenor(){
+        $verificador = false;
         if (isset($_POST['qtd_menor']) and $_POST['qtd_menor'] > 0) {
             $this->parentesco = isset($_POST['parentesco']) ? $_POST['parentesco'] : INVALIDO;
             for ($i = 0; $i < $_POST['qtd_menor']; $i++) {
@@ -116,12 +132,14 @@ class pessoa{
 
                 $menorID = $this->insertDadosBasicos($nomeMenor,$sobrenomeMenor,ALUNO,SIM,NAO,$nascimentoMenor);
 
-                $this->insertRelacaoDependente($menorID);
+                $verificador = $this->insertRelacaoDependente($menorID);
+                if($verificador == false) return false;//se nao inseriu corretamente ja sai do loop
             }
         }
-        $this->redireciona();
-
+        return $verificador;
     }
+
+//---------------------------------------------Insere dados no banco----------------------------------------------------
 
     /**
      * @param $nome
@@ -350,7 +368,7 @@ class pessoa{
         }
     }
 
-    //---------------------------------------------UPDATE---------------------------------------------------------------
+//---------------------------------------------UPDATE-------------------------------------------------------------------
 
     private function hasUpdatePermission($pessoaId){
         if($pessoaId == $_SESSION['ID'] or $_SESSION['NIVEL'] == ADMINISTRADOR){
@@ -360,6 +378,27 @@ class pessoa{
             $this->redirecionaPagAnterior();
             return false;
         }
+    }
+
+    /**
+     * Essa funcao adiciona um dependente para um usuario definido
+     * @param $respId
+     * @throws Exception
+     */
+    public function addDependente($respId){
+        if($this->hasUpdatePermission($respId)){
+            $this->responsavelID = $respId;//aqui colocamos o usuario passado como responsavel
+            if($this->insertMenor()){
+                new mensagem(SUCESSO,"Dependente(s) inserido(s) com sucesso");
+
+            }else{
+                new mensagem(INSERT_ERRO,"Erro ao inserir dependente");
+            }
+        }else{
+            new mensagem(ERRO,"Sem permissão para alterar");
+        }
+
+        $this->redirecionaPagAnterior();
     }
     /**
      * @param $pessoaId

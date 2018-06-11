@@ -82,7 +82,7 @@ class main{
                     new mensagem(ERRO,$e);
                 }
                 break;
-                //Pessoa
+                //Pessoa------------------------------------------------------------------------------------------------
             case "insertPessoa":
                 $pess = new pessoa();
                 try {
@@ -147,7 +147,11 @@ class main{
                 $pess = new pessoa();
                 $pess->updateContato($_GET['id']);
                 break;
-            //Oficina
+            case "addDependente":
+                $pess = new pessoa();
+                $pess->addDependente($_GET['id']);
+                break;
+            //Oficina---------------------------------------------------------------------------------------------------
             case "insertOficina":
                 $ofic = new oficina();
                 $ofic->setOficina();
