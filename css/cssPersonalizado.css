@@ -1,4 +1,3 @@
-/*TODO: reformular palheta de cores*/
 /*Imports*/
 @import "bootstrapExpansion.css";
 @import "printable.css";
@@ -56,7 +55,7 @@ body {
 h1,h2,h3,h4,span,p,a{
     color: white;
 }
-input[type=text], input[type=password]{
+input[type=text], input[type=password], input[type=number], input[type=date]{
     background-color: rgba(31, 31, 31, 0.7) !important;
     border: 0 !important;
     color: white !important; /*verificar por que funciona apenas com important */
@@ -96,12 +95,18 @@ input[type=text], input[type=password]{
     -o-transition: 0.4s ease-in-out;
     transition: 0.4s ease-in-out;
 }
+.formBoxContainer{
+    border: 2px solid #353635;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
 .coolButton:active {
     color: #56abff;
 }
 
 /*Dashboard pages*/
 #dashboard, .infra, .oficinas, .turmas, .usuario, .aluno, #relatorios {
+    overflow-x: hidden;
     min-height: 100%;
     background:
             #e5e6e6
