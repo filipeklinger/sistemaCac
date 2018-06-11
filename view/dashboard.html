@@ -8,13 +8,6 @@
         </div>
 
         <ul class="list-unstyled" id="menu">
-            <!--li class="text-center">
-                <a href="#homeSubmenu">
-                    <i class="glyphicon glyphicon-home"></i>
-                    <br>
-                    Home
-                </a>
-            </li-->
             <br>
             <br>
             <li class="text-center">
@@ -36,7 +29,7 @@
         <hr>
 
         <br>
-        <h2> <b>Consulta de Turmas Ativas em <span id="anoAtual"></span>.<span id="periodoAtual"></span></b></h2>
+        <h2> <b>Turmas Ativas em <span id="anoAtual"></span>.<span id="periodoAtual"></span></b></h2>
         <br>
 
         <table class="table">
@@ -53,6 +46,7 @@
             </thead>
             <tbody id="t_oficinas"></tbody>
         </table>
+        <row class="navbar-fixed-bottom text-center">&copy;CAC, Todos os Direitos Reservados, <span id="footerYear"></span></row>
     </div>
 </div>
 
@@ -119,6 +113,6 @@
 
         $('#menu').prepend(menuString);
     }
-
+    $('#footerYear').append((new Date).getFullYear());
 </script>
 </body>
