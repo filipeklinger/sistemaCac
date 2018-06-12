@@ -362,7 +362,7 @@ class pessoa{
      */
     public function getDependentes($responsavelId){
         try {
-            return $this->db->select("nome,sobrenome,responsavel_parentesco", "menor_idade,pessoa", "responsavel_id = ? and pessoa_id = id_pessoa", array($responsavelId));
+            return $this->db->select("id_pessoa,nome,sobrenome,responsavel_parentesco", "menor_idade,pessoa", "responsavel_id = ? and pessoa_id = id_pessoa", array($responsavelId));
         } catch (Exception $e) {
             return "";
         }
