@@ -9,6 +9,9 @@ body {
     min-width: 360px;
     height: 100vh;
     font-family: 'Open Sans', sans-serif;
+    transition: .3s ease-in-out;
+    background-color: #e5e6e6;
+
 }
 hr {
     border-color: #353635;
@@ -25,7 +28,7 @@ hr {
 }
 .navbar-default{
     background-color: #353635 !important;
-    border-bottom: 2px solid #000;
+    /*border-bottom: 2px solid #000;*/
     border-radius: 0px;
 }
 .navbar-default .navbar-nav > li > a{
@@ -34,12 +37,7 @@ hr {
 .navbar-default .navbar-nav > li > a:hover{
     color: whitesmoke;
 }
-.alert-danger{
-    /*background-color: rgba(238, 58, 62, 0.84);*/
-    /*color: rgb(238, 61, 62);*/
-    /*border: none;*/
-    /*font-weight: bold;*/
-}
+
 .btn-primary {
     color: #000;
     border: 2px solid #000;
@@ -54,7 +52,14 @@ hr {
     background-color: rgba(244, 151, 46, 0.65);
 
 }
-
+.btn-sec{
+    background-color: #4187d0;
+    color: #d5d5d5;
+    transition: .3s ease-in-out;
+}
+.btn-sec:hover{
+    background-color: #4482ce;
+}
 .selectCool{
     background-color: transparent;
     border: 0;
@@ -68,6 +73,7 @@ hr {
             url("../img/bg-main.jpg")
             no-repeat;
 }
+
 #page404 .container, #main .container {
     height: 100%;
 }
@@ -78,13 +84,12 @@ input[type=text], input[type=password], input[type=number], input[type=date]{
     background-color: rgba(31, 31, 31, 0.7) !important;
     border: 0 !important;
     /*border: 1px solid #5a5a5a;*/
-    color: white !important; /*verificar por que funciona apenas com important */
+    color: white !important; /*TODO: verificar por que funciona apenas com important */
 }
 
 .container-fluid {
     padding: 0;
 }
-
 .printOnly {
     display: none;
 }
@@ -93,10 +98,10 @@ input[type=text], input[type=password], input[type=number], input[type=date]{
 }
 /*PADRÕES GLOBAIS*/
 /*Estilo de botões*/
-.coolButton {
-    border: 1px solid white;
-    border-radius: 25px;
-    padding: 8px 20px;
+.coolButton, .coolButton2{
+    border: 2px solid white;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.14);
     text-decoration: none;
     -webkit-transition: 0.4s ease-in-out;
     -moz-transition: 0.4s ease-in-out;
@@ -105,10 +110,22 @@ input[type=text], input[type=password], input[type=number], input[type=date]{
     transition: 0.4s ease-in-out;
     font-size: large;
 }
-.coolButton:hover {
+.coolButton {
+    border-radius: 25px;
+    padding: 8px 20px;
+}
+.coolButton:hover, .coolButton2:hover{
     color: #56abff;
-    border: 1px solid #d7d7d7;
-    background-color: rgba(0, 0, 0, 0.14);
+    border-color: #d7d7d7;
+    background-color: rgba(0, 0, 0, 0.18);
+}
+.coolButton2{
+    padding: 8px 20px;
+}
+.coolButton2:hover{
+    color: #56abff;
+    border-color: #d7d7d7;
+    background-color: rgba(0, 0, 0, 0.18);
     -webkit-transition: 0.4s ease-in-out;
     -moz-transition: 0.4s ease-in-out;
     -ms-transition: 0.4s ease-in-out;
@@ -207,78 +224,53 @@ input[type=text], input[type=password], input[type=number], input[type=date]{
 #main form {
     padding-top: calc(9% - 52px);
 }
-#main form > a {
-    color: white;
-    padding-left: 10px;
+#main form > a{
+    padding-left: 8px;
+    transition: .3s ease-in-out;
+}
+#main form > a:hover {
+
+    text-decoration: underline;
+    color: #56abff;
 }
 
 /*Login: lista de oficinas disponíveis*/
-#listaOficinas {
-    /*background-color: #ffc987;*/
-    background-color: #fff;
-    height: auto;
-    min-height: 100%;
+#listaOficinas p, #listaOficinas span, #listaOficinas h3{
+    color: #101010;
+    margin-top: 0;
+    padding-top: 0;
 }
-#listaOficinas h4, #listaOficinas span, #listaOficinas p{
-    color: black;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
+#titulo-lista{
+    background-color: rgb(53, 54, 53);
+    color: #dedede;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 16px;
 }
 
-#titulo-lista {
-    border-top: 3px solid #000;
-    border-bottom: 5px solid #000;
-    padding: 10px;
-    color: black;
-}
-#listaOficinas .container-fluid {
-    padding-top: 1%;
-    padding-bottom: 2%;
-    min-height: 100%;
-}
-#listaOficinas .container-fluid h3 {
-    color: #000;
+.oficinasvagas{
+    font-size: xx-large;
     font-weight: bold;
+    color: rgb(255, 88, 105);
 }
-#listaOficinas .media {
-    color: #000;
-    /*background-color: #2aabd2;*/
-    border-bottom: 4px solid #000;
-    border-left: 4px solid transparent; /*não a forma mais elegante de resolver o problema, mas resolve*/
-    padding-left: 3%;
-    padding-top: 1.5%;
-    padding-bottom: 1.5%;
-    transition: 0.3s ease;
-    font-size: medium;
+.oficinas{
+    border: 2px solid #868686;
+    margin-bottom: 2%;
+    padding: 12px;
 }
-#listaOficinas .media .media-body {
-    padding-left: 3%;
-}
-#listaOficinas .media:hover {
-    /*
-    border-left: 4px solid #ff7471;
-    border-bottom: 4px solid #ff7471;
-    color: #ff7471;
-    background-color: rgba(244, 255, 252, 0.94);
-    */
 
-}
-#listaOficinas .media .media-left {
-    padding-right: 0;
-}
-#listaOficinas .media .media-object {
-    font-size: 50px;
-}
-#listaOficinas .media .media-body .media-heading {
-    font-size: x-large;
-    font-weight: bold;
-}
 /*Login: Rodapé principal com dados e informações para contato*/
 #MainFooter {
-    background-color: #88bbd6;
+    background-color: rgb(53, 54, 53);
     color: white;
     padding: 25px;
-    box-shadow: 0px 20px 20px 20px #000000;
+    /*box-shadow: 0px 20px 20px 20px #000000;*/
+}
+#MainFooter a{
+    color: #3f84cb;
+}
+#MainFooter a:hover{
+    text-decoration: underline;
 }
 /* Estilo do Loader que esta no codigo do ajax */
 .loader {

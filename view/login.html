@@ -14,7 +14,7 @@
                     <br>
                     <input type="password" class="form-control" name="senha" placeholder="Senha" autocomplete="off">
                     <br>
-                    <button type="submit" href="#" class="btn btn-primary "> Entrar</button>
+                    <button type="submit" href="#" class="btn btn-sec"> Entrar </button>
                     <a href="index.php?pag=Cad.Candidato">Não Tenho Conta</a>
                 </form>
             </div>
@@ -25,31 +25,15 @@
         </div>
     </div>
 </div>
-<div id="listaOficinas" class="lista">
-    <div class="container-fluid">
-        <div class="cabecalho printOnly text-center">
-            <div class="row">
-                <img class="img-responsive" src="img/ufrrj_logo.png"/>
-            </div>
-            <div class="row">
-                <h2>Pró-Reitoria de Extensão</h2>
-                <h2>Departamento de Arte e Cultura</h2>
-            </div>
-            <br/>
-            <br/>
-            <p>
-                Segue abaixo a relação de oficinas ativas em <span id="hoje"></span>, ofertadas pelo centro de Arte e
-                Cultura desta universidade, e suas respectivas informações.
-            </p>
-            <br/>
-        </div>
-        <h3 id="titulo-lista">OFICINAS DISPONÍVEIS</h3>
+
+<div id="listaOficinas" class="lista" style="margin-top: 0">
+    <div class="container-fluid" >
+        <h2 id="titulo-lista" class="text-center">Oficinas Disponíveis</h2>
         <br/>
         <div id="t_oficinas"></div>
     </div>
 </div>
 <div id="MainFooter" class="text-center">
-    <!--TODO: adicionar redes sociais no footer (colocado nomes em ordem alfabetica) -->
     <div class="row">
         <small>Projetado por <a href="http://filipeklinger.16mb.com/">Filipe Klinger</a>, Luciano Viana, e Vinícius
             Martins
@@ -77,18 +61,19 @@
                 }
                 //console.log(avaliaData(objJson[i]));
                 var aux = JSON.parse(avaliaData(objJson[i]));
-                //console.log(aux);
+
                 corpo.append(
-                    '<div class="media">' +
-                    '<div class="media-left text-center">' +
-                    '<span class="media-object">' +
-                    objJson[i].vagas
-                    + '</span>' +
-                    '<span>vagas</span></div>' +
-                    '<div class="media-body">' +
-                    '<h4 class="media-heading">' + objJson[i].oficina + ' - ' + objJson[i].inicio + '</h4><span>' + aux + '</span>' +
+                    '<div class="container oficinas">' +
+                    '<div class="col-md-2 ">' +
+                    '<div class="text-center oficinasvagas">' +
+                    objJson[i].vagas +
+                    '<br>vagas</div></div>' + //end of oficinaVagas
+                    '<div class="col-md-8">' + //begin of oficinas content
+                    '<h3 >' + objJson[i].oficina + ' - ' + objJson[i].inicio +
+                    '</h3>' +
+                    ' <h4>Dias: ' + aux + '</h4>' +
+                    '<p>Local: ' + objJson[i].sala + ' em  ' + objJson[i].predio + '</p>' +
                     '<p>Professor: ' + objJson[i].professor + '</p>' +
-                    '<p>Local: ' + objJson[i].predio + ',  ' + objJson[i].sala + '</p>' +
                     '</div>' +
                     '</div>'
                 );
@@ -96,7 +81,9 @@
         }
         else {
             corpo.append(
-                '<h2> :( Nenhuma turma disponível</h2>'
+                '<div class="container oficinas">' +
+                '<h2 class="text-center"> <span id="oops" class="glyphicon glyphicon-education"></span> Novas Turmas em Breve</h2>' +
+                '</div>>'
             );
         }
     }
@@ -104,19 +91,19 @@
     function avaliaData(jsonObject) {
         var dias = new Array();
         if (jsonObject.segunda === '1') {
-            dias.push("Seg");
+            dias.push("Seg ");
         }
         if (jsonObject.terca === '1') {
-            dias.push("Ter");
+            dias.push("Ter ");
         }
         if (jsonObject.quarta === '1') {
-            dias.push("Qua");
+            dias.push("Qua ");
         }
         if (jsonObject.quinta === '1') {
-            dias.push("Qui");
+            dias.push("Qui ");
         }
         if (jsonObject.sexta === '1') {
-            dias.push("Sex");
+            dias.push("Sex ");
         }
         return JSON.stringify(dias);
     }
