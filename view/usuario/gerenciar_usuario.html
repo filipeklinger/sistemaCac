@@ -9,15 +9,12 @@
                 <ul class="nav navbar-nav">
                     <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página
                         Inicial</a></li>
-                    <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectCandidato')" href="#">Gerenciar
+                    <li class="active"><a data-toggle="tab" onclick="carregaUsuarios('selectCandidato')" href="#">Gerenciar
                         Candidato</a></li>
                     <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectProfessor')" href="#">Gerenciar
                         Professores</a></li>
                     <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectAdministrador')" href="#">Gerenciar
                         Adminstradores</a></li>
-                    <li><a data-toggle="tab"
-                           onclick="ajaxLoadGET('control/main.php?req=selectSala',jsonParseSalas,'#tsala');"
-                           href="#salas">Gerenciar Salas</a></li>
                 </ul>
             </div>
         </div>

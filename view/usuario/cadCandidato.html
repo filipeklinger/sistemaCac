@@ -78,18 +78,15 @@
             <div class="form-group col-md-8 col-lg-push-2">
                 <label class="control-label" for="resp_tel">Telefone de Contato</label>
                 <div class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Tipo de Telefone <span
-                                class="glyphicon glyphicon-menu-down small"></span>
-                        </button>
-                        <ul class="dropdown-menu" id="resp_tel_type" name="resp_tel_type">
-                            <li><a name="1">Celular</a></li>
-                            <li><a name="2">Whatsapp</a></li>
-                            <li><a name="3">Fixo ( Residencial )</a></li>
-                            <li><a name="4">Para Recados</a></li>
-                        </ul>
-                    </div>
+                        <div class="input-group-addon">
+                            <select class="selectCool" id="resp_tel_type" name="resp_tel_type">
+                                <option disabled selected>Tipo de Contato</option>
+                                <option value="0">Celular</option>
+                                <option value="1">Whatsapp</option>
+                                <option value="2">Fixo ( Residencial )</option>
+                                <option value="3">Para Recados</option>
+                            </select>
+                        </div>
                     <input id="resp_tel" name="resp_tel" type="number" placeholder="somente números"
                            class="form-control input-md" required>
                 </div>
@@ -99,16 +96,13 @@
             <div class="form-group col-md-8 col-lg-push-2">
                 <label class="control-label" for="doc_number">Número de Documento</label>
                 <div class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Tipo de Documento <span
-                                class="glyphicon glyphicon-menu-down small"></span>
-                        </button>
-                        <ul class="dropdown-menu" id="doc_type" name="resp_tel_type">
-                            <li><a name="1">Registro geral (RG)</a></li>
-                            <li><a name="2">Passaporte</a></li>
-                        </ul>
-                    </div>
+                        <div class="input-group-addon">
+                            <select class="selectCool" id="doc_type" name="resp_tel_type">
+                                <option disabled selected>Tipo de Documento</option>
+                                <option value="0">Registro Geral ( RG )</option>
+                                <option value="1">Passaport</option>
+                            </select>
+                        </div>
                     <input id="doc_number" name="doc_number" type="number" placeholder="somente numeros"
                            class="form-control input-md" required>
                 </div>
@@ -194,40 +188,37 @@
                 <label class="control-label" for="estado">Estado / Cidade</label>
 
                 <div class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Estado<span
-                                class="glyphicon glyphicon-menu-down small"></span>
-                        </button>
-                        <ul class="dropdown-menu" id="estado" name="estado">
-                            <li><a name="AC">Acre</a></li>
-                            <li><a name="AL">Alagoas</a></li>
-                            <li><a name="AP">Amapá</a></li>
-                            <li><a name="AM">Amazonas</a></li>
-                            <li><a name="BA">Bahia</a></li>
-                            <li><a name="CE">Ceará</a></li>
-                            <li><a name="DF">Distrito Federal</a></li>
-                            <li><a name="ES">Espírito Santo</a></li>
-                            <li><a name="GO">Goiás</a></li>
-                            <li><a name="MA">Maranhão</a></li>
-                            <li><a name="MT">Mato Grosso</a></li>
-                            <li><a name="MS">Mato Grosso do Sul</a></li>
-                            <li><a name="MG">Minas Gerais</a></li>
-                            <li><a name="PA">Pará</a></li>
-                            <li><a name="PB">Paraíba</a></li>
-                            <li><a name="PR">Paraná</a></li>
-                            <li><a name="PE">Pernambuco</a></li>
-                            <li><a name="PI">Piauí</a></li>
-                            <li><a name="RJ">Rio de Janeiro</a></li>
-                            <li><a name="RN">Rio Grande do Norte</a></li>
-                            <li><a name="RS">Rio Grande do Sul</a></li>
-                            <li><a name="RO">Rondônia</a></li>
-                            <li><a name="RR">Roraima</a></li>
-                            <li><a name="SC">Santa Catarina</a></li>
-                            <li><a name="SP">São Paulo</a></li>
-                            <li><a name="SE">Sergipe</a></li>
-                            <li><a name="TO">Tocantins</a></li>
-                        </ul>
+                    <div class="input-group-addon">
+                        <select class="selectCool" id="estado" name="estado">
+                            <option disabled selected>Estado</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
                     </div>
                     <!-- Cidade -->
                     <input id="cidade" name="cidade" type="text" placeholder="Seropédica"
@@ -326,7 +317,7 @@
 
         $(function () {
             $('<div class="aluno">' +
-                '<!-- Primeiro nome do menor ' + quantidade + ' -->\n' +
+                '<h4> Dependente #'+quantidade+' </h4><hr>\n' +
                 '            <div class="form-group col-md-8 col-lg-push-2">\n' +
                 '                <label class=" control-label" for="nome_menor' + quantidade + '">Nome</label>\n' +
                 '                <div class="">\n' +
