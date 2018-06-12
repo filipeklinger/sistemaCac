@@ -329,7 +329,10 @@ function loadDepententes() {
     function parseDependentes(resposta,corpo) {
         let json = JSON.parse(resposta);
         for(i in json){
-            corpo.append('<p>Nome: <span class="depNome"> '+json[i].nome + '</span>&nbsp;<span class="depsobrenome">' + json[i].sobrenome + "</span></p>");
+            corpo.append('<p>Nome: <span class="depNome"> '+json[i].nome + '</span>&nbsp;<span class="depsobrenome">' + json[i].sobrenome +
+                '&nbsp; <button id="btnDeps" onclick="editaDependente('+json[i].id_pessoa+')" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>' +
+                '&nbsp; <button id="btnDeps" onclick="removeDependente('+json[i].id_pessoa+')" class="btn btn-primary"><span class=\'glyphicon glyphicon-remove\'></span></button>' +
+                '</span></p>');
         }
     }
 }
