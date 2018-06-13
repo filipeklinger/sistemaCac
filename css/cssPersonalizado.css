@@ -3,9 +3,10 @@
 @import "printable.css";
 @import "fontWrapper.css";
 
+
 /*Globals*/
 body {
-    min-height: 570px; /*tamanho real 640, remove barra de endereços*/
+    min-height: 570px; /*tamanho real 640, remove barra de endereços do navegador*/
     min-width: 360px;
     height: 100vh;
     font-family: 'Open Sans', sans-serif;
@@ -13,28 +14,34 @@ body {
     background-color: #e5e6e6;
 
 }
+
 hr {
     border-color: #353635;
 }
-.input-group-addon{
+
+.input-group-addon {
     background-color: #eaecec;
     border: 1px solid #5a5a5a;
     color: #000;
     transition: .2s ease-in-out;
 }
-.input-group-addon:hover{
+
+.input-group-addon:hover {
     background-color: rgba(244, 151, 46, 0.65);
     color: #2e2e2e;
 }
-.navbar-default{
+
+.navbar-default {
     background-color: #353635 !important;
     /*border-bottom: 2px solid #000;*/
     border-radius: 0px;
 }
-.navbar-default .navbar-nav > li > a{
+
+.navbar-default .navbar-nav > li > a {
     color: #a9a9a9;
 }
-.navbar-default .navbar-nav > li > a:hover{
+
+.navbar-default .navbar-nav > li > a:hover {
     color: whitesmoke;
 }
 
@@ -45,48 +52,52 @@ hr {
     background-color: transparent;
     transition: .1s ease-in-out;
 }
-.btn-primary:hover{
+
+.btn-primary:hover {
     color: #000;
     border: 2px solid #000;
     border-radius: 0;
     background-color: rgba(244, 151, 46, 0.65);
 
 }
-.btn-sec{
+
+.btn-sec {
     background-color: #4187d0;
     color: #d5d5d5;
     transition: .3s ease-in-out;
 }
-.btn-sec:hover{
+
+.btn-sec:hover {
     background-color: #4482ce;
 }
-.selectCool{
+
+.selectCool {
     background-color: transparent;
     border: 0;
     cursor: pointer;
 }
-.selectCool2{
+
+.selectCool2 {
     background-color: transparent;
     border: 2px solid #000;
     cursor: pointer;
     padding: 5px;
 }
 
-#page404, #main{
-    height: 100%;
-    background:
-            #009092
-            url("../img/bg-main.jpg")
-            no-repeat;
+#page404, #main {
+    height: calc(100% - 57px);
+    background: #009092 url("../img/bg-main.jpg") no-repeat;
 }
 
 #page404 .container, #main .container {
     height: 100%;
 }
-h1,h2,h3,h4,span,p,a{
+
+h1, h2, h3, h4, span, p, a {
     color: white;
 }
-input[type=text], input[type=password], input[type=number], input[type=date], input[type=time]{
+
+input[type=text], input[type=password], input[type=number], input[type=date], input[type=time] {
     background-color: rgba(31, 31, 31, 0.7) !important;
     border: 0 !important;
     /*border: 1px solid #5a5a5a;*/
@@ -94,17 +105,20 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 }
 
 .container-fluid {
-    padding: 0 ;
+    padding: 0;
 }
+
 .printOnly {
     display: none;
 }
-#mainAvisos{
+
+#mainAvisos {
     min-height: 52px;
 }
+
 /*PADRÕES GLOBAIS*/
 /*Estilo de botões*/
-.coolButton, .coolButton2{
+.coolButton, .coolButton2 {
     border: 2px solid white;
     color: white;
     background-color: rgba(0, 0, 0, 0.14);
@@ -116,19 +130,23 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     transition: 0.4s ease-in-out;
     font-size: large;
 }
+
 .coolButton {
     border-radius: 25px;
     padding: 8px 20px;
 }
-.coolButton:hover, .coolButton2:hover{
+
+.coolButton:hover, .coolButton2:hover {
     color: #56abff;
     border-color: #d7d7d7;
     background-color: rgba(0, 0, 0, 0.18);
 }
-.coolButton2{
+
+.coolButton2 {
     padding: 8px 20px;
 }
-.coolButton2:hover{
+
+.coolButton2:hover {
     color: #56abff;
     border-color: #d7d7d7;
     background-color: rgba(0, 0, 0, 0.18);
@@ -138,11 +156,13 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     -o-transition: 0.4s ease-in-out;
     transition: 0.4s ease-in-out;
 }
-.formBoxContainer{
+
+.formBoxContainer {
     border: 2px solid #353635;
     border-radius: 10px;
     margin-bottom: 25px;
 }
+
 .coolButton:active {
     color: #56abff;
 }
@@ -151,42 +171,48 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 #dashboard, .infra, .oficinas, .turmas, .usuario, .aluno, #relatorios {
     overflow-x: hidden;
     min-height: 100%;
-    background:
-            #e5e6e6
-            repeat
-            700px;
+    background: #e5e6e6 repeat 700px;
     color: #575557; /*color white*/
     padding: 0 !important;
 
 }
-.infra, .oficinas, .turmas, .usuario, .aluno{
+
+.infra, .oficinas, .turmas, .usuario, .aluno {
     /*input styles in here!!!!!*/
 }
+
 /*Tabelas*/
-.tableContainer{
+.tableContainer {
     overflow-x: scroll;
 }
-.table{
+
+.table {
     /*background-color: #dbe8e8;*/
     color: rgb(178, 176, 178);
     border: 2px solid #353635;
+    margin-top: 3%;
 }
-.table td{
+
+.table td {
     padding: 15px;
     color: #353635;
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;
 }
-.table td{
+
+.table td {
 }
-.table tbody tr{
+
+.table tbody tr {
     transition: .2s ease-in-out;
 }
-.table tbody tr:hover{
+
+.table tbody tr:hover {
     /*box-shadow: 0 0 3px 2px #4b4b4b;*/
     background-color: rgba(244, 151, 46, 0.8);
 }
-.table th{
+
+.table th {
     padding: 15px;
     color: rgb(239, 245, 236);
     background-color: #353635;
@@ -194,34 +220,38 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     font-weight: 700;
     border-bottom: none;
 }
-#footerYear{
+
+#footerYear {
     color: #575557;
 }
+
 /*Página 404*/
 #page404 .container {
     margin-top: 10%;
 }
+
 #page404 {
     overflow: hidden;
 }
+
 #page404 h1 {
     font-size: 200px;
 }
-#contTab{
+
+#contTab {
     padding: 20px;
 }
+
 /*Login: página principal*/
 .logo {
-    background:
-            url("../img/Logo-web.svg")
-            no-repeat
-            center;
-    min-height: 55%;
+    background: url("../img/Logo-web.svg") no-repeat center;
+    min-height: 45%;
 }
 
-#mainAvisos{
+#mainAvisos {
     margin-bottom: 20px;
 }
+
 #main .container {
     padding-top: 11%;
 }
@@ -229,16 +259,20 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 #main .continue {
     font-size: 20px;
 }
-#main #avisos{
+
+#main #avisos {
     margin-bottom: 0;
 }
+
 #main form {
     padding-top: calc(9% - 52px);
 }
-#main form > a{
+
+#main form > a {
     padding-left: 8px;
     transition: .3s ease-in-out;
 }
+
 #main form > a:hover {
 
     text-decoration: underline;
@@ -246,12 +280,13 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 }
 
 /*Login: lista de oficinas disponíveis*/
-#listaOficinas p, #listaOficinas span, #listaOficinas h3{
+#listaOficinas p, #listaOficinas span, #listaOficinas h3 {
     color: #101010;
     margin-top: 0;
     padding-top: 0;
 }
-#titulo-lista{
+
+#titulo-lista {
     background-color: rgb(53, 54, 53);
     color: #dedede;
     margin-top: 0;
@@ -259,15 +294,20 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     padding: 16px;
 }
 
-.oficinasvagas{
+.oficinasvagas {
     font-size: xx-large;
     font-weight: bold;
     color: rgb(255, 88, 105);
 }
-.oficinas{
+
+.oficinasContainer {
     border: 2px solid #868686;
     margin-bottom: 2%;
     padding: 12px;
+}
+
+.oficinasContainer h2 {
+    color: black
 }
 
 /*Login: Rodapé principal com dados e informações para contato*/
@@ -277,12 +317,15 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     padding: 25px;
     /*box-shadow: 0px 20px 20px 20px #000000;*/
 }
-#MainFooter a{
+
+#MainFooter a {
     color: #3f84cb;
 }
-#MainFooter a:hover{
+
+#MainFooter a:hover {
     text-decoration: underline;
 }
+
 /* Estilo do Loader que esta no codigo do ajax */
 .loader {
     margin: 0 auto;
@@ -294,6 +337,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
 }
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -302,31 +346,37 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
         transform: rotate(360deg);
     }
 }
+
 /*Dashboard: Tela inicial pós login*/
 #dashboard {
     display: flex; /*TODO: mexer no display mode, não responsivo*/
-    background-color: #f3f1f3;/*background-color: rgba(195, 187, 243, 0.88);*/
+    background-color: #f3f1f3; /*background-color: rgba(195, 187, 243, 0.88);*/
     color: #575557;
     min-width: 100%;
 }
+
 #dashboard p, #dashboard h1, #dashboard h2, #dashboard h2, #dashboard h4,
-#relatorios span, #relatorios h1 , #relatorios h2, #relatorios h3, #relatorios h4, #relatorios p{
+#relatorios span, #relatorios h1, #relatorios h2, #relatorios h3, #relatorios h4, #relatorios p {
     color: #404040
 }
+
 #dashboard .content {
     padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
     width: 100%;
 }
-#usr{
+
+#usr {
     color: #575557;
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
 }
-#user, #nv, #anoAtual, #periodoAtual{
+
+#user, #nv, #anoAtual, #periodoAtual {
     color: rgb(255, 88, 105);
 }
+
 #dashboard .content hr {
     border-color: #353635;
 }
@@ -336,6 +386,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     text-decoration: none;
     transition: all 0.3s;
 }
+
 /*Sidebar*/
 .sidebar {
     /*border-right: 1px solid #747474;*/
@@ -344,48 +395,47 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     font-weight: normal;
     background-color: #353635;
 }
+
 .sidebar ul li {
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: medium;
 }
+
 .sidebar ul li i {
     font-size: x-large;
 }
+
 .sidebar ul .collapse a:hover {
     /*padding-top: 7px;*/
 }
+
 .sidebar ul li a:hover {
     color: rgb(255, 88, 105);
 }
+
 /*TODO: Aperfeiçoar estilo de formulários*/
 /*Infraestrutura*/
-.infra h1,.infra h2,.infra h3,.infra h4,.infra span,.infra p, .oficinas h1,.oficinas h2,.oficinas h3,.oficinas h4,.oficinas span,.oficinas p,
-.turmas h1,.turmas h2,.turmas h3,.turmas h4,.turmas span,.turmas p, .usuario h1,.usuario h2,.usuario h3,.usuario h4,.usuario span,.usuario p,
-.aluno h1,.aluno h2,.aluno h3,.aluno h4,.aluno span,.aluno p{
+.infra h1, .infra h2, .infra h3, .infra h4, .infra span, .infra p, .oficinas h1, .oficinas h2, .oficinas h3, .oficinas h4, .oficinas span, .oficinas p,
+.turmas h1, .turmas h2, .turmas h3, .turmas h4, .turmas span, .turmas p, .usuario h1, .usuario h2, .usuario h3, .usuario h4, .usuario span, .usuario p,
+.aluno h1, .aluno h2, .aluno h3, .aluno h4, .aluno span, .aluno p {
     color: #404040;
 }
-.infra {}
-/*Oficinas */
-.oficinas {}
-/*Turmas*/
-.turmas {}
-/*Usuário */
-.usuario {}
-/*Usuário: Gerenciar*/
-.aluno {}
 
 /*SCREEN SIZE - responsivo*/
 @media screen and (max-height: 640px) {
-    #page404, #main{
-        height: calc(100% - 57px);
+    #page404, #main {
+        /*height: 100vh;*/
+        /*height: calc(100% - 57px); /*WORKS ONLY FOR ANDROID 6.0 CHROME BROWSERS REMOVE CALC*/
     }
-    #main div a.coolButton{
+
+    #main div a.coolButton {
         display: none;
     }
 }
-@media screen and (max-width: 1199px){
-    #main div a.coolButton{
+
+@media screen and (max-width: 1199px) {
+    #main div a.coolButton {
         display: none;
     }
 }

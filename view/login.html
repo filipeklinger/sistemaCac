@@ -48,7 +48,6 @@
 
     ajaxLoadGET('control/main.php?req=selectTurmaAtiva', listaMarota, '#t_oficinas');
 
-
     function listaMarota(resposta, corpo) {
         var objJson = JSON.parse(resposta);
         var aux;
@@ -81,9 +80,9 @@
         }
         else {
             corpo.append(
-                '<div class="container oficinas">' +
+                '<div class="container oficinasContainer">' +
                 '<h2 class="text-center"> <span class="glyphicon glyphicon-education"></span> Novas Turmas em Breve</h2>' +
-                '</div>>'
+                '</div>'
             );
         }
     }

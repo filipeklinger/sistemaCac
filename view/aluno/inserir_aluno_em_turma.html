@@ -1,45 +1,53 @@
-<body class="container-fluid">
-<div class="aluno">
-    <div class="header">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid" style="overflow-x: hidden">
-                <div>
-                    <ul class="nav navbar-nav">
-                        <li><a href="index.php?pag=Alunos"><i class="glyphicon glyphicon-chevron-left"></i> Voltar a Gerência de Alunos</a></li>
-                    </ul>
+<body class="container-fluid usuario">
+
+<div class="header">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a href="index.php?pag=Alunos"><i class="glyphicon glyphicon-chevron-left"></i> Voltar a
+                        Gerência de Alunos</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<p id="avisos"></p>
+
+<div class="container">
+    <!-- Form Name  -->
+    <form class="form-horizontal" action="control/main.php?req=insertAluno" method="POST">
+        <br>
+        <div class="formBoxContainer col-md-12 text-center">
+            <div class="form-group container">
+                <h3 class="text-center col-md-12">Cadastro de Aluno em Uma Turma</h3>
+
+                <div class="col-md-12">
+                    <label for="turma">Turma: </label>
+                    <select class="selectCool" id="turma" name="turma"
+                            title="Escolha uma Turma"
+                            required="required">
+                        <option value="">Selecione uma Turma</option>
+
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <label for="candidato">Candidato</label>
+                    <select class="selectCool" id="candidato" name="candidato"
+                            title="Escolha uma Pessoa" required="required">
+                        <option value=1 selected="selected">Escolha Uma Pessoa</option>
+                    </select>
                 </div>
             </div>
-        </nav>
-    </div>
-    <div class="container" style="overflow-x: hidden">
-        <p id="avisos"></p>
-        <h2 class="" style="">Cadastro de Aluno em Uma Turma</h2>
-        <br><br>
-        <form class="form-horizontal col-md-12" action="control/main.php?req=insertAluno" method="POST">
-            <div class="form-group">
-                <label for="turma">Selecione a turma</label>
-                <select onchange="" name="turma" id="turma" style="color: black">
-                    <option value=1 selected="selected">Dança 1 Seg-QUA</option>
-                </select>
-            </div>
-
-            <h5>Legenda:</h5>
-            <p id="legenda"></p>
-            <h3>Selecione um Candidato</h3>
-            <div class="form-group">
-                <label for="candidato">Candidato</label>
-                <select onchange="" name="candidato" id="candidato" style="color: black">
-                    <option value=1 selected="selected">Fulaninho</option>
-                </select>
-            </div>
-            <div class="form-group"><!-- Submit -->
-                <br>
-                <br>
-                <br>
-                <input id="enviar" type="submit" class="btn btn-primary btn-block" value="CADASTRAR ALUNO" />
-            </div>
-        </form>
-    </div>
+        </div>
+        <!-- Submit -->
+        <div class="container-fluid">
+            <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Cadastrar"/>
+        </div>
+        <br>
+        <br>
+    </form>
 </div>
 <script type="text/javascript">
     $(document).on("load", loader());
@@ -55,14 +63,15 @@
         for (i in objJson) {
             corpo.append(
                 '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
-                );
-            $('#legenda').append('->'+ objJson[i].oficina + " - " + objJson[i].turma +
-                    ' Inicio: '+objJson[i].inicio +
-                    ' Local:  '+ objJson[i].predio + ',  ' + objJson[i].sala +
+            );
+            $('#legenda').append('->' + objJson[i].oficina + " - " + objJson[i].turma +
+                ' Inicio: ' + objJson[i].inicio +
+                ' Local:  ' + objJson[i].predio + ',  ' + objJson[i].sala +
                 '<br/>');
         }
     }
-    function parseCandidatos(resposta,corpo) {
+
+    function parseCandidatos(resposta, corpo) {
         var objJson = JSON.parse(resposta);
         for (i in objJson) {
             corpo.append(
