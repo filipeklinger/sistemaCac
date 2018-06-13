@@ -1,53 +1,52 @@
-<body>
-<div id="dashboard">
-    <!-- Sidebar Holder -->
-    <div class="sidebar col-md-1">
-        <br>
+<body id="dashboard">
+<!-- Sidebar Holder -->
+<div class="sidebar col-md-1">
+    <br>
 
-        <div class="sidebar-header">
-        </div>
-
-        <ul class="list-unstyled" id="menu">
-            <br>
-            <br>
-            <li class="text-center">
-                <a href="control/main.php?req=logout">
-                    <i class="glyphicon glyphicon-log-out"></i>
-                    <br>Sair
-                </a>
-            </li>
-        </ul>
+    <div class="sidebar-header">
     </div>
-    <!-- Page Content Holder -->
-    <div class="content container-fluid">
-        <p id="avisos"></p>
 
-        <p id="usr">
-            Seja bem vindo <span id="user"></span>. <br> Você está logado como <b><span id="nv"></span></b>.
-        </p>
-
-        <hr>
-
+    <ul class="list-unstyled" id="menu">
         <br>
-        <h2> <b>Turmas Ativas em <span id="anoAtual"></span>.<span id="periodoAtual"></span></b></h2>
         <br>
+        <li class="text-center">
+            <a href="control/main.php?req=logout">
+                <i class="glyphicon glyphicon-log-out"></i>
+                <br>Sair
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- Page Content Holder -->
+<div class="content container-fluid">
+    <p id="avisos"></p>
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th class='col-md-2'>OFICINAS</th>
-                <th class='col-md-2'>TURMA</th>
-                <th class='col-md-2'>DIA DA SEMANA</th>
-                <th class='col-md-2'>HORÁRIO</th>
-                <th class='col-md-1'>SALA</th>
-                <th class='col-md-2'>PROFESSOR</th>
-                <th class='col-md-1'>VAGAS</th>
-            </tr>
-            </thead>
-            <tbody id="t_oficinas"></tbody>
-        </table>
-        <row class="navbar-fixed-bottom text-center">&copy;CAC, Todos os Direitos Reservados, <span id="footerYear"></span></row>
-    </div>
+    <p id="usr">
+        Seja bem vindo <span id="user"></span>. <br> Você está logado como <b><span id="nv"></span></b>.
+    </p>
+
+    <hr>
+
+    <br>
+    <h2><b>Turmas Ativas em <span id="anoAtual"></span>.<span id="periodoAtual"></span></b></h2>
+    <br>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th class='col-md-2'>OFICINAS</th>
+            <th class='col-md-2'>TURMA</th>
+            <th class='col-md-2'>DIA DA SEMANA</th>
+            <th class='col-md-2'>HORÁRIO</th>
+            <th class='col-md-1'>SALA</th>
+            <th class='col-md-2'>PROFESSOR</th>
+            <th class='col-md-1'>VAGAS</th>
+        </tr>
+        </thead>
+        <tbody id="t_oficinas"></tbody>
+    </table>
+    <row class="navbar-fixed-bottom text-center">&copy;CAC, Todos os Direitos Reservados, <span id="footerYear"></span>
+    </row>
 </div>
 
 <script type="text/javascript">
@@ -62,8 +61,6 @@
         getMsgs();
         getMenu();
     }
-
-
 
 
     function parseUsuario(resposta) {
@@ -93,19 +90,19 @@
 
     function getMenu() {
         let menu = JSON.parse(menuPrincipal);
-        let menuString = '' ;
+        let menuString = '';
 
         for (i in menu) {
 
             menuString += '        <li class="text-center submenu">\n' +
                 '                       <a href="#' + menu[i].link + '" data-toggle="collapse" aria-expanded="false">\n' +
-                '                           <i class="glyphicon '+menu[i].icone+'"></i>\n' +
+                '                           <i class="glyphicon ' + menu[i].icone + '"></i>\n' +
                 '                           <br>' + menu[i].nome + '\n' +
                 '                       </a>\n' +
                 '                       <ul class="collapse list-unstyled" id="' + menu[i].link + '">';
 
-            for (j in menu[i].submenu){
-                menuString += '          <li><a href="'+menu[i].submenu[j].link+'">'+menu[i].submenu[j].nome+'</a></li>';
+            for (j in menu[i].submenu) {
+                menuString += '          <li><a href="' + menu[i].submenu[j].link + '">' + menu[i].submenu[j].nome + '</a></li>';
             }
 
             menuString += '</ul></li>';
@@ -113,6 +110,7 @@
 
         $('#menu').prepend(menuString);
     }
+
     $('#footerYear').append((new Date).getFullYear());
 </script>
 </body>

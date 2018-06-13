@@ -1,169 +1,151 @@
-<body class="container-fluid">
-<div class="turmas">
-    <div class="header">
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container-fluid" style="overflow-x: hidden">
-                <div>
-                    <ul class="nav navbar-nav">
-                        <li><a href="index.php?pag=Turmas"><i class="glyphicon glyphicon-chevron-left"></i> Voltar a
-                            Gerência de Turmas</a></li>
-                    </ul>
+<body class="container-fluid usuario">
+
+<div class="header">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a href="index.php?pag=Login"><i class="glyphicon glyphicon-chevron-left"></i> Voltar para
+                        Página Inicial</a>
+                    </li>
+                    <li class="active"><a data-toggle="" href="#turmas">Cadastro de Turmas</a></li>
+                </ul>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<p id="avisos"></p>
+
+<div class="container">
+    <!-- Form Name  -->
+    <form class="form-horizontal" action="control/main.php?req=insertPessoa" method="POST">
+        <br>
+        <div class="formBoxContainer col-md-12">
+            <div class="form-group container">
+                <h3 class="text-center col-md-12">Informações Gerais de Oficina</h3>
+
+                <div class="col-md-12">
+                    <select class="selectCool2" id="selectOficina" name="oficina_id"
+                            title="Escolha uma oficina"
+                            required="required">
+                        <option value="">Selecione uma Oficina</option>
+
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <select class="selectCool2" id="selectProf" name="prof_id" style="color: black"
+                            title="Escolha uma Professor" required="required">
+                        <option value="">Selecione um professor</option>
+                    </select>
+                </div>
+                <!-- Infraestrutura -->
+                <div class="">
+                    <div class="col-md-12">
+                        <select class="selectCool2" id="nome" name="oficina_id"
+                                title="Escolha uma oficina"
+                                required="required">
+                            <option value="" selected disabled>Escolha Um Prédio</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <select class="selectCool2" id="selectSala" name="sala_id" onchange="disponibilidade();"
+                                required="required">
+                            <option value="" selected disabled>Selecione uma sala</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4" style="margin-top: 16px">
+                        <input id="vagas" name="vagas" type="number" placeholder="numero de vagas" class="form-control input-md"
+                               required="">
                 </div>
             </div>
-        </nav>
-    </div>
 
-    <div class="container" style="overflow-x: hidden">
-        <h2 class="" style="">Cadastro de Turmas</h2>
-        <br><br>
+        </div>
 
+        <div class="formBoxContainer col-md-12">
+            <h3 class="text-center col-md-12">Escolha de Dias da Semana</h3>
 
-             <form action="control/main.php?req=insertTurma" method="POST">
-                 <div class="form-group">
-                     <label class="control-label">ESCOLHA DE OFICINA</label>
+            <div class="form-group">
+                <div class="text-center">
 
-                     <div class="input-group" style="color: black">
-                    <select id="selectOficina" name="oficina_id" class="selectpicker" title="Escolha uma oficina"
-                            required="required">
-                        <option value="1">Selecione uma Oficina</option>
-                    </select>
-
-                </div><!-- /input-group -->
-                </div><!-- /form-group -->
-
-        <!-- Predios disponiveis -->
-        <div id="tbody" class="form-group">
-            <label class="control-label">ESCOLHA DE PRÉDIO</label>
-            <div class="">
-                <div class="input-group" style="color: black">
-                    <select id="selectPredio" onchange="SalaFromPredioId();" class="selectpicker"
-                            title="Escolha um predio" required="required">
-                        <option value="1">Selecione um Prédio</option>
-                    </select>
-                </div><!-- /input-group -->
-            </div>
-        </div><!-- /form-group -->
-
-        <!-- Salas disponiveis -->
-        <div id="tsala" class="form-group">
-            <label class="control-label">ESCOLHA DE SALA</label>
-            <div class="">
-                <div class="input-group" style="color: black">
-                    <select id="selectSala" name="sala_id" onchange="disponibilidade();" class="selectpicker"
-                            title="Escolha uma Sala" required="required">
-                        <option value="1">Selecione uma sala</option>
-                    </select>
-                </div><!-- /input-group -->
-            </div>
-        </div><!-- /form-group -->
-
-        <div id="tprof" class="form-group">
-            <label class="4 control-label">ESCOLHA UM PROFESSOR</label>
-            <div class="">
-                <div class="input-group">
-                    <select id="selectProf" name="prof_id" style="color: black" class="selectpicker"
-                            title="Escolha uma Professor" required="required">
-                        <option value="-1">Selecione um professor</option>
-                    </select>
-                </div><!-- /input-group -->
-            </div>
-        </div><!-- /form-group -->
-
-        <!---AQUI DEVEMOS MOSTRAR OS HORARIOS DISPONIVEIS DAQUELA SALA -->
-        <br>
-
-        <h3 class="">Escolha os dias da semana</h3>
-        <hr>
-        <div class="form-group">
-            <div class="col-lg-offset-4">
-
-                <span class="button-checkbox">
-                    <button type="button" class="btn" data-color="primary">Segunda</button>
+                <span class="button-checkbox ">
+                    <button type="button" class="btn btn-primary">Segunda</button>
                     <input type="checkbox" name="seg" class="hidden"/>
                 </span>
 
-                <span class="button-checkbox">
-                    <button type="button" class="btn" data-color="primary">Terça</button>
+                    <span class="button-checkbox">
+                    <button type="button" class="btn btn-primary">Terça</button>
                     <input type="checkbox" name="ter" class="hidden"/>
                 </span>
 
-                <span class="button-checkbox">
-                    <button type="button" class="btn" data-color="primary">Quarta</button>
+                    <span class="button-checkbox">
+                    <button type="button" class="btn btn-primary">Quarta</button>
                     <input type="checkbox" name="qua" class="hidden"/>
                 </span>
 
-                <span class="button-checkbox">
-                    <button type="button" class="btn" data-color="primary">Quinta</button>
+                    <span class="button-checkbox">
+                    <button type="button" class="btn btn-primary">Quinta</button>
                     <input type="checkbox" name="qui" class="hidden"/>
                 </span>
 
-                <span class="button-checkbox">
-                    <button type="button" class="btn" data-color="primary">Sexta</button>
+                    <span class="button-checkbox">
+                    <button type="button" class="btn btn-primary">Sexta</button>
                     <input type="checkbox" name="sex" class="hidden"/>
                 </span>
-
+                    <br>
+                    <br>
+                    <!--Uma Tabela de Horário, UAU-->
+                    <div class="col-md-12 tableContainer">
+                        <table class="table" >
+                            <thead>
+                            <tr>
+                                <th>Hora</th>
+                                <th>Segunda</th>
+                                <th>Terça</th>
+                                <th>Quarta</th>
+                                <th>Quinta</th>
+                                <th>Sexta</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody id="horariosDisponiveis">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="formBoxContainer col-md-12">
+            <h3 class="text-center col-md-12">Escolha de Horário</h3>
 
-        <div class="row" style="color: white">
-            <table class="scheduler" width="80%" align="center" cellspacing="12">
-                <thead>
-                <tr>
-                    <th>Hora</th>
-                    <th>Segunda</th>
-                    <th>Terça</th>
-                    <th>Quarta</th>
-                    <th>Quinta</th>
-                    <th>Sexta</th>
-                </tr>
-                </thead>
-                <tbody id="horariosDisponiveis">
-                </tbody>
-            </table>
-        </div>
-        <!-- FIM HORARIOS -->
-        <hr>
-        <br>
-        <!-- Horario -->
-        <div class="row">
-            <div class="col-md-4 form-group">
-                <label class="control-label" for="horarioInic">HORÁRIO DE INÍCIO</label>
-                <div class="">
-                    <input id="horarioInic" name="horario_inic" type="time" placeholder="" class="form-control input-md"
-                           required="">
+            <div class="form-group col-md-9 col-md-push-4">
+                <div class=" col-md-3">
+                    <label class="control-label" for="horarioInic">Inicia as: </label>
+                    <div class="">
+                        <input id="horarioInic" name="horario_inic" type="time" placeholder=""
+                               class="form-control input-md"
+                               required="">
+                    </div>
                 </div>
-            </div><!-- /form-group -->
-            <div class="col-md-4 form-group">
-                <label class="control-label" for="horarioFim">HORÁRIO DE FIM</label>
-                <div class="">
-                    <input id="horarioFim" name="horario_fim" type="time" placeholder="Início (--:--)"
-                           class="form-control input-md" required="">
+                <div class=" col-md-3">
+                    <label class="control-label" for="horarioFim">Termina as: </label>
+                    <div class="">
+                        <input id="horarioFim" name="horario_fim" type="time" placeholder="Início (--:--)"
+                               class="form-control input-md" required="">
+                    </div>
                 </div>
-            </div><!-- /form-group -->
-        </div>
-        <!-- Num de vagas -->
-        <div class="form-group">
-            <label class="control-label" for="vagas">NÚMERO DE VAGAS</label>
-            <div class="">
-                <input id="vagas" name="vagas" type="number" placeholder="numero de vagas" class="form-control input-md"
-                       required="">
             </div>
-        </div><!-- /form-group -->
-        <br>
-        <br>
-        <div class=""><!-- Submit -->
-            <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Criar"/>
         </div>
-        </form>
+        <!-- Submit -->
+        <div class="container-fluid">
+            <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Cadastrar"/>
+        </div>
         <br>
         <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-    </div>
+    </form>
 </div>
 
 <script type="text/javascript">

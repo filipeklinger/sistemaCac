@@ -65,6 +65,12 @@ hr {
     border: 0;
     cursor: pointer;
 }
+.selectCool2{
+    background-color: transparent;
+    border: 2px solid #000;
+    cursor: pointer;
+    padding: 5px;
+}
 
 #page404, #main{
     height: 100%;
@@ -80,7 +86,7 @@ hr {
 h1,h2,h3,h4,span,p,a{
     color: white;
 }
-input[type=text], input[type=password], input[type=number], input[type=date]{
+input[type=text], input[type=password], input[type=number], input[type=date], input[type=time]{
     background-color: rgba(31, 31, 31, 0.7) !important;
     border: 0 !important;
     /*border: 1px solid #5a5a5a;*/
@@ -88,7 +94,7 @@ input[type=text], input[type=password], input[type=number], input[type=date]{
 }
 
 .container-fluid {
-    padding: 0;
+    padding: 0 ;
 }
 .printOnly {
     display: none;
@@ -150,11 +156,16 @@ input[type=text], input[type=password], input[type=number], input[type=date]{
             repeat
             700px;
     color: #575557; /*color white*/
+    padding: 0 !important;
+
 }
 .infra, .oficinas, .turmas, .usuario, .aluno{
     /*input styles in here!!!!!*/
 }
 /*Tabelas*/
+.tableContainer{
+    overflow-x: scroll;
+}
 .table{
     /*background-color: #dbe8e8;*/
     color: rgb(178, 176, 178);
@@ -296,6 +307,7 @@ input[type=text], input[type=password], input[type=number], input[type=date]{
     display: flex; /*TODO: mexer no display mode, não responsivo*/
     background-color: #f3f1f3;/*background-color: rgba(195, 187, 243, 0.88);*/
     color: #575557;
+    min-width: 100%;
 }
 #dashboard p, #dashboard h1, #dashboard h2, #dashboard h2, #dashboard h4,
 #relatorios span, #relatorios h1 , #relatorios h2, #relatorios h3, #relatorios h4, #relatorios p{
