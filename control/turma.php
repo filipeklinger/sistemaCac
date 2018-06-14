@@ -218,6 +218,11 @@ class turma{
         }
     }
 
+    /**
+     * Aqui recuperamos as turmas alocadas em Determinada Sala
+     * @param $identificador
+     * @return string
+     */
     public function getHorariosBySalaId($identificador){
         $projection = "oficina.nome as oficina,segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim";
         try {
