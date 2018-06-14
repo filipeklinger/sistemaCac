@@ -172,7 +172,7 @@ class main{
                 $ofic = new oficina();
                 echo $ofic->getOficinaById($_GET['id']);
                 break;
-                //TURMA
+                //TURMA-------------------------------------------------------------------------------------------------
             case "insertTurma":
                 $turma = new turma();
                 $turma->setTurma();

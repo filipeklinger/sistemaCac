@@ -167,7 +167,6 @@ class turma{
             $columns = "ano,sala_id,segunda,terca,quarta,quinta,sexta,inicio,fim,turma_id";
             $params = array($ano, $this->sala, $this->seg, $this->ter, $this->qua, $this->qui, $this->sex, $this->hinic, $this->hfim, $this->turmaId);
             if ($this->db->insert($columns, "horario_turma_sala", $params)) {
-                //new mensagem(SUCESSO, "Cadastrado com sucesso");
             } else {
                 new mensagem(INSERT_ERRO, "Erro ao cadastrar");
             }
