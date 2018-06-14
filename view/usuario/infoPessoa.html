@@ -225,37 +225,6 @@
         $('#formDependentes').attr('action','control/main.php?req=addDependente&id=' + identificador);
         addMenor();
     }
-
-    /*
-    function editaDependente() {
-        let divDeps = document.getElementById('dep');
-        let edicao = '';
-        for(i=0;i< divDeps.children.length;i++){
-            let filho = divDeps.children[i];
-            let nome = filho.children[0].textContent;
-            let sobrenome = filho.children[1].textContent;
-            edicao +=
-                '<!-- Primeiro nome da pessoa -->\n' +
-                '<h4 class="text-center">Dependente '+(i+1)+'</h4>' +
-                '        <div class="form-group">\n' +
-                '            <label class="col-md-4 control-label" for="nome">Nome</label>\n' +
-                '            <div class="col-md-4">\n' +
-                '                <input id="nome" name="nome" type="text" placeholder="José" value="'+nome+'"  class="form-control input-md" required="">\n' +
-                '            </div>\n' +
-                '        </div>\n' +
-                '\n' +
-                '        <!-- Sobrenome da pessoa -->\n' +
-                '        <div class="form-group">\n' +
-                '            <label class="col-md-4 control-label" for="sobrenome">Sobrenome</label>\n' +
-                '            <div class="col-md-4">\n' +
-                '                <input id="sobrenome" name="sobrenome" type="text" placeholder="da silva" value="'+sobrenome+'" class="form-control input-md" required="">\n' +
-                '            </div>\n' +
-                '        </div>'
-                ;
-        }
-        $('#dep').empty().append(edicao);
-    }
-    */
 </script>
 
 </body>
