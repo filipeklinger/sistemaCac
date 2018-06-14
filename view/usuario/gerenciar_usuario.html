@@ -25,29 +25,23 @@
     <div id="contTab" class="tab-content" style="padding: 20px;">
         <div id="users" class="tab-pane fade in active">
 
-            <a href="?pag=Cad.Pessoa" type="button" class="btn btn-primary" style="margin: 0px 0 50px 0"><i
+            <a href="?pag=Cad.Pessoa" type="button" class="btn btn-primary"><i
                     class="glyphicon glyphicon-plus"></i> Novo Usuário</a>
 
-            <!--select onchange="carregaUsuarios();" id="tipoUser">
-                <option value="selectCandidato" selected="selected">Alunos</option>
-                <option value="selectProfessor">Professores</option>
-                <option value="selectAdministrador">Administradores</option>
-            </select-->
-            <div class="row">
-                <table width="80%" align="center" class="table">
-                    <thead>
-                    <tr>
-                        <th class="col-md-4">NOME</th>
-                        <th class="col-md-2">TIPO DE ACESSO</th>
-                        <th class="col-md-2">É MENOR DE IDADE?</th>
-                        <th class="col-md-2">DISCENTE DA UFRRJ?</th>
-                        <th class="col-md-2">Ver / Editar dados</th>
-                    </tr>
-                    </thead>
-                    <tbody id="usuarios">
-                    </tbody>
-                </table>
-            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="col-md-4">Nome</th>
+                    <th class="col-md-2">Tipo de Acesso</th>
+                    <th class="col-md-2">Menor de Idade ?</th>
+                    <th class="col-md-2">Discente da Rural ?</th>
+                    <th class="col-md-2">Ver / Editar dados</th>
+                    <th class="col-md-2"></th>
+                </tr>
+                </thead>
+                <tbody id="usuarios"></tbody>
+            </table>
+
         </div>
     </div>
 </div>
