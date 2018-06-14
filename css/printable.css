@@ -12,9 +12,6 @@
     #main, #MainFooter, .sidebar, .nav .navbar-default{
         display: none;
     }
-    .noPrint::before{
-        content: "Esta Página Não Pode Ser Impressa";
-    }
     .noPrint{
         display: none;
     }
