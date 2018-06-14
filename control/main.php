@@ -210,7 +210,7 @@ class main{
                 $turma = new turma();
                 $turma->setPeriodo();
                 break;
-                //Aluno
+                //Aluno-------------------------------------------------------------------------------------------------
             case "insertAluno":
                 $aluno = new aluno();
                 try {
@@ -222,7 +222,7 @@ class main{
             case "selectAlunosByTurmaId":
                 $aluno = new aluno();
                 try {
-                    $aluno->getAlunos($_GET['id']);
+                    echo $aluno->getAlunos($_GET['id']);
                 } catch (Exception $e) {
                     new mensagem(ERRO,$e);
                 }
@@ -243,7 +243,11 @@ class main{
                     echo($e);
                 }
                 break;
-            //Relatorio
+            case "listaPresenca":
+                $aluno = new aluno();
+                echo $aluno->getListaPresenca($_GET['id']);
+                break;
+            //Relatorio-------------------------------------------------------------------------------------------------
             case "relAlunosPorTurmaPeriodo":
                 $relatorio = new relatorio();
                 echo $relatorio->getAlunosPorOficina($_GET['id']);

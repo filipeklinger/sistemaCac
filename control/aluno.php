@@ -88,13 +88,14 @@ class aluno{
     /**
      * Buscando os alunos de turma especifica
      * @param $turmaId Integer - Id da turma
+     * @return string JSON
      * @throws Exception
      */
     public function getAlunos($turmaId){
         $tempo = turma::getTempoStatic($this->db);
         $columns = "aluno_turma.id_aluno,pessoa.nome,pessoa.sobrenome,turma.nome_turma as turma,lista_espera,aluno_turma.trancado";
         $whereClause = "aluno_turma.turma_id = turma.id_turma and aluno_turma.pessoa_id = pessoa.id_pessoa and turma.tempo_id = ? and turma.id_turma = ?";
-        echo $this->db->select($columns,"pessoa,turma,aluno_turma",$whereClause,array($tempo->id_tempo,$turmaId),"pessoa.nome",ASC);
+        return $this->db->select($columns,"pessoa,turma,aluno_turma",$whereClause,array($tempo->id_tempo,$turmaId),"pessoa.nome",ASC);
     }
 
     /**
@@ -148,6 +149,42 @@ class aluno{
         }
 
        $this->redirecionaPagAnterior();
+    }
+
+    /**
+     * aqui geramos uma lista de presença com os alunos ativos na turma
+     * @param $turmaId
+     * @return string HTML
+     * @throws Exception
+     */
+    public function getListaPresenca($turmaId){
+        $alunos = json_decode($this->getAlunos($turmaId));
+
+        $posAluno = 0;
+        $listaAlunos = "<table>".
+        "<thead>
+                <tr>
+                    <th>Num</th>
+                    <th>Nome</th>
+                    <th>Presenças</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id=\"alunos\">
+                ";
+        for($i=0;$i< sizeof($alunos);$i++){
+            $posAluno++;
+            $listaAlunos .= "<tr>";
+            $listaAlunos .= "<td>".$posAluno."</td>";
+            $listaAlunos .= "<td>".$alunos[$i]->nome." ";
+            $listaAlunos .= $alunos[$i]->sobrenome."</td>";
+            $listaAlunos .= "<td></td>";
+            $listaAlunos .= "</tr>";
+        }
+        $listaAlunos .="</tbody>
+            </table>";
+        return $listaAlunos;
+
     }
 
     private function redireciona(){header("Location: ../index.php?pag=Cad.Aluno");}
