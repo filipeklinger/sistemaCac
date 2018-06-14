@@ -152,10 +152,13 @@ function jsonParseOficinasTurma(resposta, corpo) {
     for (var i in objJson) {
         corpo.append('<option value="' + objJson[i].id_oficina + '">' + objJson[i].nome + '</option>');
     }
+    if(objJson.length < 1){
+        corpo.append('<option value="-1">Nenhuma Oficina cadastrada</option>');
+    }
 }
 
 function SalaFromPredioId() {
-    var identificador = parseInt(selectPredioTurma.val());
+    let identificador = parseInt(selectPredioTurma.val());
     ajaxLoadGET('control/main.php?req=selectSalaByPredioId&id=' + identificador, jsonParseSalasTurma, selectSala);
 }
 
