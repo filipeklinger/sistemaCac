@@ -28,6 +28,7 @@
                 </select>
             </div>
         </div>
+        <h3 class="text-center">Turmas Ativas</h3>
         <table class="table">
             <thead>
             <tr>
@@ -36,11 +37,27 @@
                 <th class=''>HORÁRIO</th>
                 <th class=''>SALA</th>
                 <th class=''>PROFESSOR</th>
-                <th class=''>ATIVA</th>
+                <th class=''>Vagas Totais</th>
                 <th class=''></th>
             </tr>
             </thead>
             <tbody id="turmas"></tbody>
+        </table>
+
+        <h3 class="text-center">Turmas Inativas</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th class=''>OFICINA</th>
+                <th class=''>DIA DA SEMANA</th>
+                <th class=''>HORÁRIO</th>
+                <th class=''>SALA</th>
+                <th class=''>PROFESSOR</th>
+                <th class=''>Vagas Totais</th>
+                <th class=''></th>
+            </tr>
+            </thead>
+            <tbody id="turmasInativas"></tbody>
         </table>
     </div>
 </div>
@@ -59,18 +76,33 @@
 
         function parseTurmaHorario(resposta, corpo) {
             let objJson = JSON.parse(resposta);
+            let ativas = '';
+            let inativas = '';
             for (i in objJson) {
-                corpo.append(
-                    '<tr>' +
-                    '<td class=\'col-md-2\'>' + objJson[i].oficina + '</td>' +
-                    '<td class=\'col-md-2\'>' + getDiaSemana(objJson[i]) + '</td>' +
-                    '<td class=\'col-md-2\'>' + objJson[i].inicio + " as " + objJson[i].fim + '</td>' +
-                    '<td class=\'col-md-2\'>' + objJson[i].sala + '</td>' +
-                    '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
-                    '<td class=\'col-md-2\'>' + isAtivo(objJson[i].is_ativo) + '</td>' +
-                    '<td class=\'col-md-2\'><a href="?pag=Edit.Turma&id=' + objJson[i].id_turma + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
-                    '</tr>');
+                if(objJson[i].is_ativo == '1'){
+                    ativas += '<tr>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].oficina + '</td>' +
+                        '<td class=\'col-md-2\'>' + getDiaSemana(objJson[i]) + '</td>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].inicio + " as " + objJson[i].fim + '</td>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].sala + '</td>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].vagas + '</td>' +
+                        '<td class=\'col-md-2\'><a href="?pag=Edit.Turma&id=' + objJson[i].id_turma + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
+                        '</tr>';
+                }else{
+                    inativas += '<tr>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].oficina + '</td>' +
+                        '<td class=\'col-md-2\'>' + getDiaSemana(objJson[i]) + '</td>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].inicio + " as " + objJson[i].fim + '</td>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].sala + '</td>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
+                        '<td class=\'col-md-2\'>' + objJson[i].vagas + '</td>' +
+                        '<td class=\'col-md-2\'><a href="?pag=Edit.Turma&id=' + objJson[i].id_turma + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
+                        '</tr>'
+                }
             }
+            corpo.append(ativas);
+            $('#turmasInativas').empty().append(inativas);
         }
     }
 
