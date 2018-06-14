@@ -13,7 +13,7 @@
 </div>
 <p id="avisos"></p>
 
-<h3 class="text-center">Visualizando dados de <span class="nome"></span></h3>
+<h3 class="text-center">Visualizando dados de <span id="nomeLabel"></span></h3>
 <!-- TODO Implementar botao de Setar Bolsista para administradores-->
 <h4 id="dadosBasicos">Dados Básicos</h4>
 <hr/>
@@ -92,14 +92,15 @@
         identificador = parseInt(getParameterByName('id'));
         getMsgs();
         ajaxLoadGET('control/main.php?req=selectPessoaById&id=' + identificador, jsonParseInfoPessoa, '#toficinas');
-        addBtnEdicaoPessoa();
+        //addBtnEdicaoPessoa();
     }
 
     function jsonParseInfoPessoa(json, corpo) {
         let objJson = JSON.parse(json);
         nome = objJson[0].nome
         $('.nome').append(nome);
-        if(objJson[0].excluido == 1) $('.nome').append("- Usuário Excluído");
+        if(objJson[0].excluido == 1) $('#nomeLabel').append(nome+"- Usuário Excluído");
+        else $('#nomeLabel').append(nome);
         $('#sobrenome').append(objJson[0].sobrenome);
         $('#nasc').append(objJson[0].data_nascimento);
         if (objJson[0].menor_idade === "1") {
@@ -111,6 +112,7 @@
             loadDepententes();
         }
         if (objJson[0].ruralino === "1") loadRuralino();
+        if(objJson[0].excluido == '0') addBtnEdicaoPessoa();
     }
 
     function addBtnEdicaoPessoa() {
