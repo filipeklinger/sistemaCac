@@ -256,7 +256,7 @@ class turma{
     public function updateTurma($turmaId){
         //recebendo dados
         $this->getCommonData();
-        $ativo = SIM;
+        $ativo = isset($_POST['ativo']) ? $_POST['ativo'] : SIM;//se der erro recebe ativo SIM
 
         //atualiza turma
         $turmaColumns = array("num_vagas","professor","is_ativo");
