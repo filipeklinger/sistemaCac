@@ -292,8 +292,14 @@ class pessoa{
             //aqui verificamos se o candidato e menor de idade e buscamos seu responsavel
             if($objCand[$i]->menor_idade == 1){
                 $respsavel = json_decode($this->db->select("nome,responsavel_parentesco","menor_idade,pessoa","responsavel_id = id_pessoa and pessoa_id = ?",array($objCand[$i]->id_pessoa)));
-                $objCand[$i]->responsavel = $respsavel[0]->nome;
-                $objCand[$i]->parentesco = $respsavel[0]->responsavel_parentesco;
+                if($respsavel != null and sizeof($respsavel)>0){
+                    $objCand[$i]->responsavel = $respsavel[0]->nome;
+                    $objCand[$i]->parentesco = $respsavel[0]->responsavel_parentesco;
+                }else{
+                    $objCand[$i]->responsavel = "Excluido";
+                    $objCand[$i]->parentesco = "Excluido";
+                }
+
             }
         }
         $cand = json_encode($objCand,JSON_UNESCAPED_UNICODE);
@@ -475,6 +481,27 @@ class pessoa{
         $this->redirecionaPagAnterior();
     }
 
+    //---------------------------------------------REMOVE---------------------------------------------------------------
+
+    /**
+     * @param $pessoaId
+     * @throws Exception
+     */
+    public function deleteDependente($pessoaId){
+        //primeiro removemos a relação de dependencia
+        if($this->db->delete("menor_idade","pessoa_id = ?",array($pessoaId))){
+            //depois removemos o registro da pessoa
+            if($this->db->delete("pessoa","id_pessoa = ?",array($pessoaId))){
+                new mensagem(SUCESSO,"Depedente removido com sucesso");
+            }else{
+                new mensagem(SUCESSO,"Aluno não pôde ser apadago pois já participou de oficina, entretanto a dependencia foi desfeita");
+            }
+        }else{
+            new mensagem(ERRO,"Problema ao remover relação de dependência");
+        }
+
+        $this->redirecionaPagAnterior();
+    }
     //---------------------------------------------REDIRECT-------------------------------------------------------------
     private function redireciona(){header("Location: ../index.php?pag=Login");}
 

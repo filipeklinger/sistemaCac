@@ -151,6 +151,10 @@ class main{
                 $pess = new pessoa();
                 $pess->addDependente($_GET['id']);
                 break;
+            case "removeDependente":
+                $pess = new pessoa();
+                $pess->deleteDependente($_GET['id']);
+                break;
             //Oficina---------------------------------------------------------------------------------------------------
             case "insertOficina":
                 $ofic = new oficina();

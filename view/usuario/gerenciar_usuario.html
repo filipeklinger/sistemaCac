@@ -55,17 +55,22 @@
 
     function jsonParseUsuarios(resposta, corpo) {
         var objJson = JSON.parse(resposta);
+        let string = '';
         for (var i in objJson) {
-
-            //console.log(objJson);
-            corpo.append(
+            string += (
                 '<tr>\n' +
                 '     <td class="col-md-4">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n' +
                 '     <td class="col-md-2">' + getNVacesso(objJson[i].nv_acesso) + '</td>\n' +
                 '     <td class="col-md-2">' + isAtivo(objJson[i].menor_idade) + '</td>\n' +
-                '     <td class="col-md-2">' + isAtivo(objJson[i].ruralino) + '</td>\n' +
-                '<td  class="col-md-2"> <a href="?pag=Info.Pessoa&id=' + objJson[i].id_pessoa + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-eye-open\'></span></a> </td>' +
-                '</tr>');
+                '     <td class="col-md-2">' + isAtivo(objJson[i].ruralino) + '</td>\n');
+            if(objJson[i].responsavel == "Excluido"){
+                string += '<td  class="col-md-2"> Excluido </td>';
+            }else{
+                string += '<td  class="col-md-2"> <a href="?pag=Info.Pessoa&id=' + objJson[i].id_pessoa + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-eye-open\'></span></a> </td>';
+            }
+            string += '</tr>';
+            corpo.empty();
+            corpo.append(string);
         }
         if (objJson.length < 1) {
             corpo.append(
