@@ -250,26 +250,31 @@ class pessoa{
      * @throws Exception
      */
     public function getProfesores(){
-        //Obtemos todos os professores com left Join em Maior idade
-        $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $prof = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso <= ?",array(2));
-        //transformamos o JSON em objeto php
-        $objProf = json_decode($prof);
-        //verificmos se esse usuario esuda na rural e adicionamos as informacoes necessarias
-        for($i=0;$i< sizeof($objProf);$i++){
-            if($objProf[$i]->ruralino == 1){
-                $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objProf[$i]->id_pessoa)));
+        if($_SESSION['NIVEL'] == ADMINISTRADOR){
+            //Obtemos todos os professores com left Join em Maior idade
+            $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
+            $prof = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso <= ?",array(2));
+            //transformamos o JSON em objeto php
+            $objProf = json_decode($prof);
+            //verificmos se esse usuario esuda na rural e adicionamos as informacoes necessarias
+            for($i=0;$i< sizeof($objProf);$i++){
+                if($objProf[$i]->ruralino == 1){
+                    $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objProf[$i]->id_pessoa)));
 
-                if(sizeof($ruralino)> 0){//verificacao adicional para verificar se existe a tupla indicada
-                    $objProf[$i]->curso = $ruralino[0]->curso;
-                    $objProf[$i]->bolsista = $ruralino[0]->bolsista;
-                }else{
-                    $objProf[$i]->curso = null;
-                    $objProf[$i]->bolsista = null;
+                    if(sizeof($ruralino)> 0){//verificacao adicional para verificar se existe a tupla indicada
+                        $objProf[$i]->curso = $ruralino[0]->curso;
+                        $objProf[$i]->bolsista = $ruralino[0]->bolsista;
+                    }else{
+                        $objProf[$i]->curso = null;
+                        $objProf[$i]->bolsista = null;
+                    }
                 }
             }
+            $prof = json_encode($objProf,JSON_UNESCAPED_UNICODE);
+        }else{
+            $prof = $this->db->select("id_pessoa,nome,sobrenome","pessoa","id_pessoa = ?",array($_SESSION['ID']));
         }
-        $prof = json_encode($objProf,JSON_UNESCAPED_UNICODE);
+
         return $prof;
     }
 

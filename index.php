@@ -92,6 +92,9 @@ if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
         case 'Trocar.Periodo':
             include "view/turma/trocarPeriodo.html";
             break;
+        case 'Minhas-Turmas':
+            include "view/turma/oficineiroMinhasTurmas.html";
+            break;
         //Usuario
         case 'Usuarios':
             include "view/usuario/gerenciar_usuario.html";

@@ -205,17 +205,22 @@ class turma{
         }
     }
 
+    /**
+     * @param $tempoId
+     * @return string
+     * @throws Exception
+     */
     public function getTurmas($tempoId){
         //aqui mostramos todas as turmas ativas ou nao
-        try {
-            $projection = "turma.is_ativo,oficina.nome as oficina,segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim,sala.nome as sala,pessoa.nome as professor,turma.num_vagas as vagas,turma.id_turma";
-            $table ="oficina,horario_turma_sala,sala,pessoa,turma";
+        $projection = "turma.is_ativo,oficina.nome as oficina,segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim,sala.nome as sala,pessoa.nome as professor,turma.num_vagas as vagas,turma.id_turma";
+        $table ="oficina,horario_turma_sala,sala,pessoa,turma";
+
+        if($_SESSION['NIVEL'] == ADMINISTRADOR){
             $whereClause = "turma.oficina_id = oficina.id_oficina and turma.professor = pessoa.id_pessoa and turma.id_turma = horario_turma_sala.turma_id AND horario_turma_sala.sala_id = sala.id_sala AND turma.tempo_id = ?";
-            return $this->db->select($projection,$table, $whereClause,array($tempoId));
-        } catch (Exception $e) {
-            new mensagem(ERRO,"Erro: ".$e);
-            return "";
+        }else{
+            $whereClause = "turma.oficina_id = oficina.id_oficina and turma.professor = pessoa.id_pessoa and turma.id_turma = horario_turma_sala.turma_id AND horario_turma_sala.sala_id = sala.id_sala AND turma.tempo_id = ? and turma.professor = ".$_SESSION['ID'];
         }
+        return $this->db->select($projection,$table, $whereClause,array($tempoId));
     }
 
     /**
