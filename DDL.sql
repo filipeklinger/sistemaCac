@@ -340,7 +340,7 @@ INSERT INTO `login` (`pessoa_id`, `usuario`, `senha`) VALUES
 --  Inserindo o Tempo do sistema padrao
 -- ----------------------------------
 INSERT INTO `tempo` (`ano`, `periodo`) VALUES
-  (CURRENT_DATE,1);
+  (year(CURRENT_DATE),1);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
