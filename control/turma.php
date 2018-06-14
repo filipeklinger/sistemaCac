@@ -197,10 +197,10 @@ class turma{
         $table ="(pessoa,oficina,turma,sala,predio)";
         $joinClause = " LEFT JOIN horario_turma_sala ON id_turma = turma_id";
 
-        if($_SESSION['NIVEL'] == ADMINISTRADOR){
-            $whereClause = "professor=id_pessoa and id_oficina=oficina_id and sala_id = id_sala and predio_id = id_predio and turma.is_ativo = ? and turma.tempo_id = ?";
-        }else{
+        if(isset($_SESSION['NIVEL']) and $_SESSION['NIVEL'] == PROFESSOR){
             $whereClause = "professor=id_pessoa and id_oficina=oficina_id and sala_id = id_sala and predio_id = id_predio and turma.is_ativo = ? and turma.tempo_id = ? and professor =".$_SESSION['ID'];
+        }else{
+            $whereClause = "professor=id_pessoa and id_oficina=oficina_id and sala_id = id_sala and predio_id = id_predio and turma.is_ativo = ? and turma.tempo_id = ?";
         }
         $tempo = self::getTempoStatic($this->db);
         $whereArgs = array(SIM,$tempo->id_tempo);//Ativo = Sim,tempo atual
