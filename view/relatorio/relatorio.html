@@ -32,6 +32,7 @@
                 <tr>
                     <th class="col-md-4">Oficina</th>
                     <th class="col-md-2">Número de Alunos</th>
+                    <th class="col-md-2">Tam da Lista de espera</th>
                 </tr>
                 </thead>
                 <tbody id="alunosPorOficina">
@@ -57,6 +58,7 @@
                     '<tr>\n' +
                     '     <td class="col-md-4">' + objJson[i].oficina + '</td>\n' +
                     '     <td class="col-md-2">' + objJson[i].alunos + '</td>\n' +
+                    '     <td class="col-md-2">' + objJson[i].espera + '</td>\n' +
                     '</tr>');
                 soma += parseInt(objJson[i].alunos);
             }

@@ -99,6 +99,7 @@
         let objJson = JSON.parse(json);
         nome = objJson[0].nome
         $('.nome').append(nome);
+        if(objJson[0].excluido == 1) $('.nome').append("- Usuário Excluído");
         $('#sobrenome').append(objJson[0].sobrenome);
         $('#nasc').append(objJson[0].data_nascimento);
         if (objJson[0].menor_idade === "1") {

@@ -119,7 +119,10 @@ class pessoa{
      */
     function insertMenor(){
         $verificador = false;
-        if (isset($_POST['qtd_menor']) and $_POST['qtd_menor'] > 0) {
+        //verificando se o responsavel id esta habilidato a ter dependentes
+        $ismenor = $this->db->select("menor_idade","pessoa","pessoa_id = ?",array($this->responsavelID));
+        $ismenor = $ismenor[0]->menor_idade;
+        if (isset($_POST['qtd_menor']) and $_POST['qtd_menor'] > 0 and $ismenor != SIM) {
             $this->parentesco = isset($_POST['parentesco']) ? $_POST['parentesco'] : INVALIDO;
             for ($i = 0; $i < $_POST['qtd_menor']; $i++) {
                 $nomeAtual = 'nome_menor' . ($i + 1);
@@ -277,7 +280,7 @@ class pessoa{
     public function getCandidatos(){
         //Obtemos todos os Candidatos com left Join em Maior idade
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso >= ?",array(3));
+        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso >= ?",array(3));
         //transformamos o JSON em objeto php
         $objCand = json_decode($cand);
         //verificmos se esse administrador esuda na rural e adicionamos as informacoes necessarias
@@ -295,9 +298,6 @@ class pessoa{
                 if($respsavel != null and sizeof($respsavel)>0){
                     $objCand[$i]->responsavel = $respsavel[0]->nome;
                     $objCand[$i]->parentesco = $respsavel[0]->responsavel_parentesco;
-                }else{
-                    $objCand[$i]->responsavel = "Excluido";
-                    $objCand[$i]->parentesco = "Excluido";
                 }
 
             }
@@ -312,7 +312,7 @@ class pessoa{
      * @throws Exception
      */
     public function getPessoaById($identificador){
-        return $this->db->select("nome,sobrenome,menor_idade,ruralino,data_nascimento","pessoa","id_pessoa = ?",array($identificador));
+        return $this->db->select("nome,sobrenome,menor_idade,ruralino,data_nascimento,excluido","pessoa","id_pessoa = ?",array($identificador));
     }
 
     /**
@@ -368,7 +368,7 @@ class pessoa{
      */
     public function getDependentes($responsavelId){
         try {
-            return $this->db->select("id_pessoa,nome,sobrenome,responsavel_parentesco", "menor_idade,pessoa", "responsavel_id = ? and pessoa_id = id_pessoa", array($responsavelId));
+            return $this->db->select("id_pessoa,nome,sobrenome,responsavel_parentesco", "menor_idade,pessoa", "responsavel_id = ? and pessoa_id = id_pessoa and excluido = 0", array($responsavelId));
         } catch (Exception $e) {
             return "";
         }
@@ -483,10 +483,10 @@ class pessoa{
 
     //---------------------------------------------REMOVE---------------------------------------------------------------
 
-    /**
+    /*
      * @param $pessoaId
      * @throws Exception
-     */
+
     public function deleteDependente($pessoaId){
         //primeiro removemos a relação de dependencia
         if($this->db->delete("menor_idade","pessoa_id = ?",array($pessoaId))){
@@ -501,6 +501,19 @@ class pessoa{
         }
 
         $this->redirecionaPagAnterior();
+    }
+     * */
+    /**
+     * @param $pesssoaId
+     * @throws Exception
+     */
+    public function deleteDependente($pesssoaId){
+        //para manter um historio somente setamos a pessoa como excluida
+        if($this->db->update(array("excluido"),"pessoa",array(SIM),"id_pessoa = ?",array($pesssoaId))){
+            new mensagem(SUCESSO,"Dependente Removido com sucesso");
+        }else{
+            new mensagem(INSERT_ERRO,"Problema ao remover dependente");
+        }
     }
     //---------------------------------------------REDIRECT-------------------------------------------------------------
     private function redireciona(){header("Location: ../index.php?pag=Login");}

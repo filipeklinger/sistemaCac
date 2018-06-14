@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `sistema_cac`.`pessoa` (
   `menor_idade` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '1 sim\n0 nao',
   `ruralino` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '1 sim\n0 nao',
   `data_nascimento` DATE NOT NULL,
+  `excluido` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '1 sim\n0 nao',
   PRIMARY KEY (`id_pessoa`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
