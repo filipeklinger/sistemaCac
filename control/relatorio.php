@@ -13,8 +13,7 @@ class relatorio{
  }
  /*
   *
-3. Contabilizar alunos aptos a receber certificado (1 por oficina concluída
-corretamente);
+
 4. Recuperar histórico de um aluno específico em oficinas já concluídas ou
 em curso;
 5. Consultar total de oficinas ativas e seus respectivos “Oficineiros”;

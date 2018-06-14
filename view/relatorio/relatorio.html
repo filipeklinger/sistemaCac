@@ -7,7 +7,8 @@
                 <ul class="nav navbar-nav">
                     <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página Inicial</a>
                     </li>
-                    <li class="active"><a data-toggle="tab" href="">Gerenciar Relatórios</a></li>
+                    <li class="active"><a data-toggle="tab" href="#contTab">Gerenciar Relatórios</a></li>
+                    <li><a data-toggle="tab" href="#histTab">Históricos</a></li>
                 </ul>
             </div>
         </div>
@@ -22,7 +23,7 @@
 </p>
 
 <div style="overflow-x: hidden;">
-    <div id="contTab" class="tab-content">
+    <div id="contTab" class="tab-pane fade in active">
 
         <p>Total: <span id="totalAlunosAtivos"></span> Alunos.</p>
         <h3>Alunos por Oficina</h3>
@@ -39,6 +40,23 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+<!-- TODO  Vinicius faz funcionar essa tab pq nao ta dando certo =(-->
+<div id="histTab" class="tab-pane fade">
+    <h3>Busca de Histórico</h3>
+    <div class="row">
+        <table width="80%" align="center" class="table">
+            <thead>
+            <tr>
+                <th class="col-md-4">Oficina</th>
+                <th class="col-md-2">Número de Alunos</th>
+                <th class="col-md-2">Tam da Lista de espera</th>
+            </tr>
+            </thead>
+            <tbody id="alunos">
+            </tbody>
+        </table>
     </div>
 </div>
 <script type="application/javascript">
