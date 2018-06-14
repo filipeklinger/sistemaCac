@@ -12,7 +12,4 @@
     #main, #MainFooter, .sidebar, .nav .navbar-default{
         display: none;
     }
-    .noPrint{
-        display: none;
-    }
 }

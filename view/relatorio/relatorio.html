@@ -7,7 +7,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página Inicial</a>
                     </li>
-                    <li class="active"><a data-toggle="tab" href="#contTab">Gerenciar Relatórios</a></li>
+                    <li class="active"><a data-toggle="tab" href="#rmain">Gerenciar Relatórios</a></li>
                     <li><a data-toggle="tab" href="#histTab">Históricos</a></li>
                 </ul>
             </div>
@@ -17,61 +17,61 @@
 
 <p id="avisos"></p>
 
-<p><label for="periodo">Periodo:</label>
-    <select id="periodo" onchange="getPeriodoSelecionado();">
-    </select>
-</p>
-
 <div style="overflow-x: hidden;">
-    <div id="contTab" class="tab-pane fade in active">
-
-        <p>Total: <span id="totalAlunosAtivos"></span> Alunos.</p>
-        <h3>Alunos por Oficina</h3>
-        <div class="row">
-            <table width="80%" align="center" class="table">
-                <thead>
-                <tr>
-                    <th class="col-md-4">Oficina</th>
-                    <th class="col-md-2">Número de Alunos</th>
-                    <th class="col-md-2">Tam da Lista de espera</th>
-                </tr>
-                </thead>
-                <tbody id="alunosPorOficina">
-                </tbody>
-            </table>
+    <div id="contTab" class="tab-content">
+        <div id="rmain" class="tab-pane fade">
+            <p>Total: <span id="totalAlunosAtivos"></span> Alunos.</p>
+            <h3>Alunos por Oficina</h3>
+            <div class="row">
+                <table width="80%" align="center" class="table">
+                    <thead>
+                    <tr>
+                        <th class="col-md-4">Oficina</th>
+                        <th class="col-md-2">Número de Alunos</th>
+                        <th class="col-md-2">Tam da Lista de espera</th>
+                    </tr>
+                    </thead>
+                    <tbody id="alunosPorOficina">
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-</div>
-<!-- TODO  Vinicius faz funcionar essa tab pq nao ta dando certo =(-->
-<div id="histTab" class="tab-pane fade">
-    <h3>Busca de Histórico</h3>
-    <div class="row">
-        <table width="80%" align="center" class="table">
-            <thead>
-            <tr>
-                <th class="col-md-4">Oficina</th>
-                <th class="col-md-2">Número de Alunos</th>
-                <th class="col-md-2">Tam da Lista de espera</th>
-            </tr>
-            </thead>
-            <tbody id="alunos">
-            </tbody>
-        </table>
+
+        <div id="histTab" class="tab-pane fade">
+            <h3>Busca de Histórico</h3>
+            <div class="row">
+                <table width="80%" align="center" class="table">
+                    <thead>
+                    <tr>
+                        <th class="col-md-4">Oficina</th>
+                        <th class="col-md-2">Número de Alunos</th>
+                        <th class="col-md-2">Tam da Lista de espera</th>
+                    </tr>
+                    </thead>
+                    <tbody id="alunos">
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 <script type="application/javascript">
     $(document).ready(loaderRelatorios);
+
+
     function loaderRelatorios() {
-        ajaxLoadGET('control/main.php?req=selectTempoHistorico', parsePeriodosSelect, '#periodo',getPeriodoSelecionado);
+        ajaxLoadGET('control/main.php?req=selectTempoHistorico', parsePeriodosSelect, '#periodo', getPeriodoSelecionado);
+
     }
 
     function getPeriodoSelecionado() {
         let periodo = $('#periodo').val();
-        ajaxLoadGET('control/main.php?req=relAlunosPorTurmaPeriodo&id='+periodo, jsonParseAlunosPorOficinas, '#alunosPorOficina');
-        function jsonParseAlunosPorOficinas(resposta,corpo) {
+        ajaxLoadGET('control/main.php?req=relAlunosPorTurmaPeriodo&id=' + periodo, jsonParseAlunosPorOficinas, '#alunosPorOficina');
+
+        function jsonParseAlunosPorOficinas(resposta, corpo) {
             let objJson = JSON.parse(resposta);
             let soma = 0;
-            for(let i in objJson){
+            for (let i in objJson) {
                 corpo.append(
                     '<tr>\n' +
                     '     <td class="col-md-4">' + objJson[i].oficina + '</td>\n' +
@@ -80,8 +80,7 @@
                     '</tr>');
                 soma += parseInt(objJson[i].alunos);
             }
-            $('#totalAlunosAtivos').empty().
-            append(soma);
+            $('#totalAlunosAtivos').empty().append(soma);
         }
     }
 </script>

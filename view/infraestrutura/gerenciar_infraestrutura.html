@@ -1,3 +1,4 @@
+
 <body class="container-fluid infra">
 <div class="header">
     <nav class="navbar navbar-default">
@@ -28,9 +29,9 @@
             <table class="table tableContainer">
                 <thead>
                 <tr>
-                    <th class=''>NOME</th>
-                    <th class=''>LOCALIZAÇÃO</th>
-                    <th class=''>ATIVO</th>
+                    <th class=''>Nome</th>
+                    <th class=''>Localização</th>
+                    <th class=''>Ativo</th>
                     <th class=''></th>
                 </tr>
                 </thead>
@@ -39,15 +40,15 @@
         </div>
 
         <div id="salas" class="tab-pane fade">
-            <a href="?pag=Cad.Sala" type="button" class="btn btn-primary" style="margin: 0px 0 50px 0"><i
+            <a href="?pag=Cad.Sala" type="button" class="btn btn-primary"><i
                     class="glyphicon glyphicon-plus"></i> Nova Sala</a>
             <br>
             <table class="table">
                 <thead>
                 <tr>
-                    <th class=''>NOME</th>
-                    <th class=''>PRÉDIO</th>
-                    <th class=''>ATIVO</th>
+                    <th class=''>Nome</th>
+                    <th class=''>Prédio</th>
+                    <th class=''>Ativo</th>
                     <th class=''></th>
                 </tr>
                 </thead>
@@ -65,6 +66,7 @@
     var controlador = "control/main.php?req=selectPredio";
 
     $('#tbody').on("load", loader());
+
 
     function loader() {
         getMsgs();

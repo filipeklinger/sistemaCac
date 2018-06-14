@@ -1,4 +1,4 @@
-<body id="dashboard" class="noPrint">
+<body id="dashboard">
 <!-- Sidebar Holder -->
 <div class="sidebar col-md-1" id="#sidebarAction">
     <br>
@@ -23,6 +23,7 @@
     </div>
     <hr>
     <br>
+    <button class="btn btn-primary" onclick="btnTglr()">Mais Opções</button>
     <h2><b>Turmas Ativas em <span id="anoAtual"></span>.<span id="periodoAtual"></span></b></h2>
     <br>
     <div class="tableContainer">
@@ -41,11 +42,7 @@
             <tbody id="t_oficinas"></tbody>
         </table>
     </div>
-    <!--div class="row navbar-fixed-bottom text-center">&copy;CAC, Todos os Direitos Reservados, <span
-            id="footerYear"></span>
-    </div-->
 </div>
-
 <script type="text/javascript">
 
     $(document).on("load", loader());
