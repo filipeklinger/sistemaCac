@@ -7,6 +7,7 @@
 include_once '../model/DatabaseOpenHelper.php';
 include_once 'mensagem.php';
 include_once 'constantes.php';
+include_once '../tcpdf/tabelaPDF.php';
 class aluno{
     private $db;
 
@@ -154,37 +155,25 @@ class aluno{
     /**
      * aqui geramos uma lista de presença com os alunos ativos na turma
      * @param $turmaId
-     * @return string HTML
+     * @return string JSON
      * @throws Exception
      */
     public function getListaPresenca($turmaId){
         $alunos = json_decode($this->getAlunos($turmaId));
-
+        $Objpresenca = null;
         $posAluno = 0;
-        $listaAlunos = "<table>".
-        "<thead>
-                <tr>
-                    <th>Num</th>
-                    <th>Nome</th>
-                    <th>Presenças</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody id=\"alunos\">
-                ";
         for($i=0;$i< sizeof($alunos);$i++){
-            $posAluno++;
-            $listaAlunos .= "<tr>";
-            $listaAlunos .= "<td>".$posAluno."</td>";
-            $listaAlunos .= "<td>".$alunos[$i]->nome." ";
-            $listaAlunos .= $alunos[$i]->sobrenome."</td>";
-            $listaAlunos .= "<td></td>";
-            $listaAlunos .= "</tr>";
+            if($alunos[$i]->lista_espera == 1 or $alunos[$i]->trancado == 1){
+                unset($alunos[$i]);
+            }else{
+                $posAluno++;
+                $alunos[$i]->pos = $posAluno;
+                $alunos[$i]->nome = $alunos[$i]->nome." ".$alunos[$i]->sobrenome;
+            }
         }
-        $listaAlunos .="</tbody>
-            </table>";
-        return $listaAlunos;
 
+        //return json_encode($json,JSON_UNESCAPED_UNICODE);
+        new pdf($alunos);
     }
 
     private function redireciona(){header("Location: ../index.php?pag=Cad.Aluno");}
