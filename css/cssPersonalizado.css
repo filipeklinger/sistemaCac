@@ -424,7 +424,6 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     color: rgb(255, 88, 105);
 }
 
-/*TODO: Aperfeiçoar estilo de formulários*/
 /*Infraestrutura*/
 .infra h1, .infra h2, .infra h3, .infra h4, .infra span, .infra p, .oficinas h1, .oficinas h2, .oficinas h3, .oficinas h4, .oficinas span, .oficinas p,
 .turmas h1, .turmas h2, .turmas h3, .turmas h4, .turmas span, .turmas p, .usuario h1, .usuario h2, .usuario h3, .usuario h4, .usuario span, .usuario p,
