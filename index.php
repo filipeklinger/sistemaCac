@@ -12,7 +12,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao r
     <!-- As meta tags acima *devem* vir em primeiro lugar dentro do `head`; qualquer outro conteúdo deve vir *após* essas tags -->
     <title><?php echo $titulo ?></title>
 
-    <link rel="icon" sizes="192x192" href="">
+    <link rel="icon" sizes="192x192" href="img/favicon.png">
     <!-- Bootstrap -->
     <link href="bootstrap3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- estiliza o seletor link href="bootstrap3.3.7/select/css/bootstrap-select.min.css" rel="stylesheet" -->

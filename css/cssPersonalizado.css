@@ -25,6 +25,10 @@ hr {
     color: #000;
     transition: .2s ease-in-out;
 }
+#btn-menu{
+    display: none;
+    color: black;
+}
 
 .input-group-addon:hover {
     background-color: rgba(244, 151, 46, 0.65);
@@ -85,7 +89,7 @@ hr {
 }
 
 #page404, #main {
-    height: calc(100% - 57px);
+    height: 100%;
     background: #009092 url("../img/bg-main.jpg") no-repeat;
 }
 
@@ -394,12 +398,18 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     font-family: 'Open Sans', sans-serif;
     font-weight: normal;
     background-color: #353635;
-}
 
+}
 .sidebar ul li {
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: medium;
+}
+.sidebar ul li ul li{
+    background-color: #2b2c2b;
+}
+.sidebar ul li ul{
+    border-bottom: 2px solid whitesmoke;
 }
 
 .sidebar ul li i {
@@ -426,7 +436,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 @media screen and (max-height: 640px) {
     #page404, #main {
         /*height: 100vh;*/
-        /*height: calc(100% - 57px); /*WORKS ONLY FOR ANDROID 6.0 CHROME BROWSERS REMOVE CALC*/
+        height: calc(100% - 57px); /*WORKS ONLY FOR ANDROID 6.0 CHROME BROWSERS REMOVE CALC*/
     }
 
     #main div a.coolButton {
