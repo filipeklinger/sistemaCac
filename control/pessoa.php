@@ -493,6 +493,12 @@ class pessoa{
         $this->redirecionaPagAnterior();
     }
 
+    public function updateRuralino($pessoaId){
+        if($this->hasUpdatePermission($pessoaId)){
+            //TODO Atualizar dados do ruralino
+        }
+    }
+
     //---------------------------------------------REMOVE---------------------------------------------------------------
 
     /**

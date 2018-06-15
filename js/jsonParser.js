@@ -255,6 +255,8 @@ function loadMenor() {
 }
 
 function loadRuralino() {
+    //adicionamos o botão editar
+    $('#ruraLabel').append('&nbsp; <button id="btnDeps" onclick="editaRuralino()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
     $('#ruralino').removeAttr("hidden");
     ajaxLoadGET('control/main.php?req=selectRuralinoByPessoaId&id='+identificador, parseRuralino, '.carr');
     function parseRuralino(json,corpo) {
@@ -264,7 +266,30 @@ function loadRuralino() {
         $('#bolsista').append(isAtivo(objJson[0].bolsista));
     }
 }
-
+function editaRuralino() {
+    let curso = $('#curso').text();
+    let matricula = $('#matricula').text();
+    let conteudo = $('#ruralinoConteudo');
+    conteudo.empty();
+    conteudo.append(
+        '<form action="control/main.php?req=updateRuralino&id=' + identificador + '" method="POST">' +
+        '<p>Curso: <input type="text" name="curso" value="' + curso + '" required="required"></p>' +
+        '<p>Matricula: <input type="number" name="matricula" value="' + matricula + '" ></p>'+
+        '<div class="form-group">\n' +
+        '                <label class="control-label" >Bolsista do CAC?</label>\n' +
+        '                <div class="">\n' +
+        '                    <label class="radio-inline">\n' +
+        '                        <input type="radio" name="bolsista" value="1">SIM\n' +
+        '                    </label>\n' +
+        '                    <label class="radio-inline">\n' +
+        '                        <input type="radio" name="bolsista" value="0">NÃO\n' +
+        '                    </label>\n' +
+        '                </div>\n' +
+        '            </div>'+
+        '<br/><input type="submit" class="btn btn-primary" value="Gravar"/>' +
+        '</form>'
+    );
+}
 
 function loadTel(id) {
     ajaxLoadGET('control/main.php?req=selectTelefoneByPessoaId&id='+id, parseTel, '#tels');
