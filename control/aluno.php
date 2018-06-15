@@ -173,7 +173,11 @@ class aluno{
                 }
             }
             $alunos = array_values($alunos);//aqui reorganizamos o array apos remover itens desnecessários
-            new pdf($alunos);
+
+            //aqui recuperamos os dados do professor, nome da oficina e nome da turma
+            $oficinaAtual = json_decode($this->db->select("oficina.nome as oficina,nome_turma as turma,pessoa.nome as professor,pessoa.sobrenome","oficina,turma,pessoa","oficina_id = id_oficina and id_turma = ? and pessoa.id_pessoa = turma.professor",array($turmaId)));
+            $oficinaAtual[0]->professor = $oficinaAtual[0]->professor." ".$oficinaAtual[0]->sobrenome;
+            new pdf($alunos,$oficinaAtual[0]);
         }else{
             $this->redirecionaPagAnterior();
         }

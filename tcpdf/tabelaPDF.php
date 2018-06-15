@@ -18,9 +18,10 @@ class MYPDF extends TCPDF {
 }
 
 class PDF{
-	private $impressao;
-	public function __construct($impressaoOBJ){
+	private $impressao,$dadosTurma;
+	public function __construct($impressaoOBJ,$dadosObj){
 	    $this->impressao = $impressaoOBJ;
+	    $this->dadosTurma = $dadosObj;
 	    $this->inicializa();
     }
 
@@ -42,7 +43,9 @@ class PDF{
         //Cabeçalho
         $header_title = "Universidade Federal Rural do Rio de Janeiro";
         $header_logo = "logo.jpg";
-        $txt_header = "Lista de presença \nSistema do Centro de Arte e Cultura\n"."Emitido em: {$dataHoje}";
+        $txt_header = "Lista de presença da turma: {$this->dadosTurma->turma}, {$this->dadosTurma->oficina} / Professor: {$this->dadosTurma->professor}\n".
+            "Sistema do Centro de Arte e Cultura - CAC\n".
+            "Emitido em: {$dataHoje}";
 
         $pdf->SetHeaderData($header_logo, PDF_HEADER_LOGO_WIDTH, $header_title, $txt_header, array(0,0,0), array(0,0,0));
         $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -76,6 +79,7 @@ class PDF{
 					<th><font color="#ffffff">&nbsp;</font></th>
 					<th><font color="#ffffff">&nbsp;</font></th>
 					<th><font color="#ffffff">&nbsp;</font></th>
+					<th><font color="#ffffff">&nbsp;</font></th>
 			    </tr>
 			    </thead>';
             for($i=0;$i<sizeof($this->impressao);$i++){
@@ -88,6 +92,7 @@ class PDF{
 					<td >&nbsp;</td>
 					<td >&nbsp;</td>
 					<td >&nbsp;</td> 
+					<td >&nbsp;</td>
 					<td >&nbsp;</td>
 					<td >&nbsp;</td>
 					<td >&nbsp;</td>

@@ -379,7 +379,7 @@ function addMenor() {
             '                <div class="col-md-4">\n' +
             '                    <input id="nome_menor0" name="nome_menor' + quantidade + '" type="text" placeholder="nome menor ' + quantidade + '"  class="form-control input-md" required="">\n' +
             '                </div>\n' +
-            '            </div>\n' +
+            '            </div></br>\n' +
             '\n' +
             '            <!-- Sobrenome do menor 0 -->\n' +
             '            <div class="form-group">\n' +
@@ -387,7 +387,7 @@ function addMenor() {
             '                <div class="col-md-4">\n' +
             '                    <input id="sobrenome_menor0" name="sobrenome_menor' + quantidade + '" type="text" placeholder="sobrenome menor ' + quantidade + '"  class="form-control input-md" required="">\n' +
             '                </div>\n' +
-            '            </div>\n' +
+            '            </div></br>\n' +
             '\n' +
             '            <!-- Nascimento do menor ' + quantidade + ' -->\n' +
             '            <div class="form-group">\n' +
@@ -395,7 +395,7 @@ function addMenor() {
             '                <div class="col-md-4">\n' +
             '                    <input id="nascimento_menor0" name="nascimento_menor' + quantidade + '" type="date" placeholder="dd/mm/aaaa"  class="form-control input-md" required="">\n' +
             '                </div>\n' +
-            '            </div>' +
+            '            </div></br>' +
             '</div>').appendTo(divContent);
         $('#qtd_menor').remove();
 
