@@ -159,21 +159,25 @@ class aluno{
      * @throws Exception
      */
     public function getListaPresenca($turmaId){
-        $alunos = json_decode($this->getAlunos($turmaId));
-        $Objpresenca = null;
-        $posAluno = 0;
-        for($i=0;$i< sizeof($alunos);$i++){
-            if($alunos[$i]->lista_espera == 1 or $alunos[$i]->trancado == 1){
-                unset($alunos[$i]);
-            }else{
-                $posAluno++;
-                $alunos[$i]->pos = $posAluno;
-                $alunos[$i]->nome = $alunos[$i]->nome." ".$alunos[$i]->sobrenome;
+        if($turmaId != null and $turmaId != INVALIDO){
+            $alunos = json_decode($this->getAlunos($turmaId));
+            $Objpresenca = null;
+            $posAluno = 0;
+            for($i=0;$i< sizeof($alunos);$i++){
+                if($alunos[$i]->lista_espera == 1 or $alunos[$i]->trancado == 1){
+                    unset($alunos[$i]);
+                }else{
+                    $posAluno++;
+                    $alunos[$i]->pos = $posAluno;
+                    $alunos[$i]->nome = $alunos[$i]->nome." ".$alunos[$i]->sobrenome;
+                }
             }
-        }
 
-        //return json_encode($json,JSON_UNESCAPED_UNICODE);
-        new pdf($alunos);
+            //return json_encode($json,JSON_UNESCAPED_UNICODE);
+            new pdf($alunos);
+        }else{
+            $this->redirecionaPagAnterior();
+        }
     }
 
     private function redireciona(){header("Location: ../index.php?pag=Cad.Aluno");}
