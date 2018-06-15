@@ -105,7 +105,7 @@
                     '<tr>\n' +
                     '     <td> </td>\n'+
                     '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
-                    '     <td><a href="control/main.php?req=trancarMatricula&id=' + objJson[i].id_aluno + '" class="btn btn-primary">Trancar Matricula</a></td>\n' +
+                    '     <td><a href="javascript:func()" onclick="confirmacaoTrancarMatricula(' + objJson[i].id_aluno + ')" class="btn btn-primary">Trancar Matricula</a></td>\n' +
                     '</tr>';
             } else if (objJson[i].trancado === '1') {
                 listaTrancados +=
@@ -140,6 +140,12 @@
         let trancada = $('#matTrancada');
         trancada.empty();
         trancada.append(listaTrancados);
+    }
+    function confirmacaoTrancarMatricula(id) {
+        let resposta = confirm("Deseja trancar a matricula?");
+        if(resposta == true){
+            window.location.href = "control/main.php?req=trancarMatricula&id="+id;
+        }
     }
 </script>
 </body>
