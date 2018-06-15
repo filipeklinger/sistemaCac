@@ -90,7 +90,7 @@ class login{
                 $_SESSION['MENU'] ='[{"nome":"Minhas Turmas","link":"TurmasSubmenu","icone":"glyphicon-bell","submenu":[{"nome":"ver","link":"?pag=Turmas"},{"nome":"Nova Turma","link":"?pag=Cad.Turma"}]},{"nome":"Alunos","link":"AlunosSubmenu","icone":"glyphicon-education","submenu":[{"nome":"Gerenciar","link":"?pag=Presença"}]}]';
                 break;
             case ALUNO:
-                $_SESSION['MENU'] ='[{"nome":"Minha conta","link":"ContaSubmenu","icone":"glyphicon-user","submenu":[{"nome":"Meus Dados","link":"?pag=Info.Pessoa&id='.$_SESSION['ID'].'"}]},{"nome":"Aulas","link":"AulaSubmenu","icone":"glyphicon-education","submenu":[{"nome":"Minhas Aulas","link":"?pag=Alunos"}]}]';
+                $_SESSION['MENU'] ='[{"nome":"Minha conta","link":"ContaSubmenu","icone":"glyphicon-user","submenu":[{"nome":"Meus Dados","link":"?pag=Meus-Dados&id='.$_SESSION['ID'].'"}]}]';
                 break;
             case VISITANTE:
                 $_SESSION['MENU'] ='[]';

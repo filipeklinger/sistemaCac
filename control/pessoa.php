@@ -218,12 +218,17 @@ class pessoa{
         return password_hash($str, PASSWORD_BCRYPT);
 
     }
-
+//--------------------------------------RECUPERA DO BANCO---------------------------------------------------------------
+    public function hasSelectPermission(){
+        if(isset($_SESSION['NIVEL']) and $_SESSION['NIVEL'] == ADMINISTRADOR) return;
+        else $this->redireciona();
+    }
     /**
      * @return string JSON
      * @throws Exception
      */
     public function getAdministradores(){
+        $this->hasSelectPermission();
         //Obtemos todos os administradores com left Join em Maior idade pois e obrigatorio ser maior de idade
         //entretando selecionamos tambem os que nao completaram as informacoes
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
@@ -250,6 +255,7 @@ class pessoa{
      * @throws Exception
      */
     public function getProfesores(){
+        $this->hasSelectPermission();
         if($_SESSION['NIVEL'] == ADMINISTRADOR){
             //Obtemos todos os professores com left Join em Maior idade
             $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
@@ -283,6 +289,7 @@ class pessoa{
      * @throws Exception
      */
     public function getCandidatos(){
+        $this->hasSelectPermission();
         //Obtemos todos os Candidatos com left Join em Maior idade
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
         $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso >= ?",array(3));
@@ -488,26 +495,6 @@ class pessoa{
 
     //---------------------------------------------REMOVE---------------------------------------------------------------
 
-    /*
-     * @param $pessoaId
-     * @throws Exception
-
-    public function deleteDependente($pessoaId){
-        //primeiro removemos a relação de dependencia
-        if($this->db->delete("menor_idade","pessoa_id = ?",array($pessoaId))){
-            //depois removemos o registro da pessoa
-            if($this->db->delete("pessoa","id_pessoa = ?",array($pessoaId))){
-                new mensagem(SUCESSO,"Depedente removido com sucesso");
-            }else{
-                new mensagem(SUCESSO,"Aluno não pôde ser apadago pois já participou de oficina, entretanto a dependencia foi desfeita");
-            }
-        }else{
-            new mensagem(ERRO,"Problema ao remover relação de dependência");
-        }
-
-        $this->redirecionaPagAnterior();
-    }
-     * */
     /**
      * @param $pesssoaId
      * @throws Exception

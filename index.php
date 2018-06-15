@@ -102,8 +102,8 @@ if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
         case 'Info.Pessoa':
             include "view/usuario/infoPessoa.html";
             break;
-        case 'Edit.Pessoa':
-            include "view/usuario/editPessoa.html";
+        case 'Meus-Dados':
+            include "view/usuario/meusDados.html";
             break;
         //Alunos
         case 'Alunos':
