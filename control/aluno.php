@@ -172,8 +172,7 @@ class aluno{
                     $alunos[$i]->nome = $alunos[$i]->nome." ".$alunos[$i]->sobrenome;
                 }
             }
-
-            //return json_encode($json,JSON_UNESCAPED_UNICODE);
+            $alunos = array_values($alunos);//aqui reorganizamos o array apos remover itens desnecessários
             new pdf($alunos);
         }else{
             $this->redirecionaPagAnterior();

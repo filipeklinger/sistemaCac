@@ -2,7 +2,7 @@
 // Include the main TCPDF library (search for installation path).
 //require_once('tcpdf_include.php');
 require_once('config/tcpdf_config_alt.php');
-require_once('tcpdf.php');
+require_once 'tcpdf.php';
 
 // Extend the TCPDF class to create custom Footer
 class MYPDF extends TCPDF {
@@ -79,6 +79,7 @@ class PDF{
 			    </tr>
 			    </thead>';
             for($i=0;$i<sizeof($this->impressao);$i++){
+                if(!isset($this->impressao[$i]->pos)) continue;
                 if($i%2 == 0) $html .= "<tr bgcolor=\"#ebebe0\" align=\"center\" nobr=\"true\">";
                 else $html .= "<tr align=\"center\" nobr=\"true\">";
                 $html .="
