@@ -20,7 +20,7 @@ class pessoa{
     //Endereco
     private $rua,$numero,$complemento,$bairro,$cidade,$estado;
     //ruralino
-    private $matricula,$curso;
+    private $matricula,$curso,$bolsista;
     //Caso menor
     private $responsavelID,$parentesco = INVALIDO;//inicializamos como invalido
     //login
@@ -64,6 +64,11 @@ class pessoa{
         $this->respTel = isset($_POST['resp_tel']) ? $_POST['resp_tel'] : INVALIDO;
         $this->respTelType = isset($_POST['resp_tel_type']) ? $_POST['resp_tel_type'] : INVALIDO;
     }
+    private function receiveRuralino(){
+        $this->matricula = isset($_POST['matricula']) ? $_POST['matricula'] : INVALIDO;
+        $this->curso = isset($_POST['curso']) ? $_POST['curso'] : INVALIDO;
+        $this->bolsista = isset($_POST['bolsista']) ? $_POST['bolsista'] : INVALIDO;
+    }
 
 //---------------------------------------------Procedimento de cadastrar pessoa-----------------------------------------
 
@@ -93,9 +98,7 @@ class pessoa{
         $this->insertEndereco();
         //---------------------------RURALINO--------------------------
         if (isset($_POST['ruralino']) and $_POST['ruralino'] == "on") {
-            $this->matricula = isset($_POST['matricula']) ? $_POST['matricula'] : INVALIDO;
-            $this->curso = isset($_POST['curso']) ? $_POST['curso'] : INVALIDO;
-
+            $this->receiveRuralino();
             $this->insertRuralino();
         }
 
@@ -493,10 +496,23 @@ class pessoa{
         $this->redirecionaPagAnterior();
     }
 
+    /**
+     * @param $pessoaId
+     * @throws Exception
+     */
     public function updateRuralino($pessoaId){
         if($this->hasUpdatePermission($pessoaId)){
-            //TODO Atualizar dados do ruralino
+            $this->receiveRuralino();
+            $params = array($this->matricula,$this->curso,$this->bolsista);
+            if($this->db->update(array("matricula","curso","bolsista"),"ruralino",$params,"pessoa_id = ?",array($pessoaId))){
+                new mensagem(SUCESSO,"Cadastro atualizado");
+            }else{
+                new mensagem(INSERT_ERRO,"Problema ao atualizar");
+            }
+        }else{
+            new mensagem(ERRO,"Permissão insuficiente");
         }
+        $this->redirecionaPagAnterior();
     }
 
     //---------------------------------------------REMOVE---------------------------------------------------------------

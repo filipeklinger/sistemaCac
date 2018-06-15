@@ -139,6 +139,10 @@ class main{
                 $pess = new pessoa();
                 $pess->updateEndereco($_GET['id']);
                 break;
+            case "updateRuralino":
+                $pess = new pessoa();
+                $pess->updateRuralino($_GET['id']);
+                break;
             case "updateDoc":
                 $pess = new pessoa();
                 $pess->updateDocument($_GET['id']);
