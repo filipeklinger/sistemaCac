@@ -67,7 +67,7 @@ class pessoa{
     private function receiveRuralino(){
         $this->matricula = isset($_POST['matricula']) ? $_POST['matricula'] : INVALIDO;
         $this->curso = isset($_POST['curso']) ? $_POST['curso'] : INVALIDO;
-        $this->bolsista = isset($_POST['bolsista']) ? $_POST['bolsista'] : INVALIDO;
+        $this->bolsista = isset($_POST['bolsista']) ? $_POST['bolsista'] : NAO;
     }
 
 //---------------------------------------------Procedimento de cadastrar pessoa-----------------------------------------

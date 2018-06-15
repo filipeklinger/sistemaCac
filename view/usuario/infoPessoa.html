@@ -43,11 +43,11 @@
     <p>Bairro: <span id="bairro"></span>, <span id="cidade"></span> - <span id="estado"></span></p>
 </div>
 
-<div id="ruralino" hidden="hidden" style="padding-top: 15px;">
+<div id="ruralino" style="padding-top: 15px;">
     <div class="carr"></div>
     <h4 id="ruraLabel">Aluno da Rural</h4>
     <hr/>
-    <div id="ruralinoConteudo">
+    <div id="ruralinoConteudo" hidden="hidden">
         <p>Curso: <span id="curso"></span></p>
         <p>Matricula: <span id="matricula"></span></p>
         <p>Bolsista do CAC: <span id="bolsista"></span></p>
@@ -113,7 +113,10 @@
             loadDocument();
             loadDepententes();
         }
-        if (objJson[0].ruralino === "1") loadRuralino();
+        if (objJson[0].ruralino === "1"){
+            loadRuralino();
+            $('#ruralinoConteudo').removeAttr('hidden');
+        }
         if(objJson[0].excluido == '0') addBtnEdicaoPessoa();
     }
 
