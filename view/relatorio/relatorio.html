@@ -19,7 +19,11 @@
 
 <div style="overflow-x: hidden;">
     <div id="contTab" class="tab-content">
-        <div id="rmain" class="tab-pane fade">
+        <div id="rmain" class="tab-pane fade active in">
+            <div class="col-md-1">
+                <select class="selectCool2" id="periodo" onchange="getPeriodoSelecionado();">
+                </select>
+            </div>
             <p>Total: <span id="totalAlunosAtivos"></span> Alunos.</p>
             <h3>Alunos por Oficina</h3>
             <div class="row">
