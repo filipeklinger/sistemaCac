@@ -34,7 +34,7 @@ class pessoa{
 
     private function receiveAccessLevel(){
         if (isset($_SESSION['NIVEL']) and $_SESSION['NIVEL'] == ADMINISTRADOR) {//se não for adm o nivel é automaticamente aluno
-            $this->nv = isset($_POST['nv_acesso']) ? $_POST['nv_acesso'] : VISITANTE;//se der erro fica como visitante
+            $this->nv = isset($_POST['nv_acesso']) ? $_POST['nv_acesso'] : ALUNO;//se der erro fica como visitante
         } else {
             $this->nv = ALUNO;
         }

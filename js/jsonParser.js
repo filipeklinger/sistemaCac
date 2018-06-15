@@ -366,36 +366,36 @@ function loadDepententes() {
 }
 
 function addMenor() {
-    let quantidade = $('#qtd_menor').val();
-    let divContent = $('#menor_de_idade');
+    var quantidade = $('#qtd_menor').val();
+    var divContent = $('#menor_de_idade');
 
     quantidade++;
 
     $(function () {
         $('<div class="aluno">' +
-            '<!-- Primeiro nome do menor ' + quantidade + ' -->\n' +
-            '            <div class="form-group">\n' +
-            '                <label class="col-md-4 control-label" for="nome_menor' + quantidade + '">Nome</label>\n' +
-            '                <div class="col-md-4">\n' +
+            '<h4> Dependente #'+quantidade+' </h4><hr>\n' +
+            '            <div class="form-group col-md-8 col-lg-push-2">\n' +
+            '                <label class=" control-label" for="nome_menor' + quantidade + '">Nome</label>\n' +
+            '                <div class="">\n' +
             '                    <input id="nome_menor0" name="nome_menor' + quantidade + '" type="text" placeholder="nome menor ' + quantidade + '"  class="form-control input-md" required="">\n' +
             '                </div>\n' +
-            '            </div></br>\n' +
+            '            </div><br/>\n' +
             '\n' +
             '            <!-- Sobrenome do menor 0 -->\n' +
-            '            <div class="form-group">\n' +
-            '                <label class="col-md-4 control-label" for="sobrenome_menor' + quantidade + '">Sobrenome</label>\n' +
-            '                <div class="col-md-4">\n' +
+            '            <div class="form-group col-md-8 col-lg-push-2">\n' +
+            '                <label class="control-label" for="sobrenome_menor' + quantidade + '">Sobrenome</label>\n' +
+            '                <div class="">\n' +
             '                    <input id="sobrenome_menor0" name="sobrenome_menor' + quantidade + '" type="text" placeholder="sobrenome menor ' + quantidade + '"  class="form-control input-md" required="">\n' +
             '                </div>\n' +
-            '            </div></br>\n' +
+            '            </div><br/>\n' +
             '\n' +
             '            <!-- Nascimento do menor ' + quantidade + ' -->\n' +
-            '            <div class="form-group">\n' +
-            '                <label class="col-md-4 control-label" for="nascimento_menor' + quantidade + '">Nascimento</label>\n' +
-            '                <div class="col-md-4">\n' +
+            '            <div class="form-group col-md-8 col-lg-push-2">\n' +
+            '                <label class="control-label" for="nascimento_menor' + quantidade + '">Nascimento</label>\n' +
+            '                <div class="">\n' +
             '                    <input id="nascimento_menor0" name="nascimento_menor' + quantidade + '" type="date" placeholder="dd/mm/aaaa"  class="form-control input-md" required="">\n' +
             '                </div>\n' +
-            '            </div></br>' +
+            '            </div><br/>' +
             '</div>').appendTo(divContent);
         $('#qtd_menor').remove();
 
