@@ -42,4 +42,15 @@ da lista de espera em relação a quantidade de vagas disponibilizadas;
         $groupBy = " GROUP BY id_turma";
         return $this->db->select($projection,$table,$whereClause.$groupBy,array($tempoId));
  }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function getAlunosHistorico(){
+        $columns = "pessoa.nome,pessoa.sobrenome,COUNT(oficina.nome) as oficinas";
+        $whereClause = "pessoa.id_pessoa = aluno_turma.pessoa_id and aluno_turma.turma_id = turma.id_turma AND turma.oficina_id = oficina.id_oficina";
+        $group = " GROUP BY pessoa.nome, pessoa.sobrenome";
+        return $this->db->select($columns,"pessoa,aluno_turma,turma,oficina",$whereClause.$group,null,"pessoa.nome",ASC);
+    }
 }

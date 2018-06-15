@@ -20,10 +20,13 @@
 <div style="overflow-x: hidden;">
     <div id="contTab" class="tab-content">
         <div id="rmain" class="tab-pane fade active in">
+
             <div class="col-md-1">
+                <span>Periodo:</span>
                 <select class="selectCool2" id="periodo" onchange="getPeriodoSelecionado();">
                 </select>
             </div>
+
             <p>Total: <span id="totalAlunosAtivos"></span> Alunos.</p>
             <h3>Alunos por Oficina</h3>
             <div class="row">
@@ -47,9 +50,9 @@
                 <table width="80%" align="center" class="table">
                     <thead>
                     <tr>
-                        <th class="col-md-4">Oficina</th>
-                        <th class="col-md-2">Número de Alunos</th>
-                        <th class="col-md-2">Tam da Lista de espera</th>
+                        <th class="col-md-4">Nome</th>
+                        <th class="col-md-2">Participou de</th>
+                        <th class="col-md-2"></th>
                     </tr>
                     </thead>
                     <tbody id="alunos">
@@ -65,7 +68,7 @@
 
     function loaderRelatorios() {
         ajaxLoadGET('control/main.php?req=selectTempoHistorico', parsePeriodosSelect, '#periodo', getPeriodoSelecionado);
-
+        ajaxLoadGET('control/main.php?req=selectAlunosHistorico', parseAlunosHistorico, '#alunos');
     }
 
     function getPeriodoSelecionado() {
@@ -85,6 +88,19 @@
                 soma += parseInt(objJson[i].alunos);
             }
             $('#totalAlunosAtivos').empty().append(soma);
+        }
+    }
+    function parseAlunosHistorico(resposta,corpo) {
+        let objJson = JSON.parse(resposta);
+        let soma = 0;
+        for (let i in objJson) {
+            corpo.append(
+                '<tr>\n' +
+                '     <td class="col-md-4">' + objJson[i].nome +' '+ objJson[i].sobrenome + '</td>\n' +
+                '     <td class="col-md-2">' + objJson[i].oficinas + ' Oficinas</td>\n' +
+                '     <td class="col-md-2"></td>\n' +
+                '</tr>');
+            soma += parseInt(objJson[i].alunos);
         }
     }
 </script>
