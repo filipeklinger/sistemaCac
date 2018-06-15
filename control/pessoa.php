@@ -243,9 +243,15 @@ class pessoa{
         for($i=0;$i< sizeof($objAdm);$i++){
             if(isset($objAdm[$i]->ruralino) and $objAdm[$i]->ruralino == 1){
                 $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objAdm[$i]->id_pessoa)));
-                if(sizeof($ruralino) > 0){
-                    $objAdm[$i]->curso = $ruralino[$i]->curso;
-                    $objAdm[$i]->bolsista = $ruralino[$i]->bolsista;
+                if($ruralino!= null and sizeof($ruralino) > 0){
+                    if(isset($ruralino[$i]) and $ruralino[$i] != null){
+                        $objAdm[$i]->curso = $ruralino[$i]->curso;
+                        $objAdm[$i]->bolsista = $ruralino[$i]->bolsista;
+                    }else{
+                        $objAdm[$i]->curso = "";
+                        $objAdm[$i]->bolsista = "";
+                    }
+
                 }
             }
         }
