@@ -30,7 +30,7 @@ class pessoa{
         $this->db = new Database();
     }
 
-//------------Recebe Dados do Form ------------------------------------------------
+//------------Recebe Dados do Form -------------------------------------------------------------------------------------
 
     private function receiveAccessLevel(){
         if (isset($_SESSION['NIVEL']) and $_SESSION['NIVEL'] == ADMINISTRADOR) {//se não for adm o nivel é automaticamente aluno

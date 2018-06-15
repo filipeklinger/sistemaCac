@@ -1,4 +1,3 @@
-<body>
 <body class="container-fluid">
 <div class="turmas">
     <div class="header">
@@ -34,7 +33,7 @@
             <div class="form-group">
 
                 <div class="input-group" style="color: black">
-                    <select id="selectOficina" name="oficina_id" class="selectpicker" title="Escolha uma oficina"
+                    <select id="selectOficina" name="oficina_id" class="selectCool2" title="Escolha uma oficina"
                             hidden="hidden" required>
                         <option value="1">Selecione uma Oficina</option>
                     </select>
@@ -47,7 +46,7 @@
                 <label class="control-label">ESCOLHA DE PRÉDIO</label>
                 <div class="">
                     <div class="input-group" style="color: black">
-                        <select id="selectPredio" onchange="SalaFromPredioId();" class="selectpicker"
+                        <select id="selectPredio" onchange="SalaFromPredioId();" class="selectCool2"
                                 title="Escolha um predio" required="required">
                             <option value="1">Selecione um Prédio</option>
                         </select>
@@ -60,7 +59,7 @@
                 <label class="control-label">ESCOLHA DE SALA</label>
                 <div class="">
                     <div class="input-group" style="color: black">
-                        <select id="selectSala" name="sala_id" onchange="disponibilidade();" class="selectpicker"
+                        <select id="selectSala" name="sala_id" onchange="disponibilidade();" class="selectCool2"
                                 title="Escolha uma Sala" required="required">
                             <option value="1">Selecione uma sala</option>
                         </select>
@@ -72,7 +71,7 @@
                 <label class="4 control-label">ESCOLHA UM PROFESSOR</label>
                 <div class="">
                     <div class="input-group">
-                        <select id="selectProf" name="prof_id" style="color: black" class="selectpicker"
+                        <select id="selectProf" name="prof_id" style="color: black" class="selectCool2"
                                 title="Escolha uma Professor" required="required">
                             <option value="-1">Selecione um professor</option>
                         </select>
@@ -117,7 +116,7 @@
             </div>
 
             <div class="row" style="color: white">
-                <table class="scheduler" width="80%" align="center" cellspacing="12">
+                <table class="table" width="80%" align="center" cellspacing="12">
                     <thead>
                     <tr>
                         <th>Hora</th>
