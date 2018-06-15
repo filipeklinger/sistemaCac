@@ -358,7 +358,7 @@ function loadDepententes() {
         let json = JSON.parse(resposta);
         for(i in json){
             corpo.append('<p>Nome: <span class="depNome"> '+json[i].nome + '</span>&nbsp;<span class="depsobrenome">' + json[i].sobrenome +
-                '&nbsp; <a href="?pag=Info.Pessoa&id='+json[i].id_pessoa+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a>' +
+                '&nbsp; <a href="?pag=Meus-Dados&id='+json[i].id_pessoa+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a>' +
                 '&nbsp; <a href="control/main.php?req=removeDependente&id='+json[i].id_pessoa+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-remove\'></span></a>' +
                 '</span></p>');
         }

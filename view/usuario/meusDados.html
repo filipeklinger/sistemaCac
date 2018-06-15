@@ -109,6 +109,7 @@
             loadEnd(identificador);
             loadDocument();
             loadDepententes();
+            $('#dependentes h4').append('&nbsp; <button id="btnDeps" onclick="adicionaDependete()" class="btn btn-primary"><span class=\'glyphicon glyphicon-plus\'></span></button>');
         }
         if (objJson[0].ruralino === "1") loadRuralino();
         if(objJson[0].excluido == '0') addBtnEdicaoPessoa();
@@ -119,7 +120,7 @@
         $('#contato').append('&nbsp; <button id="btnCont" onclick="editUsuarioContato()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
         $('#endereco').append('&nbsp; <button id="btnEnd" onclick="editUsuarioEndereco()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
         $('#docLabel').append('&nbsp; <button id="btnDoc" onclick="editUsuarioDocumento()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
-        $('#dependentes h4').append('&nbsp; <button id="btnDeps" onclick="adicionaDependete()" class="btn btn-primary"><span class=\'glyphicon glyphicon-plus\'></span></button>');
+
     }
 
     function editUsuarioNome() {
