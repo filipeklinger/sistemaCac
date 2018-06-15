@@ -21,7 +21,7 @@
             <select class="selectCool2" onchange="obterAlunos();" id="turma">
                 <option value="1" selected="selected">T01</option>
             </select>
-<a href="control/main.php?req=listaPresenca&id=1" class="btn btn-primary">Gerar Lista de presença</a>
+            <a id="gerarPresenca" href="" class="btn btn-primary">Gerar Lista de presença</a>
             <h3 class="text-center">Alunos Matriculados na turma</h3>
 
             <table class="table">
@@ -88,6 +88,7 @@
 
     function obterAlunos() {
         let turma = $('#turma').val();
+        $('#gerarPresenca').attr('href','control/main.php?req=listaPresenca&id='+turma);
         ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id=' + turma, parseAlunos, '#alunos');
     }
 
