@@ -25,13 +25,19 @@
 
                 <div class="col-md-12">
                     <label for="turma">Turma: </label>
-                    <select class="selectCool" id="turma" name="turma"
+                    <select class="selectCool" id="turma" name="turma" onchange="obterInfoTurma();"
                             title="Escolha uma Turma"
                             required="required">
                         <option value="">Selecione uma Turma</option>
 
                     </select>
                 </div>
+
+                <div class="col-md-12">
+                    <p><b>Dia: <span id="diaTurma"></span> <span id="horarioTurma"></span></b></p>
+                    <p><b>pré requisito: <span id="preReq"></span> </b></p>
+                </div>
+
                 <div class="col-md-12">
                     <label for="candidato">Candidato</label>
                     <select class="selectCool" id="candidato" name="candidato"
@@ -53,12 +59,24 @@
     $(document).on("load", loader());
 
     function loader() {
-        ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasComVagas, '#turma');
+        ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasComVagas, '#turma',obterInfoTurma);
         ajaxLoadGET('control/main.php?req=selectCandidato', parseCandidatos, '#candidato');
         getMsgs();
     }
 
-    function parseTurmasComVagas(resposta, corpo) {
+    function obterInfoTurma() {
+        let idTurma = $('#turma').val();
+        ajaxLoadGET('control/main.php?req=selectTurmaById&id='+idTurma, parseTurmaInfo, '#diaTurma');
+
+        function parseTurmaInfo(resposta) {
+            let json = JSON.parse(resposta);
+            $('#diaTurma').append(getDiaSemana(json[0]));
+            $('#horarioTurma').empty().append(json[0].inicio.slice(0,5) +'h ás '+json[0].fim.slice(0,5)+'h');
+            $('#preReq').empty().append(json[0].requisito);
+        }
+    }
+
+    function parseTurmasComVagas(resposta, corpo,funcaoEncadeada) {
         var objJson = JSON.parse(resposta);
         for (i in objJson) {
             corpo.append(
@@ -69,6 +87,7 @@
                 ' Local:  ' + objJson[i].predio + ',  ' + objJson[i].sala +
                 '<br/>');
         }
+        funcaoEncadeada();
     }
 
     function parseCandidatos(resposta, corpo) {

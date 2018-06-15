@@ -68,7 +68,7 @@ function jsonParseNomePredios(resposta,corpo) {
 /*TODO: SUBSTITUR A FUNÇÃO GETdIAsEMANA*/
 
 function getDiaSemana(objdia) {
-    var diasSemana = "";
+    let diasSemana = "";
     if (objdia.segunda === "1") diasSemana = "Segunda";
     if (objdia.terca === "1"){
         if(diasSemana.length > 1) diasSemana += " e ";

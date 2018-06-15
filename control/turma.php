@@ -252,7 +252,7 @@ class turma{
             "ano,segunda,terca,quarta,quinta,sexta,inicio,fim,"./* horario_turma_sala */
             "horario_turma_sala.sala_id,"./* sala */
             "sala.predio_id,"./* Predio */
-            "oficina.nome as oficina";/* Oficina */
+            "oficina.nome as oficina,oficina.pre_requisito as requisito";/* Oficina */
         $whereClause =
             "turma.id_turma = horario_turma_sala.turma_id ".
             " and horario_turma_sala.sala_id = sala.id_sala ".
