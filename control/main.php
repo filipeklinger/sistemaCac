@@ -256,6 +256,10 @@ class main{
                 $relatorio = new relatorio();
                 echo $relatorio->getAlunosPorOficina($_GET['id']);
                 break;
+            case "selectAlunosHistorico":
+                $relatorio = new relatorio();
+                echo $relatorio->getAlunosHistorico();
+                break;
             //USUARIO
             case "selecUsuarioLogado":
                 login::getUser();
