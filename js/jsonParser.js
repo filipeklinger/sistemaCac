@@ -29,6 +29,9 @@ function ajaxLoadGET(destino,funcaoParse,corpo,funcaoEncadeada){
             funcaoParse(this.responseText,body,funcaoEncadeada);
         }
     };
+    if (xhttp.overrideMimeType) {
+        xhttp.overrideMimeType('text/xml');
+    }
     xhttp.open("GET", destino);
     xhttp.send();
 
