@@ -4,7 +4,24 @@ function ajaxLoadGET(destino,funcaoParse,corpo,funcaoEncadeada){
     var body = $(corpo);
     //colocando uma mensagem de load para o usuario
     body.append('<div class="loader"></div>');
-    var xhttp = new XMLHttpRequest();//Objeto Ajax
+    //var xhttp = new XMLHttpRequest();//Objeto Ajax
+    var xhttp;
+    try{
+        // Firefox, Opera 8.0+, Safari
+        xhttp=new XMLHttpRequest();
+    } catch (e) {
+        // Internet Explorer
+        try {
+            xhttp = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {
+                alert("Esse site não funciona no seu navegador, Use o chrome.");
+                return false;
+            }
+        }
+    }
     xhttp.onreadystatechange = function(){//toda vez que mudar estado chama a funcao
         if(xhttp.readyState === 4){//estado 4 é quando recebe a resposta
             $(".loader").remove();
