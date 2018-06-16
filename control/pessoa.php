@@ -264,7 +264,6 @@ class pessoa{
      * @throws Exception
      */
     public function getProfesores(){
-        $this->hasSelectPermission();
         if($_SESSION['NIVEL'] == ADMINISTRADOR){
             //Obtemos todos os professores com left Join em Maior idade
             $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
@@ -298,7 +297,6 @@ class pessoa{
      * @throws Exception
      */
     public function getCandidatos(){
-        $this->hasSelectPermission();
         //Obtemos todos os Candidatos com left Join em Maior idade
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
         $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso >= ?",array(3));

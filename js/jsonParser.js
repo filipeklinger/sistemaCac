@@ -30,7 +30,7 @@ function ajaxLoadGET(destino,funcaoParse,corpo,funcaoEncadeada){
         }
     };
     if (xhttp.overrideMimeType) {
-        xhttp.overrideMimeType('text/xml');
+        xhttp.overrideMimeType('application/json');
     }
     xhttp.open("GET", destino);
     xhttp.send();
