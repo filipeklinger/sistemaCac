@@ -43,7 +43,6 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao r
 <?php
 //aqui recebemos por get a pagina de conteudo escolhida
 $opcao = isset($_GET['pag']) ? $_GET['pag'] : 'Login';
-//TODO: verificar User Agente - evitar que código de estilo quebre
 
 if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
     //pessoa logada tem essas opcoes de pagina
@@ -131,6 +130,9 @@ if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
             break;
         case 'Cad.Candidato':
             include "view/usuario/cadCandidato.html";
+            break;
+        case 'unsupported':
+	        include "view/unsupported.html";
             break;
         default:
             header("Location: ?pag=Login");

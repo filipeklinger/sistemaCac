@@ -1,8 +1,5 @@
 /*Imports*/
 @import "bootstrapExpansion.css";
-@import "printable.css";
-@import "fontWrapper.css";
-
 
 /*Globals*/
 body {
@@ -14,7 +11,9 @@ body {
     background-color: #e5e6e6;
 
 }
-
+.noPrint, .none{
+    display: none;
+}
 hr {
     border-color: #353635;
 }

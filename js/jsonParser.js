@@ -1,5 +1,19 @@
 //Recuperando as informações
 
+var notSupported = ['samsungBrowser','MSIE','Trident','Firefox'];
+
+$(document).ready(function () {
+    var b = navigator.userAgent;
+    for(var i in notSupported){
+        let aux = new RegExp(notSupported[i]);
+        console.log("> "+aux);
+        if(b.match(aux) != null){
+            alert("Navegador Não Supportado, Você Será Redirecionado . . . .");
+            window.location.replace("view/unsupported.html");
+        }
+    }
+});
+
 function ajaxLoadGET(destino,funcaoParse,corpo,funcaoEncadeada){
     var body = $(corpo);
     //colocando uma mensagem de load para o usuario
