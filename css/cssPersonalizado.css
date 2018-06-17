@@ -1,6 +1,13 @@
 /*Imports*/
 @import "bootstrapExpansion.css";
 
+/*Fontes*/
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Open Sans Light'), local('OpenSans-Regular'), url('fonts/OpenSans-Regular.ttf') format('ttf');
+}
 /*Globals*/
 body {
     min-height: 570px; /*tamanho real 640, remove barra de endereços do navegador*/
@@ -11,7 +18,7 @@ body {
     background-color: #e5e6e6;
 
 }
-.noPrint, .none{
+.noPrint{
     display: none;
 }
 hr {

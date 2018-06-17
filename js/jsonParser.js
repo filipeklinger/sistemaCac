@@ -1,12 +1,11 @@
 //Recuperando as informações
 
-var notSupported = ['samsungBrowser','MSIE','Trident','Firefox'];
+var notSupported = ['samsungBrowser','MSIE','Trident'];
 
 $(document).ready(function () {
     var b = navigator.userAgent;
     for(var i in notSupported){
         let aux = new RegExp(notSupported[i]);
-        console.log("> "+aux);
         if(b.match(aux) != null){
             alert("Navegador Não Supportado, Você Será Redirecionado . . . .");
             window.location.replace("view/unsupported.html");
