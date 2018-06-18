@@ -87,14 +87,11 @@
 
 <script type="text/javascript">
     $('#tbody').on("load", loader());
-
     var identificador;
-
     function loader() {
         identificador = parseInt(getParameterByName('id'));
         getMsgs();
         ajaxLoadGET('control/main.php?req=selectPessoaById&id=' + identificador, jsonParseInfoPessoa, '#toficinas');
-        //addBtnEdicaoPessoa();
     }
     /*---ESSAs ESTão DUPLICADAs PROPROSITALMENTE PARA ALTERAR ALGUNS VALORES NA EXIBIÇÃO---------*/
     function editUsuarioNome() {

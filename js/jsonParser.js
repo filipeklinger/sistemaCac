@@ -192,14 +192,15 @@ function jsonParseOficinasTurma(resposta, corpo) {
 
 function SalaFromPredioId() {
     let identificador = parseInt(selectPredioTurma.val());
-    ajaxLoadGET('control/main.php?req=selectSalaByPredioId&id=' + identificador, jsonParseSalasTurma, selectSala);
+    ajaxLoadGET('control/main.php?req=selectSalaByPredioId&id=' + identificador, jsonParseSalasTurma, '#carregandoSalas');
 }
 
-function jsonParseSalasTurma(resposta, corpo) {
-    corpo.empty();
+function jsonParseSalasTurma(resposta) {
+    cp = $('#selectSala');
+    cp.empty();
     var objJson = JSON.parse(resposta);
     for (var i in objJson) {
-        corpo.append('<option value="' + objJson[i].id_sala + '">' + objJson[i].nome + '</option>');
+        cp.append('<option value="' + objJson[i].id_sala + '">' + objJson[i].nome + '</option>');
     }
 }
 
