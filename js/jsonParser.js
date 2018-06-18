@@ -597,3 +597,37 @@ function adicionaDependete() {
     $('#formDependentes').attr('action','control/main.php?req=addDependente&id=' + identificador);
     addMenor();
 }
+
+/*---------GERENCIAMENTO DE USUARIOS ------------------------- */
+function jsonParseUsuarios(resposta, corpo) {
+    var objJson = JSON.parse(resposta);
+    let string = '';
+    for (var i in objJson) {
+        string +=
+            '<tr>\n';
+        if(objJson[i].excluido == '1'){
+            string += '     <td class="col-md-4">' + objJson[i].nome + " " + objJson[i].sobrenome + ' - Excluído</td>\n';
+        }else{
+            string += '     <td class="col-md-4">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
+        }
+        string+='     <td class="col-md-2">' + getNVacesso(objJson[i].nv_acesso) + '</td>\n' +
+            '     <td class="col-md-2">' + isAtivo(objJson[i].menor_idade) + '</td>\n' +
+            '     <td class="col-md-2">' + isAtivo(objJson[i].ruralino) + '</td>\n'+
+            '<td  class="col-md-2"> <a href="?pag=Info.Pessoa&id=' + objJson[i].id_pessoa + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-eye-open\'></span></a> </td>'+
+            '</tr>';
+        corpo.empty();
+        corpo.append(string);
+    }
+    if (objJson.length < 1) {
+        corpo.append(
+            '<tr>\n' +
+            '\n' +
+            '                    <td>:( NÃO</td>\n' +
+            '                    <td>ESIXTEM</td>\n' +
+            '                    <td>USUÁRIOS </td>\n' +
+            '                    <td>NESTA</td>\n' +
+            '                    <td>CATEGORIA</td>\n' +
+            '                    <td>---</td>\n' +
+            '                </tr>');
+    }
+}
