@@ -138,9 +138,21 @@ class main{
                 $pess = new pessoa();
                 $pess->updateEndereco($_GET['id']);
                 break;
+            case "insertRuralino":
+                $pess = new pessoa();
+                try {
+                    $pess->ruralino($_GET['id']);
+                } catch (Exception $e) {
+                    new mensagem(ERRO,$e);
+                }
+                break;
             case "updateRuralino":
                 $pess = new pessoa();
-                $pess->updateRuralino($_GET['id']);
+                try {
+                    $pess->updateRuralino($_GET['id']);
+                } catch (Exception $e) {
+                    new mensagem(ERRO,$e);
+                }
                 break;
             case "updateDoc":
                 $pess = new pessoa();

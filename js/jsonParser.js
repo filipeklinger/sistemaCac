@@ -271,6 +271,25 @@ function parsePeriodosSelect(resposta, corpo,funcaoEncadeada) {
 }
 
 /* ------------------------------------------------USUARIOS-----------------------------------------------------------*/
+function jsonParseInfoPessoa(json, corpo) {
+    let objJson = JSON.parse(json);
+    nome = objJson[0].nome
+    $('.nome').append(nome);
+    if(objJson[0].excluido == 1) $('#nomeLabel').append(nome+"- Usuário Excluído");
+    else $('#nomeLabel').append(nome);
+    $('#sobrenome').append(objJson[0].sobrenome);
+    $('#nasc').append(objJson[0].data_nascimento);
+    if (objJson[0].menor_idade === "1") {
+        loadMenor();
+    } else {
+        loadTel(identificador);
+        loadEnd(identificador);
+        loadDocument();
+        loadDepententes();
+    }
+    if (objJson[0].ruralino === "1"){ loadRuralino(); }else{ btnInsertRuralino(); }
+    if(objJson[0].excluido == '0') addBtnEdicaoPessoa();
+}
 
 function loadMenor() {
     $('#menorIdade').removeAttr("hidden");
@@ -290,7 +309,7 @@ function loadMenor() {
 function loadRuralino() {
     //adicionamos o botão editar
     $('#ruraLabel').append('&nbsp; <button id="btnDeps" onclick="editaRuralino()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
-    $('#ruralino').removeAttr("hidden");
+    $('#ruralinoConteudo').removeAttr("hidden");
     ajaxLoadGET('control/main.php?req=selectRuralinoByPessoaId&id='+identificador, parseRuralino, '.carr');
     function parseRuralino(json,corpo) {
         var objJson = JSON.parse(json);
@@ -299,6 +318,36 @@ function loadRuralino() {
         $('#bolsista').append(isAtivo(objJson[0].bolsista));
     }
 }
+
+function btnInsertRuralino(){
+    //adicionamos o botão Adicionar
+    $('#ruraLabel').append('&nbsp; <button id="btnDeps" onclick="insertRuralino()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
+}
+
+function insertRuralino() {
+    let conteudo = $('#ruralinoConteudo');
+    conteudo.empty();
+    conteudo.removeAttr('hidden');
+    conteudo.append(
+        '<form action="control/main.php?req=insertRuralino&id=' + identificador + '" method="POST">' +
+        '<p>Curso: <input type="text" name="curso" placeholder="Educação Física" required="required"></p>' +
+        '<p>Matricula: <input type="number" name="matricula" placeholder="2018180188" ></p>'+
+        '<div class="form-group">\n' +
+        '                <label class="control-label" >Bolsista do CAC?</label>\n' +
+        '                <div class="">\n' +
+        '                    <label class="radio-inline">\n' +
+        '                        <input type="radio" name="bolsista" value="1">SIM\n' +
+        '                    </label>\n' +
+        '                    <label class="radio-inline">\n' +
+        '                        <input type="radio" name="bolsista" value="0">NÃO\n' +
+        '                    </label>\n' +
+        '                </div>\n' +
+        '            </div>'+
+        '<br/><input type="submit" class="btn btn-primary" value="Gravar"/>' +
+        '</form>'
+    );
+}
+
 function editaRuralino() {
     let curso = $('#curso').text();
     let matricula = $('#matricula').text();
@@ -397,6 +446,14 @@ function loadDepententes() {
         }
     }
 }
+//----------------------------EDITA USUARIO--------------------------------
+function addBtnEdicaoPessoa() {
+    $('#dadosBasicos').append('&nbsp; <button id="btNome" onclick="editUsuarioNome()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
+    $('#contato').append('&nbsp; <button id="btnCont" onclick="editUsuarioContato()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
+    $('#endereco').append('&nbsp; <button id="btnEnd" onclick="editUsuarioEndereco()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
+    $('#docLabel').append('&nbsp; <button id="btnDoc" onclick="editUsuarioDocumento()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
+    $('#dependentes h4').append('&nbsp; <button id="btnDeps" onclick="adicionaDependete()" class="btn btn-primary"><span class=\'glyphicon glyphicon-plus\'></span></button>');
+}
 
 function addMenor() {
     var quantidade = $('#qtd_menor').val();
@@ -434,4 +491,108 @@ function addMenor() {
 
         $('<input type="hidden" name="qtd_menor" value=" ' + quantidade + '" id="qtd_menor">').appendTo(divContent);
     });
+}
+
+function editUsuarioNome() {
+    $('#btNome').removeAttr("onclick");
+    let dadosBasicos = $('#nomeNasc');
+    let sobrenome = $('#sobrenome').text();
+    let nasc = $('#nasc').text();
+    dadosBasicos.empty();
+    dadosBasicos.append(
+        '<form action="control/main.php?req=updateDadosBasicos&id=' + identificador + '" method="POST">' +
+        '<p>Nível de Acesso: <select id="nv_acesso" name="nv_acesso">\n' +
+        '                        <option value=4>Visitante</option>\n' +
+        '                        <option value=3>Aluno</option>\n' +
+        '                        <option value=2>Oficineiro</option>\n' +
+        '                        <option value=1>Administrador</option>\n' +
+        '                    </select>' +
+        '</p>' +
+        '<p>Nome: <input type=\'text\' name=\'nome\' value="' + nome + '" required="required"></p>' +
+        '<p>Sobrenome: <input type="text" name="sobrenome" value="' + sobrenome + '" required="required"></p>' +
+        '<p>Data nascimento: <input type="date" name="nascimento" value="' + nasc + '" required="required"> </p>' +
+        '<br/><input type="submit" class="btn btn-primary" value="Gravar"/>' +
+        '</form>');
+}
+
+function editUsuarioContato() {
+    $('#btnCont').removeAttr("onclick");
+    let tels = $('#tels');
+    let acm = '<form action="control/main.php?req=updateContato&id=' + identificador + '" method="POST">';
+    let tipo = 0;
+    tels.empty();
+    if (jsonContato !== null) {
+        jsonContato = JSON.parse(jsonContato);
+        for (i in jsonContato) {
+            tipo = jsonContato[i].tipo;
+            acm += '<p>Tel: <input type="number" name="resp_tel" value="' + jsonContato[i].numero + '" required="required">' +
+                'Tipo: <select id="resp_tel_type" name="resp_tel_type">\n' +
+                '                        <option value="2" ' + verTp(tipo, 2) + '>Whatsapp</option>\n' +
+                '                        <option value="1"' + verTp(tipo, 1) + '>Celular</option>\n' +
+                '                        <option value="3"' + verTp(tipo, 3) + '>Fixo (residencial)</option>\n' +
+                '                        <option value="4"' + verTp(tipo, 4) + '>Recados</option>\n' +
+                '                    </select>' +
+                '</p>';
+        }
+    }
+    acm += '<br/><input type="submit" class="btn btn-primary" value="Gravar"/></form>';
+    tels.append(acm);
+
+    function verTp(tp, val) {
+        if (parseInt(tp) === parseInt(val)) return 'selected';
+        return '';
+    }
+}
+
+function editUsuarioEndereco() {
+    $('#btnEnd').removeAttr("onclick");
+    let end = $('#end');
+    //Obtendo dados atuais
+    let rua = $('#rua').text();
+    let numero = $('#numero').text();
+    let complemento = $('#complemento').text();
+    let bairro = $('#bairro').text();
+    let cidade = $('#cidade').text();
+    let estado = $('#estado').text();
+    end.empty();
+    //Inserindo campos de edicao
+    end.append(
+        '<form action="control/main.php?req=updateEndereco&id=' + identificador + '" method="POST">' +
+        '<p>Rua: <input type=\'text\' name=\'rua\' value="' + rua + '" required="required"></p>' +
+        '<p>Numero: <input type="number" name="numero" value="' + numero + '" required="required"></p>' +
+        '<p>Complemento: <input type="text" name="complemento" value="' + complemento + '" ></p>' +
+        '<p>Bairro: <input type="text" name="bairro" value="' + bairro + '" required="required"></p>' +
+        '<p>Cidade: <input type="text" name="cidade" value="' + cidade + '" required="required"></p>' +
+        '<p>Estado: <input type="text" name="estado" value="' + estado + '" required="required"></p>' +
+        '<br/><input type="submit" class="btn btn-primary" value="Gravar"/>' +
+        '</form>');
+}
+
+function editUsuarioDocumento() {
+    $('#btnDoc').removeAttr("onclick");
+    let docs = $('#docs');
+    //obtendo dados atuais
+    let tipo = $('#tipoDoc').text();
+    let numero = $('#numeroDoc').text();
+    docs.empty();
+
+    docs.append(
+        '<form action="control/main.php?req=updateDoc&id=' + identificador + '" method="POST">' +
+        '<p>Tipo: ' +
+        '   <select id="doc_type" name="doc_type">\n' +
+        '       <option value="1">Registro geral (RG)</option>\n' +
+        '       <option value="2">Passaporte</option>\n' +
+        '   </select>' +
+        '</p>' +
+        '<p>Numero: <input type="number" name="doc_number" value="' + numero + '" required="required"></p>' +
+        '<br/><input type="submit" class="btn btn-primary" value="Gravar"/>' +
+        '</form>');
+}
+
+function adicionaDependete() {
+    $('#gravaMenor').attr('type','submit');
+    $('#label_parentesco').removeAttr('hidden');
+    //requisitamos adicionar dependente no id do usuario atual
+    $('#formDependentes').attr('action','control/main.php?req=addDependente&id=' + identificador);
+    addMenor();
 }

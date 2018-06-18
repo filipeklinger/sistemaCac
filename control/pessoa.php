@@ -64,10 +64,12 @@ class pessoa{
         $this->respTel = isset($_POST['resp_tel']) ? $_POST['resp_tel'] : INVALIDO;
         $this->respTelType = isset($_POST['resp_tel_type']) ? $_POST['resp_tel_type'] : INVALIDO;
     }
+
     private function receiveRuralino(){
         $this->matricula = isset($_POST['matricula']) ? $_POST['matricula'] : INVALIDO;
         $this->curso = isset($_POST['curso']) ? $_POST['curso'] : INVALIDO;
         $this->bolsista = isset($_POST['bolsista']) ? $_POST['bolsista'] : NAO;
+        //somente o ADM pode setar essa informação
     }
 
 //---------------------------------------------Procedimento de cadastrar pessoa-----------------------------------------
@@ -191,7 +193,7 @@ class pessoa{
      */
     private function insertRuralino(){
         $params = array($this->responsavelID,$this->matricula,$this->curso,NAO);
-        $this->db->insert("pessoa_id,matricula,curso,bolsista","ruralino",$params);
+        return $this->db->insert("pessoa_id,matricula,curso,bolsista","ruralino",$params);
     }
 
     /**
@@ -433,8 +435,14 @@ class pessoa{
         $this->receiveAccessLevel();
         if($this->hasUpdatePermission($pessoaId) == false)return;
         $this->receiveDadosBasicos();
-        $colunms = array("nome","sobrenome","nv_acesso","data_nascimento");
-        $params =array($this->nome,$this->sobrenome,$this->nv,$this->nascimento);
+
+        if($_SESSION['NIVEL'] == ADMINISTRADOR){
+            $colunms = array("nome","sobrenome","nv_acesso","data_nascimento");
+            $params =array($this->nome,$this->sobrenome,$this->nv,$this->nascimento);
+        }else{//se nao for adm não mexemos no nivel de acesso
+            $colunms = array("nome","sobrenome","data_nascimento");
+            $params =array($this->nome,$this->sobrenome,$this->nascimento);
+        }
 
         if($this->db->update($colunms,"pessoa",$params,"id_pessoa = ?",array($pessoaId))){
             new mensagem(SUCESSO,"Cadastro Atualizado");
@@ -501,14 +509,41 @@ class pessoa{
     }
 
     /**
+     * Atualiza a informação de quem foi cadastrado como não ruralino
+     * @param $pessoaId
+     * @throws Exception
+     */
+    public function ruralino($pessoaId){
+        $this->responsavelID = $pessoaId;
+        if($this->db->update(array("ruralino"),"pessoa",array(SIM),"id_pessoa = ?",array($pessoaId))){
+            $this->receiveRuralino();
+            if($this->insertRuralino()){
+                new mensagem(SUCESSO,"Cadastro atualizado, Curso e Matricula inseridos");
+            }else{
+                new mensagem(INSERT_ERRO,"Erro ao inserir Curso e Matricula");
+            }
+        }else{
+            new mensagem(ERRO,"Problema ao atualizar registro do aluno");
+        }
+        $this->redirecionaPagAnterior();
+    }
+
+    /**
      * @param $pessoaId
      * @throws Exception
      */
     public function updateRuralino($pessoaId){
         if($this->hasUpdatePermission($pessoaId)){
             $this->receiveRuralino();
-            $params = array($this->matricula,$this->curso,$this->bolsista);
-            if($this->db->update(array("matricula","curso","bolsista"),"ruralino",$params,"pessoa_id = ?",array($pessoaId))){
+            if($_SESSION['NIVEL'] == ADMINISTRADOR){
+                $columns = array("matricula","curso","bolsista");
+                $params = array($this->matricula,$this->curso,$this->bolsista);
+            }else{//se não for ADM não pode alterar status de bolsista
+                $columns = array("matricula","curso");
+                $params = array($this->matricula,$this->curso);
+            }
+
+            if($this->db->update($columns,"ruralino",$params,"pessoa_id = ?",array($pessoaId))){
                 new mensagem(SUCESSO,"Cadastro atualizado");
             }else{
                 new mensagem(INSERT_ERRO,"Problema ao atualizar");
