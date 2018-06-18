@@ -21,7 +21,6 @@ class main{
     public function __construct(){
 
     }
-
     public function setAction(){
         $this->act = isset($_GET['req']) ? $_GET['req'] : INVALIDO;
         $this->doAction();

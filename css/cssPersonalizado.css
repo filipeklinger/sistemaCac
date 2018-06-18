@@ -1,9 +1,13 @@
 /*Imports*/
-@import "bootstrapExpansion.css";
-@import "printable.css";
-@import "fontWrapper.css";
+/*@import "bootstrapExpansion.css";*/
 
-
+/*Fontes*/
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Open Sans Light'), local('OpenSans-Regular'), url('fonts/OpenSans-Regular.ttf') format('ttf');
+}
 /*Globals*/
 body {
     min-height: 570px; /*tamanho real 640, remove barra de endereços do navegador*/
@@ -12,15 +16,16 @@ body {
     font-family: 'Open Sans', sans-serif;
     transition: .3s ease-in-out;
     background-color: #e5e6e6;
-
 }
-
+.noPrint{
+    display: none;
+}
 hr {
     border-color: #353635;
 }
 
 .input-group-addon {
-    background-color: #eaecec;
+    background-color: #f3f1f3;
     border: 1px solid #5a5a5a;
     color: #000;
     transition: .2s ease-in-out;
@@ -107,8 +112,7 @@ h1, h2, h3, h4, span, p, a {
 input[type=text], input[type=password], input[type=number], input[type=date], input[type=time] {
     background-color: rgba(31, 31, 31, 0.7) !important;
     border: 0 !important;
-    /*border: 1px solid #5a5a5a;*/
-    color: white !important; /*TODO: verificar por que funciona apenas com important */
+    color: white !important;
 }
 
 .container-fluid {
@@ -281,7 +285,6 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 }
 
 #main form > a:hover {
-
     text-decoration: underline;
     color: #56abff;
 }
@@ -308,10 +311,14 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 }
 
 .oficinasContainer {
-    /*border: 2px solid #868686;*/
     margin-bottom: 2%;
     padding: 12px;
     color: black;
+    transition: .2s ease-in-out;
+}
+.oficinasContainer:hover{
+    border-left: 10px solid rgb(255, 88, 105);
+    /*padding-left: 2px;*/
 }
 
 .oficinasContainer h2, .oficinasContainer h4 {
@@ -337,9 +344,9 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 /* Estilo do Loader que esta no codigo do ajax */
 .loader {
     margin: 0 auto;
-    border: 5px solid #f3f3f3;
+    border: 5px solid #f3f1f3;
     border-radius: 50%;
-    border-top: 5px solid #3498db;
+    border-top: 5px solid #3f84cb;
     width: 40px;
     height: 40px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
@@ -357,9 +364,9 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 
 /*Dashboard: Tela inicial pós login*/
 #dashboard {
-    display: flex; /*TODO: mexer no display mode, não responsivo*/
-    background-color: #f3f1f3; /*background-color: rgba(195, 187, 243, 0.88);*/
-    color: #575557;
+    display: flex;
+    background-color: #f3f1f3;
+    /*color: #575557;*/
     min-width: 100%;
 }
 
@@ -368,9 +375,9 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     color: #404040
 }
 
-#dashboard .content {
+.content {
     padding: 20px;
-    min-height: 100vh;
+    min-height: 100%;
     transition: all 0.3s;
     width: 100%;
 }
@@ -403,10 +410,11 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     font-family: 'Open Sans', sans-serif;
     font-weight: normal;
     background-color: #353635;
+    min-height: 100%;
+    /*overflow-y: hidden;*/
 }
 .sidebar ul li {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 0 10px 0;
     font-size: medium;
 }
 .sidebar ul li ul li{
@@ -420,10 +428,6 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     font-size: x-large;
 }
 
-.sidebar ul .collapse a:hover {
-    /*padding-top: 7px;*/
-}
-
 .sidebar ul li a:hover {
     color: rgb(255, 88, 105);
 }
@@ -434,7 +438,9 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 .aluno h1, .aluno h2, .aluno h3, .aluno h4, .aluno span, .aluno p {
     color: #404040;
 }
-
+.closeBtnAtSmallScreen{
+    display: none;
+}
 /*SCREEN SIZE - responsivo*/
 @media screen and (max-height: 640px) {
     #page404, #main {
@@ -447,6 +453,17 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     }
     .logo{
         max-height: 200px;
+    }
+    .sidebar{
+        position: absolute;
+        width: 100%;
+    }
+    .closeBtnAtSmallScreen{
+        position: absolute;
+        display: flex;
+    }
+    #dashboard{
+        display: contents;
     }
 }
 
