@@ -178,6 +178,10 @@ class main{
                 $pess = new pessoa();
                 $pess->deleteDependente($_GET['id']);
                 break;
+            case "updateSenha":
+                $pess = new pessoa();
+                $pess->updateSenha($_GET['id']);
+                break;
             //Oficina---------------------------------------------------------------------------------------------------
             case "insertOficina":
                 $ofic = new oficina();

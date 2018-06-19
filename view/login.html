@@ -28,7 +28,7 @@
 
 <div id="listaOficinas" class="lista" style="margin-top: 0">
     <div class="container-fluid" >
-        <h2 id="titulo-lista" class="text-center">Oficinas Disponíveis</h2>
+        <h2 id="titulo-lista" class="text-center">Oficinas Disponíveis em <span id="anoAtual" style="color: white"></span>.<span id="periodoAtual" style="color: white"></span></h2>
         <br/>
         <div id="t_oficinas"></div>
     </div>
@@ -42,10 +42,16 @@
         <span>&copy;CAC CENTRO DE ARTE E CULTURA | TODOS OS DIREITOS RESERVADOS</span>
     </div>
 </div>
-<script>
-    $(document).on("load", getMsgs());
+<script type="application/javascript">
+    $(document).on("load", loadLogin());
 
-    ajaxLoadGET('control/main.php?req=selectTurmaAtiva', listaMarota, '#t_oficinas');
+    function loadLogin(){
+        getMsgs();
+        ajaxLoadGET('control/main.php?req=selectPeriodoAtual', parsePeriodoText, '#periodoAtual');
+        ajaxLoadGET('control/main.php?req=selectTurmaAtiva', listaMarota, '#t_oficinas');
+    }
+
+
 
     function listaMarota(resposta, corpo) {
         var objJson = JSON.parse(resposta);
@@ -116,7 +122,7 @@
     else {
         periodo = 1;
     }
-    document.getElementById('hoje').innerHTML = now.getUTCFullYear() + '-' + periodo;
+    //document.getElementById('hoje').innerHTML = now.getUTCFullYear() + '-' + periodo;
     //}
 </script>
 </body>

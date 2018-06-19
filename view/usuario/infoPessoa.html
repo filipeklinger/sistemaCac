@@ -87,7 +87,7 @@
     <div id="altSenha" style="margin-top: 16px;margin-bottom: 46px;">
         <h4>Alterar Senha</h4>
         <hr/>
-        <form action="#" method="POST">
+        <form id="upSenha" action="#" method="POST">
             <div class="form-group col-md-8 col-lg-push-2">
                 <label class="control-label" for="senha">Senha</label>
                 <div class="">
@@ -104,7 +104,7 @@
                 <p class="help-block" id="error-senha"></p>
             </div>
             <div class="form-group col-md-8 col-lg-push-2">
-                    <input id="btn-senha" type="button" class="btn btn-primary form-control input-md" value="Alterar" disabled="disabled">
+                    <input id="btn-senha" type="button" onclick="verificaUpdateSenha();" class="btn btn-primary form-control input-md" value="Alterar">
             </div>
 
         </form>
@@ -112,15 +112,14 @@
 </div>
 <script type="text/javascript">
     $('#tbody').on("load", loader());
-
     var identificador;
-    var jsonContato;
-
 
     function loader() {
         identificador = parseInt(getParameterByName('id'));
         getMsgs();
         ajaxLoadGET('control/main.php?req=selectPessoaById&id=' + identificador, jsonParseInfoPessoa, '#toficinas');
+        //setando a rota certa para update de senha
+        $('#upSenha').attr('action','control/main.php?req=updateSenha&id=' + identificador);
     }
 </script>
 

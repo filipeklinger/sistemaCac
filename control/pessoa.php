@@ -72,6 +72,11 @@ class pessoa{
         //somente o ADM pode setar essa informação
     }
 
+    private function receiveLogin(){
+        $this->user = isset($_POST['usuario']) ? $_POST['usuario'] : INVALIDO;
+        $this->senha = isset($_POST['senha']) ? $_POST['senha'] : INVALIDO;
+    }
+
 //---------------------------------------------Procedimento de cadastrar pessoa-----------------------------------------
 
     /**
@@ -114,10 +119,7 @@ class pessoa{
         }
 
         //-------------------LOGIN-----------------------------
-
-        $this->user = isset($_POST['usuario']) ? $_POST['usuario'] : INVALIDO;
-        $this->senha = isset($_POST['senha']) ? $_POST['senha'] : INVALIDO;
-
+        $this->receiveLogin();
         $this->insertLogin();
 
         //-----------------Menor-Idade------------------------------
@@ -556,6 +558,24 @@ class pessoa{
                 new mensagem(SUCESSO,"Cadastro atualizado");
             }else{
                 new mensagem(INSERT_ERRO,"Problema ao atualizar");
+            }
+        }else{
+            new mensagem(ERRO,"Permissão insuficiente");
+        }
+        $this->redirecionaPagAnterior();
+    }
+
+    /**
+     * @param $pessoaId
+     * @throws Exception
+     */
+    public function updateSenha($pessoaId){
+        if($this->hasUpdatePermission($pessoaId)){
+            $this->receiveLogin();
+            if($this->db->update(array("senha"),"login",array($this->make_hash($this->senha)),"pessoa_id = ?",array($pessoaId))){
+                new mensagem(SUCESSO,"Senha Atualizada");
+            }else{
+                new mensagem(INSERT_ERRO,"Erro ao Atualizar");
             }
         }else{
             new mensagem(ERRO,"Permissão insuficiente");

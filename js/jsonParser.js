@@ -255,7 +255,7 @@ function isAtivoX(num, obj) {
 function parsePeriodoText(resposta,corpo) {
     let json = JSON.parse(resposta);
     $('#anoAtual').append(json.ano);
-    corpo.append(json.periodo);
+    $('#periodoAtual').append(json.periodo);
 }
 
 function parsePeriodosSelect(resposta, corpo,funcaoEncadeada) {
@@ -614,11 +614,18 @@ function verificadores(){
 function verificaSenha() {
     let erro = $('#error-senha').empty();
     if($('#senha').val() === $('#repsenha').val()){
-
         senhaOk = true;
     }else{
         erro.append('Senhas não conferem');
         senhaOk = false;
+    }
+}
+
+function verificaUpdateSenha() {
+    if(senhaOk){
+        $('#btn-senha').attr('type','submit');
+    }else{
+        alert('Senhas não conferem');
     }
 }
 
