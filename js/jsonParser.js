@@ -274,10 +274,21 @@ function parsePeriodosSelect(resposta, corpo,funcaoEncadeada) {
 /* ------------------------------------------------USUARIOS-----------------------------------------------------------*/
 function jsonParseInfoPessoa(json, corpo) {
     let objJson = JSON.parse(json);
-    nome = objJson[0].nome
+    nome = objJson[0].nome;
     $('.nome').append(nome);
-    if(objJson[0].excluido == 1) $('#nomeLabel').append(nome+"- Usuário Excluído");
-    else $('#nomeLabel').append(nome);
+    let controleConta = $('#bloqConta');
+
+    if(objJson[0].excluido == 1){
+        $('#nomeLabel').append(nome+"- Usuário Desativado");
+        //adicionando botao de reativar
+        controleConta.append('<a href="control/main.php?req=ativaConta&id='+identificador+'" class="btn btn-primary">Reativar conta</a>');
+
+    }else{
+        //botao de desativar
+        $('#nomeLabel').append(nome);
+        controleConta.append('<a href="control/main.php?req=desativaConta&id='+identificador+'" class="btn btn-danger">Desativar conta</a>');
+    }
+
     $('#sobrenome').append(objJson[0].sobrenome);
     $('#nasc').append(objJson[0].data_nascimento);
     if (objJson[0].menor_idade === "1") {
@@ -654,7 +665,7 @@ function jsonParseUsuarios(resposta, corpo) {
         string +=
             '<tr>\n';
         if(objJson[i].excluido == '1'){
-            string += '     <td class="col-md-4">' + objJson[i].nome + " " + objJson[i].sobrenome + ' - Excluído</td>\n';
+            string += '     <td class="col-md-4">' + objJson[i].nome + " " + objJson[i].sobrenome + ' - Desativado</td>\n';
         }else{
             string += '     <td class="col-md-4">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
         }

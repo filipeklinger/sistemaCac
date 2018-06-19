@@ -189,7 +189,15 @@ class main{
             case "desativaConta":
                 $pess = new pessoa();
                 try {
-                    $pess->desativaConta($_GET['id']);
+                    $pess->gerenciaConta($_GET['id'],SIM);
+                } catch (Exception $e) {
+                    new mensagem(ERRO,"Erro:".$e);
+                }
+                break;
+            case "ativaConta":
+                $pess = new pessoa();
+                try {
+                    $pess->gerenciaConta($_GET['id'],NAO);
                 } catch (Exception $e) {
                     new mensagem(ERRO,"Erro:".$e);
                 }

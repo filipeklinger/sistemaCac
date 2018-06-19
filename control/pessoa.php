@@ -599,16 +599,24 @@ class pessoa{
     }
 
     /**
-     * @param $pessoaId
+     * @param $pessoaId integer
+     * @param $excuir integer
      * @throws Exception
      */
-    public function desativaConta($pessoaId){
+    public function gerenciaConta($pessoaId,$excuir){
         if($this->hasUpdatePermission($pessoaId)){
-            if($this->db->update(array("excluido"),"pessoa",array(SIM),"id_pessoa = ?",array($pessoaId))){
-                new mensagem(SUCESSO,"Conta desativada com sucesso");
+
+            if($this->db->update(array("excluido"),"pessoa",array($excuir),"id_pessoa = ?",array($pessoaId))){
+
+                if($excuir == SIM)
+                    new mensagem(SUCESSO,"Conta desativada com sucesso");
+                else
+                    new mensagem(SUCESSO,"Conta Reativada");
+
             }else{
                 new mensagem(INSERT_ERRO,"Erro ao alterar registros");
             }
+
         }else{
             new mensagem(ERRO,"Permissao Insuficiente");
         }

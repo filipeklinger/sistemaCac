@@ -111,7 +111,7 @@
         </form>
     </div>
     <div id="bloqConta" style="margin-top: 16px;margin-bottom: 46px;">
-        <a href="#" id="desativarUsuario" onclick="desativaUsuario();" class="btn btn-danger">Desativar conta</a>
+
     </div>
 </div>
 <script type="text/javascript">
@@ -126,10 +126,6 @@
         $('#upSenha').attr('action','control/main.php?req=updateSenha&id=' + identificador);
     }
 
-    function desativaUsuario() {
-        let id = parseInt(getParameterByName('id'));
-        $('#desativarUsuario').attr('href','control/main.php?req=desativaConta&id=' + id);
-    }
 </script>
 
 </body>
