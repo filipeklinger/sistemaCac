@@ -209,26 +209,23 @@ function jsonParteHorariosDisponiveis(resposta, corpo) {
     for (let i in objJson) {
         corpo.append(
             '<tr>\n' +
-            '                    <th>' + objJson[i].inicio + ' ás ' + objJson[i].fim + '</th>\n' +
-            '\n' +
-            '                    <td>' + isAtivoX(objJson[i].segunda, objJson[i]) + '</td>\n' +
-            '                    <td>' + isAtivoX(objJson[i].terca, objJson[i]) + '</td>\n' +
-            '                    <td>' + isAtivoX(objJson[i].quarta, objJson[i]) + '</td>\n' +
-            '                    <td>' + isAtivoX(objJson[i].quinta, objJson[i]) + '</td>\n' +
-            '                    <td>' + isAtivoX(objJson[i].sexta, objJson[i]) + '</td>\n' +
+            '                    <th class="col-sm-2 col-md-2">' + objJson[i].inicio + ' ás ' + objJson[i].fim + '</th>\n' +
+            '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].segunda, objJson[i]) + '</td>\n' +
+            '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].terca, objJson[i]) + '</td>\n' +
+            '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].quarta, objJson[i]) + '</td>\n' +
+            '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].quinta, objJson[i]) + '</td>\n' +
+            '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].sexta, objJson[i]) + '</td>\n' +
             '                </tr>');
     }
     if (objJson.length < 1) {
         corpo.append(
             '<tr>\n' +
-            '                    <th>--:-- - --:--</th>\n' +
-            '\n' +
-            '                    <td>Nenhuma turma</td>\n' +
-            '                    <td>cadastrada</td>\n' +
-            '                    <td>nesta</td>\n' +
-            '                    <td>sala</td>\n' +
-            '                    <td>--</td>\n' +
-            '                    <td>---</td>\n' +
+            '                    <th class="col-sm-2 col-md-2">--:-- - --:--</th>\n' +
+            '                    <td class="col-sm-2 col-md-2">Nenhuma turma</td>\n' +
+            '                    <td class="col-sm-2 col-md-2">cadastrada</td>\n' +
+            '                    <td class="col-sm-2 col-md-2">nesta</td>\n' +
+            '                    <td class="col-sm-2 col-md-2">sala</td>\n' +
+            '                    <td class="col-sm-2 col-md-2">&nbsp;=)</td>\n' +
             '                </tr>');
     }
 }
