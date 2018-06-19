@@ -186,6 +186,14 @@ class main{
                     new mensagem(ERRO,"Erro:".$e);
                 }
                 break;
+            case "desativaConta":
+                $pess = new pessoa();
+                try {
+                    $pess->desativaConta($_GET['id']);
+                } catch (Exception $e) {
+                    new mensagem(ERRO,"Erro:".$e);
+                }
+                break;
             //Oficina---------------------------------------------------------------------------------------------------
             case "insertOficina":
                 $ofic = new oficina();

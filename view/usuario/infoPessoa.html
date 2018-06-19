@@ -84,10 +84,11 @@
         <div id="dep"></div>
 
     </div>
-    <div id="altSenha" style="margin-top: 16px;margin-bottom: 46px;">
+    <div id="altSenha" style="margin-top: 16px;">
         <h4>Alterar Senha</h4>
         <hr/>
         <form id="upSenha" action="#" method="POST">
+            <div class="row">
             <div class="form-group col-md-8 col-lg-push-2">
                 <label class="control-label" for="senha">Senha</label>
                 <div class="">
@@ -106,8 +107,11 @@
             <div class="form-group col-md-8 col-lg-push-2">
                     <input id="btn-senha" type="button" onclick="verificaUpdateSenha();" class="btn btn-primary form-control input-md" value="Alterar">
             </div>
-
+            </div>
         </form>
+    </div>
+    <div id="bloqConta" style="margin-top: 16px;margin-bottom: 46px;">
+        <a href="#" id="desativarUsuario" onclick="desativaUsuario();" class="btn btn-danger">Desativar conta</a>
     </div>
 </div>
 <script type="text/javascript">
@@ -120,6 +124,11 @@
         ajaxLoadGET('control/main.php?req=selectPessoaById&id=' + identificador, jsonParseInfoPessoa, '#toficinas');
         //setando a rota certa para update de senha
         $('#upSenha').attr('action','control/main.php?req=updateSenha&id=' + identificador);
+    }
+
+    function desativaUsuario() {
+        let id = parseInt(getParameterByName('id'));
+        $('#desativarUsuario').attr('href','control/main.php?req=desativaConta&id=' + id);
     }
 </script>
 

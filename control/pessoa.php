@@ -597,6 +597,23 @@ class pessoa{
             new mensagem(INSERT_ERRO,"Problema ao remover dependente");
         }
     }
+
+    /**
+     * @param $pessoaId
+     * @throws Exception
+     */
+    public function desativaConta($pessoaId){
+        if($this->hasUpdatePermission($pessoaId)){
+            if($this->db->update(array("excluido"),"pessoa",array(SIM),"id_pessoa = ?",array($pessoaId))){
+                new mensagem(SUCESSO,"Conta desativada com sucesso");
+            }else{
+                new mensagem(INSERT_ERRO,"Erro ao alterar registros");
+            }
+        }else{
+            new mensagem(ERRO,"Permissao Insuficiente");
+        }
+        $this->redireciona();
+    }
     //---------------------------------------------REDIRECT-------------------------------------------------------------
     private function redireciona(){header("Location: ../index.php?pag=Login");}
 
