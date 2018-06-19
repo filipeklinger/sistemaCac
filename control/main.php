@@ -303,7 +303,7 @@ class main{
                 $relatorio = new relatorio();
                 echo $relatorio->getAlunosHistorico();
                 break;
-            //USUARIO
+            //USUARIO---------------------------------------------------------------------------------------------------
             case "selecUsuarioLogado":
                 login::getUser();
                 break;

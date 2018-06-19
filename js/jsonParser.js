@@ -83,12 +83,6 @@ function isAtivo(num) {
     else return "não";
 }
 
-function trancado(num) {
-    if(num === '1') return "Sim";
-    else return "Não";
-}
-
-
 function jsonParseNomePredios(resposta,corpo) {
     var objJson = JSON.parse(resposta);
     corpo.append('<option value="" disabled selected>Selecione o prédio ao qual a sala pertence</option>');
@@ -271,7 +265,67 @@ function parsePeriodosSelect(resposta, corpo,funcaoEncadeada) {
     setTimeout(funcaoEncadeada,5);
 }
 
-/* ------------------------------------------------USUARIOS-----------------------------------------------------------*/
+//-------------------------ALUNOS---------------------------------------------------------------------------------------
+function parseTurmasAtivas(resposta, corpo) {
+    var objJson = JSON.parse(resposta);
+    for (i in objJson) {
+        corpo.append(
+            '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
+        );
+    }
+    obterAlunos();
+}
+
+function obterAlunos() {
+    let turma = $('#turma').val();
+    $('#gerarPresenca').attr('href','control/main.php?req=listaPresenca&id='+turma);
+    ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id=' + turma, parseAlunos, '#alunos');
+}
+
+function parseAlunos(resposta, corpo) {
+    let objJson = JSON.parse(resposta);
+    let listaAlunos = '';
+    let listaEspera = '';
+    let listaTrancados = '';
+    for (let i in objJson) {
+
+        if (objJson[i].trancado === '0' && objJson[i].lista_espera === '0') {
+            listaAlunos +=
+                '<tr>\n' +
+                '     <td> </td>\n'+
+                '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
+                '     <td><a href="javascript:func()" onclick="confirmacaoTrancarMatricula(' + objJson[i].id_aluno + ')" class="btn btn-primary">Trancar Matricula</a></td>\n' +
+                '</tr>';
+        } else if (objJson[i].trancado === '1') {
+            listaTrancados +=
+                '<tr>\n' +
+                '     <td> </td>\n'+
+                '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
+                '     <td>Matricula Trancada</a></td>\n' +
+                '</tr>';
+        } else {
+            listaEspera +=
+                '<tr>\n' +
+                '     <td> </td>\n'+
+                '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
+                '     <td>Lista de Espera</td>\n' +
+                '</tr>';
+        }
+    }
+    let listaVazia =
+        '<tr>\n' +
+        '                    <td></td>\n' +
+        '                    <td>NÃO EXISTEM ALUNOS NESTA CATEGORIA</td>\n' +
+        '                    <td> </td>\n' +
+        '                </tr>';
+    if(listaAlunos.length < 2) listaAlunos = listaVazia;
+    if(listaEspera.length < 2) listaEspera = listaVazia;
+    if(listaTrancados.length < 2) listaTrancados = listaVazia;
+    corpo.append(listaAlunos);
+    $('#listaEspera').empty().append(listaEspera);
+    $('#matTrancada').empty().append(listaTrancados);
+}
+//------------------------------------------------USUARIOS--------------------------------------------------------------
 function jsonParseInfoPessoa(json, corpo) {
     let objJson = JSON.parse(json);
     nome = objJson[0].nome;
@@ -458,7 +512,7 @@ function loadDepententes() {
         }
     }
 }
-//----------------------------EDITA USUARIO--------------------------------
+//------------------------------------------------EDITA USUARIO---------------------------------------------------------
 function addBtnEdicaoPessoa() {
     $('#dadosBasicos').append('&nbsp; <button id="btNome" onclick="editUsuarioNome()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
     $('#contato').append('&nbsp; <button id="btnCont" onclick="editUsuarioContato()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
@@ -608,7 +662,7 @@ function adicionaDependete() {
     $('#formDependentes').attr('action','control/main.php?req=addDependente&id=' + identificador);
     addMenor();
 }
-/*-----------------------------VERIFICAÇÃO DE FORMULARIO DE ENTRADA---------------------------------------------------*/
+//------------------------------VERIFICAÇÃO DE FORMULARIO DE ENTRADA----------------------------------------------------
 //verirficadores
 var userDisponivel = false;
 var senhaOk = false;
@@ -657,7 +711,7 @@ function verificaUsuarioDuplicado() {
     }
 }
 
-/*------------------------------GERENCIAMENTO DE USUARIOS ----------------------------------------------------------- */
+//-------------------------------GERENCIAMENTO DE USUARIOS -------------------------------------------------------------
 function jsonParseUsuarios(resposta, corpo) {
     var objJson = JSON.parse(resposta);
     let string = '';
