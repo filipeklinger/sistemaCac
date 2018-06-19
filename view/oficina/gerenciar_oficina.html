@@ -55,6 +55,7 @@
     function jsonParseOficinas(json, corpo) {
         var objJson = JSON.parse(json);
         for (var i in objJson) {
+            if(objJson[i].pre_requisito.length < 2) objJson[i].pre_requisito = 'Nenhum';
             corpo.append(
                 '<tr>' +
                 '<td class=\'col-md-5\'> ' + objJson[i].nome + '</td>' +
