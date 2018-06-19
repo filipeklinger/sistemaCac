@@ -180,7 +180,11 @@ class main{
                 break;
             case "updateSenha":
                 $pess = new pessoa();
-                $pess->updateSenha($_GET['id']);
+                try {
+                    $pess->updateSenha($_GET['id']);
+                } catch (Exception $e) {
+                    new mensagem(ERRO,"Erro:".$e);
+                }
                 break;
             //Oficina---------------------------------------------------------------------------------------------------
             case "insertOficina":
