@@ -93,6 +93,7 @@
     function parseCandidatos(resposta, corpo) {
         var objJson = JSON.parse(resposta);
         for (i in objJson) {
+            if(objJson[i].excluido == 1) continue;//removendo usuarios desativados
             corpo.append(
                 '<option value=' + objJson[i].id_pessoa + ' >' + objJson[i].nome + " " + objJson[i].sobrenome + '</option>'
             );
