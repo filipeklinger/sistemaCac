@@ -334,7 +334,7 @@ COLLATE = utf8mb4_unicode_ci;
 INSERT INTO `pessoa` (`nome`, `sobrenome`, `nv_acesso`, `menor_idade`,`ruralino`,`data_nascimento`) VALUES
   ('Master', 'adm', 1, 0, 0,CURRENT_DATE);
 INSERT INTO `login` (`pessoa_id`, `usuario`, `senha`) VALUES
-  (1,'master','$2y$10$symYmm2UiLcdcHcTExnixu4QSR8e/v1jDB8ailHm2BfhFH1dDHrlC');
+  (1,'master','$2y$10$UOFY7mMe9X9qpxSCQSdMm.kCSs7lx.32HzWn6TWtdFMwkpCeE3wDG');
 
 -- ----------------------------------
 --  Inserindo o Tempo do sistema padrao
