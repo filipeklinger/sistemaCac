@@ -29,7 +29,8 @@
 
 
             <h3 class="text-center">Alunos por Oficina</h3>
-            <p>Total: <span id="totalAlunosAtivos"></span> Alunos.</p>
+            <p>Total matriculado em oficinas: <span id="totalAlunosAtivos"></span> Alunos.</p>
+            <p>Total em lista de espera: <span id="totalAlunosEspera"></span> Alunos.</p>
             <div class="row">
                 <table width="80%" align="center" class="table">
                     <thead>
@@ -79,6 +80,7 @@
         function jsonParseAlunosPorOficinas(resposta, corpo) {
             let objJson = JSON.parse(resposta);
             let soma = 0;
+            let espera = 0;
             for (let i in objJson) {
                 corpo.append(
                     '<tr>\n' +
@@ -87,8 +89,10 @@
                     '     <td class="col-md-2">' + objJson[i].espera + '</td>\n' +
                     '</tr>');
                 soma += parseInt(objJson[i].alunos);
+                espera += parseInt(objJson[i].espera);
             }
             $('#totalAlunosAtivos').empty().append(soma);
+            $('#totalAlunosEspera').empty().append(espera);
         }
     }
     function parseAlunosHistorico(resposta,corpo) {
