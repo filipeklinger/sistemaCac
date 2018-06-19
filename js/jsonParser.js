@@ -597,8 +597,49 @@ function adicionaDependete() {
     $('#formDependentes').attr('action','control/main.php?req=addDependente&id=' + identificador);
     addMenor();
 }
+/*-----------------------------VERIFICAÇÃO DE FORMULARIO DE ENTRADA---------------------------------------------------*/
+//verirficadores
+var userDisponivel = false;
+var senhaOk = false;
 
-/*---------GERENCIAMENTO DE USUARIOS ------------------------- */
+function verificadores(){
+    let btn = $('#btn-senha');
+    if(userDisponivel && senhaOk){
+        btn.attr('type','submit');
+    }else{
+        alert("Dados Para Acesso a Conta precisam ser corrigidos");
+    }
+}
+
+function verificaSenha() {
+    let erro = $('#error-senha').empty();
+    if($('#senha').val() === $('#repsenha').val()){
+
+        senhaOk = true;
+    }else{
+        erro.append('Senhas não conferem');
+        senhaOk = false;
+    }
+}
+
+function verificaUsuarioDuplicado() {
+    let usuario = $('#usuario').val();
+    ajaxLoadGET('control/main.php?req=verificaUser&nome='+usuario,parseUserDuplicado,'#error-user');
+
+    function parseUserDuplicado(resposta) {
+        let json = JSON.parse(resposta);
+        let msg = $('#error-user').empty();
+        if(json[0].usuario != 0){
+            msg.append('Usuário indisponivel');
+            userDisponivel = false;
+        }else{
+            msg.append('Usuário OK');
+            userDisponivel = true;
+        }
+    }
+}
+
+/*------------------------------GERENCIAMENTO DE USUARIOS ----------------------------------------------------------- */
 function jsonParseUsuarios(resposta, corpo) {
     var objJson = JSON.parse(resposta);
     let string = '';

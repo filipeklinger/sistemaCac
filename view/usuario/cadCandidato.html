@@ -251,9 +251,10 @@
             <div class="form-group col-md-8 col-lg-push-2">
                 <label class="control-label" for="usuario">Usuário</label>
                 <div class="">
-                    <input id="usuario" name="usuario" type="text" placeholder="nome do usuario"
-                           class="form-control input-md" required="" >
+                    <input id="usuario" onkeyup="verificaUsuarioDuplicado();" name="usuario" type="text" placeholder="nome do usuario"
+                           class="form-control input-md" required="">
                 </div>
+                <div class="help-block" id="error-user"></div>
             </div>
 
             <div class="form-group col-md-8 col-lg-push-2">
@@ -263,11 +264,19 @@
                            required="">
                 </div>
             </div>
+            <div class="form-group col-md-8 col-lg-push-2">
+                <label class="control-label" for="repsenha">Repita a Senha</label>
+                <div class="">
+                    <input id="repsenha" name="senha" onkeyup="verificaSenha();" type="password" placeholder="senha" class="form-control input-md"
+                           required="">
+                </div>
+                <p class="help-block" id="error-senha"></p>
+            </div>
         </div>
 
         <!-- Submit -->
         <div class="container-fluid">
-            <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Cadastrar"/>
+            <input id="btn-senha" onclick="verificadores();" type="button" class="btn btn-primary btn-block" value="Cadastrar"/>
         </div>
         <br>
         <br>

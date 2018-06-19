@@ -82,6 +82,14 @@ class main{
                 }
                 break;
                 //Pessoa------------------------------------------------------------------------------------------------
+            case "verificaUser":
+                $pess = new pessoa();
+                try {
+                    echo $pess->verificaUsuarioDuplicado($_GET['nome']);
+                } catch (Exception $e) {
+                    echo "Erro: ".$e;
+                }
+                break;
             case "insertPessoa":
                 $pess = new pessoa();
                 try {

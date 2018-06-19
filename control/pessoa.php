@@ -75,6 +75,15 @@ class pessoa{
 //---------------------------------------------Procedimento de cadastrar pessoa-----------------------------------------
 
     /**
+     * Busca se existe um nome de usuario parecido com os ja cadastrado
+     * @param $nomeDeUsuario
+     * @return string
+     * @throws Exception
+     */
+    public function verificaUsuarioDuplicado($nomeDeUsuario){
+        return $this->db->select("count(*) as usuario","login","usuario like ?",array('%'.$nomeDeUsuario.'%'));
+    }
+    /**
      * um usuário pode cadastrar varios dependentes (menores de idade)
      * @throws Exception
      */
