@@ -330,6 +330,7 @@ COLLATE = utf8mb4_unicode_ci;
 
 -- ----------------------------------
 --  Inserindo o administrador padrao
+-- nova senha padrao: pL<0@TX86T](7KN'H
 -- ----------------------------------
 INSERT INTO `pessoa` (`nome`, `sobrenome`, `nv_acesso`, `menor_idade`,`ruralino`,`data_nascimento`) VALUES
   ('Master', 'adm', 1, 0, 0,CURRENT_DATE);
