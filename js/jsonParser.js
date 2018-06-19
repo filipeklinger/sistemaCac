@@ -196,6 +196,7 @@ function jsonParseSalasTurma(resposta) {
     for (var i in objJson) {
         cp.append('<option value="' + objJson[i].id_sala + '">' + objJson[i].nome + '</option>');
     }
+    disponibilidade();
 }
 
 function disponibilidade() {
