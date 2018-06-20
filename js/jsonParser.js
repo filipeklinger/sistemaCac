@@ -316,7 +316,7 @@ function parseAlunos(resposta, corpo) {
         listaEspera +=
             '<tr>\n' +
             '     <td></td>\n'+
-            '     <td>' + objEspera[j].nome + " " + objJson[j].sobrenome + '</td>\n'+
+            '     <td>' + objEspera[j].nome + " " + objEspera[j].sobrenome + '</td>\n'+
             '     <td>'+(parseInt(j)+1)+'</td>\n' +
             '</tr>';
     }
