@@ -101,6 +101,13 @@ class turma{
      */
     public function setTurma(){
         $this->getCommonData();
+        $disponibilidade = json_decode($this->getHorariosBySalaId($this->sala));
+        for($i=0;$i<sizeof($disponibilidade);$i++){
+            if($disponibilidade[$i]->segunda and $disponibilidade[$i]->inicio){
+                echo "conflito";
+                break;
+            }
+        }
         //inserindo turma
         $this->insertTurma();
         $this->turmaId = $this->db->getLastId();

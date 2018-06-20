@@ -1,6 +1,6 @@
 //Recuperando as informações
 
-var notSupported = ['samsungBrowser','MSIE','Trident'];
+var notSupported = ['SamsungBrowser','MSIE','Trident'];
 
 $(document).ready(function () {
     var b = navigator.userAgent;

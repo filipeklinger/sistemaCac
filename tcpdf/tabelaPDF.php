@@ -105,11 +105,12 @@ class PDF{
             }
             $html .="</table>";
             // output the HTML content
-                    $pdf->writeHTML($html, true, false, false, false, '');
+            $pdf->writeHTML($html, true, false, false, false, '');
             // ---------------------------------------------------------
             //echo $html;//iprimindo teste
+
             // close and output PDF document colocar D para Download I para inline
-                    $pdf->Output($pdfTitle.'.pdf', 'D');
+            $pdf->Output($pdfTitle.'.pdf', 'D');
         }
 
 

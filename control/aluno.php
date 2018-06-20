@@ -161,23 +161,21 @@ class aluno{
     public function getListaPresenca($turmaId){
         if($turmaId != null and $turmaId != INVALIDO){
             $alunos = json_decode($this->getAlunos($turmaId));
-            $Objpresenca = null;
+            $Objpresenca = array();
             $posAluno = 0;
             for($i=0;$i< sizeof($alunos);$i++){
-                if($alunos[$i]->lista_espera == 1 or $alunos[$i]->trancado == 1){
-                    unset($alunos[$i]);
-                }else{
-                    $posAluno++;
-                    $alunos[$i]->pos = $posAluno;
-                    $alunos[$i]->nome = $alunos[$i]->nome." ".$alunos[$i]->sobrenome;
-                }
-            }
-            $alunos = array_values($alunos);//aqui reorganizamos o array apos remover itens desnecessários
+                //se cair nessa condicao pulamos para prox iteracao
+                if(($alunos[$i]->lista_espera == 1) || ($alunos[$i]->trancado == 1)){continue;}
 
+                $Objpresenca[$posAluno] = new stdClass();
+                $Objpresenca[$posAluno]->pos = $posAluno+1;
+                $Objpresenca[$posAluno]->nome = $alunos[$i]->nome." ".$alunos[$i]->sobrenome;
+                $posAluno++;
+            }
             //aqui recuperamos os dados do professor, nome da oficina e nome da turma
             $oficinaAtual = json_decode($this->db->select("oficina.nome as oficina,nome_turma as turma,pessoa.nome as professor,pessoa.sobrenome","oficina,turma,pessoa","oficina_id = id_oficina and id_turma = ? and pessoa.id_pessoa = turma.professor",array($turmaId)));
             $oficinaAtual[0]->professor = $oficinaAtual[0]->professor." ".$oficinaAtual[0]->sobrenome;
-            new pdf($alunos,$oficinaAtual[0]);
+            new pdf($Objpresenca,$oficinaAtual[0]);
         }else{
             $this->redirecionaPagAnterior();
         }
