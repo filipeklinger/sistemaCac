@@ -206,7 +206,6 @@
             if(json[0].quarta === "1") $('#qua').click();
             if(json[0].quinta === "1") $('#qui').click();
             if(json[0].sexta === "1") $('#sex').click();
-
             //oficina
             $('#nomeHeader').append(json[0].oficina);
             //Setando os selects na posicao correta dos dados
@@ -217,6 +216,8 @@
             $('#selectProf option[value='+professorAtual+']').attr('selected','selected');
 
             $('#selectOficina option[value='+oficinaAtual+']').attr('selected','selected');
+            SalaFromPredioId();
+            disponibilidade();
         }
     }
 

@@ -104,7 +104,7 @@ class turma{
         $disponibilidade = json_decode($this->getHorariosBySalaId($this->sala));
         for($i=0;$i<sizeof($disponibilidade);$i++){
             if($disponibilidade[$i]->segunda and $disponibilidade[$i]->inicio){
-                echo "conflito";
+                //echo "conflito";
                 break;
             }
         }
