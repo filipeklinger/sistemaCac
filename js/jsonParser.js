@@ -284,6 +284,7 @@ function parseAlunos(resposta, corpo) {
     let objJson = JSON.parse(resposta);
     let listaAlunos = '';
     let listaEspera = '';
+    let objEspera = [];
     let listaTrancados = '';
     for (let i in objJson) {
 
@@ -302,14 +303,24 @@ function parseAlunos(resposta, corpo) {
                 '     <td>Matricula Trancada</a></td>\n' +
                 '</tr>';
         } else {
-            listaEspera +=
-                '<tr>\n' +
-                '     <td> </td>\n'+
-                '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
-                '     <td>Lista de Espera</td>\n' +
-                '</tr>';
+            objEspera.push(objJson[i]);
         }
     }
+
+    //Ordenando por chegada
+    objEspera.sort(function (a,b) {
+        return a.id_aluno-b.id_aluno;
+    });
+    // agora inserindo os alunos da espera
+    for(let j in objEspera){
+        listaEspera +=
+            '<tr>\n' +
+            '     <td></td>\n'+
+            '     <td>' + objEspera[j].nome + " " + objJson[j].sobrenome + '</td>\n'+
+            '     <td>'+(parseInt(j)+1)+'</td>\n' +
+            '</tr>';
+    }
+
     let listaVazia =
         '<tr>\n' +
         '                    <td></td>\n' +
