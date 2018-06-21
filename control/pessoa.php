@@ -596,6 +596,7 @@ class pessoa{
         }else{
             new mensagem(INSERT_ERRO,"Problema ao remover dependente");
         }
+        $this->redirecionaPagAnterior();
     }
 
     /**
