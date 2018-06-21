@@ -236,11 +236,14 @@ class turma{
      * Aqui recuperamos as turmas alocadas em Determinada Sala
      * @param $identificador
      * @return string
+     * @throws Exception
      */
     public function getHorariosBySalaId($identificador){
+        //buscando periodo atual
+        $tempo = self::getTempoStatic($this->db);
         $projection = "oficina.nome as oficina,segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim";
         try {
-            return $this->db->select($projection, "horario_turma_sala,turma,oficina", "sala_id = ? and turma_id = id_turma and oficina_id=id_oficina and  turma.is_ativo = 1", array($identificador),"inicio");
+            return $this->db->select($projection, "horario_turma_sala,turma,oficina", "sala_id = ? and turma_id = id_turma and oficina_id=id_oficina and  turma.is_ativo = 1 and turma.tempo_id = ?", array($identificador,$tempo->id_tempo),"inicio");
         } catch (Exception $e) {
             new mensagem(ERRO,"Erro: ".$e);
             return "";
