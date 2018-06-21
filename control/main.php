@@ -23,9 +23,17 @@ class main{
     }
     public function setAction(){
         $this->act = isset($_GET['req']) ? $_GET['req'] : INVALIDO;
-        $this->doAction();
+        try {
+            $this->doAction();
+        } catch (Exception $e) {
+            new mensagem(ERRO,"Erro: ".$e);
+            $this->redireciona();
+        }
     }
 
+    /**
+     * @throws Exception
+     */
     private function doAction(){
         switch ($this->act){
             case "login":
@@ -55,11 +63,7 @@ class main{
                 break;
             case "selectPredioById":
                 $infra = new infraestrutura();
-                try {
-                    echo $infra->getPredioById($_GET['id']);
-                } catch (Exception $e) {
-                    new mensagem(ERRO,$e);
-                }
+                echo $infra->getPredioById($_GET['id']);
                 break;
             case "selectSala":
                 $infra = new infraestrutura();
@@ -67,36 +71,20 @@ class main{
                 break;
             case "selectSalaByPredioId":
                 $infra = new infraestrutura();
-                try {
-                    echo $infra->getSalaByPredioId($_GET['id']);
-                } catch (Exception $e) {
-                    new mensagem(ERRO,$e);
-                }
+                echo $infra->getSalaByPredioId($_GET['id']);
                 break;
             case "selectSalaById":
                 $infra = new infraestrutura();
-                try {
-                    echo $infra->getSalaById($_GET['id']);
-                } catch (Exception $e) {
-                    new mensagem(ERRO,$e);
-                }
+                echo $infra->getSalaById($_GET['id']);
                 break;
                 //Pessoa------------------------------------------------------------------------------------------------
             case "verificaUser":
                 $pess = new pessoa();
-                try {
-                    echo $pess->verificaUsuarioDuplicado($_GET['nome']);
-                } catch (Exception $e) {
-                    echo "Erro: ".$e;
-                }
+                echo $pess->verificaUsuarioDuplicado($_GET['nome']);
                 break;
             case "insertPessoa":
                 $pess = new pessoa();
-                try {
-                    $pess->setPessoa();
-                } catch (Exception $e) {
-                    new mensagem(ERRO,"Erro: ".$e);
-                }
+                $pess->setPessoa();
                 break;
             case "selectAdministrador":
                 $pess = new pessoa();
@@ -148,19 +136,11 @@ class main{
                 break;
             case "insertRuralino":
                 $pess = new pessoa();
-                try {
-                    $pess->ruralino($_GET['id']);
-                } catch (Exception $e) {
-                    new mensagem(ERRO,$e);
-                }
+                $pess->ruralino($_GET['id']);
                 break;
             case "updateRuralino":
                 $pess = new pessoa();
-                try {
-                    $pess->updateRuralino($_GET['id']);
-                } catch (Exception $e) {
-                    new mensagem(ERRO,$e);
-                }
+                $pess->updateRuralino($_GET['id']);
                 break;
             case "updateDoc":
                 $pess = new pessoa();
@@ -180,27 +160,15 @@ class main{
                 break;
             case "updateSenha":
                 $pess = new pessoa();
-                try {
-                    $pess->updateSenha($_GET['id']);
-                } catch (Exception $e) {
-                    new mensagem(ERRO,"Erro:".$e);
-                }
+                $pess->updateSenha($_GET['id']);
                 break;
             case "desativaConta":
                 $pess = new pessoa();
-                try {
-                    $pess->gerenciaConta($_GET['id'],SIM);
-                } catch (Exception $e) {
-                    new mensagem(ERRO,"Erro:".$e);
-                }
+                $pess->gerenciaConta($_GET['id'],SIM);
                 break;
             case "ativaConta":
                 $pess = new pessoa();
-                try {
-                    $pess->gerenciaConta($_GET['id'],NAO);
-                } catch (Exception $e) {
-                    new mensagem(ERRO,"Erro:".$e);
-                }
+                $pess->gerenciaConta($_GET['id'],NAO);
                 break;
             //Oficina---------------------------------------------------------------------------------------------------
             case "insertOficina":
@@ -260,35 +228,19 @@ class main{
                 //Aluno-------------------------------------------------------------------------------------------------
             case "insertAluno":
                 $aluno = new aluno();
-                try {
-                    $aluno->setAluno();
-                } catch (Exception $e) {
-                    new mensagem(ERRO,$e);
-                }
+                $aluno->setAluno();
                 break;
             case "selectAlunosByTurmaId":
                 $aluno = new aluno();
-                try {
-                    echo $aluno->getAlunos($_GET['id']);
-                } catch (Exception $e) {
-                    new mensagem(ERRO,$e);
-                }
+                echo $aluno->getAlunos($_GET['id']);
                 break;
             case "selectAlunosListaEspera":
                 $aluno = new aluno();
-                try {
-                    echo $aluno->getAlunoListaEspera($_GET['id']);
-                } catch (Exception $e) {
-                    new mensagem(ERRO,$e);
-                }
+                echo $aluno->getAlunoListaEspera($_GET['id']);
                 break;
             case "trancarMatricula":
                 $aluno = new aluno();
-                try {
-                    $aluno->trancarMatricula($_GET['id']);
-                } catch (Exception $e) {
-                    echo($e);
-                }
+                $aluno->trancarMatricula($_GET['id']);
                 break;
             case "listaPresenca":
                 $aluno = new aluno();
@@ -311,9 +263,13 @@ class main{
                 login::logout();
                 break;
             default:
-                    header("Location: ../index.php?pag=Login");
+                    $this->redireciona();
                 break;
         }
+    }
+
+    private function redireciona(){
+        header("Location: ../index.php?pag=Login");
     }
 
 }
