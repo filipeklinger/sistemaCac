@@ -10,7 +10,8 @@ include_once 'constantes.php';
 include_once '../tcpdf/tabelaPDF.php';
 class aluno{
     private $db;
-    private $sucessInsercao,$failInsercao,$idTurma;
+    private $sucessInsercao,$failInsercao,$listaEsperaInsercao,$idTurma;
+    private $numSucess,$numEspera,$numFail,$numErro;
 
     public function __construct(){
         $this->db = new Database();
@@ -20,13 +21,28 @@ class aluno{
      * @throws Exception
      */
     public function setAluno(){
+        //inicializando contadores
+        $this->numSucess=$this->numEspera=$this->numFail=$this->numErro=0;
         //recuperando a turma
         $this->idTurma = isset($_POST['turma']) ? $_POST['turma'] : INVALIDO;
         $this->sucessInsercao = "Status dos Candidatos: <br/>";
         foreach ($_POST['aluno_id'] as $id){
             $this->parseCandidato($id);
         }
-        new mensagem(SUCESSO,$this->sucessInsercao.$this->failInsercao);
+        //montando mensagem
+        $msg = "";
+        if($this->numSucess == 1) $msg.=$this->numSucess." aluno inserido com sucesso na turma<br/>"; elseif($this->numSucess >1) $msg.=$this->numSucess." alunos inseridos com sucesso na turma<br/>";
+        if($this->numEspera == 1) $msg.=$this->numEspera." aluno inserido na lista de espera<br/>"; elseif($this->numEspera > 1) $msg.=$this->numEspera." alunos inseridos na lista de espera<br/>";
+        if($this->numFail == 1) $msg.=$this->numFail." aluno já está na turma ou participa de 2 oficinas<br/>"; elseif($this->numFail > 1) $msg.=$this->numFail." alunos já estão na turma ou participam de 2 oficinas<br/>";
+        if($this->numErro == 1) $msg.=$this->numErro." aluno não pôde ser inserido, log de erro gerado<br/>";if($this->numErro > 1) $msg.=$this->numErro." alunos não puderam ser inseridos, log de erro gerado<br/>";
+
+        //verificando se temos mais erros ou sucesso
+        if(($this->numFail+$this->numErro) < $this->numSucess){
+            new mensagem(SUCESSO,$msg);
+        }else{
+            new mensagem(ERRO,$msg);
+        }
+
         $this->redireciona();
     }
 
@@ -38,7 +54,7 @@ class aluno{
         //verificando se o aluno já esta cadastrado em 2 oficinas do periodo atual
          $estaParticipando = $this->getParticipacaoPeriodoAtual($idPessoa);
        //buscando nome
-        $nome = $this->getNome($idPessoa);
+        //$nome = $this->getNome($idPessoa);
 
         if($estaParticipando < 2){
             //buscando se o aluno já esta cadasrado nessa turma
@@ -53,23 +69,31 @@ class aluno{
                 if(($turma->ocupadas) < ($turma->vagas)){
                     //pessoa dentro do numero de vagas
                     $params = array($this->idTurma,$idPessoa,NAO);
+                    $this->sucessInsercao = 0;
                 }else{
                     //pessoas na lista de espera
                     $params = array($this->idTurma,$idPessoa,SIM);
                     //$posicao = json_decode($this->db->select("count(*) as n","aluno_turma","id_turma = ? and lista_espera = ?",array($idTurma,SIM)));
-                    $mens = "na lista de espera";
+                    //$mens = "na lista de espera";
+                    $this->sucessInsercao = 1;
                 }
                 //tentando inserir o aluno na turma
                 if($this->db->insert("turma_id,pessoa_id,lista_espera","aluno_turma",$params)){
-                    $this->sucessInsercao.= "{$nome} inserido com sucesso {$mens}<br/>";
+                    //inserido com sucesso
+                    if($this->sucessInsercao == 0) $this->numSucess++;
+                    else $this->numEspera++;
+
                 }else{
-                    $this->failInsercao.= "Não foi possivel inserir {$nome}<br/>";
+                    //$this->failInsercao.= "Não foi possivel inserir {$nome}<br/>";
+                    $this->numErro++;
                 }
             }else{
-                $this->failInsercao.="{$nome} Já está nessa turma<br/>";
+                //$this->failInsercao.="{$nome} Já está nessa turma<br/>";
+                $this->numFail++;
             }
         }else{
-            $this->failInsercao.="{$nome} já esta participando de {$estaParticipando} Oficinas<br/>";
+            //$this->failInsercao.="{$nome} já esta participando de {$estaParticipando} Oficinas<br/>";
+            $this->numFail++;
         }
     }
 
