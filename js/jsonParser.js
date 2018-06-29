@@ -334,6 +334,12 @@ function parseAlunos(resposta, corpo) {
     $('#listaEspera').empty().append(listaEspera);
     $('#matTrancada').empty().append(listaTrancados);
 }
+
+function calculaIdade(nascimento){
+    nascimento = new Date(nascimento);
+    let hoje = new Date();
+    return Math.floor(Math.ceil(Math.abs(nascimento.getTime() - hoje.getTime()) / (1000 * 3600 * 24)) / 365.25);
+}
 //------------------------------------------------USUARIOS--------------------------------------------------------------
 function jsonParseInfoPessoa(json, corpo) {
     let objJson = JSON.parse(json);

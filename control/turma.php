@@ -259,6 +259,8 @@ class turma{
     public function getTurmaById($turmaId){
         $columns =
             "turma.num_vagas,turma.nome_turma,turma.professor,turma.is_ativo,turma.oficina_id,"./* turma */
+            //selecionando vagas disponiveis
+            "(SELECT count(*) as n from aluno_turma where aluno_turma.turma_id = id_turma and lista_espera = 0 and trancado = 0) as ocupadas,".
             "ano,segunda,terca,quarta,quinta,sexta,inicio,fim,"./* horario_turma_sala */
             "horario_turma_sala.sala_id,"./* sala */
             "sala.predio_id,"./* Predio */

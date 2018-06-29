@@ -36,6 +36,7 @@
                 <div class="col-md-12">
                     <p><b>Dia: <span id="diaTurma"></span> <span id="horarioTurma"></span></b></p>
                     <p><b>pré requisito: <span id="preReq"></span> </b></p>
+                    <p><b>Selecionados: <span class="selecionados">0</span> / Vagas: <span class="vagas">X</span></b></p>
                 </div>
 
                 <div class="col-md-11">
@@ -47,7 +48,7 @@
                     <table class="table">
                         <thead  style="align-content: center;">
                         <tr>
-                            <th class=''>NOME</th>
+                            <th class=''>Nome</th>
                             <th class=''>Idade</th>
                             <th class=''>Inserir?</th>
                         </tr>
@@ -57,6 +58,13 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <p><b>Selecionados: <span class="selecionados">0</span> / Vagas: <span class="vagas">X</span></b></p>
+            <p class="warning">
+                Caso o numero de selecionados supere o numero de vagas os alunos serão cadastrados em ordem alfabética.
+                Para cadastrar em outra ordem cadastre um a um.
+            </p>
+        </div>
         <!-- Submit -->
         <div class="container-fluid">
             <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Cadastrar"/>
@@ -64,6 +72,7 @@
         <br>
         <br>
     </form>
+
 </div>
 <script type="text/javascript">
     $(document).ready(loader());//devemos carregar somente apos a pagina ser exibida
@@ -80,9 +89,11 @@
 
         function parseTurmaInfo(resposta) {
             let json = JSON.parse(resposta);
+            if(json[0].requisito.length < 2) json[0].requisito = 'Nenhum';
             $('#diaTurma').append(getDiaSemana(json[0]));
             $('#horarioTurma').empty().append(json[0].inicio.slice(0,5) +'h ás '+json[0].fim.slice(0,5)+'h');
             $('#preReq').empty().append(json[0].requisito);
+            $('.vagas').empty().append(parseInt(json[0].num_vagas) - parseInt(json[0].ocupadas));
         }
         //apos trocar de turma devemos desmarcar os alunos da turma anterior
         Desmarcar();
@@ -94,10 +105,7 @@
             corpo.append(
                 '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
             );
-            $('#legenda').append('->' + objJson[i].oficina + " - " + objJson[i].turma +
-                ' Inicio: ' + objJson[i].inicio +
-                ' Local:  ' + objJson[i].predio + ',  ' + objJson[i].sala +
-                '<br/>');
+
         }
         funcaoEncadeada();
     }
@@ -112,8 +120,8 @@
                 corpo.append(
                     '<tr>' +
                     '<td class=\'col-md-5\'> ' + objJson[i].nome + ' '+ objJson[i].sobrenome+ '</td>' +
-                    '<td class=\'col-md-5\'> ' + objJson[i].data_nascimento + '</td>' +
-                    '<td class=\'col-md-1\'> <input type="checkbox" name="aluno_id[]" value="'+ objJson[i].id_pessoa + '"> </td>' +
+                    '<td class=\'col-md-5\'> ' + calculaIdade(objJson[i].data_nascimento) + '</td>' +
+                    '<td class=\'col-md-1\'> <input type="checkbox" name="aluno_id[]" onclick="contagem();" value="'+ objJson[i].id_pessoa + '"> </td>' +
                     '</tr>');
             }
         }
@@ -121,6 +129,14 @@
     //função que desmarca todos
     function Desmarcar(){
         $("input[name='aluno_id[]']").each(function(){
-            $(this).removeAttr("checked");})}
+            $(this).removeAttr("checked");})
+        contagem();
+    }
+
+    function contagem() {
+        let checkbox = $('input:checkbox[name^=aluno_id]:checked');
+        $('.selecionados').empty().append(checkbox.length);
+    }
+
 </script>
 </body>
