@@ -19,7 +19,7 @@ class aluno{
      * @throws Exception
      */
     public function setAluno(){
-        //recebendo dados do user
+        /*/recebendo dados do user
         $idPessoa = isset($_POST['candidato']) ? $_POST['candidato'] : INVALIDO;
         $idTurma = isset($_POST['turma']) ? $_POST['turma'] : INVALIDO;
 
@@ -59,6 +59,10 @@ class aluno{
             new mensagem(ERRO,"Aluno já esta participando de ".$estaParticipando." Oficinas");
         }
         $this->redireciona();
+        */
+        echo '<pre>';
+        print_r($_POST);
+        echo '</pre>';
     }
 
     /**

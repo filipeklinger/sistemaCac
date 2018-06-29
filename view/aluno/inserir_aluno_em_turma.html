@@ -38,12 +38,22 @@
                     <p><b>pré requisito: <span id="preReq"></span> </b></p>
                 </div>
 
-                <div class="col-md-12">
-                    <label for="candidato">Candidato</label>
-                    <select class="selectCool" id="candidato" name="candidato"
-                            title="Escolha uma Pessoa" required="required">
-                        <option value=1 selected="selected">Escolha Uma Pessoa</option>
-                    </select>
+                <div class="col-md-11">
+                    <label for="searchNames">Busque Candidatos</label>
+                    <input type="text" id="searchNames" onkeyup="getCandidatosByName();" name="searchName" placeholder="Nome de um aluno">
+                    <br/>
+                    <input type="button" class="btn btn-primary" onclick="Desmarcar();" value="Desmarcar todos"/>
+                    <br/>
+                    <table class="table">
+                        <thead  style="align-content: center;">
+                        <tr>
+                            <th class=''>NOME</th>
+                            <th class=''>Idade</th>
+                            <th class=''>Inserir?</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tcandidatos"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -56,11 +66,11 @@
     </form>
 </div>
 <script type="text/javascript">
-    $(document).on("load", loader());
+    $(document).ready(loader());//devemos carregar somente apos a pagina ser exibida
 
     function loader() {
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasComVagas, '#turma',obterInfoTurma);
-        ajaxLoadGET('control/main.php?req=selectCandidato', parseCandidatos, '#candidato');
+        getCandidatosByName();
         getMsgs();
     }
 
@@ -74,6 +84,8 @@
             $('#horarioTurma').empty().append(json[0].inicio.slice(0,5) +'h ás '+json[0].fim.slice(0,5)+'h');
             $('#preReq').empty().append(json[0].requisito);
         }
+        //apos trocar de turma devemos desmarcar os alunos da turma anterior
+        Desmarcar();
     }
 
     function parseTurmasComVagas(resposta, corpo,funcaoEncadeada) {
@@ -90,14 +102,25 @@
         funcaoEncadeada();
     }
 
-    function parseCandidatos(resposta, corpo) {
-        var objJson = JSON.parse(resposta);
-        for (i in objJson) {
-            if(objJson[i].excluido == 1) continue;//removendo usuarios desativados
-            corpo.append(
-                '<option value=' + objJson[i].id_pessoa + ' >' + objJson[i].nome + " " + objJson[i].sobrenome + '</option>'
-            );
+    function getCandidatosByName() {
+        let nome = $('#searchNames').val();
+        ajaxLoadGET('control/main.php?req=selectCandidato&nome='+nome, parseCandidatos, '#tcandidatos');
+        function parseCandidatos(resposta, corpo) {
+            let objJson = JSON.parse(resposta);
+            for (i in objJson) {
+                if(objJson[i].excluido == 1) continue;//removendo usuarios desativados
+                corpo.append(
+                    '<tr>' +
+                    '<td class=\'col-md-5\'> ' + objJson[i].nome + ' '+ objJson[i].sobrenome+ '</td>' +
+                    '<td class=\'col-md-5\'> ' + objJson[i].data_nascimento + '</td>' +
+                    '<td class=\'col-md-1\'> <input type="checkbox" name="aluno_id[]" value="'+ objJson[i].id_pessoa + '"> </td>' +
+                    '</tr>');
+            }
         }
     }
+    //função que desmarca todos
+    function Desmarcar(){
+        $("input[name='aluno_id[]']").each(function(){
+            $(this).removeAttr("checked");})}
 </script>
 </body>
