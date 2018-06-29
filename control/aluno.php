@@ -10,6 +10,7 @@ include_once 'constantes.php';
 include_once '../tcpdf/tabelaPDF.php';
 class aluno{
     private $db;
+    private $sucessInsercao,$failInsercao,$idTurma;
 
     public function __construct(){
         $this->db = new Database();
@@ -19,50 +20,57 @@ class aluno{
      * @throws Exception
      */
     public function setAluno(){
-        /*/recebendo dados do user
-        $idPessoa = isset($_POST['candidato']) ? $_POST['candidato'] : INVALIDO;
-        $idTurma = isset($_POST['turma']) ? $_POST['turma'] : INVALIDO;
+        //recuperando a turma
+        $this->idTurma = isset($_POST['turma']) ? $_POST['turma'] : INVALIDO;
+        $this->sucessInsercao = "Status dos Candidatos: <br/>";
+        foreach ($_POST['aluno_id'] as $id){
+            $this->parseCandidato($id);
+        }
+        new mensagem(SUCESSO,$this->sucessInsercao.$this->failInsercao);
+        $this->redireciona();
+    }
 
+    /**
+     * @param $idPessoa
+     * @throws Exception
+     */
+    private function parseCandidato($idPessoa){
         //verificando se o aluno já esta cadastrado em 2 oficinas do periodo atual
          $estaParticipando = $this->getParticipacaoPeriodoAtual($idPessoa);
+       //buscando nome
+        $nome = $this->getNome($idPessoa);
 
         if($estaParticipando < 2){
             //buscando se o aluno já esta cadasrado nessa turma
-            $jaNaTurma = json_decode($this->db->select("count(*) as n","aluno_turma","turma_id = ? and pessoa_id = ?",array($idTurma,$idPessoa)));
+            $jaNaTurma = json_decode($this->db->select("count(*) as n","aluno_turma","turma_id = ? and pessoa_id = ?",array($this->idTurma,$idPessoa)));
             $jaNaTurma = $jaNaTurma[0]->n;
             if($jaNaTurma == null or $jaNaTurma == NAO){
                 //obtendo num de vagas cadastradas na turma
-                $turma = json_decode($this->getVagasDisponiveis($idTurma));
+                $turma = json_decode($this->getVagasDisponiveis($this->idTurma));
                 $turma = $turma[0];
                 //inserindo aluno em turma
                 $mens = "";
                 if(($turma->ocupadas) < ($turma->vagas)){
                     //pessoa dentro do numero de vagas
-                    $params = array($idTurma,$idPessoa,NAO);
+                    $params = array($this->idTurma,$idPessoa,NAO);
                 }else{
                     //pessoas na lista de espera
-                    $params = array($idTurma,$idPessoa,SIM);
+                    $params = array($this->idTurma,$idPessoa,SIM);
                     //$posicao = json_decode($this->db->select("count(*) as n","aluno_turma","id_turma = ? and lista_espera = ?",array($idTurma,SIM)));
                     $mens = "na lista de espera";
                 }
-
                 //tentando inserir o aluno na turma
                 if($this->db->insert("turma_id,pessoa_id,lista_espera","aluno_turma",$params)){
-                    new mensagem(SUCESSO,"Aluno inserido com sucesso ".$mens);
+                    $this->sucessInsercao.= "{$nome} inserido com sucesso {$mens}<br/>";
                 }else{
-                    new mensagem(INSERT_ERRO,"Não foi possivel inserir o aluno");
+                    $this->failInsercao.= "Não foi possivel inserir {$nome}<br/>";
                 }
             }else{
-                new mensagem(ERRO,"Aluno Já está nessa turma");
+                $this->failInsercao.="{$nome} Já está nessa turma<br/>";
             }
         }else{
-            new mensagem(ERRO,"Aluno já esta participando de ".$estaParticipando." Oficinas");
+            $this->failInsercao.="{$nome} já esta participando de {$estaParticipando} Oficinas<br/>";
         }
-        $this->redireciona();
-        */
-        echo '<pre>';
-        print_r($_POST);
-        echo '</pre>';
     }
 
     /**
@@ -77,6 +85,19 @@ class aluno{
         $estaParticipando = json_decode($this->db->select("count(*) as n","aluno_turma,turma",$whereCLause,array($tempoAtual->id_tempo,$idPessoa)));
         $estaParticipando = $estaParticipando[0]->n;
         return $estaParticipando;
+    }
+
+    /**
+     * recupera o nome e sobrenome de uma pessoa pelo id passado
+     * @param $idPessoa
+     * @return string com o nome e sobrenome
+     * @throws Exception
+     */
+    private function getNome($idPessoa){
+        //recuperando nome do aluno
+        $nomeCandidato = json_decode($this->db->select("nome,sobrenome","pessoa","id_pessoa = ?",array($idPessoa)));
+        $nomeCandidato = $nomeCandidato[0]->nome.' '.$nomeCandidato[0]->sobrenome;
+        return $nomeCandidato;
     }
 
     /**

@@ -313,7 +313,7 @@ class pessoa{
         $nome = isset($_GET['nome']) ? '%'.$_GET['nome'].'%' : '%%';
         //Obtemos todos os Candidatos com left Join em Maior idade
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso >= ? and nome like ?",array(3,$nome));
+        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso >= ? and nome like ?",array(3,$nome),"nome",ASC);
         //transformamos o JSON em objeto php
         $objCand = json_decode($cand);
         //verificmos se esse administrador esuda na rural e adicionamos as informacoes necessarias
