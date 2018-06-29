@@ -9,7 +9,8 @@
                 <ul class="nav navbar-nav">
                     <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página
                         Inicial</a></li>
-                    <li class="active"><a data-toggle="tab" onclick="carregaUsuarios('selectCandidato')" href="#">Gerenciar
+                    <li class="active"><a data-toggle="tab" onclick="carregaUsuarios('selectTodos')" href="#">Todos</a></li>
+                    <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectCandidato')" href="#">Gerenciar
                         Candidato</a></li>
                     <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectProfessor')" href="#">Gerenciar
                         Professores</a></li>
@@ -27,6 +28,12 @@
 
             <a href="?pag=Cad.Pessoa" type="button" class="btn btn-primary"><i
                     class="glyphicon glyphicon-plus"></i> Novo Usuário</a>
+
+            <!--TODO Melhorar aparencia da caixa de pesquisa -->
+            <p style="padding-top: 16px;">
+                Busca: <input type="text" id="searchName" onkeyup="carregaUsuarios('selectTodos')" placeholder="Digite um nome">
+                <button class="btn btn-primary" onclick="limpaPesquisa();"><span class="glyphicon glyphicon-remove"></span></button>
+            </p>
 
             <table class="table">
                 <thead>
@@ -46,10 +53,15 @@
 </div>
 <script type="text/javascript">
     /*TODO: MELHORAR CAPTURA DE AÇÃO DA NAVEGAÇÃO*/
-    $(document).on("load", carregaUsuarios("selectCandidato"));
+    $(document).ready(carregaUsuarios("selectTodos"));
 
     function carregaUsuarios(requisicao) {
-        ajaxLoadGET('control/main.php?req=' + requisicao, jsonParseUsuarios,'#usuarios');
+        let nome = $('#searchName').val();
+        ajaxLoadGET('control/main.php?req=' + requisicao +'&nome='+nome, jsonParseUsuarios,'#usuarios');
+    }
+    function limpaPesquisa() {
+        $('#searchName').val('');
+        carregaUsuarios('selectTodos');
     }
 </script>
 </body>

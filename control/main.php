@@ -98,6 +98,10 @@ class main{
                 $pess = new pessoa();
                 echo $pess->getCandidatos();
                 break;
+            case "selectTodos":
+                $pess = new pessoa();
+                echo $pess->getTodos();
+                break;
             case "selectPessoaById":
                 $pess = new pessoa();
                 echo $pess->getPessoaById($_GET['id']);

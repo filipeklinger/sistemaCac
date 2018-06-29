@@ -338,6 +338,39 @@ class pessoa{
         $cand = json_encode($objCand,JSON_UNESCAPED_UNICODE);
         return $cand;
     }
+    /**
+     * @return string JSON
+     * @throws Exception
+     */
+    public function getTodos(){
+        $nome = isset($_GET['nome']) ? '%'.$_GET['nome'].'%' : '%%';
+        //Obtemos todos os Candidatos com left Join em Maior idade
+        $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
+        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nome like ?",array($nome),"nome",ASC);
+        //transformamos o JSON em objeto php
+        $objCand = json_decode($cand);
+        //verificmos se esse administrador esuda na rural e adicionamos as informacoes necessarias
+        for($i=0;$i< sizeof($objCand);$i++){
+            //aqui verificamos se o candidato e da rural
+            if($objCand[$i]->ruralino == 1){
+                $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objCand[$i]->id_pessoa)));
+                $objCand[$i]->curso = $ruralino[0]->curso;
+                $objCand[$i]->bolsista = $ruralino[0]->bolsista;
+
+            }
+            //aqui verificamos se o candidato e menor de idade e buscamos seu responsavel
+            if($objCand[$i]->menor_idade == 1){
+                $respsavel = json_decode($this->db->select("nome,responsavel_parentesco","menor_idade,pessoa","responsavel_id = id_pessoa and pessoa_id = ?",array($objCand[$i]->id_pessoa)));
+                if($respsavel != null and sizeof($respsavel)>0){
+                    $objCand[$i]->responsavel = $respsavel[0]->nome;
+                    $objCand[$i]->parentesco = $respsavel[0]->responsavel_parentesco;
+                }
+
+            }
+        }
+        $cand = json_encode($objCand,JSON_UNESCAPED_UNICODE);
+        return $cand;
+    }
 
     /**
      * @param $identificador
