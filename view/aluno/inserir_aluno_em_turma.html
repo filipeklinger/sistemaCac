@@ -112,7 +112,7 @@
 
     function getCandidatosByName() {
         let nome = $('#searchNames').val();
-        ajaxLoadGET('control/main.php?req=selectCandidato&nome='+nome, parseCandidatos, '#tcandidatos');
+        ajaxLoadGET('control/main.php?req=selectTodos&nome='+nome, parseCandidatos, '#tcandidatos');
         function parseCandidatos(resposta, corpo) {
             let objJson = JSON.parse(resposta);
             for (i in objJson) {
