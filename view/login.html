@@ -14,43 +14,56 @@
                     <br>
                     <input type="password" class="form-control" name="senha" placeholder="Senha" autocomplete="off">
                     <br>
-                    <button type="submit" href="#" class="btn btn-sec"> Entrar </button>
+                    <button type="submit" href="#" class="btn btn-sec"> Entrar</button>
                     <a href="index.php?pag=Cad.Candidato">Não Tenho Conta</a>
                 </form>
             </div>
         </div>
         <div class="row text-center">
             <br/>
-            <a href="#listaOficinas" class="coolButton"> Oficinas Disponíveis </a>
+            <a href="#listaOficinas" class="coolButton2"> Oficinas Disponíveis </a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="#MainFooter" class="coolButton2"> Contato </a>
         </div>
     </div>
 </div>
 
 <div id="listaOficinas" class="lista" style="margin-top: 0">
-    <div class="container-fluid" >
-        <h2 id="titulo-lista" class="text-center">Oficinas Disponíveis em <span id="anoAtual" style="color: white"></span>.<span id="periodoAtual" style="color: white"></span></h2>
+    <div class="container-fluid">
+        <h2 id="titulo-lista" class="text-center">Oficinas Disponíveis em <span id="anoAtual"
+                                                                                style="color: white"></span>.<span
+                id="periodoAtual" style="color: white"></span></h2>
         <br/>
         <div id="t_oficinas"></div>
     </div>
 </div>
-<div id="MainFooter" class="text-center">
-    <div class="row">
-        <small>Projetado por <a href="http://filipeklinger.16mb.com/">Filipe Klinger</a>, Luciano Viana, e Vinícius
-            Martins
-        </small>
-        <br/>
-        <span>&copy;CAC CENTRO DE ARTE E CULTURA | TODOS OS DIREITOS RESERVADOS</span>
+<div id="MainFooter" class="text-left">
+    <br>
+    <div class="container">
+        <div class="col-md-6">
+            <span> Telefone: +55 (21) 2682-2447</span><br>
+            <span> Endereço: BR 465, km 7, 2007 (Antiga Estrada Rio São-Paulo) - Seropédica/RJ</span><br><br>
+            <span>&copy;CAC CENTRO DE ARTE E CULTURA | TODOS OS DIREITOS RESERVADOS</span>
+        </div>
+        <div class="col-md-6 text-right">
+
+            <div class="" id="contato">
+                <a href="https://www.facebook.com/cac.rural"><span class="fa fa-facebook-official"></span></a>
+            </div>
+            <small>Projetado por <a href="http://filipeklinger.16mb.com/">Filipe Klinger</a>, Luciano Viana, e Vinícius
+                Martins
+            </small>
+        </div>
     </div>
 </div>
 <script type="application/javascript">
     $(document).on("load", loadLogin());
 
-    function loadLogin(){
+    function loadLogin() {
         getMsgs();
         ajaxLoadGET('control/main.php?req=selectPeriodoAtual', parsePeriodoText, '#periodoAtual');
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', listaMarota, '#t_oficinas');
     }
-
 
 
     function listaMarota(resposta, corpo) {

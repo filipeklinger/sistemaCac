@@ -13,7 +13,7 @@ body {
     min-height: 570px; /*tamanho real 640, remove barra de endereços do navegador*/
     min-width: 360px;
     height: 100vh;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
     transition: .3s ease-in-out;
     background-color: #e5e6e6;
 }
@@ -98,7 +98,11 @@ hr {
 
 #page404, #main {
     height: 100%;
-    background: #009092 url("../img/bg-main.jpg") no-repeat;
+    /*background: #009092 url("../img/bg-main.jpg") no-repeat;*/
+    background: #0f0f0f url("../img/pat6.svg") no-repeat;
+    background-size: cover;
+    /*background-color: black;*/
+    /*background-color: black;*/
 }
 
 #page404 .container, #main .container {
@@ -207,7 +211,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 .table td {
     padding: 15px;
     color: #353635;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
     font-weight: 500;
 }
 
@@ -227,7 +231,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     padding: 15px;
     color: rgb(239, 245, 236);
     background-color: #353635;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
     font-weight: 700;
     border-bottom: none;
 }
@@ -252,10 +256,24 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 #contTab {
     padding: 20px;
 }
-
+#contato{
+    font-size: 12pt;
+    /*padding: 50px;*/
+    color: white;
+    background-color: rgb(53, 54, 53);
+}
+#contato a span {
+    color: #67c6ff;
+    transition: .1s ease-in-out;
+    font-size: 50pt;
+    padding-left: 7px;
+}
+#contato a span:hover {
+    color: #216cce;
+}
 /*Login: página principal*/
 .logo {
-    background: url("../img/Logo-web.svg") no-repeat center;
+    background: url("../img/Logo-web2.svg") no-repeat center;
     height: 55%;
 }
 
@@ -264,6 +282,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 }
 
 #main .container {
+    /*padding-top: 11%;*/
     padding-top: 11%;
 }
 
@@ -334,7 +353,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 }
 
 #MainFooter a {
-    color: #3f84cb;
+    color: #4f97c3;
 }
 
 #MainFooter a:hover {
@@ -384,7 +403,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 
 #usr {
     color: #575557;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
     font-weight: bold;
     padding-left: 15px;
 }
@@ -407,7 +426,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 .sidebar {
     /*border-right: 1px solid #747474;*/
     color: #d6d4d6;
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
     font-weight: normal;
     background-color: #353635;
     min-height: 100%;
@@ -452,11 +471,13 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
         display: none;
     }
     .logo{
+        /*max-height: 200px;*/
         max-height: 200px;
     }
     .sidebar{
         position: absolute;
         width: 100%;
+        display: none;
     }
     .closeBtnAtSmallScreen{
         position: absolute;
@@ -470,5 +491,8 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 @media screen and (max-width: 1199px) {
     #main div a.coolButton {
         display: none;
+    }
+    .logo{
+        max-height: 30%;
     }
 }
