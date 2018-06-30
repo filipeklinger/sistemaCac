@@ -59,7 +59,7 @@ class oficina{
     public function getOficina(){
         $json = "";
         try {
-            $json = $this->db->select("*", "oficina");
+            $json = $this->db->select("*", "oficina",null,null,"nome",ASC);
         } catch (Exception $e) {
             new mensagem(ERRO,"Erro: ".$e);
         }

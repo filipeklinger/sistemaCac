@@ -211,7 +211,7 @@ class turma{
         }
         $tempo = self::getTempoStatic($this->db);
         $whereArgs = array(SIM,$tempo->id_tempo);//Ativo = Sim,tempo atual
-        return $this->db->select($projection,$table.$joinClause , $whereClause,$whereArgs,"oficina.nome",ASC);
+        return $this->db->select($projection,$table.$joinClause , $whereClause,$whereArgs,"oficina.nome ASC,nome_turma",ASC);
     }
 
     /**
@@ -229,7 +229,7 @@ class turma{
         }else{
             $whereClause = "turma.oficina_id = oficina.id_oficina and turma.professor = pessoa.id_pessoa and turma.id_turma = horario_turma_sala.turma_id AND horario_turma_sala.sala_id = sala.id_sala AND turma.tempo_id = ? and turma.professor = ".$_SESSION['ID'];
         }
-        return $this->db->select($projection,$table, $whereClause,array($tempoId));
+        return $this->db->select($projection,$table, $whereClause,array($tempoId),"oficina.nome",ASC);
     }
 
     /**
