@@ -211,7 +211,7 @@ class turma{
         }
         $tempo = self::getTempoStatic($this->db);
         $whereArgs = array(SIM,$tempo->id_tempo);//Ativo = Sim,tempo atual
-        return $this->db->select($projection,$table.$joinClause , $whereClause,$whereArgs);
+        return $this->db->select($projection,$table.$joinClause , $whereClause,$whereArgs,"oficina.nome",ASC);
     }
 
     /**
