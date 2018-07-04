@@ -46,11 +46,12 @@
                     <input type="button" class="btn btn-primary" onclick="Desmarcar();" value="Desmarcar todos"/>
                     <br/>
                     <table class="table">
-                        <thead  style="align-content: center;">
+                        <thead>
                         <tr>
-                            <th class=''>Nome</th>
-                            <th class=''>Idade</th>
-                            <th class=''>Inserir?</th>
+                            <th class='' >Nome</th>
+                            <th class='' style="text-align: center">Função</th>
+                            <th class='' style="text-align: center">Idade</th>
+                            <th class='' style="text-align: center">Inserir?</th>
                         </tr>
                         </thead>
                         <tbody id="tcandidatos"></tbody>
@@ -75,68 +76,11 @@
 
 </div>
 <script type="text/javascript">
-    $(document).ready(loader());//devemos carregar somente apos a pagina ser exibida
-
+    $(document).ready(loader());
     function loader() {
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasComVagas, '#turma',obterInfoTurma);
         getCandidatosByName();
         getMsgs();
     }
-
-    function obterInfoTurma() {
-        let idTurma = $('#turma').val();
-        ajaxLoadGET('control/main.php?req=selectTurmaById&id='+idTurma, parseTurmaInfo, '#diaTurma');
-
-        function parseTurmaInfo(resposta) {
-            let json = JSON.parse(resposta);
-            if(json[0].requisito.length < 2) json[0].requisito = 'Nenhum';
-            $('#diaTurma').append(getDiaSemana(json[0]));
-            $('#horarioTurma').empty().append(json[0].inicio.slice(0,5) +'h ás '+json[0].fim.slice(0,5)+'h');
-            $('#preReq').empty().append(json[0].requisito);
-            $('.vagas').empty().append(parseInt(json[0].num_vagas) - parseInt(json[0].ocupadas));
-        }
-        //apos trocar de turma devemos desmarcar os alunos da turma anterior
-        Desmarcar();
-    }
-
-    function parseTurmasComVagas(resposta, corpo,funcaoEncadeada) {
-        var objJson = JSON.parse(resposta);
-        for (i in objJson) {
-            corpo.append(
-                '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
-            );
-
-        }
-        funcaoEncadeada();
-    }
-
-    function getCandidatosByName() {
-        let nome = $('#searchNames').val();
-        ajaxLoadGET('control/main.php?req=selectTodos&nome='+nome, parseCandidatos, '#tcandidatos');
-        function parseCandidatos(resposta, corpo) {
-            let objJson = JSON.parse(resposta);
-            for (i in objJson) {
-                if(objJson[i].excluido == 1) continue;//removendo usuarios desativados
-                corpo.append(
-                    '<tr>' +
-                    '<td class=\'col-md-5\'> ' + objJson[i].nome + ' '+ objJson[i].sobrenome+ '</td>' +
-                    '<td class=\'col-md-5\'> ' + calculaIdade(objJson[i].data_nascimento) + '</td>' +
-                    '<td class=\'col-md-1\'> <input type="checkbox" name="aluno_id[]" onclick="contagem();" value="'+ objJson[i].id_pessoa + '"> </td>' +
-                    '</tr>');
-            }
-        }
-    }
-    //função que desmarca todos
-    function Desmarcar(){
-        $("input[name='aluno_id[]']").each(function(){
-            $(this).removeAttr("checked");})
-        contagem();
-    }
-
-    function contagem() {
-        let checkbox = $('input:checkbox[name^=aluno_id]:checked');
-        $('.selecionados').empty().append(checkbox.length);
-    }
-
 </script>
 </body>
