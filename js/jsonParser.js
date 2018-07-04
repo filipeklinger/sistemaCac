@@ -292,14 +292,14 @@ function parseAlunos(resposta, corpo) {
             listaAlunos +=
                 '<tr>\n' +
                 '     <td> </td>\n'+
-                '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
+                '     <td style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
                 '     <td><a href="javascript:func()" onclick="confirmacaoTrancarMatricula(' + objJson[i].id_aluno + ')" class="btn btn-primary">Trancar Matricula</a></td>\n' +
                 '</tr>';
         } else if (objJson[i].trancado === '1') {
             listaTrancados +=
                 '<tr>\n' +
                 '     <td> </td>\n'+
-                '     <td>' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
+                '     <td style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
                 '     <td>Matricula Trancada</a></td>\n' +
                 '</tr>';
         } else {
@@ -316,7 +316,7 @@ function parseAlunos(resposta, corpo) {
         listaEspera +=
             '<tr>\n' +
             '     <td></td>\n'+
-            '     <td>' + objEspera[j].nome + " " + objEspera[j].sobrenome + '</td>\n'+
+            '     <td style="text-transform: capitalize;">' + objEspera[j].nome + " " + objEspera[j].sobrenome + '</td>\n'+
             '     <td>'+(parseInt(j)+1)+'</td>\n' +
             '</tr>';
     }

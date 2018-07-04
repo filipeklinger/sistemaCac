@@ -88,7 +88,7 @@ class PDF{
                 else $html .= "<tr align=\"center\" nobr=\"true\">";
                 $html .="
 					<td >".$this->impressao[$i]->pos."</td>
-					<td colspan=\"4\">".$this->impressao[$i]->nome."</td>
+					<td colspan=\"4\">".ucwords($this->impressao[$i]->nome)."</td>
 					<td >&nbsp;</td>
 					<td >&nbsp;</td>
 					<td >&nbsp;</td> 

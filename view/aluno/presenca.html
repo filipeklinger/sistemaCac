@@ -69,22 +69,6 @@
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasAtivas, '#turma');
         getMsgs();
     }
-
-    function parseTurmasAtivas(resposta, corpo) {
-        var objJson = JSON.parse(resposta);
-        for (i in objJson) {
-            corpo.append(
-                '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
-            );
-        }
-        obterAlunos();
-    }
-
-    function obterAlunos() {
-        let turma = $('#turma').val();
-        $('#gerarPresenca').attr('href','control/main.php?req=listaPresenca&id='+turma);
-        ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id=' + turma, parseAlunos, '#alunos');
-    }
     function confirmacaoTrancarMatricula(id) {
         alert("Somente Administradores podem Realizar essa função");
     }
