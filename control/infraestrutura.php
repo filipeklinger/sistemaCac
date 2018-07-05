@@ -10,21 +10,27 @@ include_once 'constantes.php';
 include_once 'mensagem.php';
 
 class infraestrutura{
-    private $db;
+    private $db,$nome,$localizacao,$ativo,$predioId;
 
     public function __construct(){
         $this->db = new Database();
     }
 
-    public function setPredio(){
+    private function getPredioData(){
         $nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
+        $this->nome = strtoupper($nome);//Deixando maiscula
         $localizacao = isset($_POST['localizacao']) ? $_POST['localizacao'] : INVALIDO;
-        $params = array($nome,$localizacao);
+        $this->localizacao = ucwords($localizacao);
+        $this->ativo = isset($_POST['ativo']) ? $_POST['ativo'] : SIM;
+    }
 
-        if($nome != INVALIDO){
+    public function setPredio(){
+        $this->getPredioData();
+        $params = array($this->nome,$this->localizacao);
+        if($this->nome != INVALIDO){
             try {
                 if($this->db->insert("nome,localizacao", "predio", $params)){
-                    new mensagem(SUCESSO,"Predio: ".$nome." cadastrado com sucesso!!");
+                    new mensagem(SUCESSO,"Predio: ".$this->nome." cadastrado com sucesso!!");
                 }else{
                     new mensagem(INSERT_ERRO,"Erro ao inserir");
                 }
@@ -38,17 +44,14 @@ class infraestrutura{
     }
 
     public function updatePredio($identificador){
-        $nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
-        $localizacao = isset($_POST['localizacao']) ? $_POST['localizacao'] : INVALIDO;
-        $ativo = isset($_POST['ativo']) ? $_POST['ativo'] : NAO;
-        $params = array($nome,$localizacao,$ativo);
+        $this->getPredioData();
+        $params = array($this->nome,$this->localizacao,$this->ativo);
 
-        if($nome != INVALIDO){
+        if($this->nome != INVALIDO){
             try {
                 $columns = array("nome","localizacao","is_ativo");
-
                 if($this->db->update($columns,"predio",$params,"id_predio=?",array($identificador))){
-                    new mensagem(SUCESSO," Predio: ".$nome." atualizado com sucesso!!");
+                    new mensagem(SUCESSO," Predio: ".$this->nome." atualizado com sucesso!!");
                 }else{
                     new mensagem(INSERT_ERRO,"Erro ao atualizar");
                 }
@@ -61,16 +64,20 @@ class infraestrutura{
         $this->redireciona();
     }
 
-    public function setSala(){
-        $predioId = isset($_POST['predio_id']) ? $_POST['predio_id'] : INVALIDO;;
+    private function getSalaData(){
+        $this->predioId = isset($_POST['predio_id']) ? $_POST['predio_id'] : INVALIDO;;
         $nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
-        $is_ativo = 1;
+        $this->nome = ucwords($nome);
+        $this->ativo = isset($_POST['ativo']) ? $_POST['ativo'] : SIM;
+    }
 
-        $params = array($predioId,$nome,$is_ativo);
-        if($nome != INVALIDO){
+    public function setSala(){
+        $this->getSalaData();
+        $params = array($this->predioId,$this->nome,$this->ativo);
+        if($this->nome != INVALIDO){
             try {
                 if($this->db->insert("predio_id,nome,is_ativo", "sala", $params)){
-                    new mensagem(SUCESSO," ".$nome." cadastrado com sucesso!!");
+                    new mensagem(SUCESSO," ".$this->nome." cadastrado com sucesso!!");
                 }else{
                     new mensagem(INSERT_ERRO,"Erro ao inserir");
                 }
@@ -83,15 +90,13 @@ class infraestrutura{
     }
 
     public function updateSala($identificador){
-        $nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
-        $is_ativo = isset($_POST['ativo']) ? $_POST['ativo'] : SIM;
-
-        $params = array($nome,$is_ativo);
-        if($nome != INVALIDO){
+        $this->getSalaData();
+        $params = array($this->nome,$this->ativo);
+        if($this->nome != INVALIDO){
             try {
                 $columns = array("nome","is_ativo");
                 if($this->db->update($columns,"sala",$params,"id_sala = ?",array($identificador))){
-                    new mensagem(SUCESSO," ".$nome." atualizado com sucesso!!");
+                    new mensagem(SUCESSO," ".$this->nome." atualizado com sucesso!!");
                 }else{
                     new mensagem(INSERT_ERRO,"Erro ao atualizar");
                 }

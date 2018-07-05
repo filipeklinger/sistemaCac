@@ -17,7 +17,8 @@ class oficina{
         $this->db = new Database();
     }
     public function setOficina(){
-        $this->nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;;
+        $this->nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
+        $this->nome = ucwords($this->nome);//deixando maiscula
         $this->preRequisito = isset($_POST['pre_requisito']) ? $_POST['pre_requisito'] : INVALIDO;
         $this->inserOficina();
     }
