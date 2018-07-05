@@ -12,7 +12,7 @@ class relatorio{
      $this->db = new Database();
  }
 
-    //o total de alunos pode ser obtdo atraves da soma dos alunos por oficina no front-end diminuindo processamento
+    //o total de alunos é obtdo atraves da soma dos alunos por oficina no front-end diminuindo processamento
     /**
      * @param $tempoId
      * @return string

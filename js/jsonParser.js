@@ -528,7 +528,7 @@ function jsonParseInfoPessoa(json, corpo) {
     if (objJson[0].menor_idade === "1") {
         loadMenor();
     } else {
-        loadTel(identificador);
+        loadContato(identificador);
         loadEnd(identificador);
         loadDocument();
         loadDepententes();
@@ -547,7 +547,7 @@ function loadMenor() {
         $('#respsobrenome').append(objJson[0].sobrenome);
         $('#parentesco').append(objJson[0].parentesco);
 
-        loadTel(objJson[0].responsavel_id);
+        loadContato(objJson[0].responsavel_id);
         loadEnd(objJson[0].responsavel_id);
     }
 }
@@ -619,14 +619,14 @@ function editaRuralino() {
     );
 }
 
-function loadTel(id) {
-    ajaxLoadGET('control/main.php?req=selectTelefoneByPessoaId&id='+id, parseTel, '#tels');
+function loadContato(id) {
+    ajaxLoadGET('control/main.php?req=selectTelefoneByPessoaId&id='+id, parseContato, '#tels');
 
-    function parseTel(json,corpo) {
+    function parseContato(json,corpo) {
         jsonContato = json;
-        var objJson = JSON.parse(json);
+        let objJson = JSON.parse(json);
         for(i in objJson){
-            corpo.append('<p>Telefone ('+getTelType(objJson[i].tipo)+'): '+objJson[i].numero+'</p>');
+            corpo.append('<p>Contato ('+getTelType(objJson[i].tipo)+'): '+objJson[i].contato+'</p>');
         }
     }
 
@@ -641,6 +641,8 @@ function loadTel(id) {
                 return "Fixo";
             case 4:
                 return "Recados";
+            case 5:
+                return "Email";
             default:
                 return "...";
         }

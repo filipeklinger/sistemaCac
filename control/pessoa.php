@@ -16,7 +16,7 @@ class pessoa{
     //Documentos
     private $docNumber,$docType;
     //contato
-    private $respTel,$respTelType;
+    private $respTel,$respTelType,$email;
     //Endereco
     private $rua,$numero,$complemento,$bairro,$cidade,$estado;
     //ruralino
@@ -63,6 +63,7 @@ class pessoa{
     private function receiveContato(){
         $this->respTel = isset($_POST['resp_tel']) ? $_POST['resp_tel'] : INVALIDO;
         $this->respTelType = isset($_POST['resp_tel_type']) ? $_POST['resp_tel_type'] : INVALIDO;
+        $this->email = isset($_POST['email']) ? $_POST['email'] : INVALIDO;
     }
 
     private function receiveRuralino(){
@@ -188,7 +189,11 @@ class pessoa{
      */
     private function insertContato(){
     	$params = array($this->responsavelID,$this->respTel,$this->respTelType);
-    	$this->db->insert("pessoa_id,numero,tipo_telefone","telefone",$params);
+    	$this->db->insert("pessoa_id,contato,tipo_contato","contato",$params);
+    	if($this->email!= INVALIDO){//se email foi setado então insere um contato
+            $params = array($this->responsavelID,$this->email,5);
+            $this->db->insert("pessoa_id,contato,tipo_contato","contato",$params);
+        }
     }
 
     /**
@@ -407,7 +412,7 @@ class pessoa{
      * @throws Exception
      */
     public function getTelefone($pessoaId){
-        return $this->db->select("numero,tipo_telefone as tipo","telefone","pessoa_id = ?",array($pessoaId));
+        return $this->db->select("contato,tipo_contato as tipo","contato","pessoa_id = ?",array($pessoaId));
     }
 
     /**
@@ -505,13 +510,13 @@ class pessoa{
     public function updateContato($pessoaId){
         $this->receiveContato();
         if($this->hasUpdatePermission($pessoaId) == false)return;
-        $columns = array("numero","tipo_telefone");
+        $columns = array("contato","tipo_contato");
         $params = array($this->respTel,$this->respTelType);
 
-        if($this->db->update($columns,"telefone",$params,"pessoa_id = ?",array($pessoaId))){
-            new mensagem(SUCESSO,"Telefone atualizado");
+        if($this->db->update($columns,"contato",$params,"pessoa_id = ?",array($pessoaId))){
+            new mensagem(SUCESSO,"Contato atualizado");
         }else{
-            new mensagem(INSERT_ERRO,"Erro ao atualizar telefone");
+            new mensagem(INSERT_ERRO,"Erro ao atualizar Contato");
         }
 
         $this->redirecionaPagAnterior();

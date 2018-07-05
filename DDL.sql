@@ -1,6 +1,6 @@
 -- MySQL Script
--- Sáb 02 Jun 2018 15:43:45 -03
--- Model: Sistema CAC    Version: 13.02
+-- Qua 04 Jul 2018 22:43:45 -03
+-- Model: Sistema CAC    Version: 13.04
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -140,15 +140,15 @@ COLLATE = utf8mb4_unicode_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sistema_cac`.`endereco` (
   `pessoa_id` INT(11) NOT NULL,
-  `rua` VARCHAR(45) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
+  `rua` VARCHAR(45) NOT NULL,
   `numero` INT(6) NOT NULL,
-  `complemento` VARCHAR(45) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
-  `bairro` VARCHAR(45) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
-  `cidade` VARCHAR(45) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
-  `estado` VARCHAR(2) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL COMMENT 'somente sigla',
+  `complemento` VARCHAR(45) NOT NULL,
+  `bairro` VARCHAR(45) NOT NULL,
+  `cidade` VARCHAR(45) NOT NULL,
+  `estado` VARCHAR(2) NOT NULL COMMENT 'somente sigla',
   PRIMARY KEY (`pessoa_id`),
-  INDEX `contato_pessoa` (`pessoa_id` ASC),
-  CONSTRAINT `fk_contato_pessoa`
+  INDEX `endereco_pessoa` (`pessoa_id` ASC),
+  CONSTRAINT `fk_endereco_pessoa`
     FOREIGN KEY (`pessoa_id`)
     REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
@@ -309,17 +309,16 @@ COLLATE = utf8mb4_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `sistema_cac`.`telefone`
+-- Table `sistema_cac`.`contato`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sistema_cac`.`telefone` (
-  `id_telefone` INT(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `sistema_cac`.`contato` (
+  `id_contato` INT(11) NOT NULL AUTO_INCREMENT,
   `pessoa_id` INT(11) NOT NULL,
-  `numero` VARCHAR(45) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL,
-  `tipo_telefone` INT(2) NOT NULL COMMENT '1 celular\n2 whatsapp\n3 fixo (residencial)\n4 recados',
-  PRIMARY KEY (`id_telefone`),
-  INDEX `numero` (`numero` ASC),
-  INDEX `fk_telefone_pessoa` (`pessoa_id` ASC),
-  CONSTRAINT `fk_telefone_pessoa`
+  `contato` VARCHAR(45) NOT NULL,
+  `tipo_contato` INT(2) NOT NULL COMMENT '1 celular\n2 whatsapp\n3 fixo (residencial)\n4 recados\n5 email',
+  PRIMARY KEY (`id_contato`),
+  INDEX `contato` (`contato` ASC),
+  CONSTRAINT `fk_contato_pessoa`
     FOREIGN KEY (`pessoa_id`)
     REFERENCES `sistema_cac`.`pessoa` (`id_pessoa`)
     ON DELETE NO ACTION
@@ -330,13 +329,18 @@ COLLATE = utf8mb4_unicode_ci;
 
 -- ----------------------------------
 --  Inserindo o administrador padrao
--- nova senha padrao: pL<0@TX86T](7KN'H
+-- nova senha padrao: pL<@TX86T](7KN'H
 -- ----------------------------------
 INSERT INTO `pessoa` (`nome`, `sobrenome`, `nv_acesso`, `menor_idade`,`ruralino`,`data_nascimento`) VALUES
   ('Master', 'adm', 1, 0, 0,CURRENT_DATE);
 INSERT INTO `login` (`pessoa_id`, `usuario`, `senha`) VALUES
-  (1,'master','$2y$10$UOFY7mMe9X9qpxSCQSdMm.kCSs7lx.32HzWn6TWtdFMwkpCeE3wDG');
-
+  (1,'master','$2y$10$soqcBucNPTsmofyra86hIO2I7ojsLNhmrb2MyqXeMnBxtKfVb.xUq');
+INSERT INTO `endereco` (`pessoa_id`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`) VALUES
+  (1, 'Centro de Arte e Cultura', 2007, 'CAC', 'UFRRJ', 'Seropédica', 'RJ');
+INSERT INTO `documento` (`pessoa_id`, `numero_documento`, `tipo_documento`) VALUES
+  (1, '000000000', 1);
+INSERT INTO `contato` (`id_contato`, `pessoa_id`, `contato`, `tipo_contato`) VALUES
+  (1, 1, '2126822447', 3);
 -- ----------------------------------
 --  Inserindo o Tempo do sistema padrao
 -- ----------------------------------

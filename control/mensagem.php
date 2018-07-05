@@ -41,5 +41,4 @@ class mensagem{
     private function msgIncorreta(){
         $_SESSION['MSG'] = "{\"tipo\":\"erro\",\"desc\":\" Mensagem Definida Incorretamente. \"}";
     }
-    //TODO implementar mensagens multiplas para erro e sucesso (usando arrays)
 }
