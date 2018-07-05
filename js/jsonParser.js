@@ -794,9 +794,9 @@ function jsonParseUsuarios(resposta, corpo) {
         string +=
             '<tr>\n';
         if(objJson[i].excluido == '1'){
-            string += '     <td class="col-md-4">' + objJson[i].nome + " " + objJson[i].sobrenome + ' - Desativado</td>\n';
+            string += '     <td class="col-md-4"  style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + ' - Desativado</td>\n';
         }else{
-            string += '     <td class="col-md-4">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
+            string += '     <td class="col-md-4"  style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
         }
         string+='     <td class="col-md-2">' + getNVacesso(objJson[i].nv_acesso) + '</td>\n' +
             '     <td class="col-md-2">' + isAtivo(objJson[i].menor_idade) + '</td>\n' +
