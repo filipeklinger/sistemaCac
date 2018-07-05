@@ -460,6 +460,8 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 .closeBtnAtSmallScreen{
     display: none;
 }
+#slogan{
+}
 /*SCREEN SIZE - responsivo*/
 @media screen and (max-height: 640px) {
     #page404, #main {
@@ -486,6 +488,8 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     #dashboard{
         display: contents;
     }
+    #slogan{
+    }
 }
 
 @media screen and (max-width: 1199px) {
@@ -494,5 +498,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     }
     .logo{
         max-height: 30%;
+    }
+    #slogan{
     }
 }
