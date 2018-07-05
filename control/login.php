@@ -1,6 +1,6 @@
 <?php
 /**
- * Created Filipe
+ * Created by Filipe Klinger
  * Date: 27/04/18
  * Time: 18:22
  */
@@ -24,12 +24,8 @@ class login{
         $senha = isset($_POST['senha']) ? $_POST['senha'] : INVALIDO;
 
         //primeiro buscamos os usuario possiveis
-        try {
-            $usr = json_decode($this->db->select("senha,pessoa_id", "login", "usuario = ?", array($login)));
-        } catch (Exception $e) {
-        }
+        $usr = json_decode($this->db->select("senha,pessoa_id", "login", "usuario = ?", array($login)));
 
-        //depois vericamos se o usuario encontrado e a senha informada conferem
         if($usr != null and password_verify($senha,$usr[0]->senha)){
             $user = json_decode($this->db->select("id_pessoa,nome,nv_acesso","pessoa","id_pessoa = ?",array($usr[0]->pessoa_id)));
             $_SESSION['LOGADO'] = true;
