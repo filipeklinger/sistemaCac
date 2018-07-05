@@ -45,7 +45,6 @@ hr {
 
 .navbar-default {
     background-color: #353635 !important;
-    /*border-bottom: 2px solid #000;*/
     border-radius: 0px;
 }
 
@@ -183,17 +182,13 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 }
 
 /*Dashboard pages*/
-#dashboard, .infra, .oficinas, .turmas, .usuario, .aluno, #relatorios {
+#dashboard, .infra, .oficinas, .turmas, .usuario, .aluno, #relatorios, #installer{
     overflow-x: hidden;
     min-height: 100%;
     background: #e5e6e6 repeat 700px;
     color: #575557; /*color white*/
     padding: 0 !important;
 
-}
-
-.infra, .oficinas, .turmas, .usuario, .aluno {
-    /*input styles in here!!!!!*/
 }
 
 /*Tabelas*/
@@ -491,7 +486,12 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     #slogan{
     }
 }
+#installer{
 
+    background-color: darkgrey;
+    padding-top: 11%;
+
+}
 @media screen and (max-width: 1199px) {
     #main div a.coolButton {
         display: none;

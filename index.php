@@ -136,6 +136,9 @@ if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
         case 'unsupported':
 	        include "view/unsupported.html";
             break;
+        case 'iniciando': //TODO: remover rota, TEST ONLY, falha de segurança
+            include "view/installer.html";
+            break;
         default:
             header("Location: ?pag=Login");
             break;
