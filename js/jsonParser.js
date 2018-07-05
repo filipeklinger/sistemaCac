@@ -1,5 +1,4 @@
-//Recuperando as informações
-
+/*Recuperando as informações*/
 var notSupported = ['SamsungBrowser','MSIE','Trident'];
 
 $(document).ready(function () {
@@ -49,10 +48,7 @@ function ajaxLoadGET(destino,funcaoParse,corpo,funcaoEncadeada){
     xhttp.send();
 
 }
-//---------------------------------------------Login---------------------------------
-
-
-
+/*---------------------------------------------Login---------------------------------*/
 function listaMarota(resposta, corpo) {
     var objJson = JSON.parse(resposta);
     var aux;
@@ -120,7 +116,7 @@ if (now.getMonth() > 6) {
 else {
     periodo = 1;
 }
-//---------------------------------------------DASHBOARD------------------------------
+/*---------------------------------------------DASHBOARD------------------------------*/
 function parseUsuario(resposta) {
     var jsonObj = JSON.parse(resposta);
     $('#user').append(jsonObj.nome);
@@ -168,7 +164,7 @@ function getMenu() {
 
     $('#menu').prepend(menuString);
 }
-//---------------------------------------------INFRA----------------------------------
+/*---------------------------------------------INFRA----------------------------------*/
 function jsonParsePredios(json,corpo) {
     var objJson = JSON.parse(json);
     for(var i in objJson){
@@ -181,9 +177,6 @@ function jsonParsePredios(json,corpo) {
             '</tr>');
     }
 }
-
-/*TODO: reduzir tamanho de colunas da função jsonParseSalas e jsonParsePredios*/
-
 function jsonParseSalas(json,corpo) {
     var objJson = JSON.parse(json);
     for(var i in objJson){
@@ -248,8 +241,8 @@ function getNVacesso(nv){
 }
 
 function getMsgs() {
-    var aviso = $('#avisos');
-    var msg = JSON.parse(mensagem);
+    let aviso = $('#avisos');
+    let msg = JSON.parse(mensagem);
 
     switch (msg.tipo){
         case "erro":
@@ -265,12 +258,10 @@ function getMsgs() {
 
     }
 }
-
-//recuperando o tag por GET com Javascript
 function getParameterByName(name) {
-    var url = window.location.href;
+    let url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
         results = regex.exec(url);
     if (!results) return null;
     if (!results[2]) return '';
@@ -382,7 +373,7 @@ function parsePeriodosSelect(resposta, corpo,funcaoEncadeada) {
     setTimeout(funcaoEncadeada,5);
 }
 
-//-------------------------ALUNOS---------------------------------------------------------------------------------------
+/*-------------------------ALUNOS---------------------------*/
 function parseTurmasAtivas(resposta, corpo) {
     var objJson = JSON.parse(resposta);
     for (i in objJson) {
@@ -453,11 +444,7 @@ function parseAlunos(resposta, corpo) {
     $('#listaEspera').empty().append(listaEspera);
     $('#matTrancada').empty().append(listaTrancados);
 }
-
-
-//------------------------------------------------INSERIR-ALUNO-EM-TURMA------------------------------------------------
-
-
+/*------------------------------------------------INSERIR-ALUNO-EM-TURMA-------------------------*/
 function obterInfoTurma() {
     let idTurma = $('#turma').val();
     ajaxLoadGET('control/main.php?req=selectTurmaById&id='+idTurma, parseTurmaInfo, '#diaTurma');
@@ -502,7 +489,6 @@ function getCandidatosByName() {
         }
     }
 }
-//função que desmarca todos
 function Desmarcar(){
     $("input[name='aluno_id[]']").each(function(){
         $(this).removeAttr("checked");})
@@ -519,7 +505,7 @@ function calculaIdade(nascimento){
     let hoje = new Date();
     return Math.floor(Math.ceil(Math.abs(nascimento.getTime() - hoje.getTime()) / (1000 * 3600 * 24)) / 365.25);
 }
-//------------------------------------------------USUARIOS--------------------------------------------------------------
+/*------------------------------------------------USUARIOS------------------------------*/
 function jsonParseInfoPessoa(json, corpo) {
     let objJson = JSON.parse(json);
     nome = objJson[0].nome;
@@ -706,7 +692,7 @@ function loadDepententes() {
         }
     }
 }
-//------------------------------------------------EDITA USUARIO---------------------------------------------------------
+/*------------------------------------------------EDITA USUARIO--------------------------*/
 function addBtnEdicaoPessoa() {
     $('#dadosBasicos').append('&nbsp; <button id="btNome" onclick="editUsuarioNome()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
     $('#contato').append('&nbsp; <button id="btnCont" onclick="editUsuarioContato()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
@@ -714,7 +700,6 @@ function addBtnEdicaoPessoa() {
     $('#docLabel').append('&nbsp; <button id="btnDoc" onclick="editUsuarioDocumento()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
     $('#dependentes h4').append('&nbsp; <button id="btnDeps" onclick="adicionaDependete()" class="btn btn-primary"><span class=\'glyphicon glyphicon-plus\'></span></button>');
 }
-
 function addMenor() {
     var quantidade = $('#qtd_menor').val();
     var divContent = $('#menor_de_idade');
@@ -856,8 +841,7 @@ function adicionaDependete() {
     $('#formDependentes').attr('action','control/main.php?req=addDependente&id=' + identificador);
     addMenor();
 }
-//------------------------------VERIFICAÇÃO DE FORMULARIO DE ENTRADA----------------------------------------------------
-//verirficadores
+/*------------------------------VERIFICAÇÃO DE FORMULARIO DE ENTRADA----------------*/
 var userDisponivel = false;
 var senhaOk = false;
 
@@ -904,8 +888,7 @@ function verificaUsuarioDuplicado() {
         }
     }
 }
-
-//-------------------------------GERENCIAMENTO DE USUARIOS -------------------------------------------------------------
+/*-------------------------------GERENCIAMENTO DE USUARIOS ----------------------------------*/
 function jsonParseUsuarios(resposta, corpo) {
     var objJson = JSON.parse(resposta);
     let string = '';
