@@ -62,54 +62,6 @@
     }
 
 
-    function parseUsuario(resposta) {
-        var jsonObj = JSON.parse(resposta);
-        $('#user').append(jsonObj.nome);
-        $('#nv').append(jsonObj.nv_acesso);
-    }
-
-    function parseTurmaHorario(resposta, corpo) {
-        var objJson = JSON.parse(resposta);
-        for (i in objJson) {
-            //aqui obtemos o numero real de vagas disponiveis
-            objJson[i].vagas = parseInt(objJson[i].vagas) - parseInt(objJson[i].ocupadas);
-            corpo.append(
-                '<tr>' +
-                '<td class=\'col-md-2\'>' + objJson[i].oficina + '</td>' +
-                '<td class=\'col-md-2\'>' + objJson[i].turma + '</td>' +
-                '<td class=\'col-md-2\'>' + getDiaSemana(objJson[i]) + '</td>' +
-                '<td class=\'col-md-2\'>' + objJson[i].inicio + " as " + objJson[i].fim + '</td>' +
-                '<td class=\'col-md-1\'>' + objJson[i].sala + '</td>' +
-                '<td class=\'col-md-2\'>' + objJson[i].professor + '</td>' +
-                '<td class=\'col-md-1\'>' + objJson[i].vagas + '</td>' +
-                '</tr>');
-        }
-
-    }
-
-    function getMenu() {
-        let menu = JSON.parse(menuPrincipal);
-        let menuString = '';
-
-        for (i in menu) {
-
-            menuString += '        <li class="text-center submenu">\n' +
-                '                       <a href="#' + menu[i].link + '" data-toggle="collapse" aria-expanded="false">\n' +
-                '                           <i class="glyphicon ' + menu[i].icone + '"></i>\n' +
-                '                           <br>' + menu[i].nome + '\n' +
-                '                       </a>\n' +
-                '                       <ul class="collapse list-unstyled" id="' + menu[i].link + '">';
-
-            for (j in menu[i].submenu) {
-                menuString += '          <li><a href="' + menu[i].submenu[j].link + '">' + menu[i].submenu[j].nome + '</a></li>';
-            }
-
-            menuString += '</ul></li>';
-        }
-
-        $('#menu').prepend(menuString);
-    }
-
     $('#footerYear').append((new Date).getFullYear());
 </script>
 </body>

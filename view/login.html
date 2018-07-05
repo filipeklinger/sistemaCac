@@ -57,85 +57,12 @@
     </div>
 </div>
 <script type="application/javascript">
-    $(document).on("load", loadLogin());
+    $(document).ready(loadLogin());
 
     function loadLogin() {
         getMsgs();
         ajaxLoadGET('control/main.php?req=selectPeriodoAtual', parsePeriodoText, '#periodoAtual');
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', listaMarota, '#t_oficinas');
     }
-
-
-    function listaMarota(resposta, corpo) {
-        var objJson = JSON.parse(resposta);
-        var aux;
-        if (objJson.length > 0) {
-            for (var i in objJson) {
-                //aqui obtemos o numero real de vagas disponiveis
-                objJson[i].vagas = parseInt(objJson[i].vagas) - parseInt(objJson[i].ocupadas);
-                if (objJson[i].vagas < 10) {
-                    objJson[i].vagas = '&nbsp;&nbsp;' + objJson[i].vagas;
-                }
-                //console.log(avaliaData(objJson[i]));
-                var aux = JSON.parse(avaliaData(objJson[i]));
-
-                corpo.append(
-                    '<div class="container oficinasContainer">' +
-                    '<div class="col-md-2 ">' +
-                    '<div class="text-center oficinasvagas">' +
-                    objJson[i].vagas +
-                    '<br>vagas</div></div>' + //end of oficinaVagas
-                    '<div class="col-md-8">' + //begin of oficinas content
-                    '<h3 >' + objJson[i].oficina + ' - ' + objJson[i].inicio +
-                    '</h3>' +
-                    ' <h4>Dias: ' + aux + '</h4>' +
-                    '<p>Local: ' + objJson[i].sala + ' em  ' + objJson[i].predio + '</p>' +
-                    '<p>Professor: ' + objJson[i].professor + '</p>' +
-                    '<hr>' +
-                    '</div>' +
-                    '</div>'
-                );
-            }
-        }
-        else {
-            corpo.append(
-                '<div class="container oficinasContainer">' +
-                '<h2 class="text-center"> <span class="glyphicon glyphicon-education"></span> Novas Turmas em Breve</h2>' +
-                '</div>'
-            );
-        }
-    }
-
-    function avaliaData(jsonObject) {
-        var dias = new Array();
-        if (jsonObject.segunda === '1') {
-            dias.push("Seg ");
-        }
-        if (jsonObject.terca === '1') {
-            dias.push("Ter ");
-        }
-        if (jsonObject.quarta === '1') {
-            dias.push("Qua ");
-        }
-        if (jsonObject.quinta === '1') {
-            dias.push("Qui ");
-        }
-        if (jsonObject.sexta === '1') {
-            dias.push("Sex ");
-        }
-        return JSON.stringify(dias);
-    }
-
-    //function currDate(){
-    const now = new Date();
-    var periodo;
-    if (now.getMonth() > 6) {
-        periodo = 2;
-    }
-    else {
-        periodo = 1;
-    }
-    //document.getElementById('hoje').innerHTML = now.getUTCFullYear() + '-' + periodo;
-    //}
 </script>
 </body>

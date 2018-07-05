@@ -49,13 +49,132 @@ function ajaxLoadGET(destino,funcaoParse,corpo,funcaoEncadeada){
     xhttp.send();
 
 }
+//---------------------------------------------Login---------------------------------
 
+
+
+function listaMarota(resposta, corpo) {
+    var objJson = JSON.parse(resposta);
+    var aux;
+    if (objJson.length > 0) {
+        for (var i in objJson) {
+            //aqui obtemos o numero real de vagas disponiveis
+            objJson[i].vagas = parseInt(objJson[i].vagas) - parseInt(objJson[i].ocupadas);
+            if (objJson[i].vagas < 10) {
+                objJson[i].vagas = '&nbsp;&nbsp;' + objJson[i].vagas;
+            }
+            //console.log(avaliaData(objJson[i]));
+            var aux = JSON.parse(avaliaData(objJson[i]));
+
+            corpo.append(
+                '<div class="container oficinasContainer">' +
+                '<div class="col-md-2 ">' +
+                '<div class="text-center oficinasvagas">' +
+                objJson[i].vagas +
+                '<br>vagas</div></div>' + //end of oficinaVagas
+                '<div class="col-md-8">' + //begin of oficinas content
+                '<h3 >' + objJson[i].oficina + ' - ' + objJson[i].inicio +
+                '</h3>' +
+                ' <h4>Dias: ' + aux + '</h4>' +
+                '<p>Local: <span style="text-transform: capitalize">' + objJson[i].sala + '</span> em  <span style="text-transform: uppercase">' + objJson[i].predio + '</span></p>' +
+                '<p>Professor: ' + objJson[i].professor + '</p>' +
+                '<hr>' +
+                '</div>' +
+                '</div>'
+            );
+        }
+    }
+    else {
+        corpo.append(
+            '<div class="container oficinasContainer">' +
+            '<h2 class="text-center"> <span class="glyphicon glyphicon-education"></span> Novas Turmas em Breve</h2>' +
+            '</div>'
+        );
+    }
+}
+
+function avaliaData(jsonObject) {
+    var dias = new Array();
+    if (jsonObject.segunda === '1') {
+        dias.push("Seg ");
+    }
+    if (jsonObject.terca === '1') {
+        dias.push("Ter ");
+    }
+    if (jsonObject.quarta === '1') {
+        dias.push("Qua ");
+    }
+    if (jsonObject.quinta === '1') {
+        dias.push("Qui ");
+    }
+    if (jsonObject.sexta === '1') {
+        dias.push("Sex ");
+    }
+    return JSON.stringify(dias);
+}
+const now = new Date();
+var periodo;
+if (now.getMonth() > 6) {
+    periodo = 2;
+}
+else {
+    periodo = 1;
+}
+//---------------------------------------------DASHBOARD------------------------------
+function parseUsuario(resposta) {
+    var jsonObj = JSON.parse(resposta);
+    $('#user').append(jsonObj.nome);
+    $('#nv').append(jsonObj.nv_acesso);
+}
+
+function parseTurmaHorario(resposta, corpo) {
+    var objJson = JSON.parse(resposta);
+    for (i in objJson) {
+        //aqui obtemos o numero real de vagas disponiveis
+        objJson[i].vagas = parseInt(objJson[i].vagas) - parseInt(objJson[i].ocupadas);
+        corpo.append(
+            '<tr>' +
+            '<td class=\'col-md-2\' style="text-transform: capitalize;">' + objJson[i].oficina + '</td>' +
+            '<td class=\'col-md-2\'>' + objJson[i].turma + '</td>' +
+            '<td class=\'col-md-2\'>' + getDiaSemana(objJson[i]) + '</td>' +
+            '<td class=\'col-md-2\'>' + objJson[i].inicio + " as " + objJson[i].fim + '</td>' +
+            '<td class=\'col-md-1\' style="text-transform: capitalize;">' + objJson[i].sala + '</td>' +
+            '<td class=\'col-md-2\' style="text-transform: capitalize;">' + objJson[i].professor + '</td>' +
+            '<td class=\'col-md-1\'>' + objJson[i].vagas + '</td>' +
+            '</tr>');
+    }
+
+}
+
+function getMenu() {
+    let menu = JSON.parse(menuPrincipal);
+    let menuString = '';
+
+    for (i in menu) {
+
+        menuString += '        <li class="text-center submenu">\n' +
+            '                       <a href="#' + menu[i].link + '" data-toggle="collapse" aria-expanded="false">\n' +
+            '                           <i class="glyphicon ' + menu[i].icone + '"></i>\n' +
+            '                           <br>' + menu[i].nome + '\n' +
+            '                       </a>\n' +
+            '                       <ul class="collapse list-unstyled" id="' + menu[i].link + '">';
+
+        for (j in menu[i].submenu) {
+            menuString += '          <li><a href="' + menu[i].submenu[j].link + '">' + menu[i].submenu[j].nome + '</a></li>';
+        }
+
+        menuString += '</ul></li>';
+    }
+
+    $('#menu').prepend(menuString);
+}
+//---------------------------------------------INFRA----------------------------------
 function jsonParsePredios(json,corpo) {
     var objJson = JSON.parse(json);
     for(var i in objJson){
         corpo.append(
             '<tr>' +
-            '<td class=\'col-md-5\'> '+ objJson[i].nome + '</td>' +
+            '<td class=\'col-md-5\' style="text-transform: uppercase;"> '+ objJson[i].nome + '</td>' +
             '<td class=\'col-md-5\'> '+ objJson[i].localizacao + '</td>' +
             '<td class=\'col-md-1\'> '+ isAtivo(objJson[i].is_ativo) + '</td>' +
             '<td class=\'col-md-1\'> <a href="?pag=Edit.Predio&id='+objJson[i].id_predio+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
@@ -70,8 +189,8 @@ function jsonParseSalas(json,corpo) {
     for(var i in objJson){
         corpo.append(
             '<tr>' +
-            '<td class=\'col-md-4\'> '+ objJson[i].sala + '</td>' +
-            '<td class=\'col-md-4\'> '+ objJson[i].predio + '</td>' +
+            '<td class=\'col-md-4\' style="text-transform: capitalize;"> '+ objJson[i].sala + '</td>' +
+            '<td class=\'col-md-4\' style="text-transform: uppercase;"> '+ objJson[i].predio + '</td>' +
             '<td class=\'col-md-2\'> '+ isAtivo(objJson[i].is_ativo) + '</td>' +
             '<td class=\'col-md-2\'> <a href="?pag=Edit.Sala&id='+objJson[i].id_sala+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
             '</tr>');
@@ -794,9 +913,9 @@ function jsonParseUsuarios(resposta, corpo) {
         string +=
             '<tr>\n';
         if(objJson[i].excluido == '1'){
-            string += '     <td class="col-md-4"  style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + ' - Desativado</td>\n';
+            string += '     <td class="col-md-4" style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + ' - Desativado</td>\n';
         }else{
-            string += '     <td class="col-md-4"  style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
+            string += '     <td class="col-md-4" style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
         }
         string+='     <td class="col-md-2">' + getNVacesso(objJson[i].nv_acesso) + '</td>\n' +
             '     <td class="col-md-2">' + isAtivo(objJson[i].menor_idade) + '</td>\n' +
