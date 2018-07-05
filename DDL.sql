@@ -332,7 +332,7 @@ COLLATE = utf8mb4_unicode_ci;
 -- nova senha padrao: pL<@TX86T](7KN'H
 -- ----------------------------------
 INSERT INTO `pessoa` (`nome`, `sobrenome`, `nv_acesso`, `menor_idade`,`ruralino`,`data_nascimento`) VALUES
-  ('Master', 'adm', 1, 0, 0,CURRENT_DATE);
+  ('Master', 'adm', 1, 0, 1,CURRENT_DATE);
 INSERT INTO `login` (`pessoa_id`, `usuario`, `senha`) VALUES
   (1,'master','$2y$10$soqcBucNPTsmofyra86hIO2I7ojsLNhmrb2MyqXeMnBxtKfVb.xUq');
 INSERT INTO `endereco` (`pessoa_id`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`) VALUES
@@ -341,6 +341,8 @@ INSERT INTO `documento` (`pessoa_id`, `numero_documento`, `tipo_documento`) VALU
   (1, '000000000', 1);
 INSERT INTO `contato` (`id_contato`, `pessoa_id`, `contato`, `tipo_contato`) VALUES
   (1, 1, '2126822447', 3);
+INSERT INTO `ruralino` (`pessoa_id`, `matricula`, `curso`, `bolsista`) VALUES
+  (1, '2010390000', 'Sistemas de Informação', 0);
 -- ----------------------------------
 --  Inserindo o Tempo do sistema padrao
 -- ----------------------------------
