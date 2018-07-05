@@ -16,14 +16,15 @@ class oficina{
     public function __construct(){
         $this->db = new Database();
     }
-    public function setOficina(){
+
+    private function getOficinaData(){
         $this->nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;
         $this->nome = ucwords($this->nome);//deixando maiscula
         $this->preRequisito = isset($_POST['pre_requisito']) ? $_POST['pre_requisito'] : INVALIDO;
-        $this->inserOficina();
     }
 
-    private function inserOficina(){
+    public function setOficina(){
+        $this->getOficinaData();
         $params = array($this->nome,$this->preRequisito);
         try {
             if($this->db->insert("nome,pre_requisito", "oficina", $params)){
@@ -39,9 +40,7 @@ class oficina{
     }
 
     public function updateOficina($identificador){
-        $this->nome = isset($_POST['nome']) ? $_POST['nome'] : INVALIDO;;
-        $this->preRequisito = isset($_POST['pre_requisito']) ? $_POST['pre_requisito'] : INVALIDO;
-
+        $this->getOficinaData();
         $columns = array("nome","pre_requisito");
         $params = array($this->nome,$this->preRequisito);
         try {
