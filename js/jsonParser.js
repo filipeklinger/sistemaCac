@@ -532,11 +532,21 @@ function jsonParseInfoPessoa(json, corpo) {
         loadEnd(identificador);
         loadDocument();
         loadDepententes();
+        loadLogin(identificador);
     }
     if (objJson[0].ruralino === "1"){ loadRuralino(); }else{ btnInsertRuralino(); }
     if(objJson[0].excluido == '0') addBtnEdicaoPessoa();
 }
 
+function loadLogin(id) {
+    $('#altSenha').removeAttr('hidden');
+    ajaxLoadGET('control/main.php?req=selectLoginUser&id='+id, parseLogin, '.carr');
+    function parseLogin(resposta) {
+        let objJson = JSON.parse(resposta);
+        $('#login').empty().append(objJson[0].usuario);
+    }
+
+}
 function loadMenor() {
     $('#menorIdade').removeAttr("hidden");
     ajaxLoadGET('control/main.php?req=selectResponsavelByMenorId&id='+identificador, parseMenor, '.carr');

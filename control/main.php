@@ -106,6 +106,10 @@ class main{
                 $pess = new pessoa();
                 echo $pess->getPessoaById($_GET['id']);
                 break;
+            case "selectLoginUser":
+                $pess = new pessoa();
+                echo $pess->getLoginUser($_GET['id']);
+                break;
             case "selectRuralinoByPessoaId":
                 $pess = new pessoa();
                 echo $pess->getRuralinoByPessoaId($_GET['id']);

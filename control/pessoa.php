@@ -239,7 +239,18 @@ class pessoa{
         return password_hash($str, PASSWORD_BCRYPT);
 
     }
+
 //--------------------------------------RECUPERA DO BANCO---------------------------------------------------------------
+    private function hasPermission($pessoaId){
+        if($pessoaId == $_SESSION['ID'] or $_SESSION['NIVEL'] == ADMINISTRADOR){
+            return true;
+        }else{
+            new mensagem(ERRO,"Permissão Insuficiente para a operação requerida");
+            $this->redirecionaPagAnterior();
+            return false;
+        }
+    }
+
     public function hasSelectPermission(){
         if(isset($_SESSION['NIVEL']) and $_SESSION['NIVEL'] == ADMINISTRADOR) return;
         else $this->redireciona();
@@ -391,6 +402,17 @@ class pessoa{
      * @return string
      * @throws Exception
      */
+    public function getLoginUser($identificador){
+        if($this->hasPermission($identificador)){
+            return $this->db->select("usuario","login","pessoa_id = ?",array($identificador));
+        }
+    }
+
+    /**
+     * @param $identificador
+     * @return string
+     * @throws Exception
+     */
     public function getRuralinoByPessoaId($identificador){
         return $this->db->select("matricula,curso,bolsista","ruralino","pessoa_id = ?",array($identificador));
     }
@@ -447,23 +469,13 @@ class pessoa{
 
 //---------------------------------------------UPDATE-------------------------------------------------------------------
 
-    private function hasUpdatePermission($pessoaId){
-        if($pessoaId == $_SESSION['ID'] or $_SESSION['NIVEL'] == ADMINISTRADOR){
-            return true;
-        }else{
-            new mensagem(ERRO,"Permissão Insuficiente para a operação requerida");
-            $this->redirecionaPagAnterior();
-            return false;
-        }
-    }
-
     /**
      * Essa funcao adiciona um dependente para um usuario definido
      * @param $respId
      * @throws Exception
      */
     public function addDependente($respId){
-        if($this->hasUpdatePermission($respId)){
+        if($this->hasPermission($respId)){
             $this->responsavelID = $respId;//aqui colocamos o usuario passado como responsavel
             if($this->insertMenor()){
                 new mensagem(SUCESSO,"Dependente(s) inserido(s) com sucesso");
@@ -483,7 +495,7 @@ class pessoa{
      */
     public function updateDadosBasicos($pessoaId){
         $this->receiveAccessLevel();
-        if($this->hasUpdatePermission($pessoaId) == false)return;
+        if($this->hasPermission($pessoaId) == false)return;
         $this->receiveDadosBasicos();
 
         if($_SESSION['NIVEL'] == ADMINISTRADOR){
@@ -509,7 +521,7 @@ class pessoa{
      */
     public function updateContato($pessoaId){
         $this->receiveContato();
-        if($this->hasUpdatePermission($pessoaId) == false)return;
+        if($this->hasPermission($pessoaId) == false)return;
         $columns = array("contato","tipo_contato");
         $params = array($this->respTel,$this->respTelType);
 
@@ -528,7 +540,7 @@ class pessoa{
      */
     public function updateEndereco($pessoaId){
         $this->receiveEndereco();
-        if($this->hasUpdatePermission($pessoaId) == false)return;
+        if($this->hasPermission($pessoaId) == false)return;
         $columns = array("rua","numero","complemento","bairro","cidade","estado");
         $params = array($this->rua,$this->numero,$this->complemento,$this->bairro,$this->cidade,$this->estado);
 
@@ -546,7 +558,7 @@ class pessoa{
      */
     public function updateDocument($pessoaId){
         $this->receiveDocumento();
-        if($this->hasUpdatePermission($pessoaId) == false)return;
+        if($this->hasPermission($pessoaId) == false)return;
         $columns = array("numero_documento","tipo_documento");
         $params = array($this->docNumber,$this->docType);
 
@@ -583,7 +595,7 @@ class pessoa{
      * @throws Exception
      */
     public function updateRuralino($pessoaId){
-        if($this->hasUpdatePermission($pessoaId)){
+        if($this->hasPermission($pessoaId)){
             $this->receiveRuralino();
             if($_SESSION['NIVEL'] == ADMINISTRADOR){
                 $columns = array("matricula","curso","bolsista");
@@ -609,7 +621,7 @@ class pessoa{
      * @throws Exception
      */
     public function updateSenha($pessoaId){
-        if($this->hasUpdatePermission($pessoaId)){
+        if($this->hasPermission($pessoaId)){
             $this->receiveLogin();
             if($this->db->update(array("senha"),"login",array($this->make_hash($this->senha)),"pessoa_id = ?",array($pessoaId))){
                 new mensagem(SUCESSO,"Senha Atualizada");
@@ -644,7 +656,7 @@ class pessoa{
      * @throws Exception
      */
     public function gerenciaConta($pessoaId,$excuir){
-        if($this->hasUpdatePermission($pessoaId)){
+        if($this->hasPermission($pessoaId)){
 
             if($this->db->update(array("excluido"),"pessoa",array($excuir),"id_pessoa = ?",array($pessoaId))){
 
