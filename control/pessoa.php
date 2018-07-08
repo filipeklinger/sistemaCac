@@ -394,7 +394,13 @@ class pessoa{
      * @throws Exception
      */
     public function getPessoaById($identificador){
-        return $this->db->select("nome,sobrenome,menor_idade,ruralino,data_nascimento,excluido","pessoa","id_pessoa = ?",array($identificador));
+        if($this->hasPermission($identificador)){
+            return $this->db->select("nome,sobrenome,menor_idade,ruralino,data_nascimento,excluido","pessoa","id_pessoa = ?",array($identificador));
+        }else{
+            new mensagem(ERRO,"Voce não tem permissão para isso");
+            return '';
+        }
+
     }
 
     /**
@@ -405,6 +411,8 @@ class pessoa{
     public function getLoginUser($identificador){
         if($this->hasPermission($identificador)){
             return $this->db->select("usuario","login","pessoa_id = ?",array($identificador));
+        }else{
+            return '';
         }
     }
 
@@ -677,6 +685,12 @@ class pessoa{
     //---------------------------------------------REDIRECT-------------------------------------------------------------
     private function redireciona(){header("Location: ../index.php?pag=Login");}
 
-    private function redirecionaPagAnterior(){header("Location: " . $_SERVER['HTTP_REFERER'] . "");}
+    private function redirecionaPagAnterior()
+    {
+        if (isset($_SERVER['HTTP_REFERER']))
+            header("Location: " . $_SERVER['HTTP_REFERER'] . "");
+        else
+            header("Location: ../index.php?pag=DashBoard");
+            }
 
 }

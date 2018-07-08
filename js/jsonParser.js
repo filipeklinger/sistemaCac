@@ -547,6 +547,7 @@ function loadLogin(id) {
     }
 
 }
+
 function loadMenor() {
     $('#menorIdade').removeAttr("hidden");
     ajaxLoadGET('control/main.php?req=selectResponsavelByMenorId&id='+identificador, parseMenor, '.carr');
