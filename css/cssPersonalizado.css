@@ -458,10 +458,10 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 #slogan{
 }
 /*SCREEN SIZE - responsivo*/
-@media screen and (max-height: 640px) {
+@media screen and (max-height: 640px) and (max-width: 539px){
     #page404, #main {
         /*height: 100vh;*/
-        height: calc(100% - 57px); /*WORKS ONLY FOR ANDROID 6.0 CHROME BROWSERS REMOVE CALC*/
+        /*height: calc(100% - 57px); /*WORKS ONLY FOR ANDROID 6.0 CHROME BROWSERS REMOVE CALC*/
     }
 
     #main div a.coolButton {
@@ -486,12 +486,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     #slogan{
     }
 }
-#installer{
 
-    background-color: darkgrey;
-    padding-top: 11%;
-
-}
 @media screen and (max-width: 1199px) {
     #main div a.coolButton {
         display: none;
