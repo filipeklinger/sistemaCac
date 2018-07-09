@@ -30,7 +30,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao r
     <!-- Icones Personalizados - Font Awesome -->
     <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- estiliza o seletor script src="bootstrap3.3.7/select/js/bootstrap-select.min.js"></script -->
-    <script src="js/jsonParser.js"></script>
+    <script src="js/jsonParser.min.js"></script>
     <!-- Aqui recebemos as msg do PHP e inserimos numa variavel JS chamada mensagem -->
     <script type="application/x-javascript">
         <?php
