@@ -375,10 +375,15 @@ function parsePeriodosSelect(resposta, corpo,funcaoEncadeada) {
 
 /*-------------------------ALUNOS---------------------------*/
 function parseTurmasAtivas(resposta, corpo) {
-    var objJson = JSON.parse(resposta);
+    let objJson = JSON.parse(resposta);
     for (i in objJson) {
         corpo.append(
             '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
+        );
+    }
+    if(objJson.length < 1){
+        corpo.append(
+            '<option value="0" selected="selected" disabled="disabled">Nenhuma Turma Disponível</option>'
         );
     }
     obterAlunos();
@@ -386,7 +391,8 @@ function parseTurmasAtivas(resposta, corpo) {
 
 function obterAlunos() {
     let turma = $('#turma').val();
-    $('#gerarPresenca').attr('href','control/main.php?req=listaPresenca&id='+turma);
+    if(turma != null) $('#gerarPresenca').attr('href','control/main.php?req=listaPresenca&id='+turma);
+    else $('#gerarPresenca').attr('disabled','disabled');
     ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id=' + turma, parseAlunos, '#alunos');
 }
 
