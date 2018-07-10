@@ -18,7 +18,6 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao r
     <!-- estiliza o seletor link href="bootstrap3.3.7/select/css/bootstrap-select.min.css" rel="stylesheet" -->
     <link href="css/cssPersonalizado.min.css" rel="stylesheet">
     <!-- HTML5 shim e Respond.js para suporte no IE8 de elementos HTML5 e media queries -->
-    <!-- ALERTA: Respond.js não funciona se você visualizar uma página file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -29,9 +28,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao r
     <script src="bootstrap3.3.7/js/bootstrap.min.js"></script>
     <!-- Icones Personalizados - Font Awesome -->
     <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- estiliza o seletor script src="bootstrap3.3.7/select/js/bootstrap-select.min.js"></script -->
     <script src="js/jsonParser.min.js"></script>
-    <!-- Aqui recebemos as msg do PHP e inserimos numa variavel JS chamada mensagem -->
     <script type="application/x-javascript">
         <?php
         $msg = isset($_SESSION['MSG']) ? $_SESSION['MSG'] : '{"tipo":" ","desc":" "}';
