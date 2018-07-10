@@ -1,0 +1,17 @@
+#compatível apenas com APACHE server
+# BEGIN GZIP
+<IfModule mod_mime.c>
+  AddType image/svg+xml svg svgz
+  AddEncoding gzip svgz
+</IfModule>
+<ifmodule mod_deflate.c>
+      #compressão de SVG
+      AddOutputFilterByType DEFLATE image/svg+xml
+
+        # compatibilidade com browsers antigos
+      BrowserMatch ^Mozilla/4 gzip-only-text/html
+      BrowserMatch ^Mozilla/4\.0[678] no-gzip
+      BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+      Header append Vary User-Agent
+</ifmodule>
+# END GZIP

@@ -24,7 +24,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao r
     <script src="js/ieComp/respond.min.js"></script>
     <![endif]-->
     <!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
-    <script src="bootstrap3.3.7/jquery.min.js"></script>
+    <script src="bootstrap3.3.7/jquery.min.js" ></script>
     <!-- Inclui todos os plugins compilados do bootstrap (abaixo) -->
     <script src="bootstrap3.3.7/js/bootstrap.min.js"></script>
     <!-- Icones Personalizados - Font Awesome -->

@@ -2,19 +2,17 @@
 <div id="main">
     <div class="container">
         <div class="col-lg-6 logo">
-            <!--div class="row text-center" id="slogan">"Oficinas Gratuitas"</div-->
         </div>
-        <div class="col-lg-6" style="margin-bottom: 25px">
+        <div class="col-lg-6" id="mainFormContainer" style="margin-bottom: 25px">
             <div class="panel-body">
 
-                <form id="form" action="control/main.php?req=login" method="POST">
+                <form id="form" action="control/main.php?req=login" method="POST" autocomplete="off">
                     <div id="mainAvisos">
                         <p id="avisos" class=""></p>
                     </div>
-                    <input id="user" type="text" name="login" class="form-control" placeholder="Usuário"
-                           autocomplete="off">
+                    <input id="user" type="text" name="login" class="form-control" placeholder="Usuário">
                     <br>
-                    <input type="password" class="form-control" name="senha" placeholder="Senha" autocomplete="off">
+                    <input type="password" class="form-control" name="senha" placeholder="Senha">
                     <br>
                     <button type="submit" href="#" class="btn btn-sec"> Entrar</button>
                     <a href="index.php?pag=Cad.Candidato">Não Tenho Conta</a>
