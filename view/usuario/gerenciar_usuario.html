@@ -26,15 +26,21 @@
     <div id="contTab" class="tab-content" style="padding: 20px;">
         <div id="users" class="tab-pane fade in active">
 
+            <div class="col-md-2">
             <a href="?pag=Cad.Pessoa" type="button" class="btn btn-primary"><i
                     class="glyphicon glyphicon-plus"></i> Novo Usuário</a>
-
+            </div>
             <!--TODO Melhorar aparencia da caixa de pesquisa -->
-            <p style="padding-top: 16px;">
-                Busca: <input type="text" id="searchName" onkeyup="carregaUsuarios('selectTodos')" placeholder="Digite um nome">
+            <!--p style="padding-top: 16px;">
+                <input type="text" class="searchBox" id="searchName" onkeyup="carregaUsuarios('selectTodos')" placeholder="Buscar ...">
                 <button class="btn btn-primary" onclick="limpaPesquisa();"><span class="glyphicon glyphicon-remove"></span></button>
-            </p>
+            </p-->
+            <div class="col-md-5 searchBox">
+                <input type="text" class="searchBox" id="searchName" onkeyup="carregaUsuarios('selectTodos')" placeholder="Buscar ...">
+                <button class="btn coolButton3" onclick="limpaPesquisa();"><span class="glyphicon glyphicon-remove"></span></button>
+            </div>
 
+            <br>
             <table class="table">
                 <thead>
                 <tr>
@@ -43,6 +49,7 @@
                     <th class="col-md-2">Menor de Idade ?</th>
                     <th class="col-md-2">Discente da Rural ?</th>
                     <th class="col-md-2">Ver / Editar dados</th>
+                    <th class="col-md-2"></th>
                 </tr>
                 </thead>
                 <tbody id="usuarios"></tbody>

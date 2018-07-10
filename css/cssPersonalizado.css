@@ -455,7 +455,23 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 .closeBtnAtSmallScreen{
     display: none;
 }
-#slogan{
+.searchBox{
+    font-style: italic;
+    background-color: transparent;
+    border-bottom: 2px solid black;
+}
+
+.searchBox input[type=text]{
+    background-color: transparent !important;
+    color: black !important;
+    width:  90%;
+    min-width: 200px;
+    margin-top: 10px;
+}
+
+.coolButton3 {
+    color: rgba(0, 0, 0, 0.18);
+    background-color: transparent;
 }
 /*SCREEN SIZE - responsivo*/
 @media screen and (max-height: 640px) and (max-width: 539px){
@@ -483,7 +499,8 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     #dashboard{
         display: contents;
     }
-    #slogan{
+    .searchBox input[type=text]{
+        margin-top: 30px;
     }
 }
 
@@ -494,6 +511,8 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     .logo{
         max-height: 30%;
     }
-    #slogan{
+    .searchBox{
+        margin-top: 2%;
+        margin-left: 15px;
     }
 }
