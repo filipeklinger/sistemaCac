@@ -473,11 +473,6 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 }
 /*SCREEN SIZE - responsivo*/
 @media screen and (max-height: 640px) and (max-width: 539px){
-    #page404, #main {
-        /*height: 100vh;*/
-        /*height: calc(100% - 57px); /*WORKS ONLY FOR ANDROID 6.0 CHROME BROWSERS REMOVE CALC*/
-    }
-
     #main div a.coolButton {
         display: none;
     }
@@ -502,6 +497,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     }
     .container{
         margin: 15px;
+        margin-top: 0;
     }
 }
 
