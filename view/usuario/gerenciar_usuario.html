@@ -59,7 +59,6 @@
 
     function carregaUsuarios(requisicao) {
         let nome = $('#searchName').val();
-        /*TODO: MENSAGEM DE NÃO EXISTENCIA DE USUÁRIOS NÃO MUDA APESAR DE MUNDANÇA NO CODIGO FONTE*/
         ajaxLoadGET('control/main.php?req=' + requisicao +'&nome='+nome, jsonParseUsuarios,'#usuarios');
     }
     function limpaPesquisa() {

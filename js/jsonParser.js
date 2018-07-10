@@ -204,7 +204,7 @@ function jsonParseNomePredios(resposta,corpo) {
     }
 }
 
-/*TODO: SUBSTITUR A FUNÇÃO GETdIAsEMANA*/
+/*TODO: SUBSTITUR A FUNÇÃO getDiaSemana*/
 
 function getDiaSemana(objdia) {
     let diasSemana = "";
