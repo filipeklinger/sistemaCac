@@ -336,7 +336,7 @@ function jsonParteHorariosDisponiveis(resposta, corpo) {
             '                    <td class="col-sm-2 col-md-2">cadastrada</td>\n' +
             '                    <td class="col-sm-2 col-md-2">nesta</td>\n' +
             '                    <td class="col-sm-2 col-md-2">sala</td>\n' +
-            '                    <td class="col-sm-2 col-md-2">&nbsp;=)</td>\n' +
+            '                    <td class="col-sm-2 col-md-2"><span class="fa fa-smile-o"></span></td>\n' +
             '                </tr>');
     }
 }
@@ -439,9 +439,9 @@ function parseAlunos(resposta, corpo) {
 
     let listaVazia =
         '<tr>\n' +
+        '                    <td  style="font-size: x-large; font-weight: bold"><span class="fa fa-frown-o"></span> NÃO EXISTEM ALUNOS NESTA CATEGORIA</td>\n' +
         '                    <td></td>\n' +
-        '                    <td>NÃO EXISTEM ALUNOS NESTA CATEGORIA</td>\n' +
-        '                    <td> </td>\n' +
+        '                    <td></td>\n' +
         '                </tr>';
     if(listaAlunos.length < 2) listaAlunos = listaVazia;
     if(listaEspera.length < 2) listaEspera = listaVazia;
@@ -931,12 +931,12 @@ function jsonParseUsuarios(resposta, corpo) {
         corpo.append(
             '<tr>\n' +
             '\n' +
-            '                    <td>:( NÃO</td>\n' +
-            '                    <td>ESIXTEM</td>\n' +
-            '                    <td>USUÁRIOS </td>\n' +
-            '                    <td>NESTA</td>\n' +
-            '                    <td>CATEGORIA</td>\n' +
-            '                    <td>---</td>\n' +
+            '                    <td style="font-size: x-large; font-weight: bold"><span class="fa fa-frown-o" ></span> NÃO EXISTEM ALUNOS NESTA CATEGORIA</td>\n' +
+            '                    <td></td>\n' +
+            '                    <td></td>\n' +
+            '                    <td></td>\n' +
+            '                    <td></td>\n' +
+            '                    <td></td>\n' +
             '                </tr>');
     }
 }

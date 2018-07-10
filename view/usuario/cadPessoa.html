@@ -5,8 +5,9 @@
         <div class="container-fluid">
             <div>
                 <ul class="nav navbar-nav">
-                    <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-chevron-left"></i> Voltar para
-                        Página Inicial</a>
+                    <li><a href="index.php?pag=Usuarios"><i class="glyphicon glyphicon-chevron-left"></i> Voltar a
+                        Gerência de Usuarios
+                    </a>
                     </li>
                 </ul>
             </div>
@@ -34,7 +35,7 @@
                 <!--Nivel de acesso-->
                 <div class="col-md-3" style="padding: 16px">
                     <select id="nv_acesso" class="selectCool" name="nv_acesso" required="required">
-                        <option disabled selected>Nível de Acesso ? </option>
+                        <option disabled selected>Nível de Acesso ?</option>
                         <option value=3>Aluno</option>
                         <option value=2>Oficineiro</option>
                         <option value=1>Administrador</option>
@@ -94,7 +95,8 @@
                             <option value="4">Para Recados</option>
                         </select>
                     </div>
-                    <input autocomplete="false" id="resp_tel" maxlength="11" minlength="10" name="resp_tel" type="number"
+                    <input autocomplete="false" id="resp_tel" maxlength="11" minlength="10" name="resp_tel"
+                           type="number"
                            placeholder="Ex. 21982189999"
                            class="form-control input-md" required>
                 </div>
@@ -142,7 +144,8 @@
                 <div class="form-group col-md-8 col-lg-push-2">
                     <label class="control-label" for="matricula">Matrícula</label>
                     <div class="">
-                        <input autocomplete="false" maxlength="10" minlength="7" id="matricula" name="matricula" type="number"
+                        <input autocomplete="false" maxlength="10" minlength="7" id="matricula" name="matricula"
+                               type="number"
                                placeholder="Somente números"
                                class="form-control input-md">
                     </div>
@@ -191,7 +194,8 @@
             <div autocomplete="false" class="form-group col-md-8 col-lg-push-2">
                 <label class=" control-label" for="complemento">Complemento</label>
                 <div class="">
-                    <input autocomplete="false" id="complemento" name="complemento" type="text" placeholder="Ex. sobrado"
+                    <input autocomplete="false" id="complemento" name="complemento" type="text"
+                           placeholder="Ex. sobrado"
                            class="form-control input-md">
                 </div>
             </div>
@@ -274,7 +278,8 @@
             <div class="form-group col-md-8 col-lg-push-2">
                 <label class="control-label" for="usuario">Login</label>
                 <div class="">
-                    <input id="usuario" onkeyup="verificaUsuarioDuplicado();" name="usuario" type="text" placeholder="nomeDoUsuario"
+                    <input id="usuario" onkeyup="verificaUsuarioDuplicado();" name="usuario" type="text"
+                           placeholder="nomeDoUsuario"
                            class="form-control input-md" required="">
                 </div>
                 <div class="help-block" id="error-user"></div>
@@ -290,7 +295,8 @@
             <div class="form-group col-md-8 col-lg-push-2">
                 <label class="control-label" for="repsenha">Repita a Senha</label>
                 <div class="">
-                    <input id="repsenha" name="senha" onkeyup="verificaSenha();" type="password" placeholder="senha" class="form-control input-md"
+                    <input id="repsenha" name="senha" onkeyup="verificaSenha();" type="password" placeholder="senha"
+                           class="form-control input-md"
                            required="">
                 </div>
                 <p class="help-block" id="error-senha"></p>
@@ -299,7 +305,8 @@
 
         <!-- Submit -->
         <div class="container-fluid">
-            <input id="btn-senha" onclick="verificadores();" type="button" class="btn btn-primary btn-block" value="Cadastrar"/>
+            <input id="btn-senha" onclick="verificadores();" type="button" class="btn btn-primary btn-block"
+                   value="Cadastrar"/>
         </div>
         <br>
         <br>

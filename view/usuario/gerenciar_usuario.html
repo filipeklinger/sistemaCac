@@ -30,11 +30,6 @@
             <a href="?pag=Cad.Pessoa" type="button" class="btn btn-primary"><i
                     class="glyphicon glyphicon-plus"></i> Novo Usuário</a>
             </div>
-            <!--TODO Melhorar aparencia da caixa de pesquisa -->
-            <!--p style="padding-top: 16px;">
-                <input type="text" class="searchBox" id="searchName" onkeyup="carregaUsuarios('selectTodos')" placeholder="Buscar ...">
-                <button class="btn btn-primary" onclick="limpaPesquisa();"><span class="glyphicon glyphicon-remove"></span></button>
-            </p-->
             <div class="col-md-5 searchBox">
                 <input type="text" class="searchBox" id="searchName" onkeyup="carregaUsuarios('selectTodos')" placeholder="Buscar ...">
                 <button class="btn coolButton3" onclick="limpaPesquisa();"><span class="glyphicon glyphicon-remove"></span></button>
@@ -64,6 +59,7 @@
 
     function carregaUsuarios(requisicao) {
         let nome = $('#searchName').val();
+        /*TODO: MENSAGEM DE NÃO EXISTENCIA DE USUÁRIOS NÃO MUDA APESAR DE MUNDANÇA NO CODIGO FONTE*/
         ajaxLoadGET('control/main.php?req=' + requisicao +'&nome='+nome, jsonParseUsuarios,'#usuarios');
     }
     function limpaPesquisa() {

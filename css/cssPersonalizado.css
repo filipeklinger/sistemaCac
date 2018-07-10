@@ -251,19 +251,19 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 #contTab {
     padding: 20px;
 }
-#contato{
+#contatos{
     font-size: 12pt;
     /*padding: 50px;*/
     color: white;
     background-color: rgb(53, 54, 53);
 }
-#contato a span {
+#contatos a span {
     color: #67c6ff;
     transition: .1s ease-in-out;
     font-size: 50pt;
     padding-left: 7px;
 }
-#contato a span:hover {
+#contatos a span:hover {
     color: #216cce;
 }
 /*Login: página principal*/
@@ -456,7 +456,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     display: none;
 }
 .searchBox{
-    font-style: italic;
+    font-style: oblique;
     background-color: transparent;
     border-bottom: 2px solid black;
 }
@@ -470,7 +470,6 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 }
 
 .coolButton3 {
-    color: rgba(0, 0, 0, 0.18);
     background-color: transparent;
 }
 /*SCREEN SIZE - responsivo*/
@@ -502,6 +501,9 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     .searchBox input[type=text]{
         margin-top: 30px;
     }
+    .container{
+        margin: 15px;
+    }
 }
 
 @media screen and (max-width: 1199px) {
@@ -515,4 +517,5 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
         margin-top: 2%;
         margin-left: 15px;
     }
+
 }
