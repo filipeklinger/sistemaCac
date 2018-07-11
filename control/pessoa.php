@@ -200,6 +200,16 @@ class pessoa{
      * @throws Exception
      */
     private function insertEndereco(){
+        if($this->rua == INVALIDO){
+            $this->rua = 0;
+            $this->numero = 0;
+            $this->complemento = 0;
+            $this->bairro = 0;
+            $this->cidade = 0;
+            $this->estado = "RJ";
+            new mensagem(ERRO,"Erro ao inserir seu endereço, seu cadastro foi concluído parcialmente.<br/>".
+                                        "Faça login e insira os dados que faltaram.");
+        }
         $params = array($this->responsavelID,$this->rua,$this->numero,$this->complemento,$this->bairro,$this->cidade,$this->estado);
         $this->db->insert("pessoa_id,rua,numero,complemento,bairro,cidade,estado","endereco",$params);
     }
@@ -217,6 +227,10 @@ class pessoa{
      * @throws Exception
      */
     private function insertLogin(){
+        if($this->user == INVALIDO){
+            new mensagem(ERRO,"Erro na conexão, Dados Inválidos recebidos");
+            $this->redirecionaPagAnterior();
+        }
         $params = array($this->responsavelID,$this->user,$this->make_hash($this->senha));
         $this->db->insert("pessoa_id,usuario,senha","login",$params);
     }
