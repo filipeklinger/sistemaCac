@@ -1,6 +1,14 @@
 <?php
     session_start();
-    $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao reduzida if
+    if (!isset($_SESSION['CREATED'])) {
+        $_SESSION['CREATED'] = time();
+    } else if (time() - $_SESSION['CREATED'] > 1800) {
+        // session started more than 30 minutes ago
+        session_regenerate_id(true);    // change session ID for the current session and invalidate old session ID
+        $_SESSION['CREATED'] = time();  // update creation time
+    }
+
+$titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao reduzida if
 
     // HSTS
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
@@ -39,7 +47,7 @@
     <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- estiliza o seletor script src="bootstrap3.3.7/select/js/bootstrap-select.min.js"></script -->
     <script src="js/jsonParser.min.js"></script>
-    <!-- Aqui recebemos as msg do PHP e inserimos numa variavel JS chamada mensagem -->
+    <!-- Aqui recebemos as msg do Sistema -->
     <script type="application/x-javascript">
         <?php
         $msg = isset($_SESSION['MSG']) ? $_SESSION['MSG'] : '{"tipo":" ","desc":" "}';
