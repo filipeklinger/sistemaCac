@@ -137,7 +137,7 @@ class pessoa{
     function insertMenor(){
         $verificador = false;
         //verificando se o responsavel id esta habilidato a ter dependentes
-        $ismenor = $this->db->select("menor_idade","pessoa","pessoa_id = ?",array($this->responsavelID));
+        $ismenor = $this->db->select("menor_idade","pessoa","id_pessoa = ?",array($this->responsavelID));
         $ismenor = $ismenor[0]->menor_idade;
         if (isset($_POST['qtd_menor']) and $_POST['qtd_menor'] > 0 and $ismenor != SIM) {
             $this->parentesco = isset($_POST['parentesco']) ? $_POST['parentesco'] : INVALIDO;
