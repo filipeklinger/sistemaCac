@@ -19,12 +19,12 @@
     <!-- Form Name  -->
     <form class="form-horizontal" action="control/main.php?req=insertAluno" method="POST">
         <br>
-        <div class="formBoxContainer col-md-12 text-center">
+        <div class="formBoxContainer col-md-12">
             <div class="form-group container">
                 <h3 class="text-center col-md-12">Cadastro de Aluno em Uma Turma</h3>
 
                 <div class="col-md-12">
-                    <label for="turma">Turma: </label>
+                    <label for="turma">TURMA: </label>
                     <select class="selectCool" id="turma" name="turma" onchange="obterInfoTurma();"
                             title="Escolha uma Turma"
                             required="required">
@@ -34,38 +34,53 @@
                 </div>
 
                 <div class="col-md-12">
-                    <p><b>Dia: <span id="diaTurma"></span> <span id="horarioTurma"></span></b></p>
-                    <p><b>pré requisito: <span id="preReq"></span> </b></p>
-                    <p><b>Selecionados: <span class="selecionados">0</span> / Vagas: <span class="vagas">X</span></b></p>
+                    <p><b>DIA: </b><span id="diaTurma"></span> <span id="horarioTurma"></span></p>
+                    <p><b>PRÉ REQUISITO: </b><span id="preReq"></span></p>
+                    <p><b>VAGAS: </b><span class="vagas">X</span>
+                    </p>
                 </div>
-
                 <div class="col-md-11">
-                    <label for="searchNames">Busque Candidatos</label>
-                    <input type="text" id="searchNames" onkeyup="getCandidatosByName();" placeholder="Nome de um aluno">
-                    <br/>
-                    <input type="button" class="btn btn-primary" onclick="Desmarcar();" value="Desmarcar todos"/>
-                    <br/>
-                    <table class="table">
+                    <div class="col-md-2">
+                        <input type="button" class="btn btn-danger" onclick="Desmarcar();" value="Desmarcar todos"/>
+                    </div>
+
+                    <div class="col-md-10 searchBox">
+                        <input type="text" class="searchBox row" id="searchNames" onclick="limpaPesquisa()"
+                               onkeyup="getCandidatosByName();"
+                               placeholder="Buscar Candidados...">
+                    </div>
+                    <br>
+                    <br>
+                    <table class="table" style="margin-top: 20px">
                         <thead>
                         <tr>
-                            <th class='' >Nome</th>
-                            <th class='' style="text-align: center">Função</th>
-                            <th class='' style="text-align: center">Idade</th>
-                            <th class='' style="text-align: center">Inserir?</th>
+                            <th class=''>Nome</th>
+                            <th class=''>Função</th>
+                            <th class=''>Idade</th>
+                            <th class=''>Inserir?</th>
                         </tr>
                         </thead>
                         <tbody id="tcandidatos"></tbody>
                     </table>
+
+                    <p><b>Selecionados: <span class="selecionados">0</span> / Vagas: <span class="vagas">X</span></b>
+                    </p>
+
                 </div>
             </div>
         </div>
         <div class="col-md-12">
-            <p><b>Selecionados: <span class="selecionados">0</span> / Vagas: <span class="vagas">X</span></b></p>
-            <p class="warning">
-                Caso o numero de selecionados supere o numero de vagas os alunos serão cadastrados em ordem alfabética.
-                Para cadastrar em outra ordem cadastre um a um.
-            </p>
+            <div class="col-md-12">
+                <h4 class="text-left col-md-12 alert alert-info">
+                    <span class="glyphicon glyphicon-info-sign" style="float: left;"></span>
+                    <span class="col-md-8">
+                        Caso o número de pessoas selecionadas supere o número de vagas, os alunos serão
+                        cadastrados em ordem alfabética. Para cadastrar em outra ordem cadastre um a um.
+                    </span>
+                </h4>
+            </div>
         </div>
+
         <!-- Submit -->
         <div class="container-fluid">
             <input id="enviar" type="submit" class="btn btn-primary btn-block" value="Cadastrar"/>
@@ -77,10 +92,16 @@
 </div>
 <script type="text/javascript">
     $(document).ready(loader());
+
     function loader() {
-        ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasComVagas, '#turma',obterInfoTurma);
+        ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasComVagas, '#turma', obterInfoTurma);
         getCandidatosByName();
         getMsgs();
+    }
+
+    function limpaPesquisa() {
+        $('#searchNames').val('');
+        getCandidatosByName();
     }
 </script>
 </body>

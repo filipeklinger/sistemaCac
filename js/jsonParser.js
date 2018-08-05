@@ -940,3 +940,9 @@ function jsonParseUsuarios(resposta, corpo) {
             '                </tr>');
     }
 }
+function slideTo(value) {
+    document.querySelector('#'+value).scrollIntoView({
+        behavior: 'smooth'
+
+    });
+}
