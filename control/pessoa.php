@@ -99,7 +99,7 @@ class pessoa{
         $this->ruralino = isset($_POST['ruralino']) ? SIM : NAO;
         //------------------------Controle-----------------------------------------------
         if($this->cadastroIsBroken()){
-            $this->redirecionaPagAnterior();
+            $this->redireciona();
             return;
         }
         //---------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ class pessoa{
         $this->responsavelID = $this->insertDadosBasicos($this->nome,$this->sobrenome,$this->nv,NAO,$this->ruralino,$this->nascimento);//recuperamos o ID do adulto cadastrado
         if($this->responsavelID == null || $this->responsavelID == INVALIDO){
             new mensagem(INSERT_ERRO,"Erro ao cadastrar");
-            $this->redirecionaPagAnterior();
+            $this->redireciona();
             return;
         }
         $this->insertContato();
@@ -122,6 +122,10 @@ class pessoa{
         $this->redireciona();
     }
 
+    /**
+     * @return bool
+     * @throws Exception
+     */
     private function cadastroIsBroken(){
         //receber numero do documento, se for repetido não deixa cadastrar
         //Recebendo dados
@@ -153,6 +157,14 @@ class pessoa{
         if($this->rua == INVALIDO){
             new mensagem(ERRO,"Erro na conexão, Dados Inválidos recebidos");
             return true;
+        }
+        //ultima verificação "Pessoa se cadastrando 2 vezes ??"
+        $documentos = json_decode($this->db->select("numero_documento","documento"));
+        for ($i=0;$i<sizeof($documentos);$i++){
+            if($documentos[$i]->numero_documento == $this->docNumber){
+                new mensagem(ERRO,"Cadastro já existente no sistema, caso precise recuperar seu acesso entre em contato com o CAC");
+                return true;
+            }
         }
         return false;
     }
