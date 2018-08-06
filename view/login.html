@@ -21,9 +21,9 @@
         </div>
         <div class="row text-center">
             <br/>
-            <a href="#listaOficinas" class="coolButton2"> Oficinas Disponíveis </a>
+            <button onclick="slideTo('listaOficinas')" class="coolButton2"> Oficinas Disponíveis </button>
             &nbsp;&nbsp;&nbsp;
-            <a href="#MainFooter" class="coolButton2"> Contato </a>
+            <button onclick="slideTo('MainFooter')" class="coolButton2"> Contato </button>
         </div>
         <br>
     </div>
@@ -51,7 +51,7 @@
         <div class="col-md-6">
             <span> Telefone: +55 (21) 2682-2447</span><br>
             <span> Endereço: BR 465, km 7, 2007 (Antiga Estrada Rio São-Paulo) - Seropédica/RJ</span><br><br>
-            <span>&copy;CAC CENTRO DE ARTE E CULTURA | TODOS OS DIREITOS RESERVADOS</span>
+            <span>&copy; CAC CENTRO DE ARTE E CULTURA | TODOS OS DIREITOS RESERVADOS</span>
         </div>
         <div class="col-md-6 text-right">
 
@@ -72,5 +72,6 @@
         ajaxLoadGET('control/main.php?req=selectPeriodoAtual', parsePeriodoText, '#periodoAtual');
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', listaMarota, '#t_oficinas');
     }
+
 </script>
 </body>
