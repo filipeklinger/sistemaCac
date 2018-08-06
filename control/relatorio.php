@@ -38,4 +38,22 @@ class relatorio{
         $group = " GROUP BY pessoa.nome, pessoa.sobrenome";
         return $this->db->select($columns,"pessoa,aluno_turma,turma,oficina",$whereClause.$group,null,"pessoa.nome",ASC);
     }
+
+    /**
+     * @throws Exception
+     */
+    public function getAlunosCadastrados(){
+            //alunos da rural
+            $ruralino = json_decode($this->db->select("count(*) as n","ruralino"));
+            //crianças
+            $crianca = json_decode($this->db->select("count(*) as n","menor_idade"));
+            //total de cadastros
+            $total = json_decode($this->db->select("count(*) as n","pessoa"));
+            $json = new stdClass();
+            $json->ruralino = $ruralino[0]->n;
+            $json->crianca = $crianca[0]->n;
+            $json->total = $total[0]->n;
+
+            return json_encode($json,JSON_UNESCAPED_UNICODE);
+    }
 }

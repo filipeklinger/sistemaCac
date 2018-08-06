@@ -270,6 +270,10 @@ class main{
                 $relatorio = new relatorio();
                 echo $relatorio->getAlunosHistorico();
                 break;
+            case "selectAlunosCadastrados":
+                $relatorio = new relatorio();
+                echo $relatorio->getAlunosCadastrados();
+                break;
             //USUARIO---------------------------------------------------------------------------------------------------
             case "selecUsuarioLogado":
                 login::getUser();

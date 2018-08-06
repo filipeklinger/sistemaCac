@@ -27,6 +27,10 @@
                 </select>
             </div>
 
+            <h3 style="padding-top: 66px;">Cadastros</h3>
+            <P>Alunos da Rural: <span id="cadastrosRuralino"></span> </P>
+            <p>Crianças: <span id="cadastrosCrianca"></span> </p>
+            <p>Total de cadastros: <span id="totalCadastros"></span> </p>
 
             <h3 class="text-center">Alunos por Oficina</h3>
             <p>Total matriculado em oficinas: <span id="totalAlunosAtivos"></span> Alunos.</p>
@@ -70,7 +74,9 @@
 
     function loaderRelatorios() {
         ajaxLoadGET('control/main.php?req=selectTempoHistorico', parsePeriodosSelect, '#periodo', getPeriodoSelecionado);
+        ajaxLoadGET('control/main.php?req=selectAlunosCadastrados', parseCadastros, '#cadastrosRuralino');
         ajaxLoadGET('control/main.php?req=selectAlunosHistorico', parseAlunosHistorico, '#alunos');
+
     }
 
     function getPeriodoSelecionado() {
@@ -107,6 +113,13 @@
                 '</tr>');
             soma += parseInt(objJson[i].alunos);
         }
+    }
+
+    function parseCadastros(resposta) {
+        let objJson = JSON.parse(resposta);
+        $('#cadastrosRuralino').empty().append(objJson.ruralino);
+        $('#cadastrosCrianca').empty().append(objJson.crianca);
+        $('#totalCadastros').empty().append(objJson.total);
     }
 </script>
 </body>
