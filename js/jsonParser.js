@@ -139,6 +139,18 @@ function parseTurmaHorario(resposta, corpo) {
             '<td class=\'col-md-1\'>' + objJson[i].vagas + '</td>' +
             '</tr>');
     }
+    if(objJson.length < 1){
+        corpo.append(
+            '<tr>' +
+            '<td class=\'col-md-2\' style="text-transform: capitalize;">Sem turmas disponíveis</td>' +
+            '<td class=\'col-md-2\'></td>' +
+            '<td class=\'col-md-2\'></td>' +
+            '<td class=\'col-md-2\'></td>' +
+            '<td class=\'col-md-1\' style="text-transform: capitalize;"></td>' +
+            '<td class=\'col-md-2\' style="text-transform: capitalize;"></td>' +
+            '<td class=\'col-md-1\'></td>' +
+            '</tr>');
+    }
 
 }
 
