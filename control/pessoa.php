@@ -97,12 +97,20 @@ class pessoa{
         $this->receiveAccessLevel();
         $this->receiveDadosBasicos();
         $ruralino = isset($_POST['ruralino']) ? SIM : NAO;
+        //------------------------Controle-----------------------------------------------
+        if($this->cadastroIsBroken()){
+            $this->redirecionaPagAnterior();
+            return;
+        }
+        //---------------------------------------------------------------------------------
 
         $this->responsavelID = $this->insertDadosBasicos($this->nome,$this->sobrenome,$this->nv,NAO,$ruralino,$this->nascimento);//recuperamos o ID do adulto cadastrado
         if($this->responsavelID != null and $this->responsavelID != INVALIDO){
             new mensagem(SUCESSO,$this->nome." cadastrado com sucesso");
         }else{
             new mensagem(INSERT_ERRO,"Erro ao cadastrar");
+            $this->redirecionaPagAnterior();
+            return;
         }
         //---------------Contato------------------------------------------------------------------
         $this->receiveContato();
@@ -128,6 +136,19 @@ class pessoa{
         //----------------------------------------------------------
         $this->redireciona();
 
+    }
+
+    private function cadastroIsBroken(){
+        if($this->nome == INVALIDO || $this->sobrenome == INVALIDO){
+            new mensagem(INSERT_ERRO,"Erro ao cadastrar, nome não foi recebido corretamente.");
+            return true;
+        }
+        $this->receiveLogin();
+        if($this->user == INVALIDO){
+            new mensagem(INSERT_ERRO,"Erro ao cadastrar, usuário não foi recebido corretamente.");
+            return true;
+        }
+        return false;
     }
 
     /**
