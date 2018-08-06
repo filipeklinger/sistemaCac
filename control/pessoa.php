@@ -20,7 +20,7 @@ class pessoa{
     //Endereco
     private $rua,$numero,$complemento,$bairro,$cidade,$estado;
     //ruralino
-    private $matricula,$curso,$bolsista;
+    private $matricula,$curso,$bolsista,$ruralino;
     //Caso menor
     private $responsavelID,$parentesco = INVALIDO;//inicializamos como invalido
     //login
@@ -89,14 +89,14 @@ class pessoa{
     public function verificaUsuarioDuplicado($nomeDeUsuario){
         return $this->db->select("count(*) as usuario","login","usuario like ?",array('%'.$nomeDeUsuario.'%'));
     }
+
     /**
      * um usuário pode cadastrar varios dependentes (menores de idade)
      * @throws Exception
      */
     public function setPessoa(){
         $this->receiveAccessLevel();
-        $this->receiveDadosBasicos();
-        $ruralino = isset($_POST['ruralino']) ? SIM : NAO;
+        $this->ruralino = isset($_POST['ruralino']) ? SIM : NAO;
         //------------------------Controle-----------------------------------------------
         if($this->cadastroIsBroken()){
             $this->redirecionaPagAnterior();
@@ -104,48 +104,54 @@ class pessoa{
         }
         //---------------------------------------------------------------------------------
 
-        $this->responsavelID = $this->insertDadosBasicos($this->nome,$this->sobrenome,$this->nv,NAO,$ruralino,$this->nascimento);//recuperamos o ID do adulto cadastrado
-        if($this->responsavelID != null and $this->responsavelID != INVALIDO){
-            new mensagem(SUCESSO,$this->nome." cadastrado com sucesso");
-        }else{
+        $this->responsavelID = $this->insertDadosBasicos($this->nome,$this->sobrenome,$this->nv,NAO,$this->ruralino,$this->nascimento);//recuperamos o ID do adulto cadastrado
+        if($this->responsavelID == null || $this->responsavelID == INVALIDO){
             new mensagem(INSERT_ERRO,"Erro ao cadastrar");
             $this->redirecionaPagAnterior();
             return;
         }
-        //---------------Contato------------------------------------------------------------------
-        $this->receiveContato();
         $this->insertContato();
-        //---------------Documentos-----------------------------------------------------------------
-        $this->receiveDocumento();
         $this->insertDocumento();
-
-        $this->receiveEndereco();
         $this->insertEndereco();
-        //---------------------------RURALINO--------------------------
-        if (isset($_POST['ruralino']) and $_POST['ruralino'] == "on") {
-            $this->receiveRuralino();
-            $this->insertRuralino();
-        }
-
-        //-------------------LOGIN-----------------------------
-        $this->receiveLogin();
+        if ($this->ruralino == SIM) $this->insertRuralino();
         $this->insertLogin();
-
-        //-----------------Menor-Idade------------------------------
         $this->insertMenor();
-        //----------------------------------------------------------
-        $this->redireciona();
 
+        //Se chegou até aqui então é sucesso
+        new mensagem(SUCESSO,$this->nome." cadastrado com sucesso");
+        $this->redireciona();
     }
 
     private function cadastroIsBroken(){
+        //receber numero do documento, se for repetido não deixa cadastrar
+        //Recebendo dados
+        $this->receiveDadosBasicos();
+        $this->receiveLogin();
+        $this->receiveContato();
+        $this->receiveDocumento();
+        $this->receiveEndereco();
+
+        //Verificando dados
         if($this->nome == INVALIDO || $this->sobrenome == INVALIDO){
-            new mensagem(INSERT_ERRO,"Erro ao cadastrar, nome não foi recebido corretamente.");
+            new mensagem(ERRO,"Erro na conexão, Dados Inválidos recebidos");
             return true;
         }
-        $this->receiveLogin();
+
         if($this->user == INVALIDO){
-            new mensagem(INSERT_ERRO,"Erro ao cadastrar, usuário não foi recebido corretamente.");
+            new mensagem(ERRO,"Erro na conexão, Dados Inválidos recebidos");
+            return true;
+        }
+        if($this->ruralino == SIM){
+            $this->receiveRuralino();
+            if($this->matricula == INVALIDO || $this->curso == INVALIDO){
+                new mensagem(ERRO,"Erro na conexão, Dados Inválidos recebidos");
+                return true;
+            }
+
+        }
+
+        if($this->rua == INVALIDO){
+            new mensagem(ERRO,"Erro na conexão, Dados Inválidos recebidos");
             return true;
         }
         return false;
@@ -221,16 +227,6 @@ class pessoa{
      * @throws Exception
      */
     private function insertEndereco(){
-        if($this->rua == INVALIDO){
-            $this->rua = 0;
-            $this->numero = 0;
-            $this->complemento = 0;
-            $this->bairro = 0;
-            $this->cidade = 0;
-            $this->estado = "RJ";
-            new mensagem(ERRO,"Erro ao inserir seu endereço, seu cadastro foi concluído parcialmente.<br/>".
-                                        "Faça login e insira os dados que faltaram.");
-        }
         $params = array($this->responsavelID,$this->rua,$this->numero,$this->complemento,$this->bairro,$this->cidade,$this->estado);
         $this->db->insert("pessoa_id,rua,numero,complemento,bairro,cidade,estado","endereco",$params);
     }
