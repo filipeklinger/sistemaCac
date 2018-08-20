@@ -97,7 +97,7 @@
     function getPags(resposta) {
         let objJson = JSON.parse(resposta);
         let registros = objJson.total;
-        let paginas = registros/5;
+        let paginas = registros/25;
         let paginador = $('#qtdPags');
         paginador.empty();
         //aqui coloquei =1 pois nao temos a pagina 0, e a condicao de parada ficou menor igual.

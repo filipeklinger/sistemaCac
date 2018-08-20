@@ -19,3 +19,6 @@ const VISITANTE = 4;
 const SUCESSO = 200;
 const ERRO = 500;
 const INSERT_ERRO = 501;
+
+//paginador
+const REGISTROS = 25;

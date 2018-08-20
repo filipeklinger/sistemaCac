@@ -336,41 +336,11 @@ class pessoa{
      * @throws Exception
      */
     public function getProfesores(){
-        if (isset($_GET['nome'])) {
-            $nome = '%' . $_GET['nome'] . '%';
-
-            $pagna = null;
-            $registros = null;
-            $base = null;
-        } else {
-            $nome = '%%';
-
-            $pagna = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
-            $registros = 5;
-            if($pagna == 1) $base = 1;
-            else $base = $registros*$pagna;
-        }
         if($_SESSION['NIVEL'] == ADMINISTRADOR){
             //Obtemos todos os professores com left Join em Maior idade
             $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-            $prof = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso <= ?",array(2),"nome",ASC,$registros,$base);
-            //transformamos o JSON em objeto php
-            $objProf = json_decode($prof);
-            //verificmos se esse usuario esuda na rural e adicionamos as informacoes necessarias
-            for($i=0;$i< sizeof($objProf);$i++){
-                if($objProf[$i]->ruralino == 1){
-                    $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objProf[$i]->id_pessoa)));
+            $prof = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso <= ?",array(2),"nome",ASC);
 
-                    if(sizeof($ruralino)> 0){//verificacao adicional para verificar se existe a tupla indicada
-                        $objProf[$i]->curso = $ruralino[0]->curso;
-                        $objProf[$i]->bolsista = $ruralino[0]->bolsista;
-                    }else{
-                        $objProf[$i]->curso = null;
-                        $objProf[$i]->bolsista = null;
-                    }
-                }
-            }
-            $prof = json_encode($objProf,JSON_UNESCAPED_UNICODE);
         }else{
             $prof = $this->db->select("id_pessoa,nome,sobrenome","pessoa","id_pessoa = ?",array($_SESSION['ID']));
         }
@@ -383,44 +353,18 @@ class pessoa{
      * @throws Exception
      */
     public function getCandidatos(){
-        if (isset($_GET['nome'])) {
-            $nome = '%' . $_GET['nome'] . '%';
-
-            $pagna = null;
-            $registros = null;
-            $base = null;
-        } else {
-            $nome = '%%';
-
             $pagna = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
             $registros = 5;
             if($pagna == 1) $base = 1;
             else $base = $registros*$pagna;
-        }
+
         //Obtemos todos os Candidatos com left Join em Maior idade
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso >= ? and nome like ?",array(3,$nome),"nome",ASC,$registros,$base);
+        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso >= ?",array(3),"nome",ASC,REGISTROS,$base);
         //transformamos o JSON em objeto php
         $objCand = json_decode($cand);
         //verificmos se esse administrador esuda na rural e adicionamos as informacoes necessarias
-        for($i=0;$i< sizeof($objCand);$i++){
-            //aqui verificamos se o candidato e da rural
-            if($objCand[$i]->ruralino == 1){
-                $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objCand[$i]->id_pessoa)));
-                $objCand[$i]->curso = $ruralino[0]->curso;
-                $objCand[$i]->bolsista = $ruralino[0]->bolsista;
 
-            }
-            //aqui verificamos se o candidato e menor de idade e buscamos seu responsavel
-            if($objCand[$i]->menor_idade == 1){
-                $respsavel = json_decode($this->db->select("nome,responsavel_parentesco","menor_idade,pessoa","responsavel_id = id_pessoa and pessoa_id = ?",array($objCand[$i]->id_pessoa)));
-                if($respsavel != null and sizeof($respsavel)>0){
-                    $objCand[$i]->responsavel = $respsavel[0]->nome;
-                    $objCand[$i]->parentesco = $respsavel[0]->responsavel_parentesco;
-                }
-
-            }
-        }
         $cand = json_encode($objCand,JSON_UNESCAPED_UNICODE);
         return $cand;
     }
@@ -439,27 +383,17 @@ class pessoa{
             $nome = '%%';
 
             $pagna = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
-            $registros = 5;
             if($pagna == 1) $base = 1;
-            else $base = $registros*$pagna;
+            else $base = REGISTROS*$pagna;
         }
 
         //--------------------------------------------------------
         //Obtemos todos os Candidatos com left Join em Maior idade
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nome like ?",array($nome),"nome",ASC,$registros,$base);
+        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nome like ?",array($nome),"nome",ASC,REGISTROS,$base);
         //transformamos o JSON em objeto php
         $objCand = json_decode($cand);
-        //verificmos se esse administrador esuda na rural e adicionamos as informacoes necessarias
-        for($i=0;$i< sizeof($objCand);$i++){
-            //aqui verificamos se o candidato e da rural
-            if($objCand[$i]->ruralino == 1){
-                $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objCand[$i]->id_pessoa)));
-                $objCand[$i]->curso = $ruralino[0]->curso;
-                $objCand[$i]->bolsista = $ruralino[0]->bolsista;
 
-            }
-        }
         $cand = json_encode($objCand,JSON_UNESCAPED_UNICODE);
         return $cand;
     }
