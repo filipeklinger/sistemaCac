@@ -57,6 +57,7 @@
     <ul class="pagination" id="qtdPags">
         <li><a href="#" onclick="trocaPag(1)">1</a></li>
     </ul>
+
 </div>
 <script type="text/javascript">
     var pagina = 1;
@@ -89,7 +90,6 @@
         $('#searchName').val('');
         trocaReq('selectTodos');
     }
-
     function getPags(resposta) {
         let objJson = JSON.parse(resposta);
         let registros = objJson.total;

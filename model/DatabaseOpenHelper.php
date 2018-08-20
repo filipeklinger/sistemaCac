@@ -82,9 +82,10 @@ class Database{
         }
 
         //Paginator
-        if ($offset != null and sizeof($limit) > 0) {
+        if ($offset != null and (is_array($limit) && sizeof($limit) > 0 | is_numeric($limit) && $limit > 0)) {
             $query .=" LIMIT ". intval($limit). " OFFSET ".intval($offset);
         }
+
         //Preparing
         $PDO = $this->databaseObj;
         $stmt = $PDO->prepare($query);
@@ -93,7 +94,6 @@ class Database{
             for ($i = 0; $i < sizeof($whereArgs); $i++) {
                 $whereArgs[$i] = $this->antiInjection($whereArgs[$i]);
                 $stmt->bindParam($i + 1, $whereArgs[$i]);
-
             }
         }
 
