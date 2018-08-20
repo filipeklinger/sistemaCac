@@ -9,12 +9,12 @@
                 <ul class="nav navbar-nav">
                     <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página
                         Inicial</a></li>
-                    <li class="active"><a data-toggle="tab" onclick="carregaUsuarios('selectTodos')" href="#">Todos</a></li>
-                    <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectCandidato')" href="#">Gerenciar
+                    <li class="active"><a data-toggle="tab" onclick="trocaReq('selectTodos')" href="#">Todos</a></li>
+                    <li class=""><a data-toggle="tab" onclick="trocaReq('selectCandidato')" href="#">Gerenciar
                         Candidato</a></li>
-                    <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectProfessor')" href="#">Gerenciar
+                    <li class=""><a data-toggle="tab" onclick="trocaReq('selectProfessor')" href="#">Gerenciar
                         Professores</a></li>
-                    <li class=""><a data-toggle="tab" onclick="carregaUsuarios('selectAdministrador')" href="#">Gerenciar
+                    <li class=""><a data-toggle="tab" onclick="trocaReq('selectAdministrador')" href="#">Gerenciar
                         Adminstradores</a></li>
                 </ul>
             </div>
@@ -32,7 +32,8 @@
                     class="glyphicon glyphicon-plus"></i> Novo Usuário</a>
             </div>
             <div class="col-md-5 searchBox">
-                <input type="text" class="searchBox" id="searchName" onclick="limpaPesquisa();" onkeyup="carregaUsuarios('selectTodos');" placeholder="Buscar ...">
+                <input type="text" class="searchBox" id="searchName" onclick="limpaPesquisa();" placeholder="Buscar ...">
+                <button type="button" onclick="pesquisa()">Pesquisa</button>
             </div>
 
             <br>
@@ -52,17 +53,57 @@
 
         </div>
     </div>
+
+    <ul class="pagination" id="qtdPags">
+        <li><a href="#" onclick="trocaPag(1)">1</a></li>
+        <li><a href="#" onclick="trocaPag(2)">2</a></li>
+        <li><a href="#" onclick="trocaPag(3)">3</a></li>
+        <li><a href="#" onclick="trocaPag(4)">4</a></li>
+        <li><a href="#" onclick="trocaPag(5)">5</a></li>
+    </ul>
 </div>
 <script type="text/javascript">
-    $(document).ready(carregaUsuarios("selectTodos"));
+    var pagina = 1;
+    var requisicao = "selectTodos";
 
-    function carregaUsuarios(requisicao) {
+    $(document).ready(usuariosLoader());
+
+    function usuariosLoader() {
+        carregaUsuarios();
+        ajaxLoadGET('control/main.php?req=selectAlunosCadastrados', getPags, '#cadastrosRuralino');
+    }
+
+    function trocaPag(pag) {
+        pagina = pag;
+        carregaUsuarios();
+    }
+    function trocaReq(req) {
+        requisicao=req;
+        pagina=1;
+        carregaUsuarios();
+    }
+    function carregaUsuarios() {
+        ajaxLoadGET('control/main.php?req=' + requisicao +'&pagina='+pagina, jsonParseUsuarios,'#usuarios');
+    }
+    function pesquisa() {
         let nome = $('#searchName').val();
         ajaxLoadGET('control/main.php?req=' + requisicao +'&nome='+nome, jsonParseUsuarios,'#usuarios');
     }
     function limpaPesquisa() {
         $('#searchName').val('');
-        carregaUsuarios('selectTodos');
+        trocaReq('selectTodos');
+    }
+
+    function getPags(resposta) {
+        let objJson = JSON.parse(resposta);
+        let registros = objJson.total;
+        let paginas = registros/5;
+        let paginador = $('#qtdPags');
+        paginador.empty();
+        //aqui coloquei =1 pois nao temos a pagina 0, e a condicao de parada ficou menor igual.
+        for(let i=1;i<=paginas;i++){
+            paginador.append('<li><a href="#" onclick="trocaPag('+i+')">'+i+'</a></li>');
+        }
     }
 </script>
 </body>
