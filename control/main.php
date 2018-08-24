@@ -109,6 +109,10 @@ class main{
                 $pess = new pessoa();
                 echo $pess->getTodos();
                 break;
+            case "getPageNumber":
+                $pess = new pessoa();
+                echo $pess->getPageNumber();
+                break;
             case "selectPessoaById":
                 $pess = new pessoa();
                 echo $pess->getPessoaById($_GET['id']);

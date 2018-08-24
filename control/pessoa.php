@@ -368,6 +368,29 @@ class pessoa{
         $cand = json_encode($objCand,JSON_UNESCAPED_UNICODE);
         return $cand;
     }
+
+    /**
+     * @throws Exception
+     */
+    public function getPageNumber(){
+        $nv = isset($_GET['nivel']) ? $_GET['nivel'] : 'selectTodos';
+        $pageNumber = "";
+        switch ($nv){
+            case 'selectTodos':
+                $pageNumber = $this->db->select("count(*) as total","pessoa",null,null,"nome",ASC);
+                break;
+            case 'selectCandidato':
+                $pageNumber = $this->db->select("count(*) as total","pessoa","nv_acesso >= ?",array(3),"nome",ASC);
+                break;
+            case 'selectProfessor':
+                $pageNumber = $this->db->select("count(*) as total","pessoa","nv_acesso <= ?",array(2),"nome",ASC);
+                break;
+            case 'selectAdministrador':
+                $pageNumber = $this->db->select("count(*) as total","pessoa","nv_acesso = ?",array(1),"nome",ASC);
+                break;
+        }
+        return $pageNumber;
+    }
     /**
      * @return string JSON
      * @throws Exception
