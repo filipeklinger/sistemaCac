@@ -82,7 +82,7 @@ class Database{
         }
 
         //Paginator
-        if ($offset != null and sizeof($limit) > 0) {
+        if ($offset != null and (is_array($limit) && sizeof($limit)>0 | is_numeric($limit) && $limit >0)) {
             $query .=" LIMIT ". intval($limit). " OFFSET ".intval($offset);
         }
         //Preparing
