@@ -83,7 +83,7 @@
         ajaxLoadGET(urlControler, getPags, '#cadastrosRuralino');
     }
     function carregaUsuarios() {
-        ajaxLoadGET('control/main.php?req=' + requisicao +'&pagina='+pagina, jsonParseUsuarios,'#usuarios');
+        ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + requisicao +'&pagina='+pagina, jsonParseUsuarios,'#usuarios');
     }
     function pesquisa() {
         let nome = $('#searchName').val();
