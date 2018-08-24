@@ -66,7 +66,7 @@
 
     function usuariosLoader() {
         carregaUsuarios();
-        ajaxLoadGET('control/main.php?req=selectAlunosCadastrados', getPags, '#cadastrosRuralino');
+        ajaxLoadGET('control/main.php?req=getPageNumber', getPags, '#cadastrosRuralino');
     }
 
     function trocaPag(pag) {
@@ -77,6 +77,10 @@
         requisicao=req;
         pagina=1;
         carregaUsuarios();
+        //recarregando o paginador
+        let urlControler = 'control/main.php?req=getPageNumber&nivel='+requisicao;
+        console.log("URL: "+urlControler);
+        ajaxLoadGET(urlControler, getPags, '#cadastrosRuralino');
     }
     function carregaUsuarios() {
         ajaxLoadGET('control/main.php?req=' + requisicao +'&pagina='+pagina, jsonParseUsuarios,'#usuarios');
@@ -92,7 +96,8 @@
 
     function getPags(resposta) {
         let objJson = JSON.parse(resposta);
-        let registros = objJson.total;
+        let registros = objJson[0].total;
+        console.log("Registros: "+registros);
         let paginas = registros/25;
         let paginador = $('#qtdPags');
         paginador.empty();
