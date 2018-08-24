@@ -370,6 +370,7 @@ class pessoa{
     }
 
     /**
+     * Retorna o numero de registros dado um filtro
      * @throws Exception
      */
     public function getPageNumber(){
@@ -391,13 +392,24 @@ class pessoa{
         }
         return $pageNumber;
     }
+
     /**
      * @return string JSON
      * @throws Exception
      */
     public function getTodos(){
+        $primeiroNome = "%%";
+        $ultimoNome = "%%";
         if (isset($_GET['nome'])) {
-            $nome = '%' . $_GET['nome'] . '%';
+
+            //$nome = '%' . $_GET['nome'] . '%';
+            $nome = $_GET['nome'];
+            $partes = explode(" ",$nome);
+
+            $primeiroNome = '%'.$partes[0].'%';
+            $ultimoNome = "";
+            if(sizeof($partes)>1) $ultimoNome = $partes[sizeof($partes)-1];
+            $ultimoNome = '%'.$ultimoNome.'%';
 
             $pagna = null;
             $registros = null;
@@ -413,7 +425,7 @@ class pessoa{
         //--------------------------------------------------------
         //Obtemos todos os Candidatos com left Join em Maior idade
         $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nome like ?",array($nome),"nome",ASC,REGISTROS,$base);
+        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nome like ? and sobrenome like ?",array($primeiroNome,$ultimoNome),"nome",ASC,REGISTROS,$base);
         //transformamos o JSON em objeto php
         $objCand = json_decode($cand);
 
