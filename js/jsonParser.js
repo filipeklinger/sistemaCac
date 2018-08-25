@@ -1034,15 +1034,16 @@ function pesquisa() {
 
 
 function pesquisaCad() {
-    $('#bt-pesquisa').attr("disabled", "disabled");//importante para nao envia 2 requisicoes iguais
+    $('#bt-cad').attr("disabled", "disabled");//importante para nao envia 2 requisicoes iguais
     let nome = $('#searchNames').val();
-    ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + nivel + '&nome=' + nome, jsonParseUsuarios, '#usuarios');
+    getCandidatosByName();
 }
 
 
-function limpaPesquisa() {
-    $('#bt-cad').removeAttr("disabled");
-    $('#searchName').val('');
+function limpaPesquisa(btn,search) {
+    $('#'+btn).removeAttr("disabled");
+    $('#'+search).val('');
+    console.log("ok");
     //trocaReq('selectTodos');
 }
 

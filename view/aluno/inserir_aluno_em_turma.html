@@ -57,13 +57,13 @@
 
                         <div class="col-lg-6 smallScreenSpaceCorrection">
                             <div class="input-group">
-                    <span class="input-group-btn">
-                        <button id="bt-cad" class="btn btn-primary" type="button"
-                                onclick="getCandidatosByName();">Buscar</button>
-                    </span>
+                                <span class="input-group-btn">
+                                     <button id="bt-cad" class="btn btn-primary" type="button" onclick="pesquisaCad();"
+                                             disabled>Buscar</button>
+                                </span>
                                 <div class="searchBox">
                                     <input type="text" class="form-control" id="searchNames"
-                                           onclick="limpaPesquisa()"
+                                           onclick="limpaPesquisa('bt-cad','searchNames')"
                                            placeholder="Nome do Usuário ...">
                                 </div>
                             </div><!-- /input-group -->
@@ -143,11 +143,6 @@
         getCandidatosByName();
         getMsgs();
         ajaxLoadGET('control/main.php?req=getPageNumber&nivel=' + nivel, setPaginador, '#cadastrosRuralino');
-    }
-
-    function limpaPesquisa() {
-        $('#searchNames').val('');
-        getCandidatosByName();
     }
 
     function trocaPagCad(pag) {
