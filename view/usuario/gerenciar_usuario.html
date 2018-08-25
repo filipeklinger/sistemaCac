@@ -52,16 +52,25 @@
 
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-4"></div>
-    <ul class="pagination" id="paginador" style="padding: 40px;">
-        <li><a href="#" onclick="trocaPag(1)" id="goFirst">&laquo;</a></li>
-        <li><a href="#" onclick="trocaPag(pagina-1)" id="goBack">Anterior</a></li>
-        <li><span style="color: #0f0f0f">Pagina <span id="paginic">1</span> de <span id="pagfim">X</span></span></li>
-        <li><a href="#" onclick="trocaPag(pagina+1)" id="goNext">Proxima</a></li>
-        <li id="goLast"></li>
-    </ul>
+    <div class="container-fluid text-center">
+        <ul class="pagination coolPaginator" id="paginador">
+            <!--li><a href="#" onclick="trocaPag(1)" id="goFirst"><span class="fa fa-chevron-left"></span></a></li-->
+            <li><a href="#" onclick="trocaPag(pagina-1)" id="goBack"><span class="fa fa-chevron-left"></span></a></li>
+            <!--li><span style="color: #0f0f0f"><span id="paginic">1</span> de <span id="pagfim">N</span></span></li-->
+            <li>
+                <span>
+                    <span>
+                        <input id="paginic" type="text" onchange="trocaPag(parseInt($(this).val()))">
+                    </span>
+                    de
+                    <span id="pagfim">
+                        N
+                    </span>
+                </span>
+            </li>
+            <li><a href="#" onclick="trocaPag(pagina+1)" id="goNext"><span class="fa fa-chevron-right"></span></a></li>
+            <!--li id="goLast"></li-->
+        </ul>
     </div>
 </div>
 <script type="text/javascript">
@@ -69,7 +78,7 @@
     var pagina = 1;
     var nivel = "todos";
 
-    $(document).ready(usuariosLoader());
+    $(document).ready(usuariosLoader(), $('#paginic').val(pagina));
 
     function usuariosLoader() {
         carregaUsuarios();
@@ -78,7 +87,9 @@
 
     function trocaPag(pag) {
         if(pag <= totalpaginas && pag > 0)pagina = pag;
-        $('#paginic').empty().append(pagina);
+        //$('#paginic').empty().append(pagina);
+        console.log(pag);
+        $('#paginic').empty().val(pagina);
         carregaUsuarios();
     }
     function trocaReq(req) {

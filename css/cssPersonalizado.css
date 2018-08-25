@@ -454,6 +454,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 .closeBtnAtSmallScreen{
     display: none;
 }
+
 .searchBox{
     font-style: oblique;
     background-color: transparent;
@@ -471,6 +472,31 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 .coolButton3 {
     background-color: transparent;
 }
+
+.coolPaginator >li >a, .coolPaginator >li >span{
+    background-color: transparent;
+    border: none;
+    color: #383836;
+}
+.coolPaginator input{
+    background-color: transparent !important;
+    border-bottom: 1px solid #101010 !important;
+    max-width: 20px;
+    color: #383836 !important;
+}
+
+.coolPaginator > li > a:hover,
+.coolPaginator > li > span:hover,
+.coolPaginator > li > a:focus,
+.coolPaginator > li > span:focus{
+    color: #383836;
+    background-color: #c9c9c9;
+}
+
+.coolPaginator input:focus{
+    background-color: darkgrey;
+}
+
 /*SCREEN SIZE - responsivo*/
 @media screen and (max-height: 640px) and (max-width: 539px){
     #main div a.coolButton {
