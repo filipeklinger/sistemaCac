@@ -52,12 +52,19 @@
 
         </div>
     </div>
-
-    <ul class="pagination" id="qtdPags">
-        <li><a href="#" onclick="trocaPag(1)">1</a></li>
+    <div class="row">
+        <div class="col-md-4"></div>
+    <ul class="pagination" id="paginador">
+        <li><a href="#" onclick="trocaPag(1)" id="goFirst">&laquo;</a></li>
+        <li><a href="#" onclick="trocaPag(pagina-1)" id="goBack">Anterior</a></li>
+        <li><span style="color: #0f0f0f">Pagina <span id="paginic">1</span> de <span id="pagfim">X</span></span></li>
+        <li><a href="#" onclick="trocaPag(pagina+1)" id="goNext">Proxima</a></li>
+        <li id="goLast"></li>
     </ul>
+    </div>
 </div>
 <script type="text/javascript">
+    var totalpaginas = 1;
     var pagina = 1;
     var nivel = "todos";
 
@@ -69,7 +76,8 @@
     }
 
     function trocaPag(pag) {
-        pagina = pag;
+        if(pag <= totalpaginas && pag > 0)pagina = pag;
+        $('#paginic').empty().append(pagina);
         carregaUsuarios();
     }
     function trocaReq(req) {
@@ -97,13 +105,17 @@
     function getPags(resposta) {
         let objJson = JSON.parse(resposta);
         let registros = objJson[0].total;
-        let paginas = registros/25;
-        let paginador = $('#qtdPags');
-        paginador.empty();
+        totalpaginas = parseInt(registros / 25);
+        if(totalpaginas == 0) totalpaginas = 1;
+        $('#paginic').empty().append(pagina);
+        $('#pagfim').empty().append(totalpaginas);
+        $('#goLast').empty().append('<a href="#" onclick="trocaPag('+totalpaginas+')" id="goLast">&raquo;</a>');
+        //let paginador = $('#qtdPags');
+        //paginador.empty();
         //aqui coloquei =1 pois nao temos a pagina 0, e a condicao de parada ficou menor igual.
-        for(let i=1;i<=paginas;i++){
-            paginador.append('<li><a href="#" onclick="trocaPag('+i+')">'+i+'</a></li>');
-        }
+        //for(let i=1;i<=paginas;i++){
+        //    paginador.append('<li><a href="#" onclick="trocaPag('+i+')">'+i+'</a></li>');
+        //}
     }
 </script>
 </body>
