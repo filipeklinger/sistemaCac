@@ -93,10 +93,6 @@ class main{
                 $pess = new pessoa();
                 $pess->setPessoa();
                 break;
-            case "selectCandidato":
-                $pess = new pessoa();
-                echo $pess->getCandidatos();
-                break;
             case "selectUsuario":
                 $pess = new pessoa();
                 echo $pess->getUsuarios();
