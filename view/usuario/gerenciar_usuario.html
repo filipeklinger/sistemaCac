@@ -52,9 +52,10 @@
 
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-4"></div>
-    <ul class="pagination" id="paginador">
+    <ul class="pagination" id="paginador" style="padding: 40px;">
         <li><a href="#" onclick="trocaPag(1)" id="goFirst">&laquo;</a></li>
         <li><a href="#" onclick="trocaPag(pagina-1)" id="goBack">Anterior</a></li>
         <li><span style="color: #0f0f0f">Pagina <span id="paginic">1</span> de <span id="pagfim">X</span></span></li>
@@ -72,7 +73,7 @@
 
     function usuariosLoader() {
         carregaUsuarios();
-        ajaxLoadGET('control/main.php?req=getPageNumber&nivel='+nivel, getPags, '#cadastrosRuralino');
+        ajaxLoadGET('control/main.php?req=getPageNumber&nivel='+nivel, setPaginador, '#cadastrosRuralino');
     }
 
     function trocaPag(pag) {
@@ -81,12 +82,10 @@
         carregaUsuarios();
     }
     function trocaReq(req) {
-        nivel=req;
-        pagina=1;
+        nivel=req;pagina=1;//reseta o numero de paginas
         carregaUsuarios();
         //recarregando o paginador
-        let urlControler = 'control/main.php?req=getPageNumber&nivel='+nivel;
-        ajaxLoadGET(urlControler, getPags, '#cadastrosRuralino');
+        ajaxLoadGET('control/main.php?req=getPageNumber&nivel='+nivel, setPaginador, '#cadastrosRuralino');
     }
     function carregaUsuarios() {
         ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + nivel +'&pagina='+pagina, jsonParseUsuarios,'#usuarios');
@@ -102,7 +101,7 @@
         //trocaReq('selectTodos');
     }
 
-    function getPags(resposta) {
+    function setPaginador(resposta) {
         let objJson = JSON.parse(resposta);
         let registros = objJson[0].total;
         totalpaginas = parseInt(registros / 25);
@@ -110,12 +109,6 @@
         $('#paginic').empty().append(pagina);
         $('#pagfim').empty().append(totalpaginas);
         $('#goLast').empty().append('<a href="#" onclick="trocaPag('+totalpaginas+')" id="goLast">&raquo;</a>');
-        //let paginador = $('#qtdPags');
-        //paginador.empty();
-        //aqui coloquei =1 pois nao temos a pagina 0, e a condicao de parada ficou menor igual.
-        //for(let i=1;i<=paginas;i++){
-        //    paginador.append('<li><a href="#" onclick="trocaPag('+i+')">'+i+'</a></li>');
-        //}
     }
 </script>
 </body>
