@@ -123,7 +123,7 @@
         $('#btNome').removeAttr("onclick");
         let dadosBasicos = $('#nomeNasc');
         let sobrenome = $('#sobrenome').text();
-        let nasc = $('#nasc').text();
+        let nasc = usuarioJson[0].data_nascimento//$('#nasc').text();
         dadosBasicos.empty();
         dadosBasicos.append(
             '<form action="control/main.php?req=updateDadosBasicos&id=' + identificador + '" method="POST">' +
