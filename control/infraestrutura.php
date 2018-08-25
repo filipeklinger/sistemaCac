@@ -151,7 +151,7 @@ class infraestrutura{
     public function getSalaByPredioId($identificador){
 
         //retornamos as salas de um predio especifico
-        return $this->db->select("id_sala,nome","sala","predio_id = ?",array($identificador));
+        return $this->db->select("id_sala,nome","sala","predio_id = ? and is_ativo = 1",array($identificador));
     }
 
     private function redireciona(){
