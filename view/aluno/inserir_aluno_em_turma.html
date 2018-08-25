@@ -92,7 +92,7 @@
                             <li>
                                 <span>
                                     <span>
-                                        <input id="paginic" type="text" onclick="$(this).val('')" onkeyup="trocaPagCad(parseInt($(this).val()))">
+                                        <input id="paginic" type="text" onfocus="$(this).val('')" onblur="$(this).val(pagina)" onkeyup="trocaPagCad(parseInt($(this).val()))">
                                     </span>
                                     de
                                     <span id="pagfim">
