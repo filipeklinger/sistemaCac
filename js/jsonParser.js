@@ -15,7 +15,7 @@ $(document).ready(function () {
 function ajaxLoadGET(destino,funcaoParse,corpo,funcaoEncadeada){
     var body = $(corpo);
     //colocando uma mensagem de load para o usuario
-    body.append('<div class="loader"></div>');
+    body.prepend('<div class="loader"></div>');
     //var xhttp = new XMLHttpRequest();//Objeto Ajax
     var xhttp;
     try{
@@ -288,7 +288,7 @@ function carregadorCadTurmas() {
     //obtendo predios
     ajaxLoadGET('control/main.php?req=selectPredio', jsonParseNomePredios, selectPredioTurma);
     //obtendo professores
-    ajaxLoadGET('control/main.php?req=selectProfessor', jsonParseProfessorTurma, selectProfTurma);
+    ajaxLoadGET('control/main.php?req=selectUsuario&nivel=professor', jsonParseProfessorTurma, selectProfTurma);
     //carregando previamente os itens cadastrados no primeiro predio
     SalaFromPredioId();
     disponibilidade();
@@ -492,7 +492,7 @@ function parseTurmasComVagas(resposta, corpo,funcaoEncadeada) {
 
 function getCandidatosByName() {
     let nome = $('#searchNames').val();
-    ajaxLoadGET('control/main.php?req=selectTodos&nome='+nome, parseCandidatos, '#tcandidatos');
+    ajaxLoadGET('control/main.php?req=selectUsuario&nome='+nome, parseCandidatos, '#tcandidatos');
     function parseCandidatos(resposta, corpo) {
         let objJson = JSON.parse(resposta);
         for (i in objJson) {
@@ -927,7 +927,7 @@ function jsonParseUsuarios(resposta, corpo) {
         string +=
             '<tr>\n';
         if(objJson[i].excluido == '1'){
-            string += '     <td class="col-md-4" style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + ' - Desativado</td>\n';
+            string += '     <td class="col-md-4" style="text-transform: capitalize;color: #b92c28;">' + objJson[i].nome + " " + objJson[i].sobrenome + ' - Desativado</td>\n';
         }else{
             string += '     <td class="col-md-4" style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
         }

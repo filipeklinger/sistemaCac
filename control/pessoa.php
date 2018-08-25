@@ -298,76 +298,6 @@ class pessoa{
         if(isset($_SESSION['NIVEL']) and $_SESSION['NIVEL'] == ADMINISTRADOR) return;
         else $this->redireciona();
     }
-    /**
-     * @return string JSON
-     * @throws Exception
-     */
-    public function getAdministradores(){
-        $this->hasSelectPermission();
-        //Obtemos todos os administradores com left Join em Maior idade pois e obrigatorio ser maior de idade
-        //entretando selecionamos tambem os que nao completaram as informacoes
-        $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $adm = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento", "pessoa" . $joinClause, "nv_acesso = ?", array(1));
-
-        //transformamos o JSON em objeto php
-        $objAdm = json_decode($adm);
-        //verificmos se esse usuario esuda na rural e adicionamos as informacoes necessarias
-        for($i=0;$i< sizeof($objAdm);$i++){
-            if(isset($objAdm[$i]->ruralino) and $objAdm[$i]->ruralino == 1){
-                $ruralino = json_decode($this->db->select("curso,bolsista","ruralino","pessoa_id = ?",array($objAdm[$i]->id_pessoa)));
-                if($ruralino!= null and sizeof($ruralino) > 0){
-                    if(isset($ruralino[$i]) and $ruralino[$i] != null){
-                        $objAdm[$i]->curso = $ruralino[$i]->curso;
-                        $objAdm[$i]->bolsista = $ruralino[$i]->bolsista;
-                    }else{
-                        $objAdm[$i]->curso = "";
-                        $objAdm[$i]->bolsista = "";
-                    }
-
-                }
-            }
-        }
-        $adm = json_encode($objAdm,JSON_UNESCAPED_UNICODE);
-        return $adm;
-    }
-
-    /**
-     * @return string JSON
-     * @throws Exception
-     */
-    public function getProfesores(){
-        if($_SESSION['NIVEL'] == ADMINISTRADOR){
-            //Obtemos todos os professores com left Join em Maior idade
-            $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-            $prof = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso <= ?",array(2),"nome",ASC);
-
-        }else{
-            $prof = $this->db->select("id_pessoa,nome,sobrenome","pessoa","id_pessoa = ?",array($_SESSION['ID']));
-        }
-
-        return $prof;
-    }
-
-    /**
-     * @return string JSON
-     * @throws Exception
-     */
-    public function getCandidatos(){
-            $pagna = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
-            $registros = 5;
-            if($pagna == 1) $base = 1;
-            else $base = $registros*$pagna;
-
-        //Obtemos todos os Candidatos com left Join em Maior idade
-        $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nv_acesso >= ?",array(3),"nome",ASC,REGISTROS,$base);
-        //transformamos o JSON em objeto php
-        $objCand = json_decode($cand);
-        //verificmos se esse administrador esuda na rural e adicionamos as informacoes necessarias
-
-        $cand = json_encode($objCand,JSON_UNESCAPED_UNICODE);
-        return $cand;
-    }
 
     /**
      * Retorna o numero de registros dado um filtro
@@ -377,16 +307,16 @@ class pessoa{
         $nv = isset($_GET['nivel']) ? $_GET['nivel'] : 'selectTodos';
         $pageNumber = "";
         switch ($nv){
-            case 'selectTodos':
+            case 'todos':
                 $pageNumber = $this->db->select("count(*) as total","pessoa",null,null,"nome",ASC);
                 break;
-            case 'selectCandidato':
+            case 'candidato':
                 $pageNumber = $this->db->select("count(*) as total","pessoa","nv_acesso >= ?",array(3),"nome",ASC);
                 break;
-            case 'selectProfessor':
+            case 'professor':
                 $pageNumber = $this->db->select("count(*) as total","pessoa","nv_acesso <= ?",array(2),"nome",ASC);
                 break;
-            case 'selectAdministrador':
+            case 'administrador':
                 $pageNumber = $this->db->select("count(*) as total","pessoa","nv_acesso = ?",array(1),"nome",ASC);
                 break;
         }
@@ -394,15 +324,16 @@ class pessoa{
     }
 
     /**
+     * Obtem todos os regitros utilizando um filtro de nome
      * @return string JSON
      * @throws Exception
      */
-    public function getTodos(){
-        $primeiroNome = "%%";
-        $ultimoNome = "%%";
-        if (isset($_GET['nome'])) {
-
-            //$nome = '%' . $_GET['nome'] . '%';
+    public function getUsuarios(){
+        $nivel = isset($_GET['nivel']) ? $_GET['nivel'] : 'todos';
+        $primeiroNome = '%';
+        $ultimoNome = '%';
+        //IMPORTANTE verificar TAMANHO da string para nao gerar sobrecarga
+        if (isset($_GET['nome']) && strlen($_GET['nome'])>0) {
             $nome = $_GET['nome'];
             $partes = explode(" ",$nome);
 
@@ -415,25 +346,43 @@ class pessoa{
             $registros = null;
             $base = null;
         } else {
-            $nome = '%%';
-
             $pagna = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
             if($pagna == 1) $base = 1;
             else $base = REGISTROS*$pagna;
         }
 
-        //--------------------------------------------------------
-        //Obtemos todos os Candidatos com left Join em Maior idade
-        $joinClause = " LEFT JOIN documento ON id_pessoa = pessoa_id";
-        $cand = $this->db->select("id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido,numero_documento,tipo_documento","pessoa".$joinClause,"nome like ? and sobrenome like ?",array($primeiroNome,$ultimoNome),"nome",ASC,REGISTROS,$base);
-        //transformamos o JSON em objeto php
-        $objCand = json_decode($cand);
+        //-------------------------QUERY-------------------------------
+        $jsonUser = "";
+        $projecao = "id_pessoa,nome,sobrenome,nv_acesso,menor_idade,ruralino,data_nascimento,excluido";
+        switch ($nivel){
+            case 'todos':
+                //Obtemos todos os Candidatos com left Join em Maior idade
+                $jsonUser = $this->db->select($projecao,"pessoa","nome like ? and sobrenome like ?",array($primeiroNome,$ultimoNome),"nome",ASC,REGISTROS,$base);
+                break;
+            case 'candidato':
+                //Obtemos todos os Candidatos com left Join em Maior idade
+                $jsonUser = $this->db->select($projecao,"pessoa","nv_acesso >= ? and nome like ? and sobrenome like ?",array(3,$primeiroNome,$ultimoNome),"nome",ASC,REGISTROS,$base);
+                break;
+            case 'professor':
+                if($_SESSION['NIVEL'] == ADMINISTRADOR){
+                    //Obtemos todos os professores com left Join em Maior idade
+                    $jsonUser = $this->db->select($projecao,"pessoa","nv_acesso <= ? and nome like ? and sobrenome like ?",array(2,$primeiroNome,$ultimoNome),"nome",ASC);
 
-        $cand = json_encode($objCand,JSON_UNESCAPED_UNICODE);
-        return $cand;
+                }else{
+                    $jsonUser = $this->db->select("id_pessoa,nome,sobrenome","pessoa","id_pessoa = ?",array($_SESSION['ID']));
+                }
+                break;
+            case 'administrador':
+                if($_SESSION['NIVEL'] == ADMINISTRADOR)
+                $jsonUser = $this->db->select($projecao, "pessoa", "nv_acesso = ?", array(1));
+                break;
+        }
+
+        return $jsonUser;
     }
 
     /**
+     * Retorna os dados de uma pessoa dado seu Identificador
      * @param $identificador
      * @return string
      * @throws Exception

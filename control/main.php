@@ -93,21 +93,9 @@ class main{
                 $pess = new pessoa();
                 $pess->setPessoa();
                 break;
-            case "selectAdministrador":
+            case "selectUsuario":
                 $pess = new pessoa();
-                echo $pess->getAdministradores();
-                break;
-            case "selectProfessor":
-                $pess = new pessoa();
-                echo $pess->getProfesores();
-                break;
-            case "selectCandidato":
-                $pess = new pessoa();
-                echo $pess->getCandidatos();
-                break;
-            case "selectTodos":
-                $pess = new pessoa();
-                echo $pess->getTodos();
+                echo $pess->getUsuarios();
                 break;
             case "getPageNumber":
                 $pess = new pessoa();

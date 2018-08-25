@@ -9,12 +9,12 @@
                 <ul class="nav navbar-nav">
                     <li><a href="index.php?pag=DashBoard"><i class="glyphicon glyphicon-home"></i> Página
                         Inicial</a></li>
-                    <li class="active"><a data-toggle="tab" onclick="trocaReq('selectTodos')" href="#">Todos</a></li>
-                    <li class=""><a data-toggle="tab" onclick="trocaReq('selectCandidato')" href="#">Gerenciar
+                    <li class="active"><a data-toggle="tab" onclick="trocaReq('todos')" href="#">Todos</a></li>
+                    <li class=""><a data-toggle="tab" onclick="trocaReq('candidato')" href="#">Gerenciar
                         Candidato</a></li>
-                    <li class=""><a data-toggle="tab" onclick="trocaReq('selectProfessor')" href="#">Gerenciar
+                    <li class=""><a data-toggle="tab" onclick="trocaReq('professor')" href="#">Gerenciar
                         Professores</a></li>
-                    <li class=""><a data-toggle="tab" onclick="trocaReq('selectAdministrador')" href="#">Gerenciar
+                    <li class=""><a data-toggle="tab" onclick="trocaReq('administrador')" href="#">Gerenciar
                         Adminstradores</a></li>
                 </ul>
             </div>
@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-5 searchBox">
                 <input type="text" class="searchBox" id="searchName" onclick="limpaPesquisa();" placeholder="Buscar ...">
-                <button type="button" onclick="pesquisa()">Pesquisa</button>
+                <button id="bt-pesquisa" type="button" onclick="pesquisa()" disabled>Pesquisa</button>
             </div>
 
             <br>
@@ -45,7 +45,6 @@
                     <th class="col-md-2">Menor de Idade ?</th>
                     <th class="col-md-2">Discente da Rural ?</th>
                     <th class="col-md-2">Ver / Editar dados</th>
-                    <th class="col-md-2"></th>
                 </tr>
                 </thead>
                 <tbody id="usuarios"></tbody>
@@ -61,13 +60,13 @@
 </div>
 <script type="text/javascript">
     var pagina = 1;
-    var requisicao = "selectTodos";
+    var nivel = "todos";
 
     $(document).ready(usuariosLoader());
 
     function usuariosLoader() {
         carregaUsuarios();
-        ajaxLoadGET('control/main.php?req=getPageNumber', getPags, '#cadastrosRuralino');
+        ajaxLoadGET('control/main.php?req=getPageNumber&nivel='+nivel, getPags, '#cadastrosRuralino');
     }
 
     function trocaPag(pag) {
@@ -75,29 +74,29 @@
         carregaUsuarios();
     }
     function trocaReq(req) {
-        requisicao=req;
+        nivel=req;
         pagina=1;
         carregaUsuarios();
         //recarregando o paginador
-        let urlControler = 'control/main.php?req=getPageNumber&nivel='+requisicao;
-        console.log("URL: "+urlControler);
+        let urlControler = 'control/main.php?req=getPageNumber&nivel='+nivel;
         ajaxLoadGET(urlControler, getPags, '#cadastrosRuralino');
     }
     function carregaUsuarios() {
-        ajaxLoadGET('control/main.php?req=' + requisicao +'&pagina='+pagina, jsonParseUsuarios,'#usuarios');
+        ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + nivel +'&pagina='+pagina, jsonParseUsuarios,'#usuarios');
     }
     function pesquisa() {
+        $('#bt-pesquisa').attr("disabled","disabled");//importante para nao envia 2 requisicoes iguais
         let nome = $('#searchName').val();
-        ajaxLoadGET('control/main.php?req=' + requisicao +'&nome='+nome, jsonParseUsuarios,'#usuarios');
+        ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + nivel +'&nome='+nome, jsonParseUsuarios,'#usuarios');
     }
     function limpaPesquisa() {
+        $('#bt-pesquisa').removeAttr("disabled");
         $('#searchName').val('');
-        trocaReq('selectTodos');
+        //trocaReq('selectTodos');
     }
     function getPags(resposta) {
         let objJson = JSON.parse(resposta);
         let registros = objJson[0].total;
-        console.log("Registros: "+registros);
         let paginas = registros/25;
         let paginador = $('#qtdPags');
         paginador.empty();
