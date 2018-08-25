@@ -524,8 +524,10 @@ function calculaIdade(nascimento){
     return Math.floor(Math.ceil(Math.abs(nascimento.getTime() - hoje.getTime()) / (1000 * 3600 * 24)) / 365.25);
 }
 /*------------------------------------------------USUARIOS------------------------------*/
+var usuarioJson;
 function jsonParseInfoPessoa(json, corpo) {
     let objJson = JSON.parse(json);
+    usuarioJson = objJson;
     nome = objJson[0].nome;
     $('.nome').append(nome);
     let controleConta = $('#bloqConta');
@@ -542,7 +544,10 @@ function jsonParseInfoPessoa(json, corpo) {
     }
 
     $('#sobrenome').append(objJson[0].sobrenome);
-    $('#nasc').append(objJson[0].data_nascimento);
+    //formatando data de nascimento objJson[0].data_nascimento
+    let nascFormatada = objJson[0].data_nascimento.split('-');
+    nascFormatada = nascFormatada[2]+' / '+nascFormatada[1]+' / '+nascFormatada[0];
+    $('#nasc').append(nascFormatada);
     if (objJson[0].menor_idade === "1") {
         loadMenor();
     } else {
@@ -773,7 +778,7 @@ function editUsuarioNome() {
     $('#btNome').removeAttr("onclick");
     let dadosBasicos = $('#nomeNasc');
     let sobrenome = $('#sobrenome').text();
-    let nasc = $('#nasc').text();
+    let nasc = usuarioJson[0].data_nascimento;
     dadosBasicos.empty();
     dadosBasicos.append(
         '<form action="control/main.php?req=updateDadosBasicos&id=' + identificador + '" method="POST">' +
