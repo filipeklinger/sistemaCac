@@ -27,14 +27,28 @@
     <div id="contTab" class="tab-content" style="padding: 20px;">
         <div id="users" class="tab-pane fade in active">
 
-            <div class="col-md-2">
-            <a href="?pag=Cad.Pessoa" type="button" class="btn btn-primary"><i
-                    class="glyphicon glyphicon-plus"></i> Novo Usuário</a>
+            <div class="col-md-1">
+                <a href="?pag=Cad.Pessoa" type="button" class="btn btn-primary"><i
+                        class="glyphicon glyphicon-plus"></i> Novo Usuário</a>
             </div>
-            <div class="col-md-5 searchBox">
-                <input type="text" class="searchBox" id="searchName" onclick="limpaPesquisa();" placeholder="Buscar ...">
-                <button id="bt-pesquisa" type="button" onclick="pesquisa()" disabled>Pesquisa</button>
-            </div>
+            <!--button id="bt-pesquisa" type="button" onclick="pesquisa()" disabled>Pesquisa</button-->
+            <!--div class="col-md-5 searchBox">
+                <input type="text" class="searchBox" id="searchName" onclick="limpaPesquisa()"
+                       placeholder="Buscar ...">
+            </div-->
+
+            <div class="col-lg-6 smallScreenSpaceCorrection">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button id="bt-pesquisa" class="btn btn-primary" type="button" onclick="pesquisa()" disabled>Buscar</button>
+                    </span>
+                    <div class="searchBox">
+                        <input type="text" class="form-control searchBox" id="searchName"
+                               onclick="limpaPesquisa()"
+                               placeholder="Nome do Usuário ...">
+                    </div>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
 
             <br>
             <table class="table">

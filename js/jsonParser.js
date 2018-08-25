@@ -1003,6 +1003,7 @@ function trocaPag(pag) {
 }
 function trocaReq(req) {
     nivel=req;pagina=1;//reseta o numero de paginas
+    trocaPag(pagina);
     carregaUsuarios();
     //recarregando o paginador
     ajaxLoadGET('control/main.php?req=getPageNumber&nivel='+nivel, setPaginador, '#cadastrosRuralino');
