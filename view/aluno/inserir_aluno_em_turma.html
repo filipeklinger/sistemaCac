@@ -63,6 +63,26 @@
                         <tbody id="tcandidatos"></tbody>
                     </table>
 
+                    <div class="container-fluid text-center">
+                        <ul class="pagination coolPaginator" id="paginador">
+                            <li><a href="#" onclick="trocaPagCad(pagina-1)" id="goBack"><span
+                                    class="fa fa-chevron-left"></span></a></li>
+                            <li>
+                                <span>
+                                    <span>
+                                        <input id="paginic" type="text" onkeyup="trocaPagCad(parseInt($(this).val()))">
+                                    </span>
+                                    de
+                                    <span id="pagfim">
+                                        N
+                                    </span>
+                                </span>
+                            </li>
+                            <li><a href="#" onclick="trocaPagCad(pagina+1)" id="goNext"><span
+                                    class="fa fa-chevron-right"></span></a></li>
+                        </ul>
+                    </div>
+
                     <p><b>Selecionados: <span class="selecionados">0</span> / Vagas: <span class="vagas">X</span></b>
                     </p>
 
@@ -91,16 +111,26 @@
 
 </div>
 <script type="text/javascript">
-    $(document).ready(loader());
+    var totalpaginas = 1;
+    var pagina = 1;
+    var nivel = "todos";
+    $(document).ready(loader(), $('#paginic').val(pagina));
 
     function loader() {
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasComVagas, '#turma', obterInfoTurma);
         getCandidatosByName();
         getMsgs();
+        ajaxLoadGET('control/main.php?req=getPageNumber&nivel='+nivel, setPaginador, '#cadastrosRuralino');
     }
 
     function limpaPesquisa() {
         $('#searchNames').val('');
+        getCandidatosByName();
+    }
+    function trocaPagCad(pag) {
+        Desmarcar();
+        if(pag <= totalpaginas && pag > 0)pagina = pag;
+        $('#paginic').empty().val(pagina);
         getCandidatosByName();
     }
 </script>

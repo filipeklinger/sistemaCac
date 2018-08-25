@@ -1,26 +1,26 @@
 /*Recuperando as informações*/
-var notSupported = ['SamsungBrowser','MSIE','Trident'];
+var notSupported = ['SamsungBrowser', 'MSIE', 'Trident'];
 
 $(document).ready(function () {
     var b = navigator.userAgent;
-    for(var i in notSupported){
+    for (var i in notSupported) {
         let aux = new RegExp(notSupported[i]);
-        if(b.match(aux) != null){
+        if (b.match(aux) != null) {
             alert("Navegador Não Supportado, Você Será Redirecionado . . . .");
             window.location.replace("view/unsupported.html");
         }
     }
 });
 
-function ajaxLoadGET(destino,funcaoParse,corpo,funcaoEncadeada){
+function ajaxLoadGET(destino, funcaoParse, corpo, funcaoEncadeada) {
     var body = $(corpo);
     //colocando uma mensagem de load para o usuario
     body.prepend('<div class="loader"></div>');
     //var xhttp = new XMLHttpRequest();//Objeto Ajax
     var xhttp;
-    try{
+    try {
         // Firefox, Opera 8.0+, Safari
-        xhttp=new XMLHttpRequest();
+        xhttp = new XMLHttpRequest();
     } catch (e) {
         // Internet Explorer
         try {
@@ -34,11 +34,11 @@ function ajaxLoadGET(destino,funcaoParse,corpo,funcaoEncadeada){
             }
         }
     }
-    xhttp.onreadystatechange = function(){//toda vez que mudar estado chama a funcao
-        if(xhttp.readyState === 4){//estado 4 é quando recebe a resposta
+    xhttp.onreadystatechange = function () {//toda vez que mudar estado chama a funcao
+        if (xhttp.readyState === 4) {//estado 4 é quando recebe a resposta
             $(".loader").remove();
             body.empty();
-            funcaoParse(this.responseText,body,funcaoEncadeada);
+            funcaoParse(this.responseText, body, funcaoEncadeada);
         }
     };
     if (xhttp.overrideMimeType) {
@@ -48,6 +48,7 @@ function ajaxLoadGET(destino,funcaoParse,corpo,funcaoEncadeada){
     xhttp.send();
 
 }
+
 /*---------------------------------------------Login---------------------------------*/
 function listaMarota(resposta, corpo) {
     var objJson = JSON.parse(resposta);
@@ -108,6 +109,7 @@ function avaliaData(jsonObject) {
     }
     return JSON.stringify(dias);
 }
+
 const now = new Date();
 var periodo;
 if (now.getMonth() > 6) {
@@ -116,6 +118,7 @@ if (now.getMonth() > 6) {
 else {
     periodo = 1;
 }
+
 /*---------------------------------------------DASHBOARD------------------------------*/
 function parseUsuario(resposta) {
     var jsonObj = JSON.parse(resposta);
@@ -139,7 +142,7 @@ function parseTurmaHorario(resposta, corpo) {
             '<td class=\'col-md-1\'>' + objJson[i].vagas + '</td>' +
             '</tr>');
     }
-    if(objJson.length < 1){
+    if (objJson.length < 1) {
         corpo.append(
             '<tr>' +
             '<td class=\'col-md-2\' style="text-transform: capitalize;">Sem turmas disponíveis</td>' +
@@ -176,43 +179,45 @@ function getMenu() {
 
     $('#menu').prepend(menuString);
 }
+
 /*---------------------------------------------INFRA----------------------------------*/
-function jsonParsePredios(json,corpo) {
+function jsonParsePredios(json, corpo) {
     var objJson = JSON.parse(json);
-    for(var i in objJson){
+    for (var i in objJson) {
         corpo.append(
             '<tr>' +
-            '<td class=\'col-md-5\' style="text-transform: uppercase;"> '+ objJson[i].nome + '</td>' +
-            '<td class=\'col-md-5\'> '+ objJson[i].localizacao + '</td>' +
-            '<td class=\'col-md-1\'> '+ isAtivo(objJson[i].is_ativo) + '</td>' +
-            '<td class=\'col-md-1\'> <a href="?pag=Edit.Predio&id='+objJson[i].id_predio+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
+            '<td class=\'col-md-5\' style="text-transform: uppercase;"> ' + objJson[i].nome + '</td>' +
+            '<td class=\'col-md-5\'> ' + objJson[i].localizacao + '</td>' +
+            '<td class=\'col-md-1\'> ' + isAtivo(objJson[i].is_ativo) + '</td>' +
+            '<td class=\'col-md-1\'> <a href="?pag=Edit.Predio&id=' + objJson[i].id_predio + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
             '</tr>');
     }
 }
-function jsonParseSalas(json,corpo) {
+
+function jsonParseSalas(json, corpo) {
     var objJson = JSON.parse(json);
-    for(var i in objJson){
+    for (var i in objJson) {
         corpo.append(
             '<tr>' +
-            '<td class=\'col-md-4\' style="text-transform: capitalize;"> '+ objJson[i].sala + '</td>' +
-            '<td class=\'col-md-4\' style="text-transform: uppercase;"> '+ objJson[i].predio + '</td>' +
-            '<td class=\'col-md-2\'> '+ isAtivo(objJson[i].is_ativo) + '</td>' +
-            '<td class=\'col-md-2\'> <a href="?pag=Edit.Sala&id='+objJson[i].id_sala+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
+            '<td class=\'col-md-4\' style="text-transform: capitalize;"> ' + objJson[i].sala + '</td>' +
+            '<td class=\'col-md-4\' style="text-transform: uppercase;"> ' + objJson[i].predio + '</td>' +
+            '<td class=\'col-md-2\'> ' + isAtivo(objJson[i].is_ativo) + '</td>' +
+            '<td class=\'col-md-2\'> <a href="?pag=Edit.Sala&id=' + objJson[i].id_sala + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a> </td>' +
             '</tr>');
     }
 }
 
 function isAtivo(num) {
-    if(num == '1') return "sim";
+    if (num == '1') return "sim";
     else return "não";
 }
 
-function jsonParseNomePredios(resposta,corpo) {
+function jsonParseNomePredios(resposta, corpo) {
     var objJson = JSON.parse(resposta);
     corpo.append('<option value="" disabled selected>Selecione o prédio ao qual a sala pertence</option>');
-    for(var i in objJson){
+    for (var i in objJson) {
         corpo.append(
-            '<option value="' + objJson[i].id_predio+'">' + objJson[i].nome + '</option>' );
+            '<option value="' + objJson[i].id_predio + '">' + objJson[i].nome + '</option>');
     }
 }
 
@@ -221,26 +226,27 @@ function jsonParseNomePredios(resposta,corpo) {
 function getDiaSemana(objdia) {
     let diasSemana = "";
     if (objdia.segunda === "1") diasSemana = "Segunda";
-    if (objdia.terca === "1"){
-        if(diasSemana.length > 1) diasSemana += " e ";
+    if (objdia.terca === "1") {
+        if (diasSemana.length > 1) diasSemana += " e ";
         diasSemana += "Terça";
     }
-    if (objdia.quarta === "1"){
-        if(diasSemana.length > 1) diasSemana += " e ";
+    if (objdia.quarta === "1") {
+        if (diasSemana.length > 1) diasSemana += " e ";
         diasSemana += "Quarta";
     }
-    if (objdia.quinta === "1"){
-        if(diasSemana.length > 1) diasSemana += " e ";
+    if (objdia.quinta === "1") {
+        if (diasSemana.length > 1) diasSemana += " e ";
         diasSemana += "Quinta";
     }
-    if (objdia.sexta === "1"){
-        if(diasSemana.length > 1) diasSemana += " e ";
+    if (objdia.sexta === "1") {
+        if (diasSemana.length > 1) diasSemana += " e ";
         diasSemana += "Sexta";
     }
     return diasSemana;
 }
-function getNVacesso(nv){
-    switch (nv){
+
+function getNVacesso(nv) {
+    switch (nv) {
         case '1':
             return "Administrador";
         case '2':
@@ -256,7 +262,7 @@ function getMsgs() {
     let aviso = $('#avisos');
     let msg = JSON.parse(mensagem);
 
-    switch (msg.tipo){
+    switch (msg.tipo) {
         case "erro":
             aviso.append(msg.desc);
             aviso.addClass("alert alert-danger");
@@ -270,6 +276,7 @@ function getMsgs() {
 
     }
 }
+
 function getParameterByName(name) {
     let url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -301,7 +308,7 @@ function jsonParseOficinasTurma(resposta, corpo) {
     for (var i in objJson) {
         corpo.append('<option value="' + objJson[i].id_oficina + '">' + objJson[i].nome + '</option>');
     }
-    if(objJson.length < 1){
+    if (objJson.length < 1) {
         corpo.append('<option value="-1">Nenhuma Oficina cadastrada</option>');
     }
 }
@@ -366,13 +373,13 @@ function isAtivoX(num, obj) {
     else return " ";
 }
 
-function parsePeriodoText(resposta,corpo) {
+function parsePeriodoText(resposta, corpo) {
     let json = JSON.parse(resposta);
     $('#anoAtual').append(json.ano);
     $('#periodoAtual').append(json.periodo);
 }
 
-function parsePeriodosSelect(resposta, corpo,funcaoEncadeada) {
+function parsePeriodosSelect(resposta, corpo, funcaoEncadeada) {
     let objJson = JSON.parse(resposta);
     let opcoes = '';
     for (i in objJson) {
@@ -382,7 +389,7 @@ function parsePeriodosSelect(resposta, corpo,funcaoEncadeada) {
     }
     corpo.append(opcoes);
     //aqui executamos uma funcao 5ms apos o parse de periodo
-    setTimeout(funcaoEncadeada,5);
+    setTimeout(funcaoEncadeada, 5);
 }
 
 /*-------------------------ALUNOS---------------------------*/
@@ -393,7 +400,7 @@ function parseTurmasAtivas(resposta, corpo) {
             '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
         );
     }
-    if(objJson.length < 1){
+    if (objJson.length < 1) {
         corpo.append(
             '<option value="0" selected="selected" disabled="disabled">Nenhuma Turma Disponível</option>'
         );
@@ -403,8 +410,8 @@ function parseTurmasAtivas(resposta, corpo) {
 
 function obterAlunos() {
     let turma = $('#turma').val();
-    if(turma != null) $('#gerarPresenca').attr('href','control/main.php?req=listaPresenca&id='+turma);
-    else $('#gerarPresenca').attr('disabled','disabled');
+    if (turma != null) $('#gerarPresenca').attr('href', 'control/main.php?req=listaPresenca&id=' + turma);
+    else $('#gerarPresenca').attr('disabled', 'disabled');
     ajaxLoadGET('control/main.php?req=selectAlunosByTurmaId&id=' + turma, parseAlunos, '#alunos');
 }
 
@@ -419,15 +426,15 @@ function parseAlunos(resposta, corpo) {
         if (objJson[i].trancado === '0' && objJson[i].lista_espera === '0') {
             listaAlunos +=
                 '<tr>\n' +
-                '     <td> </td>\n'+
-                '     <td style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
+                '     <td> </td>\n' +
+                '     <td style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n' +
                 '     <td><a href="javascript:func()" onclick="confirmacaoTrancarMatricula(' + objJson[i].id_aluno + ')" class="btn btn-primary">Trancar Matricula</a></td>\n' +
                 '</tr>';
         } else if (objJson[i].trancado === '1') {
             listaTrancados +=
                 '<tr>\n' +
-                '     <td> </td>\n'+
-                '     <td style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n'+
+                '     <td> </td>\n' +
+                '     <td style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n' +
                 '     <td>Matricula Trancada</a></td>\n' +
                 '</tr>';
         } else {
@@ -436,16 +443,16 @@ function parseAlunos(resposta, corpo) {
     }
 
     //Ordenando por chegada
-    objEspera.sort(function (a,b) {
-        return a.id_aluno-b.id_aluno;
+    objEspera.sort(function (a, b) {
+        return a.id_aluno - b.id_aluno;
     });
     // agora inserindo os alunos da espera
-    for(let j in objEspera){
+    for (let j in objEspera) {
         listaEspera +=
             '<tr>\n' +
-            '     <td></td>\n'+
-            '     <td style="text-transform: capitalize;">' + objEspera[j].nome + " " + objEspera[j].sobrenome + '</td>\n'+
-            '     <td>'+(parseInt(j)+1)+'</td>\n' +
+            '     <td></td>\n' +
+            '     <td style="text-transform: capitalize;">' + objEspera[j].nome + " " + objEspera[j].sobrenome + '</td>\n' +
+            '     <td>' + (parseInt(j) + 1) + '</td>\n' +
             '</tr>';
     }
 
@@ -455,31 +462,33 @@ function parseAlunos(resposta, corpo) {
         '                    <td></td>\n' +
         '                    <td></td>\n' +
         '                </tr>';
-    if(listaAlunos.length < 2) listaAlunos = listaVazia;
-    if(listaEspera.length < 2) listaEspera = listaVazia;
-    if(listaTrancados.length < 2) listaTrancados = listaVazia;
+    if (listaAlunos.length < 2) listaAlunos = listaVazia;
+    if (listaEspera.length < 2) listaEspera = listaVazia;
+    if (listaTrancados.length < 2) listaTrancados = listaVazia;
     corpo.append(listaAlunos);
     $('#listaEspera').empty().append(listaEspera);
     $('#matTrancada').empty().append(listaTrancados);
 }
+
 /*------------------------------------------------INSERIR-ALUNO-EM-TURMA-------------------------*/
 function obterInfoTurma() {
     let idTurma = $('#turma').val();
-    ajaxLoadGET('control/main.php?req=selectTurmaById&id='+idTurma, parseTurmaInfo, '#diaTurma');
+    ajaxLoadGET('control/main.php?req=selectTurmaById&id=' + idTurma, parseTurmaInfo, '#diaTurma');
 
     function parseTurmaInfo(resposta) {
         let json = JSON.parse(resposta);
-        if(json[0].requisito.length < 2) json[0].requisito = 'Nenhum';
+        if (json[0].requisito.length < 2) json[0].requisito = 'Nenhum';
         $('#diaTurma').append(getDiaSemana(json[0]));
-        $('#horarioTurma').empty().append(json[0].inicio.slice(0,5) +'h ás '+json[0].fim.slice(0,5)+'h');
+        $('#horarioTurma').empty().append(json[0].inicio.slice(0, 5) + 'h ás ' + json[0].fim.slice(0, 5) + 'h');
         $('#preReq').empty().append(json[0].requisito);
         $('.vagas').empty().append(parseInt(json[0].num_vagas) - parseInt(json[0].ocupadas));
     }
+
     //apos trocar de turma devemos desmarcar os alunos da turma anterior
     Desmarcar();
 }
 
-function parseTurmasComVagas(resposta, corpo,funcaoEncadeada) {
+function parseTurmasComVagas(resposta, corpo, funcaoEncadeada) {
     var objJson = JSON.parse(resposta);
     for (i in objJson) {
         corpo.append(
@@ -490,26 +499,32 @@ function parseTurmasComVagas(resposta, corpo,funcaoEncadeada) {
     funcaoEncadeada();
 }
 
+
 function getCandidatosByName() {
     let nome = $('#searchNames').val();
-    ajaxLoadGET('control/main.php?req=selectUsuario&nome='+nome, parseCandidatos, '#tcandidatos');
+    let url = 'control/main.php?req=selectUsuario&nome=' + nome+'&pagina='+pagina;
+    console.log(url);
+    ajaxLoadGET(url, parseCandidatos, '#tcandidatos');
+
     function parseCandidatos(resposta, corpo) {
         let objJson = JSON.parse(resposta);
         for (i in objJson) {
-            if(objJson[i].excluido == 1) continue;//removendo usuarios desativados
+            if (objJson[i].excluido == 1) continue;//removendo usuarios desativados
             corpo.append(
                 '<tr>' +
-                '<td class=\'col-md-5\'> ' + objJson[i].nome + ' '+ objJson[i].sobrenome+ '</td>' +
+                '<td class=\'col-md-5\'> ' + objJson[i].nome + ' ' + objJson[i].sobrenome + '</td>' +
                 '<td class=\'col-md-1\'> ' + getNVacesso(objJson[i].nv_acesso) + '</td>' +
                 '<td class=\'col-md-1\'> ' + calculaIdade(objJson[i].data_nascimento) + '</td>' +
-                '<td class=\'col-md-1\'> <input type="checkbox" name="aluno_id[]" onclick="contagem();" value="'+ objJson[i].id_pessoa + '"> </td>' +
+                '<td class=\'col-md-1\'> <input type="checkbox" name="aluno_id[]" onclick="contagem();" value="' + objJson[i].id_pessoa + '"> </td>' +
                 '</tr>');
         }
     }
 }
-function Desmarcar(){
-    $("input[name='aluno_id[]']").each(function(){
-        $(this).removeAttr("checked");})
+
+function Desmarcar() {
+    $("input[name='aluno_id[]']").each(function () {
+        $(this).removeAttr("checked");
+    })
     contagem();
 }
 
@@ -518,35 +533,37 @@ function contagem() {
     $('.selecionados').empty().append(checkbox.length);
 }
 
-function calculaIdade(nascimento){
+function calculaIdade(nascimento) {
     nascimento = new Date(nascimento);
     let hoje = new Date();
     return Math.floor(Math.ceil(Math.abs(nascimento.getTime() - hoje.getTime()) / (1000 * 3600 * 24)) / 365.25);
 }
+
 /*------------------------------------------------USUARIOS------------------------------*/
 var usuarioJson;
-function jsonParseInfoPessoa(json, corpo) {
+
+function jsonParseInfoPessoa(json) {
     let objJson = JSON.parse(json);
     usuarioJson = objJson;
     nome = objJson[0].nome;
     $('.nome').append(nome);
     let controleConta = $('#bloqConta');
 
-    if(objJson[0].excluido == 1){
-        $('#nomeLabel').append(nome+"- Usuário Desativado");
+    if (objJson[0].excluido == 1) {
+        $('#nomeLabel').append(nome + "- Usuário Desativado");
         //adicionando botao de reativar
-        controleConta.append('<a href="control/main.php?req=ativaConta&id='+identificador+'" class="btn btn-primary">Reativar conta</a>');
+        controleConta.append('<a href="control/main.php?req=ativaConta&id=' + identificador + '" class="btn btn-primary">Reativar conta</a>');
 
-    }else{
+    } else {
         //botao de desativar
         $('#nomeLabel').append(nome);
-        controleConta.append('<a href="control/main.php?req=desativaConta&id='+identificador+'" class="btn btn-danger">Desativar conta</a>');
+        controleConta.append('<a href="control/main.php?req=desativaConta&id=' + identificador + '" class="btn btn-danger">Desativar conta</a>');
     }
 
     $('#sobrenome').append(objJson[0].sobrenome);
     //formatando data de nascimento objJson[0].data_nascimento
     let nascFormatada = objJson[0].data_nascimento.split('-');
-    nascFormatada = nascFormatada[2]+' / '+nascFormatada[1]+' / '+nascFormatada[0];
+    nascFormatada = nascFormatada[2] + ' / ' + nascFormatada[1] + ' / ' + nascFormatada[0];
     $('#nasc').append(nascFormatada);
     if (objJson[0].menor_idade === "1") {
         loadMenor();
@@ -557,13 +574,18 @@ function jsonParseInfoPessoa(json, corpo) {
         loadDepententes();
         loadLogin(identificador);
     }
-    if (objJson[0].ruralino === "1"){ loadRuralino(); }else{ btnInsertRuralino(); }
-    if(objJson[0].excluido == '0') addBtnEdicaoPessoa();
+    if (objJson[0].ruralino === "1") {
+        loadRuralino();
+    } else {
+        btnInsertRuralino();
+    }
+    if (objJson[0].excluido == '0') addBtnEdicaoPessoa();
 }
 
 function loadLogin(id) {
     $('#altSenha').removeAttr('hidden');
-    ajaxLoadGET('control/main.php?req=selectLoginUser&id='+id, parseLogin, '.carr');
+    ajaxLoadGET('control/main.php?req=selectLoginUser&id=' + id, parseLogin, '.carr');
+
     function parseLogin(resposta) {
         let objJson = JSON.parse(resposta);
         $('#login').empty().append(objJson[0].usuario);
@@ -573,8 +595,9 @@ function loadLogin(id) {
 
 function loadMenor() {
     $('#menorIdade').removeAttr("hidden");
-    ajaxLoadGET('control/main.php?req=selectResponsavelByMenorId&id='+identificador, parseMenor, '.carr');
-    function parseMenor(json,corpo) {
+    ajaxLoadGET('control/main.php?req=selectResponsavelByMenorId&id=' + identificador, parseMenor, '.carr');
+
+    function parseMenor(json, corpo) {
         var objJson = JSON.parse(json);
         $('#menorIdade').removeAttr("hidden");
         $('#respnome').append(objJson[0].nome);
@@ -590,8 +613,9 @@ function loadRuralino() {
     //adicionamos o botão editar
     $('#ruraLabel').append('&nbsp; <button id="btnDeps" onclick="editaRuralino()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
     $('#ruralinoConteudo').removeAttr("hidden");
-    ajaxLoadGET('control/main.php?req=selectRuralinoByPessoaId&id='+identificador, parseRuralino, '.carr');
-    function parseRuralino(json,corpo) {
+    ajaxLoadGET('control/main.php?req=selectRuralinoByPessoaId&id=' + identificador, parseRuralino, '.carr');
+
+    function parseRuralino(json, corpo) {
         var objJson = JSON.parse(json);
         $('#matricula').append(objJson[0].matricula);
         $('#curso').append(objJson[0].curso);
@@ -599,7 +623,7 @@ function loadRuralino() {
     }
 }
 
-function btnInsertRuralino(){
+function btnInsertRuralino() {
     //adicionamos o botão Adicionar
     $('#ruraLabel').append('&nbsp; <button id="btnDeps" onclick="insertRuralino()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
 }
@@ -611,7 +635,7 @@ function insertRuralino() {
     conteudo.append(
         '<form action="control/main.php?req=insertRuralino&id=' + identificador + '" method="POST">' +
         '<p>Curso: <input type="text" name="curso" placeholder="Educação Física" required="required"></p>' +
-        '<p>Matricula: <input type="number" name="matricula" placeholder="2018180188" ></p>'+
+        '<p>Matricula: <input type="number" name="matricula" placeholder="2018180188" ></p>' +
         '<div class="form-group">\n' +
         '                <label class="control-label" >Bolsista do CAC?</label>\n' +
         '                <div class="">\n' +
@@ -622,7 +646,7 @@ function insertRuralino() {
         '                        <input type="radio" name="bolsista" value="0">NÃO\n' +
         '                    </label>\n' +
         '                </div>\n' +
-        '            </div>'+
+        '            </div>' +
         '<br/><input type="submit" class="btn btn-primary" value="Gravar"/>' +
         '</form>'
     );
@@ -636,7 +660,7 @@ function editaRuralino() {
     conteudo.append(
         '<form action="control/main.php?req=updateRuralino&id=' + identificador + '" method="POST">' +
         '<p>Curso: <input type="text" name="curso" value="' + curso + '" required="required"></p>' +
-        '<p>Matricula: <input type="number" name="matricula" value="' + matricula + '" ></p>'+
+        '<p>Matricula: <input type="number" name="matricula" value="' + matricula + '" ></p>' +
         '<div class="form-group">\n' +
         '                <label class="control-label" >Bolsista do CAC?</label>\n' +
         '                <div class="">\n' +
@@ -647,26 +671,26 @@ function editaRuralino() {
         '                        <input type="radio" name="bolsista" value="0">NÃO\n' +
         '                    </label>\n' +
         '                </div>\n' +
-        '            </div>'+
+        '            </div>' +
         '<br/><input type="submit" class="btn btn-primary" value="Gravar"/>' +
         '</form>'
     );
 }
 
 function loadContato(id) {
-    ajaxLoadGET('control/main.php?req=selectTelefoneByPessoaId&id='+id, parseContato, '#tels');
+    ajaxLoadGET('control/main.php?req=selectTelefoneByPessoaId&id=' + id, parseContato, '#tels');
 
-    function parseContato(json,corpo) {
+    function parseContato(json, corpo) {
         jsonContato = json;
         let objJson = JSON.parse(json);
-        for(i in objJson){
-            corpo.append('<p>Contato ('+getTelType(objJson[i].tipo)+'): '+objJson[i].contato+'</p>');
+        for (i in objJson) {
+            corpo.append('<p>Contato (' + getTelType(objJson[i].tipo) + '): ' + objJson[i].contato + '</p>');
         }
     }
 
     function getTelType(num) {
         num = parseInt(num);
-        switch (num){
+        switch (num) {
             case 1:
                 return "celular";
             case 2:
@@ -685,9 +709,9 @@ function loadContato(id) {
 }
 
 function loadEnd(id) {
-    ajaxLoadGET('control/main.php?req=selectEndereco&id='+id, parseEnd, '.carr');
+    ajaxLoadGET('control/main.php?req=selectEndereco&id=' + id, parseEnd, '.carr');
 
-    function parseEnd(json,corpo) {
+    function parseEnd(json, corpo) {
         var objJson = JSON.parse(json);
         $('#rua').append(objJson[0].rua);
         $('#numero').append(objJson[0].numero);
@@ -700,34 +724,36 @@ function loadEnd(id) {
 }
 
 function loadDocument() {
-    ajaxLoadGET('control/main.php?req=selectDocumento&id='+identificador, parseDocumento, '.carr');
+    ajaxLoadGET('control/main.php?req=selectDocumento&id=' + identificador, parseDocumento, '.carr');
     $('#documentos').removeAttr("hidden");
-    function parseDocumento(resposta,corpo){
+
+    function parseDocumento(resposta, corpo) {
         let json = JSON.parse(resposta);
         $('#tipoDoc').append(documenTipo(json[0].tipo_documento));
         $('#numeroDoc').append(json[0].numero_documento);
     }
 
     function documenTipo(num) {
-        if(num === "1") return "Registro Geral (RG)";
+        if (num === "1") return "Registro Geral (RG)";
         return "Passaporte";
     }
 }
 
 function loadDepententes() {
-    ajaxLoadGET('control/main.php?req=selectDependentes&id='+identificador, parseDependentes,'#dep');
+    ajaxLoadGET('control/main.php?req=selectDependentes&id=' + identificador, parseDependentes, '#dep');
     $('#dependentes').removeAttr("hidden");
 
-    function parseDependentes(resposta,corpo) {
+    function parseDependentes(resposta, corpo) {
         let json = JSON.parse(resposta);
-        for(i in json){
-            corpo.append('<p>Nome: <span class="depNome"> '+json[i].nome + '</span>&nbsp;<span class="depsobrenome">' + json[i].sobrenome +
-                '&nbsp; <a href="?pag=Meus-Dados&id='+json[i].id_pessoa+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a>' +
-                '&nbsp; <a href="control/main.php?req=removeDependente&id='+json[i].id_pessoa+'" class="btn btn-primary"><span class=\'glyphicon glyphicon-remove\'></span></a>' +
+        for (i in json) {
+            corpo.append('<p>Nome: <span class="depNome"> ' + json[i].nome + '</span>&nbsp;<span class="depsobrenome">' + json[i].sobrenome +
+                '&nbsp; <a href="?pag=Meus-Dados&id=' + json[i].id_pessoa + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></a>' +
+                '&nbsp; <a href="control/main.php?req=removeDependente&id=' + json[i].id_pessoa + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-remove\'></span></a>' +
                 '</span></p>');
         }
     }
 }
+
 /*------------------------------------------------EDITA USUARIO--------------------------*/
 function addBtnEdicaoPessoa() {
     $('#dadosBasicos').append('&nbsp; <button id="btNome" onclick="editUsuarioNome()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
@@ -736,6 +762,7 @@ function addBtnEdicaoPessoa() {
     $('#docLabel').append('&nbsp; <button id="btnDoc" onclick="editUsuarioDocumento()" class="btn btn-primary"><span class=\'glyphicon glyphicon-pencil\'></span></button>');
     $('#dependentes h4').append('&nbsp; <button id="btnDeps" onclick="adicionaDependete()" class="btn btn-primary"><span class=\'glyphicon glyphicon-plus\'></span></button>');
 }
+
 function addMenor() {
     var quantidade = $('#qtd_menor').val();
     var divContent = $('#menor_de_idade');
@@ -744,7 +771,7 @@ function addMenor() {
 
     $(function () {
         $('<div class="aluno">' +
-            '<h4> Dependente #'+quantidade+' </h4><hr>\n' +
+            '<h4> Dependente #' + quantidade + ' </h4><hr>\n' +
             '            <div class="form-group col-md-8 col-lg-push-2">\n' +
             '                <label class=" control-label" for="nome_menor' + quantidade + '">Nome</label>\n' +
             '                <div class="">\n' +
@@ -871,59 +898,61 @@ function editUsuarioDocumento() {
 }
 
 function adicionaDependete() {
-    $('#gravaMenor').attr('type','submit');
+    $('#gravaMenor').attr('type', 'submit');
     $('#label_parentesco').removeAttr('hidden');
     //requisitamos adicionar dependente no id do usuario atual
-    $('#formDependentes').attr('action','control/main.php?req=addDependente&id=' + identificador);
+    $('#formDependentes').attr('action', 'control/main.php?req=addDependente&id=' + identificador);
     addMenor();
 }
+
 /*------------------------------VERIFICAÇÃO DE FORMULARIO DE ENTRADA----------------*/
 var userDisponivel = false;
 var senhaOk = false;
 
-function verificadores(){
+function verificadores() {
     let btn = $('#btn-senha');
-    if(userDisponivel && senhaOk){
-        btn.attr('type','submit');
-    }else{
+    if (userDisponivel && senhaOk) {
+        btn.attr('type', 'submit');
+    } else {
         alert("Dados Para Acesso a Conta precisam ser corrigidos");
     }
 }
 
 function verificaSenha() {
     let erro = $('#error-senha').empty();
-    if($('#senha').val() === $('#repsenha').val()){
+    if ($('#senha').val() === $('#repsenha').val()) {
         senhaOk = true;
-    }else{
+    } else {
         erro.append('Senhas não conferem');
         senhaOk = false;
     }
 }
 
 function verificaUpdateSenha() {
-    if(senhaOk){
-        $('#btn-senha').attr('type','submit');
-    }else{
+    if (senhaOk) {
+        $('#btn-senha').attr('type', 'submit');
+    } else {
         alert('Senhas não conferem');
     }
 }
 
 function verificaUsuarioDuplicado() {
     let usuario = $('#usuario').val();
-    ajaxLoadGET('control/main.php?req=verificaUser&nome='+usuario,parseUserDuplicado,'#error-user');
+    ajaxLoadGET('control/main.php?req=verificaUser&nome=' + usuario, parseUserDuplicado, '#error-user');
 
     function parseUserDuplicado(resposta) {
         let json = JSON.parse(resposta);
         let msg = $('#error-user').empty();
-        if(json[0].usuario != 0){
+        if (json[0].usuario != 0) {
             msg.append('Usuário indisponivel');
             userDisponivel = false;
-        }else{
+        } else {
             msg.append('Usuário OK');
             userDisponivel = true;
         }
     }
 }
+
 /*-------------------------------GERENCIAMENTO DE USUARIOS ----------------------------------*/
 function jsonParseUsuarios(resposta, corpo) {
     var objJson = JSON.parse(resposta);
@@ -931,15 +960,15 @@ function jsonParseUsuarios(resposta, corpo) {
     for (var i in objJson) {
         string +=
             '<tr>\n';
-        if(objJson[i].excluido == '1'){
+        if (objJson[i].excluido == '1') {
             string += '     <td class="col-md-4" style="text-transform: capitalize;color: #b92c28;">' + objJson[i].nome + " " + objJson[i].sobrenome + ' - Desativado</td>\n';
-        }else{
+        } else {
             string += '     <td class="col-md-4" style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n';
         }
-        string+='     <td class="col-md-2">' + getNVacesso(objJson[i].nv_acesso) + '</td>\n' +
+        string += '     <td class="col-md-2">' + getNVacesso(objJson[i].nv_acesso) + '</td>\n' +
             '     <td class="col-md-2">' + isAtivo(objJson[i].menor_idade) + '</td>\n' +
-            '     <td class="col-md-2">' + isAtivo(objJson[i].ruralino) + '</td>\n'+
-            '<td  class="col-md-2"> <a href="?pag=Info.Pessoa&id=' + objJson[i].id_pessoa + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-eye-open\'></span></a> </td>'+
+            '     <td class="col-md-2">' + isAtivo(objJson[i].ruralino) + '</td>\n' +
+            '<td  class="col-md-2"> <a href="?pag=Info.Pessoa&id=' + objJson[i].id_pessoa + '" class="btn btn-primary"><span class=\'glyphicon glyphicon-eye-open\'></span></a> </td>' +
             '</tr>';
         corpo.empty();
         corpo.append(string);
@@ -957,9 +986,47 @@ function jsonParseUsuarios(resposta, corpo) {
             '                </tr>');
     }
 }
+
 function slideTo(value) {
-    document.querySelector('#'+value).scrollIntoView({
+    document.querySelector('#' + value).scrollIntoView({
         behavior: 'smooth'
 
     });
+}
+
+
+/* PAGINADOR */
+function trocaPag(pag) {
+    if(pag <= totalpaginas && pag > 0)pagina = pag;
+    $('#paginic').empty().val(pagina);
+    carregaUsuarios();
+}
+function trocaReq(req) {
+    nivel=req;pagina=1;//reseta o numero de paginas
+    carregaUsuarios();
+    //recarregando o paginador
+    ajaxLoadGET('control/main.php?req=getPageNumber&nivel='+nivel, setPaginador, '#cadastrosRuralino');
+}
+function carregaUsuarios() {
+    ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + nivel +'&pagina='+pagina, jsonParseUsuarios,'#usuarios');
+}
+function pesquisa() {
+    $('#bt-pesquisa').attr("disabled","disabled");//importante para nao envia 2 requisicoes iguais
+    let nome = $('#searchName').val();
+    ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + nivel +'&nome='+nome, jsonParseUsuarios,'#usuarios');
+}
+function limpaPesquisa() {
+    $('#bt-pesquisa').removeAttr("disabled");
+    $('#searchName').val('');
+    //trocaReq('selectTodos');
+}
+
+function setPaginador(resposta) {
+    let objJson = JSON.parse(resposta);
+    let registros = objJson[0].total;
+    totalpaginas = parseInt(registros / 25);
+    if(totalpaginas == 0) totalpaginas = 1;
+    $('#paginic').empty().append(pagina);
+    $('#pagfim').empty().append(totalpaginas);
+    $('#goLast').empty().append('<a href="#" onclick="trocaPag('+totalpaginas+')" id="goLast">&raquo;</a>');
 }

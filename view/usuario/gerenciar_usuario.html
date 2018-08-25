@@ -54,9 +54,7 @@
     </div>
     <div class="container-fluid text-center">
         <ul class="pagination coolPaginator" id="paginador">
-            <!--li><a href="#" onclick="trocaPag(1)" id="goFirst"><span class="fa fa-chevron-left"></span></a></li-->
             <li><a href="#" onclick="trocaPag(pagina-1)" id="goBack"><span class="fa fa-chevron-left"></span></a></li>
-            <!--li><span style="color: #0f0f0f"><span id="paginic">1</span> de <span id="pagfim">N</span></span></li-->
             <li>
                 <span>
                     <span>
@@ -69,7 +67,6 @@
                 </span>
             </li>
             <li><a href="#" onclick="trocaPag(pagina+1)" id="goNext"><span class="fa fa-chevron-right"></span></a></li>
-            <!--li id="goLast"></li-->
         </ul>
     </div>
 </div>
@@ -83,43 +80,6 @@
     function usuariosLoader() {
         carregaUsuarios();
         ajaxLoadGET('control/main.php?req=getPageNumber&nivel='+nivel, setPaginador, '#cadastrosRuralino');
-    }
-
-    function trocaPag(pag) {
-        if(pag <= totalpaginas && pag > 0)pagina = pag;
-        //$('#paginic').empty().append(pagina);
-        console.log(pag);
-        $('#paginic').empty().val(pagina);
-        carregaUsuarios();
-    }
-    function trocaReq(req) {
-        nivel=req;pagina=1;//reseta o numero de paginas
-        carregaUsuarios();
-        //recarregando o paginador
-        ajaxLoadGET('control/main.php?req=getPageNumber&nivel='+nivel, setPaginador, '#cadastrosRuralino');
-    }
-    function carregaUsuarios() {
-        ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + nivel +'&pagina='+pagina, jsonParseUsuarios,'#usuarios');
-    }
-    function pesquisa() {
-        $('#bt-pesquisa').attr("disabled","disabled");//importante para nao envia 2 requisicoes iguais
-        let nome = $('#searchName').val();
-        ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + nivel +'&nome='+nome, jsonParseUsuarios,'#usuarios');
-    }
-    function limpaPesquisa() {
-        $('#bt-pesquisa').removeAttr("disabled");
-        $('#searchName').val('');
-        //trocaReq('selectTodos');
-    }
-
-    function setPaginador(resposta) {
-        let objJson = JSON.parse(resposta);
-        let registros = objJson[0].total;
-        totalpaginas = parseInt(registros / 25);
-        if(totalpaginas == 0) totalpaginas = 1;
-        $('#paginic').empty().append(pagina);
-        $('#pagfim').empty().append(totalpaginas);
-        $('#goLast').empty().append('<a href="#" onclick="trocaPag('+totalpaginas+')" id="goLast">&raquo;</a>');
     }
 </script>
 </body>
