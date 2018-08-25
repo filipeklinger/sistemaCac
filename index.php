@@ -8,7 +8,7 @@
         $_SESSION['CREATED'] = time();  // update creation time
     }
 
-$titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao reduzida if
+$titulo = isset($_GET['pag']) ? $_GET['pag']." - sistema_cac" : 'Sistema sistema_cac';//versao reduzida if
 
     // HSTS
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
@@ -24,6 +24,13 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - CAC" : 'Sistema CAC';//versao r
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="msapplication-starturl" content="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- As meta tags acima *devem* vir em primeiro lugar dentro do `head`; qualquer outro conteúdo deve vir *após* essas tags -->
     <title><?php echo $titulo ?></title>
