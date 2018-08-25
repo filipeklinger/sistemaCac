@@ -29,7 +29,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - sistema_cac" : 'Sistema sistema
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="msapplication-starturl" content="/">
+    <meta name="msapplication-starturl" content="/sistema_cac/">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- As meta tags acima *devem* vir em primeiro lugar dentro do `head`; qualquer outro conteúdo deve vir *após* essas tags -->
