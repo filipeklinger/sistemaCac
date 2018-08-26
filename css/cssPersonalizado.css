@@ -1,5 +1,5 @@
 /*Imports*/
-/*@import "bootstrapExpansion.css";*/
+@import "bootstrapExpansion.css";
 
 /*Fontes*/
 @font-face {
@@ -64,7 +64,7 @@ hr {
     transition: .1s ease-in-out;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn-primary[disabled]:hover, .btn-primary[disabled]:focus {
     color: #000;
     border: 2px solid #000;
     border-radius: 0;
@@ -457,16 +457,14 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 
 .searchBox{
     font-style: oblique;
-    background-color: transparent;
-    border-bottom: 2px solid black;
 }
 
 .searchBox input[type=text]{
-    background-color: transparent !important;
-    color: black !important;
-    width:  90%;
     min-width: 200px;
-    margin-top: 10px;
+    margin-top: 2px;
+    background-color: transparent !important;
+    border-bottom: 2px solid black !important;
+    color: black !important;
 }
 
 .coolButton3 {
@@ -497,6 +495,10 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     background-color: darkgrey;
 }
 
+.smallScreenSpaceCorrection{
+    padding-left: 2%;
+}
+
 /*SCREEN SIZE - responsivo*/
 @media screen and (max-height: 640px) and (max-width: 539px){
     #main div a.coolButton {
@@ -519,11 +521,19 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
         display: contents;
     }
     .searchBox input[type=text]{
-        margin-top: 30px;
+        /*margin-top: 30px;*/
     }
     .container{
         margin: 15px;
         margin-top: 0;
+    }
+
+    .smallScreenSpaceCorrection{
+        padding-top: 10%;
+        /*margin-left: 15px;*/
+    }
+    .smallScreenTableContainer{
+        overflow: scroll;
     }
 }
 
@@ -534,9 +544,12 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     .logo{
         max-height: 30%;
     }
-    .searchBox{
-        margin-top: 2%;
-        margin-left: 15px;
+    .smallScreenSpaceCorrection{
+        padding-top: 10%;
+        /*margin-left: 15px;*/
+    }
+    .smallScreenTableContainer{
+        overflow: scroll;
     }
 
 }

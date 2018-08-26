@@ -40,7 +40,7 @@
                     </p>
                 </div>
                 <div class="col-md-11">
-                    <div class="col-md-2">
+                    <!--div class="col-md-2">
                         <input type="button" class="btn btn-danger" onclick="Desmarcar();" value="Desmarcar todos"/>
                     </div>
 
@@ -48,7 +48,29 @@
                         <input type="text" class="searchBox row" id="searchNames" onclick="limpaPesquisa()"
                                onkeyup="getCandidatosByName();"
                                placeholder="Buscar Candidados...">
+                    </div-->
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <input type="button" class="btn btn-danger" onclick="Desmarcar();" value="Desmarcar todos"/>
+                        </div>
+
+                        <div class="col-lg-6 smallScreenSpaceCorrection">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                     <button id="bt-cad" class="btn btn-primary" type="button" onclick="pesquisaCad();"
+                                             disabled>Buscar</button>
+                                </span>
+                                <div class="searchBox">
+                                    <input type="text" class="form-control" id="searchNames"
+                                           onclick="limpaPesquisa('bt-cad','searchNames')"
+                                           placeholder="Nome do Usuário ...">
+                                </div>
+                            </div><!-- /input-group -->
+                        </div><!-- /.col-lg-6 -->
+                        <br>
                     </div>
+
                     <br>
                     <br>
                     <table class="table" style="margin-top: 20px">
@@ -120,16 +142,12 @@
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmasComVagas, '#turma', obterInfoTurma);
         getCandidatosByName();
         getMsgs();
-        ajaxLoadGET('control/main.php?req=getPageNumber&nivel='+nivel, setPaginador, '#cadastrosRuralino');
+        ajaxLoadGET('control/main.php?req=getPageNumber&nivel=' + nivel, setPaginador, '#cadastrosRuralino');
     }
 
-    function limpaPesquisa() {
-        $('#searchNames').val('');
-        getCandidatosByName();
-    }
     function trocaPagCad(pag) {
         Desmarcar();
-        if(pag <= totalpaginas && pag > 0)pagina = pag;
+        if (pag <= totalpaginas && pag > 0) pagina = pag;
         $('#paginic').empty().val(pagina);
         getCandidatosByName();
     }

@@ -502,21 +502,32 @@ function parseTurmasComVagas(resposta, corpo, funcaoEncadeada) {
 
 function getCandidatosByName() {
     let nome = $('#searchNames').val();
-    let url = 'control/main.php?req=selectUsuario&nome=' + nome+'&pagina='+pagina;
-    console.log(url);
+    let url = 'control/main.php?req=selectUsuario&nome=' + nome + '&pagina=' + pagina;
+    //console.log(url);
     ajaxLoadGET(url, parseCandidatos, '#tcandidatos');
 
     function parseCandidatos(resposta, corpo) {
         let objJson = JSON.parse(resposta);
-        for (i in objJson) {
-            if (objJson[i].excluido == 1) continue;//removendo usuarios desativados
+        console.log(objJson);
+        if (objJson.length === 0) {
             corpo.append(
                 '<tr>' +
-                '<td class=\'col-md-5\'> ' + objJson[i].nome + ' ' + objJson[i].sobrenome + '</td>' +
-                '<td class=\'col-md-1\'> ' + getNVacesso(objJson[i].nv_acesso) + '</td>' +
-                '<td class=\'col-md-1\'> ' + calculaIdade(objJson[i].data_nascimento) + '</td>' +
-                '<td class=\'col-md-1\'> <input type="checkbox" name="aluno_id[]" onclick="contagem();" value="' + objJson[i].id_pessoa + '"> </td>' +
+                '<td style="font-size: x-large; font-weight: bold"><span class="fa fa-frown-o" ></span> ALUNO NÃO ENCONTRADO</td>\\n\' +</td>' +
+                '<td class=\'col-md-1\'></td>' +
+                '<td class=\'col-md-1\'></td>' +
+                '<td class=\'col-md-1\'></td>' +
                 '</tr>');
+        } else {
+            for (i in objJson) {
+                if (objJson[i].excluido == 1) continue;//removendo usuarios desativados
+                corpo.append(
+                    '<tr>' +
+                    '<td class=\'col-md-5\'> ' + objJson[i].nome + ' ' + objJson[i].sobrenome + '</td>' +
+                    '<td class=\'col-md-1\'> ' + getNVacesso(objJson[i].nv_acesso) + '</td>' +
+                    '<td class=\'col-md-1\'> ' + calculaIdade(objJson[i].data_nascimento) + '</td>' +
+                    '<td class=\'col-md-1\'> <input type="checkbox" name="aluno_id[]" onclick="contagem();" value="' + objJson[i].id_pessoa + '"> </td>' +
+                    '</tr>');
+            }
         }
     }
 }
@@ -1004,27 +1015,42 @@ function slideTo(value) {
 
 /* PAGINADOR */
 function trocaPag(pag) {
-    if(pag <= totalpaginas && pag > 0)pagina = pag;
+    if (pag <= totalpaginas && pag > 0) pagina = pag;
     $('#paginic').empty().val(pagina);
     carregaUsuarios();
 }
+
 function trocaReq(req) {
-    nivel=req;pagina=1;//reseta o numero de paginas
-    carregaUsuarios();
+    nivel = req;
+    pagina = 1;//reseta o numero de paginas
     //recarregando o paginador
-    ajaxLoadGET('control/main.php?req=getPageNumber&nivel='+nivel, setPaginador, '#cadastrosRuralino');
+    trocaPag(pagina);
+    carregaUsuarios();
+    ajaxLoadGET('control/main.php?req=getPageNumber&nivel=' + nivel, setPaginador, '#cadastrosRuralino');
 }
+
 function carregaUsuarios() {
-    ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + nivel +'&pagina='+pagina, jsonParseUsuarios,'#usuarios');
+    ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + nivel + '&pagina=' + pagina, jsonParseUsuarios, '#usuarios');
 }
+
 function pesquisa() {
-    $('#bt-pesquisa').attr("disabled","disabled");//importante para nao envia 2 requisicoes iguais
+    $('#bt-pesquisa').attr("disabled", "disabled");//importante para nao envia 2 requisicoes iguais
     let nome = $('#searchName').val();
-    ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + nivel +'&nome='+nome, jsonParseUsuarios,'#usuarios');
+    ajaxLoadGET('control/main.php?req=selectUsuario&nivel=' + nivel + '&nome=' + nome, jsonParseUsuarios, '#usuarios');
 }
-function limpaPesquisa() {
-    $('#bt-pesquisa').removeAttr("disabled");
-    $('#searchName').val('');
+
+
+function pesquisaCad() {
+    $('#bt-cad').attr("disabled", "disabled");//importante para nao envia 2 requisicoes iguais
+    let nome = $('#searchNames').val();
+    getCandidatosByName();
+}
+
+
+function limpaPesquisa(btn,search) {
+    $('#'+btn).removeAttr("disabled");
+    $('#'+search).val('');
+    console.log("ok");
     //trocaReq('selectTodos');
 }
 
@@ -1032,8 +1058,8 @@ function setPaginador(resposta) {
     let objJson = JSON.parse(resposta);
     let registros = objJson[0].total;
     totalpaginas = parseInt(registros / 25);
-    if(totalpaginas == 0) totalpaginas = 1;
+    if (totalpaginas == 0) totalpaginas = 1;
     $('#paginic').empty().append(pagina);
     $('#pagfim').empty().append(totalpaginas);
-    $('#goLast').empty().append('<a href="#" onclick="trocaPag('+totalpaginas+')" id="goLast">&raquo;</a>');
+    $('#goLast').empty().append('<a href="#" onclick="trocaPag(' + totalpaginas + ')" id="goLast">&raquo;</a>');
 }
