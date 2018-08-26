@@ -3,12 +3,19 @@
 <div class="header">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="index.php?pag=Turmas"><i class="glyphicon glyphicon-chevron-left"></i> Voltar para Gerência de Turmas</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.php?pag=Turmas"><i class="glyphicon glyphicon-chevron-left"></i> Voltar para
-                        Gerência de Turmas</a>
-                    </li>
-                    <li class="active"><a data-toggle="" href="#turmas">Cadastro de Turmas</a></li>
+                    <li class="active" data-toggle="collapse" data-target="#myNavbar"><a data-toggle="" href="#turmas">Cadastro de Turmas</a></li>
                 </ul>
                 </ul>
             </div>
