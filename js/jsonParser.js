@@ -4,6 +4,7 @@ var notSupported = ['SamsungBrowser', 'MSIE', 'Trident'];
 $(document).ready(function () {
     var b = navigator.userAgent;
     for (var i in notSupported) {
+
         let aux = new RegExp(notSupported[i]);
         if (b.match(aux) != null) {
             alert("Navegador Não Supportado, Você Será Redirecionado . . . .");
@@ -257,7 +258,6 @@ function getNVacesso(nv) {
             return "Visitante";
     }
 }
-
 function getMsgs() {
     let aviso = $('#avisos');
     let msg = JSON.parse(mensagem);
@@ -1042,7 +1042,6 @@ function pesquisa() {
 
 function pesquisaCad() {
     $('#bt-cad').attr("disabled", "disabled");//importante para nao envia 2 requisicoes iguais
-    let nome = $('#searchNames').val();
     getCandidatosByName();
 }
 
