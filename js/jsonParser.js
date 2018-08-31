@@ -4,6 +4,7 @@ var notSupported = ['SamsungBrowser', 'MSIE', 'Trident'];
 $(document).ready(function () {
     var b = navigator.userAgent;
     for (var i in notSupported) {
+
         let aux = new RegExp(notSupported[i]);
         if (b.match(aux) != null) {
             alert("Navegador Não Supportado, Você Será Redirecionado . . . .");
@@ -257,7 +258,6 @@ function getNVacesso(nv) {
             return "Visitante";
     }
 }
-
 function getMsgs() {
     let aviso = $('#avisos');
     let msg = JSON.parse(mensagem);
@@ -575,7 +575,8 @@ function jsonParseInfoPessoa(json) {
     //formatando data de nascimento objJson[0].data_nascimento
     let nascFormatada = objJson[0].data_nascimento.split('-');
     nascFormatada = nascFormatada[2] + ' / ' + nascFormatada[1] + ' / ' + nascFormatada[0];
-    $('#nasc').append(nascFormatada);
+    let idade = calculaIdade(objJson[0].data_nascimento);
+    $('#nasc').append(nascFormatada+'<br>Idade: '+idade + ' Anos');
     if (objJson[0].menor_idade === "1") {
         loadMenor();
     } else {
@@ -841,18 +842,24 @@ function editUsuarioContato() {
     let tipo = 0;
     tels.empty();
     if (jsonContato !== null) {
+        console.log(jsonContato);
         jsonContato = JSON.parse(jsonContato);
-        for (i in jsonContato) {
-            tipo = jsonContato[i].tipo;
-            acm += '<p>Tel: <input type="number" name="resp_tel" value="' + jsonContato[i].numero + '" required="required">' +
+            tipo = jsonContato[0].tipo;
+            acm += '<p><input type="hidden" name="resp_tel_id" value="'+jsonContato[0].id_contato+'">' +
+                'Tel: <input type="number" name="resp_tel" value="' + jsonContato[0].contato + '" required="required">' +
                 'Tipo: <select id="resp_tel_type" name="resp_tel_type">\n' +
                 '                        <option value="2" ' + verTp(tipo, 2) + '>Whatsapp</option>\n' +
                 '                        <option value="1"' + verTp(tipo, 1) + '>Celular</option>\n' +
                 '                        <option value="3"' + verTp(tipo, 3) + '>Fixo (residencial)</option>\n' +
                 '                        <option value="4"' + verTp(tipo, 4) + '>Recados</option>\n' +
+                '                        <option value="5"' + verTp(tipo, 5) + '>Email</option>\n' +
                 '                    </select>' +
                 '</p>';
-        }
+            if(jsonContato.length >1){
+                acm += '<p><input type="hidden" name="resp_email_id" value="'+jsonContato[1].id_contato+'">' +
+                    'Email: <input type="email" name="email" value="' + jsonContato[1].contato + '" required="required">' +
+                '</p>';
+            }
     }
     acm += '<br/><input type="submit" class="btn btn-primary" value="Gravar"/></form>';
     tels.append(acm);
@@ -1035,7 +1042,6 @@ function pesquisa() {
 
 function pesquisaCad() {
     $('#bt-cad').attr("disabled", "disabled");//importante para nao envia 2 requisicoes iguais
-    let nome = $('#searchNames').val();
     getCandidatosByName();
 }
 

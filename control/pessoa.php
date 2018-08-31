@@ -436,7 +436,7 @@ class pessoa{
      * @throws Exception
      */
     public function getTelefone($pessoaId){
-        return $this->db->select("contato,tipo_contato as tipo","contato","pessoa_id = ?",array($pessoaId));
+        return $this->db->select("id_contato,contato,tipo_contato as tipo","contato","pessoa_id = ?",array($pessoaId));
     }
 
     /**
@@ -523,15 +523,33 @@ class pessoa{
      */
     public function updateContato($pessoaId){
         $this->receiveContato();
+        //Buscando id de update
+        $telId = isset($_POST['resp_tel_id']) ? $_POST['resp_tel_id'] : INVALIDO;
+        $emailId = isset($_POST['resp_email_id']) ? $_POST['resp_email_id'] : INVALIDO;
         if($this->hasPermission($pessoaId) == false)return;
         $columns = array("contato","tipo_contato");
-        $params = array($this->respTel,$this->respTelType);
+        //atualizando telefone
+        if($telId != INVALIDO){
+            $params = array($this->respTel,$this->respTelType);
 
-        if($this->db->update($columns,"contato",$params,"pessoa_id = ?",array($pessoaId))){
-            new mensagem(SUCESSO,"Contato atualizado");
-        }else{
-            new mensagem(INSERT_ERRO,"Erro ao atualizar Contato");
+            if($this->db->update($columns,"contato",$params,"id_contato = ?",array($telId))){
+                new mensagem(SUCESSO,"Contato atualizado");
+            }else{
+                new mensagem(INSERT_ERRO,"Erro ao atualizar Telefone");
+                $this->redirecionaPagAnterior();
+                return;
+            }
         }
+        //atualizando Email
+        if($emailId != INVALIDO){
+            $params = array($this->email,5);
+            if($this->db->update($columns,"contato",$params,"id_contato = ?",array($emailId))){
+                new mensagem(SUCESSO,"Contato atualizado");
+            }else{
+                new mensagem(INSERT_ERRO,"Erro ao atualizar Email");
+            }
+        }
+
 
         $this->redirecionaPagAnterior();
     }

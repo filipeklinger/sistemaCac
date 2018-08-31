@@ -8,7 +8,7 @@
         $_SESSION['CREATED'] = time();  // update creation time
     }
 
-$titulo = isset($_GET['pag']) ? $_GET['pag']." - sistema_cac" : 'Sistema sistema_cac';//versao reduzida if
+$titulo = isset($_GET['pag']) ? $_GET['pag']." - sistema_cac" : 'sistema_cac';//versao reduzida if
 
     // HSTS
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
@@ -29,7 +29,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - sistema_cac" : 'Sistema sistema
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="msapplication-starturl" content="/sistema_cac/">
+    <meta name="msapplication-starturl" content="/dac/">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- As meta tags acima *devem* vir em primeiro lugar dentro do `head`; qualquer outro conteúdo deve vir *após* essas tags -->
@@ -53,7 +53,7 @@ $titulo = isset($_GET['pag']) ? $_GET['pag']." - sistema_cac" : 'Sistema sistema
     <!-- Icones Personalizados - Font Awesome -->
     <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- estiliza o seletor script src="bootstrap3.3.7/select/js/bootstrap-select.min.js"></script -->
-    <script src="js/jsonParser.js"></script>
+    <script src="js/jsonParser.min.js"></script>
     <!-- Aqui recebemos as msg do Sistema -->
     <script type="application/x-javascript">
         <?php
