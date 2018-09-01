@@ -67,7 +67,7 @@ class PDF{
             //cabecalho tabela
             $html .= '<table cellspacing="0" cellpadding="1" border="1" align="center">
 			<thead>
-			    <tr bgcolor="#1d5a8e">
+			    <tr bgcolor="#6f77cf">
 					<th><font color="#ffffff">#</font></th>
 					<th colspan="4"><font color="#ffffff">Nome:</font></th>
 					<th><font color="#ffffff">&nbsp;</font></th>
