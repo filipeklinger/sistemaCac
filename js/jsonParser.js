@@ -395,7 +395,7 @@ function parsePeriodosSelect(resposta, corpo, funcaoEncadeada) {
 /*-------------------------ALUNOS---------------------------*/
 function parseTurmasAtivas(resposta, corpo) {
     let objJson = JSON.parse(resposta);
-    for (i in objJson) {
+    for (let i in objJson) {
         corpo.append(
             '<option value=' + objJson[i].id_turma + ' >' + objJson[i].oficina + " - " + objJson[i].turma + '</option>'
         );
@@ -421,20 +421,24 @@ function parseAlunos(resposta, corpo) {
     let listaEspera = '';
     let objEspera = [];
     let listaTrancados = '';
+    let num = 0;
     for (let i in objJson) {
 
         if (objJson[i].trancado === '0' && objJson[i].lista_espera === '0') {
+            num++;
             listaAlunos +=
                 '<tr>\n' +
-                '     <td> </td>\n' +
+                '     <td>'+num+' </td>\n' +
                 '     <td style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n' +
-                '     <td><a href="javascript:func()" onclick="confirmacaoTrancarMatricula(' + objJson[i].id_aluno + ')" class="btn btn-primary">Trancar Matricula</a></td>\n' +
+                '     <td>' + calculaIdade(objJson[i].data_nascimento) + ' anos</a></td>\n' +
+                '     <td><a href="javascript:func()" onclick="confirmacaoTrancarMatricula(' + objJson[i].id_aluno + ')" class="btn btn-primary trancar">Trancar Matricula</a></td>\n' +
                 '</tr>';
         } else if (objJson[i].trancado === '1') {
             listaTrancados +=
                 '<tr>\n' +
                 '     <td> </td>\n' +
                 '     <td style="text-transform: capitalize;">' + objJson[i].nome + " " + objJson[i].sobrenome + '</td>\n' +
+                '     <td>' + calculaIdade(objJson[i].data_nascimento) + ' anos</a></td>\n' +
                 '     <td>Matricula Trancada</a></td>\n' +
                 '</tr>';
         } else {
@@ -453,11 +457,13 @@ function parseAlunos(resposta, corpo) {
             '     <td></td>\n' +
             '     <td style="text-transform: capitalize;">' + objEspera[j].nome + " " + objEspera[j].sobrenome + '</td>\n' +
             '     <td>' + (parseInt(j) + 1) + '</td>\n' +
+            '     <td>' + calculaIdade(objJson[i].data_nascimento) + ' anos</a></td>\n' +
             '</tr>';
     }
 
     let listaVazia =
         '<tr>\n' +
+        '                    <td></td>\n' +
         '                    <td  style="font-size: x-large; font-weight: bold"><span class="fa fa-frown-o"></span> NÃO EXISTEM ALUNOS NESTA CATEGORIA</td>\n' +
         '                    <td></td>\n' +
         '                    <td></td>\n' +

@@ -139,7 +139,7 @@ class aluno{
      */
     public function getAlunos($turmaId){
         $tempo = turma::getTempoStatic($this->db);
-        $columns = "aluno_turma.id_aluno,pessoa.nome,pessoa.sobrenome,turma.nome_turma as turma,lista_espera,aluno_turma.trancado";
+        $columns = "aluno_turma.id_aluno,pessoa.nome,pessoa.sobrenome,pessoa.data_nascimento,turma.nome_turma as turma,lista_espera,aluno_turma.trancado";
         $whereClause = "aluno_turma.turma_id = turma.id_turma and aluno_turma.pessoa_id = pessoa.id_pessoa and turma.tempo_id = ? and turma.id_turma = ?";
         return $this->db->select($columns,"pessoa,turma,aluno_turma",$whereClause,array($tempo->id_tempo,$turmaId),"pessoa.nome",ASC);
     }
