@@ -1055,8 +1055,6 @@ function pesquisaCad() {
 function limpaPesquisa(btn,search) {
     $('#'+btn).removeAttr("disabled");
     $('#'+search).val('');
-    console.log("ok");
-    //trocaReq('selectTodos');
 }
 
 function setPaginador(resposta) {

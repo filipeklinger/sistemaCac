@@ -82,6 +82,38 @@ hr {
     background-color: #4482ce;
 }
 
+.navbar-toggle{
+    border: none;
+    background-color: transparent;
+    transition: .3s ease-in-out;
+    border-radius: 0;
+}
+
+.navbar-toggle *{
+    color: white !important;
+    transition: .3s ease-in-out;
+}
+
+.navbar-toggle:hover{
+    background-color: whitesmoke;
+    transition: .3s ease-in-out;
+
+}
+
+.navbar-toggle:hover *{
+    color: #101010 !important;
+}
+
+.navbar-toggle:focus{
+    background-color: transparent;
+    transition: .3s ease-in-out;
+
+}
+
+.navbar-toggle:focus *{
+    color: dimgrey !important;
+}
+
 .selectCool {
     background-color: transparent;
     border: 0;
@@ -118,7 +150,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 }
 
 .container-fluid {
-    padding: 0;
+    /*padding: 0;*/
 }
 
 .printOnly {

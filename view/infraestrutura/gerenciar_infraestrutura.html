@@ -1,22 +1,19 @@
-
 <body class="container-fluid infra">
 <div class="header">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="fa fa-bars fa-lg"></span>
                 </button>
 
-                <a class="navbar-brand" href="?pag=DashBoard" style="color: white"><i class="glyphicon glyphicon-chevron-left"></i> Página Inicial</a>
+                <a class="navbar-brand" href="?pag=DashBoard" style="color: white"><i class="fa fa-chevron-left"></i> Página Inicial</a>
             </div>
 
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active" data-toggle="collapse" data-target="#myNavbar"><a data-toggle="tab" href="#predios">Gerenciar Prédios</a></li>
-                    <li data-toggle="collapse" data-target="#myNavbar"><a data-toggle="tab" onclick="ajaxLoadGET('control/main.php?req=selectSala',jsonParseSalas,'#tsala');" href="#salas">Gerenciar Salas</a></li>
+                    <li class="active" data-target="#myNavbar"><a data-toggle="tab" href="#predios">Gerenciar Prédios</a></li>
+                    <li data-target="#myNavbar"><a data-toggle="tab" onclick="ajaxLoadGET('control/main.php?req=selectSala',jsonParseSalas,'#tsala');" href="#salas">Gerenciar Salas</a></li>
                 </ul>
             </div>
         </div>
