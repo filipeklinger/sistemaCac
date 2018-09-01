@@ -80,13 +80,13 @@ class login{
     private function getMenu(){
         switch ($_SESSION['NIVEL']){
             case ADMINISTRADOR:
-                $_SESSION['MENU'] ='[{"nome":"Infra","link":"InfraSubmenu","icone":"glyphicon-dashboard","submenu":[{"nome":"Gerenciar","link":"?pag=Infraestrutura"},{"nome":"Novo Predio","link":"?pag=Cad.Predio"},{"nome":"Nova Sala","link":"?pag=Cad.Sala"}]},{"nome":"Oficinas","link":"OficinaSubmenu","icone":"glyphicon-knight","submenu":[{"nome":"Gerenciar","link":"?pag=Oficinas"},{"nome":"Nova Oficina","link":"?pag=Cad.Oficina"}]},{"nome":"Usuarios","link":"UsuarioSubmenu","icone":"glyphicon-user","submenu":[{"nome":"Gerenciar","link":"?pag=Usuarios"},{"nome":"Novo Usuário","link":"?pag=Cad.Pessoa"}]},{"nome":"Turmas","link":"TurmaSubmenu","icone":"glyphicon-bell","submenu":[{"nome":"Mudar Período","link":"?pag=Trocar.Periodo"},{"nome":"Gerenciar Turmas","link":"?pag=Turmas"},{"nome":"Nova Turma","link":"?pag=Cad.Turma"}]},{"nome":"Alunos","link":"AlunoSubmenu","icone":"glyphicon-education","submenu":[{"nome":"Gerenciar","link":"?pag=Alunos"},{"nome":"Cad. Aluno em Turma","link":"?pag=Cad.Aluno"}]},{"nome":"Relatórios","link":"RelatorioSubmenu","icone":"glyphicon-print","submenu":[{"nome":"Gerar","link":"?pag=Relatorios"}]}]';
+                $_SESSION['MENU'] = Ambiente::getAdmMenu();
                 break;
             case PROFESSOR:
-                $_SESSION['MENU'] ='[{"nome":"Minha conta","link":"ContaSubmenu","icone":"glyphicon-user","submenu":[{"nome":"Meus Dados","link":"?pag=Meus-Dados&id='.$_SESSION['ID'].'"}]},{"nome":"Minhas Turmas","link":"TurmasSubmenu","icone":"glyphicon-bell","submenu":[{"nome":"ver","link":"?pag=Turmas"},{"nome":"Nova Turma","link":"?pag=Cad.Turma"}]},{"nome":"Alunos","link":"AlunosSubmenu","icone":"glyphicon-education","submenu":[{"nome":"Gerenciar","link":"?pag=Presença"}]}]';
+                $_SESSION['MENU'] = Ambiente::getProfMenu();
                 break;
             case ALUNO:
-                $_SESSION['MENU'] ='[{"nome":"Minha conta","link":"ContaSubmenu","icone":"glyphicon-user","submenu":[{"nome":"Meus Dados","link":"?pag=Meus-Dados&id='.$_SESSION['ID'].'"}]}]';
+                $_SESSION['MENU'] = Ambiente::getAlunoMenu();
                 break;
             case VISITANTE:
                 $_SESSION['MENU'] ='[]';

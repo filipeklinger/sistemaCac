@@ -33,11 +33,12 @@ class aluno{
         $msg = "";
         if($this->numSucess == 1) $msg.=$this->numSucess." aluno inserido com sucesso na turma<br/>"; elseif($this->numSucess >1) $msg.=$this->numSucess." alunos inseridos com sucesso na turma<br/>";
         if($this->numEspera == 1) $msg.=$this->numEspera." aluno inserido na lista de espera<br/>"; elseif($this->numEspera > 1) $msg.=$this->numEspera." alunos inseridos na lista de espera<br/>";
-        if($this->numFail == 1) $msg.=$this->numFail." aluno já está na turma ou participa de 2 oficinas<br/>"; elseif($this->numFail > 1) $msg.=$this->numFail." alunos já estão na turma ou participam de 2 oficinas<br/>";
+        if($this->numFail == 1) $msg.=$this->numFail." aluno já está na turma ou participa de ".Ambiente::getMaxOficinas()." ".Ambiente::getAtividadeName()."s<br/>"; elseif($this->numFail > 1) $msg.=$this->numFail." alunos já estão na turma ou participam de ".Ambiente::getMaxOficinas()." ".Ambiente::getAtividadeName()."s<br/>";
         if($this->numErro == 1) $msg.=$this->numErro." aluno não pôde ser inserido, log de erro gerado<br/>";if($this->numErro > 1) $msg.=$this->numErro." alunos não puderam ser inseridos, log de erro gerado<br/>";
-
+        //form vazio
+        if($this->numSucess == 0 && $this->numEspera == 0 && $this->numFail == 0 && $this->numErro == 0){$this->numErro = 1;$msg="Nenhum dado recebido, use o botão de busca";}
         //verificando se temos mais erros ou sucesso
-        if(($this->numFail+$this->numErro) < $this->numSucess){
+        if(($this->numFail+$this->numErro) <= $this->numSucess){
             new mensagem(SUCESSO,$msg);
         }else{
             new mensagem(ERRO,$msg);
@@ -51,12 +52,10 @@ class aluno{
      * @throws Exception
      */
     private function parseCandidato($idPessoa){
-        //verificando se o aluno já esta cadastrado em 2 oficinas do periodo atual
+        //verificando se o aluno já esta cadastrado em X oficinas do periodo atual
          $estaParticipando = $this->getParticipacaoPeriodoAtual($idPessoa);
-       //buscando nome
-        //$nome = $this->getNome($idPessoa);
 
-        if($estaParticipando < 2){
+        if($estaParticipando < Ambiente::getMaxOficinas()){
             //buscando se o aluno já esta cadasrado nessa turma
             $jaNaTurma = json_decode($this->db->select("count(*) as n","aluno_turma","turma_id = ? and pessoa_id = ?",array($this->idTurma,$idPessoa)));
             $jaNaTurma = $jaNaTurma[0]->n;
@@ -73,8 +72,6 @@ class aluno{
                 }else{
                     //pessoas na lista de espera
                     $params = array($this->idTurma,$idPessoa,SIM);
-                    //$posicao = json_decode($this->db->select("count(*) as n","aluno_turma","id_turma = ? and lista_espera = ?",array($idTurma,SIM)));
-                    //$mens = "na lista de espera";
                     $this->sucessInsercao = 1;
                 }
                 //tentando inserir o aluno na turma
@@ -84,15 +81,15 @@ class aluno{
                     else $this->numEspera++;
 
                 }else{
-                    //$this->failInsercao.= "Não foi possivel inserir {$nome}<br/>";
+                    //Não foi possivel inserir
                     $this->numErro++;
                 }
             }else{
-                //$this->failInsercao.="{$nome} Já está nessa turma<br/>";
+                //Já está nessa turma
                 $this->numFail++;
             }
         }else{
-            //$this->failInsercao.="{$nome} já esta participando de {$estaParticipando} Oficinas<br/>";
+            //já esta participando de X Oficinas
             $this->numFail++;
         }
     }
@@ -143,7 +140,7 @@ class aluno{
      */
     public function getAlunos($turmaId){
         $tempo = turma::getTempoStatic($this->db);
-        $columns = "aluno_turma.id_aluno,pessoa.nome,pessoa.sobrenome,turma.nome_turma as turma,lista_espera,aluno_turma.trancado";
+        $columns = "aluno_turma.id_aluno,pessoa.nome,pessoa.sobrenome,pessoa.data_nascimento,turma.nome_turma as turma,lista_espera,aluno_turma.trancado";
         $whereClause = "aluno_turma.turma_id = turma.id_turma and aluno_turma.pessoa_id = pessoa.id_pessoa and turma.tempo_id = ? and turma.id_turma = ?";
         return $this->db->select($columns,"pessoa,turma,aluno_turma",$whereClause,array($tempo->id_tempo,$turmaId),"pessoa.nome",ASC);
     }
@@ -184,7 +181,7 @@ class aluno{
 
                 //colocamos o primeiro aluno da lista de espera na turma
                 if($this->db->update(array("lista_espera"),"aluno_turma",array(NAO),"id_aluno = ?",array($alunoSelecionado->id_aluno))){
-                    $mensagenAcumulada.= ", Aluno ".$alunoSelecionado->nome." ".$alunoSelecionado->sobrenome." que estava na lista de espera foi Inserido na Turma";
+                    $mensagenAcumulada.= ", Candidato ".$alunoSelecionado->nome." ".$alunoSelecionado->sobrenome." que estava na lista de espera foi Inserido na Turma";
                     new mensagem(SUCESSO,$mensagenAcumulada);
 
                 }else{
@@ -195,7 +192,7 @@ class aluno{
             }
 
         }else{
-            new mensagem(INSERT_ERRO,"Não foi possivel trancar a matricula");
+            new mensagem(INSERT_ERRO,"Não foi possível trancar a matrícula");
         }
 
        $this->redirecionaPagAnterior();
@@ -203,8 +200,7 @@ class aluno{
 
     /**
      * aqui geramos uma lista de presença com os alunos ativos na turma
-     * @param $turmaId
-     * @return string JSON
+     * @param $turmaId Integer - identificador da turma
      * @throws Exception
      */
     public function getListaPresenca($turmaId){

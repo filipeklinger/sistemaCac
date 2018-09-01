@@ -1,4 +1,5 @@
 <?php
+include_once 'control/constantes.php';
     session_start();
     if (!isset($_SESSION['CREATED'])) {
         $_SESSION['CREATED'] = time();
@@ -8,7 +9,7 @@
         $_SESSION['CREATED'] = time();  // update creation time
     }
 
-$titulo = isset($_GET['pag']) ? $_GET['pag']." - sistema_cac" : 'sistema_cac';//versao reduzida if
+    $titulo = isset($_GET['pag']) ? $_GET['pag']." - ".Ambiente::getSystemName() : Ambiente::getSystemName();
 
     // HSTS
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {

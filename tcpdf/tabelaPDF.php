@@ -2,6 +2,7 @@
 // Include the main TCPDF library (search for installation path).
 //require_once('tcpdf_include.php');
 require_once('config/tcpdf_config_alt.php');
+require_once '../control/constantes.php';
 require_once 'tcpdf.php';
 
 // Extend the TCPDF class to create custom Footer
@@ -26,7 +27,7 @@ class PDF{
     }
 
     private function inicializa(){
-        $pdfTitle = "Lista de Presenca - CAC";
+        $pdfTitle = "Lista de Presenca ".$this->dadosTurma->oficina." ".$this->dadosTurma->turma." ".Ambiente::getSystemName();
         $orientation = 'L';//P = portrait L = landscape
 
         // create new PDF document
@@ -37,14 +38,14 @@ class PDF{
         $pdf->SetAuthor('CAC System');
         $pdf->SetTitle($pdfTitle);
         $pdf->SetSubject($pdfTitle);
-        $pdf->SetKeywords('CAC, PDF, presença, oficina');
+        $pdf->SetKeywords(Ambiente::getSystemName().', PDF, presença,'.Ambiente::getAtividadeName());
 
         $dataHoje = date('d/m/Y');
         //Cabeçalho
-        $header_title = "Universidade Federal Rural do Rio de Janeiro";
+        $header_title = Ambiente::getInstituicaoName();
         $header_logo = "logo.jpg";
-        $txt_header = "Lista de presença da turma: {$this->dadosTurma->turma}, {$this->dadosTurma->oficina} / Professor: {$this->dadosTurma->professor}\n".
-            "Sistema do Centro de Arte e Cultura - CAC\n".
+        $txt_header = Ambiente::getSystemNameExtenso()."\n".
+            "Lista de presença da turma: {$this->dadosTurma->turma}, {$this->dadosTurma->oficina} / ".Ambiente::getCargoProf().": {$this->dadosTurma->professor}\n".
             "Emitido em: {$dataHoje}";
 
         $pdf->SetHeaderData($header_logo, PDF_HEADER_LOGO_WIDTH, $header_title, $txt_header, array(0,0,0), array(0,0,0));
@@ -66,7 +67,7 @@ class PDF{
             //cabecalho tabela
             $html .= '<table cellspacing="0" cellpadding="1" border="1" align="center">
 			<thead>
-			    <tr bgcolor="#1d5a8e">
+			    <tr bgcolor="#6f77cf">
 					<th><font color="#ffffff">#</font></th>
 					<th colspan="4"><font color="#ffffff">Nome:</font></th>
 					<th><font color="#ffffff">&nbsp;</font></th>
