@@ -35,7 +35,8 @@ class aluno{
         if($this->numEspera == 1) $msg.=$this->numEspera." aluno inserido na lista de espera<br/>"; elseif($this->numEspera > 1) $msg.=$this->numEspera." alunos inseridos na lista de espera<br/>";
         if($this->numFail == 1) $msg.=$this->numFail." aluno já está na turma ou participa de ".Ambiente::getMaxOficinas()." ".Ambiente::getAtividadeName()."s<br/>"; elseif($this->numFail > 1) $msg.=$this->numFail." alunos já estão na turma ou participam de ".Ambiente::getMaxOficinas()." ".Ambiente::getAtividadeName()."s<br/>";
         if($this->numErro == 1) $msg.=$this->numErro." aluno não pôde ser inserido, log de erro gerado<br/>";if($this->numErro > 1) $msg.=$this->numErro." alunos não puderam ser inseridos, log de erro gerado<br/>";
-
+        //form vazio
+        if($this->numSucess == 0 && $this->numEspera == 0 && $this->numFail == 0 && $this->numErro == 0){$this->numErro = 1;$msg="Nenhum dado recebido, use o botão de busca";}
         //verificando se temos mais erros ou sucesso
         if(($this->numFail+$this->numErro) <= $this->numSucess){
             new mensagem(SUCESSO,$msg);
