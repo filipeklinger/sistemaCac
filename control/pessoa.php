@@ -347,7 +347,7 @@ class pessoa{
             $base = null;
         } else {
             $pagna = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
-            if($pagna == 1) $base = 0;
+            if($pagna == 1) $base = 1;//deve ser 1 para nao retornar todos os registros
             else $base = REGISTROS*$pagna;
         }
 

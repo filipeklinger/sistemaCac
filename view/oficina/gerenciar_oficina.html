@@ -17,7 +17,7 @@
 
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="active" data-toggle="collapse" data-target="#myNavbar"><a data-toggle="tab" href="#oficina">Gerenciar Oficinas</a></li>
+                        <li class="active" data-toggle="collapse" data-target="#myNavbar"><a data-toggle="tab" href="#oficina">Gerenciar <span class="atividade-name"></span>s</a></li>
                     </ul>
                 </div>
             </div>
@@ -30,8 +30,8 @@
         <div id="contTab" class="tab-content">
 
 
-                    <a href="?pag=Cad.Oficina" type="button" class="btn btn-primary"><i
-                        class="glyphicon glyphicon-plus"></i> Nova Oficina</a>
+                    <a href="?pag=Cad.Oficina" type="button" class="btn btn-primary atividade-name"><i
+                        class="glyphicon glyphicon-plus"></i> Nova </a>
 
                     <table class="table">
                         <thead>
@@ -51,9 +51,10 @@
 
     var controlador = "control/main.php?req=selectOficina";
 
-    $('#tbody').on("load", loader());
+    $(document).ready(loader());
 
     function loader() {
+        $('.atividade-name').append(AtividadeName);
         getMsgs();
         ajaxLoadGET(controlador, jsonParseOficinas, '#toficinas')
     }

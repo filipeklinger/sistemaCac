@@ -40,14 +40,14 @@
             <p>Crianças: <span id="cadastrosCrianca"></span> </p>
             <p>Total de cadastros: <span id="totalCadastros"></span> </p>
 
-            <h3 class="text-center">Alunos por Oficina</h3>
-            <p>Total matriculado em oficinas: <span id="totalAlunosAtivos"></span> Alunos.</p>
+            <h3 class="text-center">Alunos por Turma</h3>
+            <p>Total matriculado em turmas: <span id="totalAlunosAtivos"></span> Alunos.</p>
             <p>Total em lista de espera: <span id="totalAlunosEspera"></span> Alunos.</p>
             <div class="row">
                 <table width="80%" align="center" class="table">
                     <thead>
                     <tr>
-                        <th class="col-md-4">Oficina</th>
+                        <th class="col-md-4">Turma</th>
                         <th class="col-md-2">Número de Alunos</th>
                         <th class="col-md-2">Tam da Lista de espera</th>
                     </tr>
@@ -81,6 +81,7 @@
 
 
     function loaderRelatorios() {
+        $('.atividade-name').prepend(AtividadeName);
         ajaxLoadGET('control/main.php?req=selectTempoHistorico', parsePeriodosSelect, '#periodo', getPeriodoSelecionado);
         ajaxLoadGET('control/main.php?req=selectAlunosCadastrados', parseCadastros, '#cadastrosRuralino');
         ajaxLoadGET('control/main.php?req=selectAlunosHistorico', parseAlunosHistorico, '#alunos');

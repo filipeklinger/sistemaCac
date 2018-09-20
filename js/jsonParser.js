@@ -249,11 +249,11 @@ function getDiaSemana(objdia) {
 function getNVacesso(nv) {
     switch (nv) {
         case '1':
-            return "Administrador";
+            return CargoAdm;
         case '2':
-            return "Oficineiro";
+            return CargoProf;
         case '3':
-            return "Aluno";
+            return CargoAluno;
         default:
             return "Visitante";
     }
@@ -825,20 +825,14 @@ function editUsuarioNome() {
     let sobrenome = $('#sobrenome').text();
     let nasc = usuarioJson[0].data_nascimento;
     dadosBasicos.empty();
+    // noinspection BadExpressionStatementJS
     dadosBasicos.append(
-        '<form action="control/main.php?req=updateDadosBasicos&id=' + identificador + '" method="POST">' +
-        '<p>Nível de Acesso: <select id="nv_acesso" name="nv_acesso">\n' +
-        '                        <option value=4>Visitante</option>\n' +
-        '                        <option value=3>Aluno</option>\n' +
-        '                        <option value=2>Oficineiro</option>\n' +
-        '                        <option value=1>Administrador</option>\n' +
-        '                    </select>' +
-        '</p>' +
-        '<p>Nome: <input type=\'text\' name=\'nome\' value="' + nome + '" required="required"></p>' +
-        '<p>Sobrenome: <input type="text" name="sobrenome" value="' + sobrenome + '" required="required"></p>' +
-        '<p>Data nascimento: <input type="date" name="nascimento" value="' + nasc + '" required="required"> </p>' +
-        '<br/><input type="submit" class="btn btn-primary" value="Gravar"/>' +
-        '</form>');
+        `<form action="control/main.php?req=updateDadosBasicos&id=${identificador}" method="POST"><p>Nível de Acesso: <select id="nv_acesso" name="nv_acesso">
+                        <option value=4>Visitante</option>
+                        <option value=3>${CargoAluno} </option>
+                         <option value=2>${CargoProf} </option>
+                         <option value=1>${CargoAdm} </option>
+                     </select></p><p>Nome: <input type='text' name='nome' value="${nome}" required="required"></p><p>Sobrenome: <input type="text" name="sobrenome" value="${sobrenome}" required="required"></p><p>Data nascimento: <input type="date" name="nascimento" value="${nasc}" required="required"> </p><br/><input type="submit" class="btn btn-primary" value="Gravar"/></form>`);
 }
 
 function editUsuarioContato() {
@@ -851,16 +845,13 @@ function editUsuarioContato() {
         console.log(jsonContato);
         jsonContato = JSON.parse(jsonContato);
             tipo = jsonContato[0].tipo;
-            acm += '<p><input type="hidden" name="resp_tel_id" value="'+jsonContato[0].id_contato+'">' +
-                'Tel: <input type="number" name="resp_tel" value="' + jsonContato[0].contato + '" required="required">' +
-                'Tipo: <select id="resp_tel_type" name="resp_tel_type">\n' +
-                '                        <option value="2" ' + verTp(tipo, 2) + '>Whatsapp</option>\n' +
-                '                        <option value="1"' + verTp(tipo, 1) + '>Celular</option>\n' +
-                '                        <option value="3"' + verTp(tipo, 3) + '>Fixo (residencial)</option>\n' +
-                '                        <option value="4"' + verTp(tipo, 4) + '>Recados</option>\n' +
-                '                        <option value="5"' + verTp(tipo, 5) + '>Email</option>\n' +
-                '                    </select>' +
-                '</p>';
+            acm += `<p><input type="hidden" name="resp_tel_id" value="${jsonContato[0].id_contato}">Tel: <input type="number" name="resp_tel" value="${jsonContato[0].contato}" required="required">Tipo: <select id="resp_tel_type" name="resp_tel_type">
+                        <option value="2" ${verTp(tipo, 2)}>Whatsapp</option>
+                        <option value="1" ${verTp(tipo, 1)}>Celular</option>
+                        <option value="3" ${verTp(tipo, 3)}>Fixo (residencial)</option>
+                        <option value="4" ${verTp(tipo, 4)}>Recados</option>
+                        <option value="5" ${verTp(tipo, 5)}>Email</option>
+                    </select></p>`;
             if(jsonContato.length >1){
                 acm += '<p><input type="hidden" name="resp_email_id" value="'+jsonContato[1].id_contato+'">' +
                     'Email: <input type="email" name="email" value="' + jsonContato[1].contato + '" required="required">' +

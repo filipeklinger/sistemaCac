@@ -45,11 +45,11 @@ class login{
     private function getNVacesso($nv){
         switch ($nv){
             case ADMINISTRADOR:
-                return "Administrador";
+                return Ambiente::getCargoAdm();
             case PROFESSOR:
-                return "Oficineiro";
+                return Ambiente::getCargoProf();
             case ALUNO:
-                return "Aluno";
+                return Ambiente::getCargoAluno();
             default:
                 return "Visitante";
         }
