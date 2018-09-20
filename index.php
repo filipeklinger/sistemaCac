@@ -59,6 +59,7 @@ include_once 'control/constantes.php';
     <script type="application/x-javascript">
         <?php Ambiente::getUiMens(); ?>
     </script>
+    <script src="js/plotly-latest.min.js"></script>
 </head>
 <?php
 //aqui recebemos por get a pagina de conteudo escolhida
