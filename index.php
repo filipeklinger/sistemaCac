@@ -37,9 +37,6 @@ include_once 'control/constantes.php';
     <title><?php echo $titulo ?></title>
 
     <link rel="icon" sizes="192x192" href="img/favicon.png">
-    <!-- Bootstrap -->
-    <link href="bootstrap3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <!-- estiliza o seletor link href="bootstrap3.3.7/select/css/bootstrap-select.min.css" rel="stylesheet" -->
     <link href="css/cssPersonalizado.css" rel="stylesheet">
     <!-- HTML5 shim e Respond.js para suporte no IE8 de elementos HTML5 e media queries -->
     <!-- ALERTA: Respond.js não funciona se você visualizar uma página file:// -->
