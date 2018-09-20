@@ -61,24 +61,24 @@ function listaMarota(resposta, corpo) {
             if (objJson[i].vagas < 10) {
                 objJson[i].vagas = '&nbsp;&nbsp;' + objJson[i].vagas;
             }
+            if (objJson[i].pre_requisito.length < 2) objJson[i].pre_requisito = 'Nenhum';
             //console.log(avaliaData(objJson[i]));
             var aux = JSON.parse(avaliaData(objJson[i]));
 
             corpo.append(
-                '<div class="container oficinasContainer">' +
-                '<div class="col-md-2 ">' +
-                '<div class="text-center oficinasvagas">' +
-                objJson[i].vagas +
-                '<br>vagas</div></div>' + //end of oficinaVagas
-                '<div class="col-md-8">' + //begin of oficinas content
-                '<h3 >' + objJson[i].oficina + ' - ' + objJson[i].inicio +
-                '</h3>' +
-                ' <h4>Dias: ' + aux + '</h4>' +
-                '<p>Local: <span style="text-transform: capitalize">' + objJson[i].sala + '</span> em  <span style="text-transform: uppercase">' + objJson[i].predio + '</span></p>' +
-                '<p>Professor: ' + objJson[i].professor + '</p>' +
-                '<hr>' +
-                '</div>' +
-                '</div>'
+                `<div class="container oficinasContainer">
+                    <div class="col-md-2 ">
+                        <div class="text-center oficinasvagas">${objJson[i].vagas}<br>vagas</div>
+                    </div>
+                    <div class="col-md-8">
+                        <h3 >${objJson[i].oficina} - ${objJson[i].inicio}</h3>
+                        <h4>Dias: ${aux}</h4>
+                        <p>Local: <span style="text-transform: capitalize">${objJson[i].sala}</span> em  <span style="text-transform: uppercase">${objJson[i].predio}</span></p>
+                        <p>Professor: ${objJson[i].professor}</p>
+                        <p>Requisito: ${objJson[i].pre_requisito}</p>
+                        <hr>
+                      </div>
+                </div>`
             );
         }
     }
