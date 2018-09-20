@@ -31,12 +31,12 @@
         <table class="table">
             <thead>
             <tr>
-                <th class='col-md-2'>Oficinas</th>
+                <th class='col-md-2' id="atividade-header-table">s</th>
                 <th class='col-md-2'>Turma</th>
                 <th class='col-md-2'>Dia da Semana</th>
                 <th class='col-md-2'>Horário</th>
                 <th class='col-md-1'>Sala</th>
-                <th class='col-md-2'>Professor</th>
+                <th class='col-md-2' id="prof-header-table">Professor</th>
                 <th class='col-md-1'>Vagas</th>
             </tr>
             </thead>
@@ -53,6 +53,8 @@
     }
 
     function loader() {
+        $('#atividade-header-table').prepend(AtividadeName);
+        $('#prof-header-table').empty().prepend(CargoProf);
         ajaxLoadGET('control/main.php?req=selecUsuarioLogado', parseUsuario, '#nv');
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', parseTurmaHorario, '#t_oficinas');
         ajaxLoadGET('control/main.php?req=selectPeriodoAtual', parsePeriodoText, '#periodoAtual');
