@@ -31,11 +31,11 @@ class Ambiente{
     private static $nomeSistemaExtenso = "Sistema do Centro de Arte e Cultura - CAC";
     private static $nomeInstituicao = "Universidade Federal Rural do Rio de Janeiro";
     //cargos
-    private static $admn = "Destruidor";//Administrador
-    private static $prof = "Construtor";//Oficineiro
-    private static $alun = "Rebelde";//Aluno
+    private static $admn = "Administrador";//Administrador
+    private static $prof = "Oficineiro";//Oficineiro
+    private static $alun = "Aluno";//Aluno
     //nome da atividade
-    private static $atividade = "Aula";//escreva somente no singular
+    private static $atividade = "Oficina";//escreva somente no singular
     //Quantidade maxima de atividades que um aluno pode cursar num mesmo periodo
     private static $maxAtiv = 2;
 
