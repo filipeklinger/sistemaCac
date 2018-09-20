@@ -57,13 +57,7 @@ include_once 'control/constantes.php';
     <script src="js/jsonParser.min.js"></script>
     <!-- Aqui recebemos as msg do Sistema -->
     <script type="application/x-javascript">
-        <?php
-        $msg = isset($_SESSION['MSG']) ? $_SESSION['MSG'] : '{"tipo":" ","desc":" "}';
-        echo "var mensagem = '".$msg."';";
-        unset($_SESSION['MSG']);
-        $menu = isset($_SESSION['MENU']) ? $_SESSION['MENU'] : '{"nome":" ","link":" "}';
-        echo "\nvar menuPrincipal = '".$menu."';";
-        ?>
+        <?php Ambiente::getUiMens(); ?>
     </script>
 </head>
 <?php

@@ -21,7 +21,7 @@
         </div>
         <div class="row text-center">
             <br/>
-            <button onclick="slideTo('titulo-lista')" class="coolButton2"> Oficinas Disponíveis </button>
+            <button onclick="slideTo('titulo-lista')" class="coolButton2" id="bt-atividade-disp">s Disponíveis </button>
             &nbsp;&nbsp;&nbsp;
             <button onclick="slideTo('MainFooter')" class="coolButton2"> Contato </button>
         </div>
@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<h2 id="titulo-lista" class="text-center">Oficinas Disponíveis em <span id="anoAtual"
+<h2 id="titulo-lista" class="text-center">s Disponíveis em <span id="anoAtual"
 
                                                                         style="color: white"></span>.<span
 
@@ -69,6 +69,8 @@
     $(document).ready(loadLogin());
 
     function loadLogin() {
+        $('#titulo-lista').prepend(AtividadeName);
+        $('#bt-atividade-disp').prepend(AtividadeName);
         getMsgs();
         ajaxLoadGET('control/main.php?req=selectPeriodoAtual', parsePeriodoText, '#periodoAtual');
         ajaxLoadGET('control/main.php?req=selectTurmaAtiva', listaMarota, '#t_oficinas');
