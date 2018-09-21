@@ -697,12 +697,11 @@ class pessoa{
     //---------------------------------------------REDIRECT-------------------------------------------------------------
     private function redireciona(){header("Location: ../index.php?pag=Login");}
 
-    private function redirecionaPagAnterior()
-    {
+    private function redirecionaPagAnterior(){
         if (isset($_SERVER['HTTP_REFERER']))
             header("Location: " . $_SERVER['HTTP_REFERER'] . "");
         else
             header("Location: ../index.php?pag=DashBoard");
-            }
+    }
 
 }
