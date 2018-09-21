@@ -11,7 +11,7 @@ class Database{
      * @var PDO
      */
     private $diretorio;
-    private $databaseObj;
+    private $pdo;
 
     function __construct(){
         $this->diretorio = dirname(__FILE__);
@@ -37,9 +37,21 @@ class Database{
         $username = $setings['database']['username'];
         $password = $setings['database']['password'];
 
-        $con = new PDO($sgbd . ":host=" . $host . ";port=" . $port . ";dbname=" . $schema, $username, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-        $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->databaseObj = $con;
+        $this->pdo = new PDO($sgbd . ":host=" . $host . ";port=" . $port . ";dbname=" . $schema, $username, $password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    }
+
+//------------Make Atomic transactions-----------------------
+    public function startTransaction(){
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $this->pdo->beginTransaction();
+    }
+
+    public function endTransaction(){
+        // commit the transaction
+        /** @noinspection PhpUndefinedMethodInspection */
+        $this->pdo->commit();
     }
 
 //-----------------SELECT-------------------------------------------------------------------
@@ -86,8 +98,7 @@ class Database{
             $query .=" LIMIT ". intval($limit). " OFFSET ".intval($offset);
         }
         //Preparing
-        $PDO = $this->databaseObj;
-        $stmt = $PDO->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         //Inserting params
         if ($whereArgs != null and sizeof($whereArgs) > 0) {
             for ($i = 0; $i < sizeof($whereArgs); $i++) {
@@ -150,8 +161,7 @@ class Database{
         $query .= ") ";
 
         //Preparing
-        $PDO = $this->databaseObj;
-        $stmt = $PDO->prepare($query);
+        $stmt = $this->pdo->prepare($query);
 
         //Inserting params
         if ($params != null and sizeof($params) > 0) {
@@ -218,8 +228,7 @@ class Database{
         }
 
         //Preparing
-        $PDO = $this->databaseObj;
-        $stmt = $PDO->prepare($query);
+        $stmt = $this->pdo->prepare($query);
 
         //Inserting params
         $i = 0;
@@ -284,8 +293,7 @@ class Database{
         }
 
         //Preparing
-        $PDO = $this->databaseObj;
-        $stmt = $PDO->prepare($query);
+        $stmt = $this->pdo->prepare($query);
 
         //Inserting params
         if (sizeof($whereArgs) > 0) {
@@ -345,8 +353,7 @@ class Database{
         $query = "SELECT LAST_INSERT_ID()";
 
         //Preparing
-        $PDO = $this->databaseObj;
-        $stmt = $PDO->prepare($query);
+        $stmt = $this->pdo->prepare($query);
 
         //Running query
         try {
@@ -368,14 +375,16 @@ class Database{
         return $data;
     }
 //-----------------------------------SET---Variable---------------------------------------------------------------------
+
     /**
      * @param string $name name of variable
      * @param $value mixed value of variable
+     * @throws Exception
      */
     public function setVariable($name, $value){
         $value = $this->antiInjection($value);
         $name = $this->antiInjection($name);
-        $this->databaseObj->query("Set @".$name.":=".$value);
+        $this->pdo->query("Set @".$name.":=".$value);
     }
 }
 
