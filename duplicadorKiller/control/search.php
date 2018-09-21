@@ -19,7 +19,7 @@ class search{
      */
     private function getDuplicados(){
         $clausulaWhere = "numero_documento IN (SELECT B.numero_documento FROM documento B GROUP BY B.numero_documento HAVING COUNT(*) > 1)";
-        return $this->db->select('pessoa_id,numero_documento',"documento",$clausulaWhere,null,"pessoa_id");
+        return $this->db->select('pessoa_id,numero_documento',"documento",$clausulaWhere,null,"numero_documento");
     }
 
     /**
@@ -49,20 +49,20 @@ class search{
      */
     public function getDataFromDuplicados(){
         $duplic = json_decode($this->getDuplicados());
-        $stFmt = "";
+        $stFmt = array();
         $pessoaId = 0;
         for($i=0;$i<sizeof($duplic);$i++){
             $pessoaId = $duplic[$i]->pessoa_id;
-            $stFmt .= "<tr>
+            $stFmt[$i] = "<tr>
                         <td> {$pessoaId} </td>
                         <td> {$duplic[$i]->numero_documento} </td>
                         <td> {$this->getNome($pessoaId)} </td>
                         <td> {$this->estaEmTurma($pessoaId)} </td>";
             if($this->estaEmTurma($pessoaId) == 0)
-                $stFmt .= "<td><input type=\"checkbox\" name=\"pessoa_id[]\" value=\"{$pessoaId}\" > </td>";
+                $stFmt[$i] .= "<td><input type=\"checkbox\" name=\"pessoa_id[]\" value=\"{$pessoaId}\" checked='checked'> </td>";
             else
-                $stFmt .= "<td><input type=\"checkbox\" name=\"pessoa_id[]\" value=\"{$pessoaId}\"> </td>";
-            $stFmt .= "</tr>";
+                $stFmt[$i] .= "<td><input type=\"checkbox\" name=\"pessoa_id[]\" value=\"{$pessoaId}\"> </td>";
+            $stFmt[$i] .= "</tr>";
         }
         return $stFmt;
     }

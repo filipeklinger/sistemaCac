@@ -26,7 +26,7 @@ class destroy{
                 $registroEliminado .= $e."<br/>";
             }
         }
-        $_SESSION['MENSAG'] = $registroEliminado;
+        $_SESSION['MENSAG'] = $registroEliminado." =O";
         echo $registroEliminado;
         $this->redirecionaPagAnterior();
     }
