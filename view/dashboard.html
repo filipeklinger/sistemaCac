@@ -4,8 +4,6 @@
     <br>
     <button class="btn btn-info closeBtnAtSmallScreen" onclick="btnTglr()">X</button>
     <ul class="list-unstyled" id="menu">
-        <br>
-        <br>
         <li class="text-center">
             <a href="control/main.php?req=logout">
                 <i class="glyphicon glyphicon-log-out"></i>
@@ -63,7 +61,10 @@
         //btnTglr();
     }
 
+    $('.submenu').click( function(e) {
+        $('.collapse').collapse('hide');
+    });
 
-    $('#footerYear').append((new Date).getFullYear());
+    //$('#footerYear').append((new Date).getFullYear());
 </script>
 </body>
