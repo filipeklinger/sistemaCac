@@ -549,9 +549,6 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     #dashboard{
         display: contents;
     }
-    .searchBox input[type=text]{
-        /*margin-top: 30px;*/
-    }
     .container{
         margin: 15px;
         margin-top: 0;
@@ -559,6 +556,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
 
     .smallScreenSpaceCorrection{
         padding-top: 10%;
+        padding-left: 15px;
         /*margin-left: 15px;*/
     }
     .smallScreenTableContainer{
@@ -575,6 +573,7 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     }
     .smallScreenSpaceCorrection{
         padding-top: 10%;
+        padding-left: 15px;
     }
     .smallScreenTableContainer{
         overflow: scroll;

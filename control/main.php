@@ -27,6 +27,7 @@ class main{
 		    header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], true, 301);
 		    die();
 	    }
+
     }
 
     public function setAction(){

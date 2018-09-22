@@ -11,7 +11,7 @@ include_once 'control/constantes.php';
 
     $titulo = isset($_GET['pag']) ? $_GET['pag']." - ".Ambiente::getSystemName() : Ambiente::getSystemName();
 
-    // HSTS
+    //HSTS
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
     	header('Strict-Transport-Security: max-age=31536000');
     } else {

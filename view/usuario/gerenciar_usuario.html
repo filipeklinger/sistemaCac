@@ -5,20 +5,26 @@
 <div class="header">
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-                <div class="navbar-header">
-                    <button style="border: none" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="fa fa-bars fa-lg"></span>
-                    </button>
+            <div class="navbar-header">
+                <button style="border: none" type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#myNavbar">
+                    <span class="fa fa-bars fa-lg"></span>
+                </button>
 
-                    <a class="navbar-brand" href="?pag=DashBoard" style="color: white"><i class="fa fa-chevron-left"></i> Página Inicial</a>
-                </div>
+                <a class="navbar-brand" href="?pag=DashBoard" style="color: white"><i class="fa fa-chevron-left"></i>
+                    Página Inicial</a>
+            </div>
 
-                <div class="collapse navbar-collapse" id="myNavbar">
+            <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active" data-target="#myNavbar"><a data-toggle="tab" onclick="trocaReq('todos')" href="#">Todos</a></li>
-                    <li data-target="#myNavbar"><a data-toggle="tab" onclick="trocaReq('candidato')" href="#">Gerenciar Candidato</a></li>
-                    <li data-target="#myNavbar"><a data-toggle="tab" onclick="trocaReq('professor')" href="#">Gerenciar Professores</a></li>
-                    <li data-target="#myNavbar"><a data-toggle="tab" onclick="trocaReq('administrador')" href="#">Gerenciar Adminstradores</a></li>
+                    <li class="active" data-target="#myNavbar"><a data-toggle="tab" onclick="trocaReq('todos')"
+                                                                  href="#">Todos</a></li>
+                    <li data-target="#myNavbar"><a data-toggle="tab" onclick="trocaReq('candidato')" href="#">Gerenciar
+                        Candidato</a></li>
+                    <li data-target="#myNavbar"><a data-toggle="tab" onclick="trocaReq('professor')" href="#">Gerenciar
+                        Professores</a></li>
+                    <li data-target="#myNavbar"><a data-toggle="tab" onclick="trocaReq('administrador')" href="#">Gerenciar
+                        Adminstradores</a></li>
                 </ul>
             </div>
         </div>
@@ -29,7 +35,7 @@
 <div style="overflow-x: hidden;">
     <div id="contTab" class="tab-content" style="padding: 20px;">
         <div id="users" class="tab-pane fade in active">
-            <div class="col-md-12" style="overflow-x: auto">
+            <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-2">
                         <a class="btn btn-primary" href="?pag=Cad.Pessoa"><i
@@ -38,9 +44,10 @@
 
                     <div class="col-lg-6 smallScreenSpaceCorrection">
                         <div class="input-group">
-                                <span class="input-group-btn">
-                                     <button id="bt-pesquisa" class="btn btn-primary" type="button" onclick="pesquisa()" disabled>Buscar</button>
-                                </span>
+                            <span class="input-group-btn">
+                                <button id="bt-pesquisa" class="btn btn-primary" type="button" onclick="pesquisa()"
+                                     disabled>Buscar</button>
+                            </span>
                             <div class="searchBox">
                                 <input type="text" class="form-control searchBox" id="searchName"
                                        onclick="limpaPesquisa('bt-pesquisa','searchName')"
@@ -50,20 +57,21 @@
                     </div><!-- /.col-lg-6 -->
                     <br>
                 </div>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th class="col-md-4">Nome</th>
-                    <th class="col-md-2">Tipo de Acesso</th>
-                    <th class="col-md-2">Menor de Idade ?</th>
-                    <th class="col-md-2">Discente da Rural ?</th>
-                    <th class="col-md-2">Ver / Editar dados</th>
-                </tr>
-                </thead>
-                <tbody id="usuarios"></tbody>
-            </table>
+                <div style="overflow: scroll">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="col-md-4">Nome</th>
+                            <th class="col-md-2">Tipo de Acesso</th>
+                            <th class="col-md-2">Menor de Idade ?</th>
+                            <th class="col-md-2">Discente da Rural ?</th>
+                            <th class="col-md-2">Ver / Editar dados</th>
+                        </tr>
+                        </thead>
+                        <tbody id="usuarios"></tbody>
+                    </table>
+                </div>
             </div>
-
         </div>
     </div>
     <div class="container-fluid text-center">
@@ -72,7 +80,8 @@
             <li>
                 <span>
                     <span>
-                        <input id="paginic" type="text" onclick="$(this).val('')" onblur="$(this).val(pagina)"  onchange="trocaPag(parseInt($(this).val()))">
+                        <input id="paginic" type="text" onclick="$(this).val('')" onblur="$(this).val(pagina)"
+                               onchange="trocaPag(parseInt($(this).val()))">
                     </span>
                     de
                     <span id="pagfim">
