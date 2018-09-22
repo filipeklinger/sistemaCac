@@ -1004,8 +1004,8 @@ function jsonParseUsuarios(resposta, corpo) {
 
 function slideTo(value) {
     document.querySelector('#' + value).scrollIntoView({
-        behavior: 'smooth'
-
+        behavior: "smooth",
+        block: "start",
     });
 }
 
