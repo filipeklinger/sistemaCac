@@ -20,6 +20,7 @@ class main{
 
     public function __construct(){
 	    // HSTS
+
 	    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
 		    header('Strict-Transport-Security: max-age=31536000');
 	    } else {

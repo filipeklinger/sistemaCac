@@ -536,8 +536,9 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
         /*max-height: 200px;*/
         max-height: 200px;
     }
+
     .sidebar{
-        position: absolute;
+        /*position: absolute;*/
         width: 100%;
         display: none;
     }
@@ -574,7 +575,6 @@ input[type=text], input[type=password], input[type=number], input[type=date], in
     }
     .smallScreenSpaceCorrection{
         padding-top: 10%;
-        /*margin-left: 15px;*/
     }
     .smallScreenTableContainer{
         overflow: scroll;

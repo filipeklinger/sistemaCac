@@ -48,6 +48,9 @@
 
     function btnTglr() {
         $('.sidebar').toggle(100);
+        if(($(window).height() < 640) && ($(window).width() < 539)){
+            $('.content').toggle(100);
+        }
     }
 
     function loader() {
@@ -61,6 +64,7 @@
         //btnTglr();
     }
 
+    // OnClick close submenu
     $('.submenu').click( function(e) {
         $('.collapse').collapse('hide');
     });
