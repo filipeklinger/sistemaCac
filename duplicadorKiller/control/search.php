@@ -19,7 +19,7 @@ class search{
      */
     private function getDuplicados(){
         $clausulaWhere = "numero_documento IN (SELECT B.numero_documento FROM documento B GROUP BY B.numero_documento HAVING COUNT(*) > 1)";
-        return $this->db->select('pessoa_id,numero_documento',"documento",$clausulaWhere,null,"numero_documento");
+        return $this->db->select('pessoa_id,numero_documento',"documento",$clausulaWhere,null,"pessoa_id");
     }
 
     /**
@@ -45,23 +45,40 @@ class search{
     }
 
     /**
+     * @param $pessoaID
+     * @return integer
+     * @throws Exception
+     */
+    private function temLogin($pessoaID){
+        $login = json_decode($this->db->select("count(*) as n","login","pessoa_id = ?",array($pessoaID)));
+        return $login[0]->n;
+    }
+
+    /**
      * @throws Exception
      */
     public function getDataFromDuplicados(){
         $duplic = json_decode($this->getDuplicados());
         $stFmt = array();
         $pessoaId = 0;
-        for($i=0;$i<sizeof($duplic);$i++){
+        $tam = sizeof($duplic);
+        for($i=0;$i<$tam;$i++){
             $pessoaId = $duplic[$i]->pessoa_id;
             $stFmt[$i] = "<tr>
                         <td> {$pessoaId} </td>
                         <td> {$duplic[$i]->numero_documento} </td>
                         <td> {$this->getNome($pessoaId)} </td>
-                        <td> {$this->estaEmTurma($pessoaId)} </td>";
-            if($this->estaEmTurma($pessoaId) == 0)
-                $stFmt[$i] .= "<td><input type=\"checkbox\" name=\"pessoa_id[]\" value=\"{$pessoaId}\" checked='checked'> </td>";
-            else
+                        <td> {$this->estaEmTurma($pessoaId)} </td>
+                        <td> {$this->temLogin($pessoaId)} </td>";
+            //aqui desmarcamos se vc possui um idenficador que e sequencia de outro mas nao a sequencia 2 vezes
+            //isso serve para um usuario que nao se cadastrou em nenhuma oficina mas tem varias contas
+            //sem isso ele fica sem cadastro algum
+            if($this->estaEmTurma($pessoaId) > 0)
+                $stFmt[$i] .= "<td><input type=\"checkbox\" name=\"pessoa_id[]\" value=\"{$pessoaId}\" disabled> </td>";
+            else if($this->temLogin($pessoaId) != 0)
                 $stFmt[$i] .= "<td><input type=\"checkbox\" name=\"pessoa_id[]\" value=\"{$pessoaId}\"> </td>";
+            else
+                $stFmt[$i] .= "<td><input type=\"checkbox\" name=\"pessoa_id[]\" value=\"{$pessoaId}\" checked='checked'> </td>";
             $stFmt[$i] .= "</tr>";
         }
         return $stFmt;

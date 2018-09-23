@@ -60,7 +60,7 @@ class destroy{
             $this->db->delete("ruralino","pessoa_id=?",array($pessoaId));
             $this->db->delete("aluno_turma","pessoa_id=?",array($pessoaId));
             //por ultimo pessoa para nao dar erro de foreignKey
-            $this->db->delete("pessoa","pessoa_id=?",array($pessoaId));
+            $this->db->delete("pessoa","id_pessoa=?",array($pessoaId));
         $this->db->endTransaction();
 
         return "Eliminado {$pessoaId}";

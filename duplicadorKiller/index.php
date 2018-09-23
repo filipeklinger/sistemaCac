@@ -42,12 +42,13 @@ try {
     <form onsubmit="return warning(this);" method="post" action="control/destroy.php">
         <button class="btn btn-warning center-block">ELIMINAR</button>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <th>ID</th>
             <th>Documento</th>
             <th>Nome</th>
             <th>Esta em turma</th>
+            <th>Tem Login</th>
             <th>Excluir</th>
         </thead>
         <tbody>
@@ -59,6 +60,7 @@ try {
                     echo "<tr>
                             <td> Parabens!! </td>
                             <td> Nenhum Registro duplicado </td>
+                            <td>  </td>
                             <td>  </td>
                             <td> </td>";
 
