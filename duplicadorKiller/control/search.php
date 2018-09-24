@@ -54,6 +54,11 @@ class search{
         return $login[0]->n;
     }
 
+    private function traduzBool($bol){
+        if($bol > 0) return "sim";
+        return "não";
+    }
+
     /**
      * @throws Exception
      */
@@ -68,8 +73,8 @@ class search{
                         <td> {$pessoaId} </td>
                         <td> {$duplic[$i]->numero_documento} </td>
                         <td> {$this->getNome($pessoaId)} </td>
-                        <td> {$this->estaEmTurma($pessoaId)} </td>
-                        <td> {$this->temLogin($pessoaId)} </td>";
+                        <td> {$this->traduzBool( $this->estaEmTurma($pessoaId))} </td>
+                        <td> {$this->traduzBool($this->temLogin($pessoaId))} </td>";
             //aqui desmarcamos se vc possui um idenficador que e sequencia de outro mas nao a sequencia 2 vezes
             //isso serve para um usuario que nao se cadastrou em nenhuma oficina mas tem varias contas
             //sem isso ele fica sem cadastro algum
@@ -79,9 +84,10 @@ class search{
                 $stFmt[$i] .= "<td><input type=\"checkbox\" name=\"pessoa_id[]\" value=\"{$pessoaId}\"> </td>";
             else
                 $stFmt[$i] .= "<td><input type=\"checkbox\" name=\"pessoa_id[]\" value=\"{$pessoaId}\" checked='checked'> </td>";
+
             $stFmt[$i] .= "</tr>";
         }
-        return $stFmt;
+        return array_values($stFmt);
     }
 }
 ?>

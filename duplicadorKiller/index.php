@@ -42,13 +42,23 @@ try {
     <form onsubmit="return warning(this);" method="post" action="control/destroy.php">
         <button class="btn btn-warning center-block">ELIMINAR</button>
 
+        <div class="col-md-12">
+            <h4 class="text-left col-md-12 alert alert-info">
+                <span class="glyphicon glyphicon-info-sign" style="float: left;"></span>
+                <span class="col-md-8">
+                    Os itens marcados são seguros para exclusão.<br/>
+                    só marque mais itens se for extremamente necessário e entender as consequencias!
+                </span>
+            </h4>
+        </div>
+
     <table class="table table-striped">
         <thead>
             <th>ID</th>
             <th>Documento</th>
             <th>Nome</th>
             <th>Esta em turma</th>
-            <th>Tem Login</th>
+            <th>Cad. Completo</th>
             <th>Excluir</th>
         </thead>
         <tbody>
