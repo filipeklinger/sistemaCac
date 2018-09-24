@@ -31,6 +31,17 @@ try {
 
 </head>
 <body>
+<div class="header">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid" style="overflow-x: hidden">
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.php"><i class="glyphicon glyphicon-chevron-left"></i> Voltar</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
 <div class="container">
     <h3 class="text-center">Registros duplicados no sistema: <?php echo sizeof($registros); ?></h3>
     <?php
@@ -46,6 +57,8 @@ try {
             <h4 class="text-left col-md-12 alert alert-info">
                 <span class="glyphicon glyphicon-info-sign" style="float: left;"></span>
                 <span class="col-md-8">
+                    Aqui são mostradas todas as ocorrências daquele registro, ou seja,
+                    deixe pelo menos uma cópia para aquele usuário não ser completamente apagado.<br/><br/>
                     Os itens marcados são seguros para exclusão.<br/>
                     só marque mais itens se for extremamente necessário e entender as consequencias!
                 </span>
