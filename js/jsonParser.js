@@ -454,10 +454,10 @@ function parseAlunos(resposta, corpo) {
     for (let j in objEspera) {
         listaEspera +=
             '<tr>\n' +
-            '     <td></td>\n' +
-            '     <td style="text-transform: capitalize;">' + objEspera[j].nome + " " + objEspera[j].sobrenome + '</td>\n' +
             '     <td>' + (parseInt(j) + 1) + '</td>\n' +
-            '     <td>' + calculaIdade(objJson[j].data_nascimento) + ' anos</a></td>\n' +
+            '     <td style="text-transform: capitalize;">' + objEspera[j].nome + " " + objEspera[j].sobrenome + '</td>\n' +
+            '     <td>' + calculaIdade(objJson[j].data_nascimento) + ' anos</td>\n' +
+            '     <td></a></td>\n' +
             '</tr>';
     }
 

@@ -19,7 +19,7 @@ class search{
      */
     private function getDuplicados(){
         $clausulaWhere = "numero_documento IN (SELECT B.numero_documento FROM documento B GROUP BY B.numero_documento HAVING COUNT(*) > 1)";
-        return $this->db->select('pessoa_id,numero_documento',"documento",$clausulaWhere,null,"pessoa_id");
+        return $this->db->select('pessoa_id,numero_documento',"documento",$clausulaWhere,null,"numero_documento");
     }
 
     /**

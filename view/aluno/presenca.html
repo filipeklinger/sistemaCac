@@ -35,7 +35,7 @@
                 <table class="table" style="min-width: 400px;">
                     <thead>
                     <tr>
-                        <th></th>
+                        <th>#</th>
                         <th>Nome</th>
                         <th>Idade</th>
                         <th></th>
@@ -51,10 +51,10 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th></th>
-                    <th>Nome</th>
                     <th>Posição</th>
+                    <th>Nome</th>
                     <th>Idade</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody id="listaEspera">
@@ -127,10 +127,10 @@
         for (let j in objEspera) {
             listaEspera +=
                 '<tr>\n' +
-                '     <td></td>\n' +
-                '     <td style="text-transform: capitalize;">' + objEspera[j].nome + " " + objEspera[j].sobrenome + '</td>\n' +
                 '     <td>' + (parseInt(j) + 1) + '</td>\n' +
-                '     <td>' + calculaIdade(objJson[j].data_nascimento) + ' anos</a></td>\n' +
+                '     <td style="text-transform: capitalize;">' + objEspera[j].nome + " " + objEspera[j].sobrenome + '</td>\n' +
+                '     <td>' + calculaIdade(objJson[j].data_nascimento) + ' anos</td>\n' +
+                '     <td></td>\n' +
                 '</tr>';
         }
 

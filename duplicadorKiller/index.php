@@ -51,34 +51,33 @@ try {
                 </span>
             </h4>
         </div>
+        <table class="table table-striped">
+            <thead>
+                <th>ID</th>
+                <th>Documento</th>
+                <th>Nome</th>
+                <th>Esta em turma</th>
+                <th>Cad. Completo</th>
+                <th>Excluir</th>
+            </thead>
+            <tbody>
+                <?php
+                    for($i=0;$i<sizeof($registros);$i++){
+                        echo $registros[$i];
+                    }
+                    if(sizeof($registros) == 0){
+                        echo "<tr>
+                                <td> Parabens!! </td>
+                                <td> Nenhum Registro duplicado </td>
+                                <td>  </td>
+                                <td>  </td>
+                                <td> </td>";
 
-    <table class="table table-striped">
-        <thead>
-            <th>ID</th>
-            <th>Documento</th>
-            <th>Nome</th>
-            <th>Esta em turma</th>
-            <th>Cad. Completo</th>
-            <th>Excluir</th>
-        </thead>
-        <tbody>
-            <?php
-                for($i=0;$i<sizeof($registros);$i++){
-                    echo $registros[$i];
-                }
-                if(sizeof($registros) == 0){
-                    echo "<tr>
-                            <td> Parabens!! </td>
-                            <td> Nenhum Registro duplicado </td>
-                            <td>  </td>
-                            <td>  </td>
-                            <td> </td>";
-
-                }
-            ?>
-        </tbody>
+                    }
+                ?>
+            </tbody>
+        </table>
     </form>
-    </table>
 </div>
 <script type="application/javascript">
     function warning(form) {
