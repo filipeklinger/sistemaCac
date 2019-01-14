@@ -732,7 +732,7 @@ function loadEnd(id) {
     function parseEnd(json, corpo) {
         var objJson = JSON.parse(json);
         $('#rua').append(objJson[0].rua);
-        $('#numero').append(objJson[0].numero);
+        $('#num').append(objJson[0].numero);
         $('#complemento').append(objJson[0].complemento);
         $('#bairro').append(objJson[0].bairro);
         $('#cidade').append(objJson[0].cidade);
@@ -748,7 +748,7 @@ function loadDocument() {
     function parseDocumento(resposta, corpo) {
         let json = JSON.parse(resposta);
         $('#tipoDoc').append(documenTipo(json[0].tipo_documento));
-        $('#numeroDoc').append(json[0].numero_documento);
+        $('#numDoc').append(json[0].numero_documento);
     }
 
     function documenTipo(num) {
@@ -872,7 +872,7 @@ function editUsuarioEndereco() {
     let end = $('#end');
     //Obtendo dados atuais
     let rua = $('#rua').text();
-    let numero = $('#numero').text();
+    let numero = $('#num').text();
     let complemento = $('#complemento').text();
     let bairro = $('#bairro').text();
     let cidade = $('#cidade').text();
@@ -896,7 +896,7 @@ function editUsuarioDocumento() {
     let docs = $('#docs');
     //obtendo dados atuais
     let tipo = $('#tipoDoc').text();
-    let numero = $('#numeroDoc').text();
+    let numero = $('#numDoc').text();
     docs.empty();
 
     docs.append(
