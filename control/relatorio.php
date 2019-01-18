@@ -29,14 +29,39 @@ class relatorio{
  }
 
     /**
+     * obtem o Historico de um aluno especifico
      * @return string
      * @throws Exception
      */
-    public function getAlunosHistorico(){
-        $columns = "pessoa.nome,pessoa.sobrenome,COUNT(oficina.nome) as oficinas";
-        $whereClause = "pessoa.id_pessoa = aluno_turma.pessoa_id and aluno_turma.turma_id = turma.id_turma AND turma.oficina_id = oficina.id_oficina";
-        $group = " GROUP BY pessoa.nome, pessoa.sobrenome";
-        return $this->db->select($columns,"pessoa,aluno_turma,turma,oficina",$whereClause.$group,null,"pessoa.nome",ASC);
+    public function getAlunosHistorico($nome){
+        if (isset($nome) && strlen($nome) > 0) {
+            $partes = explode(" ", $nome);
+            $primeiroNome = '%' . $partes[0] . '%';
+            $ultimoNome = "";
+            if (sizeof($partes) > 1){
+                unset($partes[0]);
+                $ultimoNome = implode(" ", $partes);
+            }
+            $ultimoNome = '%' . $ultimoNome . '%';
+
+            $projecao = "pessoa.id_pessoa,pessoa.nome,pessoa.sobrenome,oficina.nome as atividade,turma.nome_turma as turma,tempo.ano,tempo.periodo";
+            $tabela = "pessoa,aluno_turma,turma,oficina,tempo";
+            $whereClause = "
+                        pessoa.excluido = 0 AND
+                        pessoa.id_pessoa = aluno_turma.pessoa_id AND
+                        aluno_turma.lista_espera = 0 AND
+                        aluno_turma.trancado = 0 AND
+                        aluno_turma.turma_id = turma.id_turma AND
+                        turma.oficina_id = oficina.id_oficina AND
+                        turma.tempo_id = tempo.id_tempo AND
+                        turma.is_ativo = 1 AND
+                        pessoa.nome LIKE ? AND
+                        pessoa.sobrenome LIKE ?
+        ";
+            $whereArgs = array($primeiroNome, $ultimoNome);
+            return $this->db->select($projecao, $tabela, $whereClause, $whereArgs);
+        }
+        return "";
     }
 
     /**

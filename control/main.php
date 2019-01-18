@@ -262,7 +262,7 @@ class main{
                 break;
             case "selectAlunosHistorico":
                 $relatorio = new relatorio();
-                echo $relatorio->getAlunosHistorico();
+                echo $relatorio->getAlunosHistorico($_GET['nome']);
                 break;
             case "selectAlunosCadastrados":
                 $relatorio = new relatorio();

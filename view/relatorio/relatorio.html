@@ -14,8 +14,8 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active" data-toggle="collapse" data-target="#myNavbar"><a data-toggle="tab" href="#rmain">Gerenciar Relatórios</a></li>
-                    <li data-toggle="collapse" data-target="#myNavbar"><a data-toggle="tab" href="#histTab">Históricos</a></li>
+                    <li class="active" data-target="#myNavbar"><a data-toggle="tab" href="#rmain">Relatório geral</a></li>
+                    <li data-target="#myNavbar"><a data-toggle="tab" href="#histTab">Históricos</a></li>
                 </ul>
             </div>
 
@@ -58,22 +58,45 @@
             </div>
         </div>
 
+        <!-- HISTORICO -->
         <div id="histTab" class="tab-pane fade">
             <h3>Busca de Histórico</h3>
+            <div class="col-lg-6 smallScreenSpaceCorrection">
+                <div class="input-group">
+                            <span class="input-group-btn">
+                                <button id="bt-pesquisa" class="btn btn-primary" type="button" onclick="buscar()"
+                                        disabled>Buscar</button>
+                            </span>
+                    <div class="searchBox">
+                        <input type="text" class="form-control searchBox" id="searchName"
+                               onclick="limpaPesquisa('bt-pesquisa','searchName')"
+                               placeholder="Nome do Aluno ...">
+                    </div>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+
             <div class="row">
                 <table width="80%" align="center" class="table">
                     <thead>
                     <tr>
                         <th class="col-md-4">Nome</th>
-                        <th class="col-md-2">Participou de</th>
-                        <th class="col-md-2"></th>
+                        <th class="col-md-2">Atividade</th>
+                        <th class="col-md-2">Turma</th>
+                        <th class="col-md-2">Ano/periodo</th>
                     </tr>
                     </thead>
                     <tbody id="alunos">
+                    <tr>
+                        <td class="col-md-4">Busque um nome</td>
+                        <td class="col-md-2">  </td>
+                        <td class="col-md-2"> </td>
+                        <td class="col-md-2"> </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+
     </div>
 </div>
 <script type="application/javascript">
@@ -110,25 +133,42 @@
             $('#totalAlunosEspera').empty().append(espera);
         }
     }
-    function parseAlunosHistorico(resposta,corpo) {
-        let objJson = JSON.parse(resposta);
-        let soma = 0;
-        for (let i in objJson) {
-            corpo.append(
-                '<tr>\n' +
-                '     <td class="col-md-4">' + objJson[i].nome +' '+ objJson[i].sobrenome + '</td>\n' +
-                '     <td class="col-md-2">' + objJson[i].oficinas + ' Oficinas</td>\n' +
-                '     <td class="col-md-2"></td>\n' +
-                '</tr>');
-            soma += parseInt(objJson[i].alunos);
-        }
-    }
 
     function parseCadastros(resposta) {
         let objJson = JSON.parse(resposta);
         $('#cadastrosRuralino').empty().append(objJson.ruralino);
         $('#cadastrosCrianca').empty().append(objJson.crianca);
         $('#totalCadastros').empty().append(objJson.total);
+    }
+
+    function buscar() {
+        $('#bt-pesquisa').attr("disabled", "disabled");//importante para nao envia 2 requisicoes iguais
+        let nome = $('#searchName').val();
+        ajaxLoadGET('control/main.php?req=selectAlunosHistorico&nome='+nome, parseAlunosHistorico, '#alunos');
+    }
+    function parseAlunosHistorico(resposta,corpo) {
+        let soma = 0;
+        try{
+            let objJson = JSON.parse(resposta);
+            for (let i in objJson) {
+                corpo.append(
+                    '<tr>\n' +
+                    '     <td class="col-md-4">' + objJson[i].nome +' '+ objJson[i].sobrenome + '</td>\n' +
+                    '     <td class="col-md-2">' + objJson[i].atividade + ' </td>\n' +
+                    '     <td class="col-md-2">' + objJson[i].turma + '</td>\n' +
+                    '     <td class="col-md-2">' + objJson[i].ano + '/' + objJson[i].periodo + '</td>\n' +
+                    '</tr>');
+                soma++;
+            }
+        }catch (e) {
+            corpo.append(
+                '<tr>\n' +
+                '     <td class="col-md-4">Nada encontrado</td>\n' +
+                '     <td class="col-md-2">  </td>\n' +
+                '     <td class="col-md-2"> </td>\n' +
+                '     <td class="col-md-2"> =(</td>\n' +
+                '</tr>');
+        }
     }
 </script>
 </body>
