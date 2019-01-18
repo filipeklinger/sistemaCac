@@ -28,7 +28,7 @@
         </div>
 
         <div class="formBoxContainer col-md-12">
-            <h3 class="text-center col-md-12">Dados Pessoais <span id="responsavel_label" hidden> - Responsável</span>
+            <h3 class="text-center col-md-12">Dados Pessoais <span class="responsavel_label" hidden> - Responsável</span>
             </h3>
 
             <div class="form-group col-md-9 col-lg-push-2" style="border: 2px solid black">
@@ -56,7 +56,7 @@
             </div>
             <!-- Primeiro nome da pessoa -->
             <div class="form-group col-md-8 col-lg-push-2">
-                <label class="control-label" for="nome">Nome</label>
+                <label class="control-label" for="nome">Nome <span class="responsavel_label" hidden>do responsável</span></label>
                 <div class="">
                     <input autocomplete="false" id="nome" name="nome" type="text" placeholder="Ex. José"
                            class="form-control input-md"
@@ -66,7 +66,7 @@
 
             <!-- Sobrenome da pessoa -->
             <div class="form-group col-md-8 col-lg-push-2">
-                <label class="control-label" for="sobrenome">Sobrenome</label>
+                <label class="control-label" for="sobrenome">Sobrenome <span class="responsavel_label" hidden>do responsável</span></label>
                 <div class="">
                     <input autocomplete="false" id="sobrenome" name="sobrenome" type="text" placeholder="Ex. da silva"
                            class="form-control input-md" required="">
@@ -75,7 +75,7 @@
 
             <!-- Nascimento -->
             <div class="form-group col-md-8 col-lg-push-2">
-                <label class="control-label" for="nascimento">Data de Nascimento</label>
+                <label class="control-label" for="nascimento">Data de Nascimento <span class="responsavel_label" hidden>do responsável</span></label>
                 <div class="">
                     <input autocomplete="false" id="nascimento" name="nascimento" type="date" min="1900-01-01"
                            class="form-control input-md formDate" required="">
@@ -163,6 +163,18 @@
                 <!-- Administrador deve setar essa opcao -->
                 <!-- FIM Ruralino -->
             </div>
+        </div>
+
+        <div class="col-md-12" id="menor_de_idade">
+            <h3 id="menor_label" class="text-center" hidden="hidden">Informações do Dependente
+                <br>
+                <br>
+                <a type="button" class="btn btn-primary" onclick="addMenor();" id="addMulti">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Novo Dependente
+                </a>
+            </h3>
+            <input type="hidden" name="qtd_menor" value="0" id="qtd_menor">
         </div>
 
         <div class="formBoxContainer col-md-12">
@@ -254,18 +266,6 @@
             </div>
         </div>
 
-        <div class="col-md-12" id="menor_de_idade">
-            <h3 id="menor_label" class="text-center" hidden="hidden">Informações do Dependente
-                <br>
-                <br>
-                <a type="button" class="btn btn-primary" onclick="addMenor();" id="addMulti">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    Novo Dependente
-                </a>
-            </h3>
-            <input type="hidden" name="qtd_menor" value="0" id="qtd_menor">
-        </div>
-
         <div class="col-md-12">
             <h4 class="text-left col-md-12 alert alert-info"><span class="glyphicon glyphicon-info-sign"
                                                                    style="float: left;"></span><span
@@ -319,7 +319,7 @@
 <script type="text/javascript">
     $('#is_menor').change(function () {
         var parentesco = $('#label_parentesco');
-        $('#responsavel_label').prop('hidden', !this.checked);
+        $('.responsavel_label').prop('hidden', !this.checked);
         $('#menor_label').prop('hidden', !this.checked);
 
         if (this.checked) {//adiciona
