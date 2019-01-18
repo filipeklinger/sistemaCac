@@ -338,8 +338,12 @@ class pessoa{
             $partes = explode(" ",$nome);
 
             $primeiroNome = '%'.$partes[0].'%';
+
             $ultimoNome = "";
-            if(sizeof($partes)>1) $ultimoNome = $partes[sizeof($partes)-1];
+            if(sizeof($partes)>1) {
+                unset($partes[0]);
+                $ultimoNome = implode(" ",$partes);
+            }
             $ultimoNome = '%'.$ultimoNome.'%';
 
             $pagna = null;
