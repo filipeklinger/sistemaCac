@@ -71,7 +71,9 @@ if(isset($_SESSION['LOGADO']) and $_SESSION['LOGADO'] == true){
         //A string do case se torna o Titulo da pagina
         case 'Login'://se a pessoa ja esta logada nao precisa de login novamente
         case 'DashBoard':
+            if($_SESSION['NIVEL'] != ALUNO)
             include "view/dashboard.html";
+            else include "view/aluno/aluno_dashboard.html";
             break;
         //Infra
         case 'Infraestrutura':

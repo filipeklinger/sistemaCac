@@ -235,6 +235,10 @@ class main{
                 $turma->setPeriodo();
                 break;
                 //Aluno-------------------------------------------------------------------------------------------------
+            case "minhasOficinas":
+                $aluno = new aluno();
+                echo $aluno->minhasOficinas();
+                break;
             case "insertAluno":
                 $aluno = new aluno();
                 $aluno->setAluno();

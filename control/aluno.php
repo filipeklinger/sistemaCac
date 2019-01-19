@@ -226,6 +226,88 @@ class aluno{
         }
     }
 
+    /**
+     * Esse historico e para o aluno obter as oficinas que ele ja participou
+     */
+    public function meuHistorico(){
+
+    }
+
+    /**
+     * para o aluno obter as oficinas que ele está matriculado atualmente
+     * e tambem as oficinas de seus dependentes se houver
+     * @throws exception
+     */
+    public function minhasOficinas(){
+        //$_SESSION['ID']
+        $oficinas = json_decode($this->oficinasAtuais($_SESSION['ID']));
+        //colocando todas as oficinas em um unico objeto aluno
+        $ofParent = array();
+        for($j=0;$j<sizeof($oficinas);$j++){
+            $nome = $oficinas[$j]->nome;
+            unset($oficinas[$j]->nome);
+            array_push($ofParent,
+                (array) $oficinas[$j]);
+
+            unset($oficinas[$j]);
+            $oficinas[$j] = new stdClass();
+            $oficinas[$j]->nome = $nome;
+        }
+        $oficinas[0]->oficinas = $ofParent;
+
+        //buscando dependentes
+        $dependentes = json_decode($this->dependentesId($_SESSION['ID']));
+        if(sizeof($dependentes)>0){
+            //obtendo as oficinas atuais do tal dependente
+            for($i=0;$i < sizeof($dependentes);$i++){
+                $oficDep = json_decode($this->oficinasAtuais($dependentes[$i]->id_pessoa));
+                unset($dependentes[$i]->id_pessoa);//removendo id por seguranca
+                $dependentes[$i]->oficinas = $oficDep;
+                array_push($oficinas,$dependentes[$i]);
+            }
+        }
+        return json_encode($oficinas,JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * Obtem o Id e nome dos dependentes
+     * @param $responsavelId
+     * @return string
+     * @throws Exception
+     */
+    private function dependentesId($responsavelId){
+        $projecao = "pessoa.id_pessoa,pessoa.nome,pessoa.sobrenome";
+        $tabela = "pessoa,menor_idade";
+        $whereClause =
+            "pessoa.id_pessoa = menor_idade.pessoa_id AND
+            menor_idade.responsavel_id = ?";
+        $whereArgs = array($responsavelId);
+        return $this->db->select($projecao,$tabela,$whereClause,$whereArgs);
+    }
+
+    /**
+     * obtem as oficinas que um aluno esta cursando atualmente
+     * @param $id_pessoa
+     * @return string
+     * @throws Exception
+     */
+    private function oficinasAtuais($id_pessoa){
+        $projecao = "pessoa.nome,turma.nome_turma as turma,oficina.nome as oficina,DATE_FORMAT(hts.inicio, \"%H:%ih\") as inicio,DATE_FORMAT(hts.fim, \"%H:%ih\") as fim,hts.segunda,hts.terca,hts.quarta,hts.quinta,hts.sexta,sala.nome as sala,p2.nome as professor";
+        $tabela = "pessoa,aluno_turma,oficina,turma,horario_turma_sala as hts,sala,pessoa as p2";
+        $whereClause =
+            "pessoa.id_pessoa=aluno_turma.pessoa_id AND
+            aluno_turma.turma_id = turma.id_turma AND
+            turma.oficina_id = oficina.id_oficina AND
+            turma.id_turma = hts.turma_id AND
+            turma.tempo_id = (SELECT MAX(tempo.id_tempo) as id FROM tempo) AND
+            hts.sala_id = sala.id_sala AND
+            turma.professor = p2.id_pessoa AND
+            pessoa.id_pessoa = ?";
+        $whereArgs = array($id_pessoa);
+        return $this->db->select($projecao,$tabela,$whereClause,$whereArgs);
+
+    }
+
     private function redireciona(){header("Location: ../index.php?pag=Cad.Aluno");}
     private function redirecionaPagAnterior(){header("Location: " . $_SERVER['HTTP_REFERER'] . "");}
 }
