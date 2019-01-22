@@ -285,9 +285,16 @@ class pessoa{
 
 //--------------------------------------RECUPERA DO BANCO---------------------------------------------------------------
     private function hasPermission($pessoaId){
+        //ou pessoa id = dependente id da pessoa
+        $dependentes = json_decode($this->getDependentes($_SESSION['ID']));
+
         if($pessoaId == $_SESSION['ID'] or $_SESSION['NIVEL'] == ADMINISTRADOR){
             return true;
         }else{
+            //verificando dependentes
+            for($i=0;$i<sizeof($dependentes);$i++){
+                if($pessoaId === $dependentes[$i]->id_pessoa) return true;//se for dependente entao tem permissao
+            }
             new mensagem(ERRO,"Permissão Insuficiente para a operação requerida");
             $this->redirecionaPagAnterior();
             return false;
