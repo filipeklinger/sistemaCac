@@ -19,14 +19,14 @@ class relatorio{
      * @throws Exception
      */
     public function getAlunosPorOficina($tempoId){
-        $projection = "oficina.nome as oficina,count(aluno_turma.id_aluno) as alunos,".
-        //lista de espera
+        $projection = "oficina.nome as oficina,turma.nome_turma as turma,count(aluno_turma.id_aluno) as alunos,".
+            //lista de espera
             "(SELECT count(aluno_turma.id_aluno) from aluno_turma WHERE aluno_turma.turma_id = turma.id_turma and aluno_turma.lista_espera = 1) as espera";
         $table = "turma,aluno_turma,oficina";
         $whereClause = "turma.tempo_id = ? AND turma.id_turma = aluno_turma.turma_id and aluno_turma.lista_espera = 0 and aluno_turma.trancado = 0 and turma.oficina_id = oficina.id_oficina";
         $groupBy = " GROUP BY id_turma";
         return $this->db->select($projection,$table,$whereClause.$groupBy,array($tempoId));
- }
+    }
 
     /**
      * obtem o Historico de um aluno especifico
