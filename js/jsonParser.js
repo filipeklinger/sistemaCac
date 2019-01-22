@@ -587,6 +587,7 @@ function jsonParseInfoPessoa(json) {
     $('#nasc').append(nascFormatada+'<br>Idade: '+idade + ' Anos');
     if (objJson[0].menor_idade === "1") {
         loadMenor();
+        $('#maiorIdade').attr('hidden',true);
     } else {
         loadContato(identificador);
         loadEnd(identificador);
