@@ -10,12 +10,14 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a class="navbar-brand" href="index.php?pag=Turmas"><i class="glyphicon glyphicon-chevron-left"></i> Voltar para Gerência de Turmas</a>
+                <a class="navbar-brand" href="index.php?pag=Turmas"><i class="glyphicon glyphicon-chevron-left"></i>
+                    Voltar para Gerência de Turmas</a>
             </div>
 
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active" data-toggle="collapse" data-target="#myNavbar"><a data-toggle="" href="#turmas">Cadastro de Turmas</a></li>
+                    <li class="active" data-toggle="collapse" data-target="#myNavbar"><a data-toggle="" href="#turmas">Cadastro
+                        de Turmas</a></li>
                 </ul>
                 </ul>
             </div>
@@ -23,9 +25,9 @@
     </nav>
 </div>
 
-<p id="avisos"></p>
 
 <div class="container">
+    <p id="avisos"></p>
     <!-- Form Name  -->
     <form class="form-horizontal" action="control/main.php?req=insertTurma" method="POST">
         <br>
@@ -67,8 +69,9 @@
                 </div>
 
                 <div class="col-md-4" style="margin-top: 16px">
-                        <input id="vagas" name="vagas" type="number" placeholder="numero de vagas" class="form-control input-md"
-                               required="" min="1">
+                    <input id="vagas" name="vagas" type="number" placeholder="numero de vagas"
+                           class="form-control input-md"
+                           required="" min="1">
                 </div>
             </div>
 
@@ -107,25 +110,11 @@
                     <br>
                     <br>
                 </div>
-                    <!--Uma Tabela de Horário, UAU-->
-                    <div class="col-md-12 tableContainer" style="overflow-x: auto">
-                        <table class="table" >
-                            <thead>
-                            <tr>
-                                <th class="col-sm-2 col-md-2">Hora</th>
-                                <th class="col-sm-2 col-md-2">Segunda</th>
-                                <th class="col-sm-2 col-md-2">Terça</th>
-                                <th class="col-sm-2 col-md-2">Quarta</th>
-                                <th class="col-sm-2 col-md-2">Quinta</th>
-                                <th class="col-sm-2 col-md-2">Sexta</th>
-
-                            </tr>
-                            </thead>
-                            <tbody id="horariosDisponiveis">
-                            </tbody>
-                        </table>
-                    </div>
-
+                <h3 class="text-center col-md-12">Horários ocupados</h3>
+                <!--Uma Tabela de Horário, shhhh, não conta pra ninguém-->
+                <div class="container-fluid">
+                    <div class="timetable"></div>
+                </div>
             </div>
         </div>
         <div class="formBoxContainer col-md-12">
@@ -136,8 +125,7 @@
                     <label class="control-label" for="horarioInic">Inicia as: </label>
                     <div class="">
                         <input id="horarioInic" name="horario_inic" type="time" placeholder=""
-                               class="form-control input-md"
-                               required="">
+                               class="form-control input-md" required="">
                     </div>
                 </div>
                 <div class=" col-md-3">
@@ -159,6 +147,7 @@
 </div>
 
 <script type="text/javascript">
+
     var selectPredioTurma = $('#selectPredio');
     var selectSalaTurma = $('#selectSala');
     var selectOficinaTurma = $('#selectOficina');
@@ -166,6 +155,30 @@
     var horariosTurma = $('#horariosDisponiveis');
 
     $(document).on("load", carregadorCadTurmas());
+    $(document).on("ready", getMsgs());
+
+    function disponibilidade() {
+        var identificador = parseInt(selectSalaTurma.val());
+
+        //ajaxLoadGET('control/main.php?req=selectHorario&id=' + identificador, criaGrade, horariosTurma);
+        ajaxLoadGET('control/main.php?req=selectHorario&id=' + identificador, criaGrade, horariosTurma);
+    }
+
+    function jsonParteHorariosDisponiveis(resposta, corpo) {
+        console.log(corpo);
+        let objJson = JSON.parse(resposta);
+        for (let i in objJson) {
+            corpo.append(
+                '<tr>\n' +
+                '                    <th class="col-sm-2 col-md-2">' + objJson[i].inicio + ' ás ' + objJson[i].fim + '</th>\n' +
+                '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].segunda, objJson[i]) + '</td>\n' +
+                '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].terca, objJson[i]) + '</td>\n' +
+                '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].quarta, objJson[i]) + '</td>\n' +
+                '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].quinta, objJson[i]) + '</td>\n' +
+                '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].sexta, objJson[i]) + '</td>\n' +
+                '                </tr>');
+        }
+    }
 
 </script>
 <script src="js/checkboxButton.js"></script>

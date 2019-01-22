@@ -10,7 +10,7 @@ include_once 'constantes.php';
 include_once '../tcpdf/tabelaPDF.php';
 class aluno{
     private $db;
-    private $sucessInsercao,$failInsercao,$listaEsperaInsercao,$idTurma;
+    private $sucessInsercao,$idTurma;
     private $numSucess,$numEspera,$numFail,$numErro;
 
     public function __construct(){
@@ -53,7 +53,7 @@ class aluno{
      */
     private function parseCandidato($idPessoa){
         //verificando se o aluno já esta cadastrado em X oficinas do periodo atual
-         $estaParticipando = $this->getParticipacaoPeriodoAtual($idPessoa);
+        $estaParticipando = $this->getParticipacaoPeriodoAtual($idPessoa);
 
         if($estaParticipando < Ambiente::getMaxOficinas()){
             //buscando se o aluno já esta cadasrado nessa turma
@@ -173,7 +173,7 @@ class aluno{
             $turma = $turma[0]->turma_id;
             $vagas = json_decode($this->getVagasDisponiveis($turma));
             if(($vagas[0]->vagas - $vagas->ocupadas) > 0)
-            $alunoSelecionado = json_decode($this->getAlunoListaEspera($turma));
+                $alunoSelecionado = json_decode($this->getAlunoListaEspera($turma));
             else $alunoSelecionado = 0 ;
             //Verificamos se existe lista de Espera
             if(sizeof($alunoSelecionado) > 0){
@@ -195,7 +195,7 @@ class aluno{
             new mensagem(INSERT_ERRO,"Não foi possível trancar a matrícula");
         }
 
-       $this->redirecionaPagAnterior();
+        $this->redirecionaPagAnterior();
     }
 
     /**
@@ -239,34 +239,31 @@ class aluno{
      * @throws exception
      */
     public function minhasOficinas(){
-        //$_SESSION['ID']
-        $oficinas = json_decode($this->oficinasAtuais($_SESSION['ID']));
-        //colocando todas as oficinas em um unico objeto aluno
-        $ofParent = array();
-        for($j=0;$j<sizeof($oficinas);$j++){
-            $nome = $oficinas[$j]->nome;
-            unset($oficinas[$j]->nome);
-            array_push($ofParent,
-                (array) $oficinas[$j]);
+        $minhasOficinas = array();
 
-            unset($oficinas[$j]);
-            $oficinas[$j] = new stdClass();
-            $oficinas[$j]->nome = $nome;
+        //colocando todas as oficinas em um unico objeto pai
+        $objetoPai = new stdClass();
+        $objetoPai->nome = "Resp";
+        $oficinasPai = array();
+
+        $oficinas = json_decode($this->oficinasAtuais($_SESSION['ID']));
+        for($j=0;$j<sizeof($oficinas);$j++){
+            unset($oficinas[$j]->nome);
+            array_push($oficinasPai, (array) $oficinas[$j]);
         }
-        $oficinas[0]->oficinas = $ofParent;
+        $objetoPai->oficinas = $oficinasPai;
+        array_push($minhasOficinas,$objetoPai);
 
         //buscando dependentes
         $dependentes = json_decode($this->dependentesId($_SESSION['ID']));
-        if(sizeof($dependentes)>0){
-            //obtendo as oficinas atuais do tal dependente
-            for($i=0;$i < sizeof($dependentes);$i++){
-                $oficDep = json_decode($this->oficinasAtuais($dependentes[$i]->id_pessoa));
-                unset($dependentes[$i]->id_pessoa);//removendo id por seguranca
-                $dependentes[$i]->oficinas = $oficDep;
-                array_push($oficinas,$dependentes[$i]);
-            }
+        for($i=0;$i < sizeof($dependentes);$i++){
+            $oficDep = json_decode($this->oficinasAtuais($dependentes[$i]->id_pessoa));
+            unset($dependentes[$i]->id_pessoa);//removendo id por seguranca
+            unset($oficDep[$i]->nome);//removendo nome duplicado
+            $dependentes[$i]->oficinas = $oficDep;
+            array_push($minhasOficinas,$dependentes[$i]);
         }
-        return json_encode($oficinas,JSON_UNESCAPED_UNICODE);
+        return json_encode($minhasOficinas,JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -280,6 +277,7 @@ class aluno{
         $tabela = "pessoa,menor_idade";
         $whereClause =
             "pessoa.id_pessoa = menor_idade.pessoa_id AND
+            pessoa.excluido = 0 AND
             menor_idade.responsavel_id = ?";
         $whereArgs = array($responsavelId);
         return $this->db->select($projecao,$tabela,$whereClause,$whereArgs);

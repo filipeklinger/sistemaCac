@@ -55,11 +55,15 @@ include_once 'control/constantes.php';
     <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- estiliza o seletor script src="bootstrap3.3.7/select/js/bootstrap-select.min.js"></script -->
     <script src="js/jsonParser.min.js"></script>
+    <script src="js/grade_horario.js"></script>
     <!-- Aqui recebemos as msg do Sistema -->
     <script type="application/x-javascript">
         <?php Ambiente::getUiMens(); ?>
     </script>
     <script src="js/plotly-latest.min.js"></script>
+    <!--Tabela timetable.js-->
+    <link rel="stylesheet" href="timetable.js/styles/plugin.css">
+    <script src="timetable.js/js/timetable.min.js"></script>
 </head>
 <?php
 //aqui recebemos por get a pagina de conteudo escolhida

@@ -328,11 +328,7 @@ function jsonParseSalasTurma(resposta) {
     disponibilidade();
 }
 
-function disponibilidade() {
-    var identificador = parseInt(selectSalaTurma.val());
 
-    ajaxLoadGET('control/main.php?req=selectHorario&id=' + identificador, jsonParteHorariosDisponiveis, horariosTurma);
-}
 
 function jsonParteHorariosDisponiveis(resposta, corpo) {
     let objJson = JSON.parse(resposta);
