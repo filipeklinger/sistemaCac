@@ -116,20 +116,11 @@
             </div>
 
             <div class="row" style="color: white;overflow-x: auto;">
-                <table class="table" width="80%" align="center" cellspacing="12">
-                    <thead>
-                    <tr>
-                        <th>Hora</th>
-                        <th>Segunda</th>
-                        <th>Terça</th>
-                        <th>Quarta</th>
-                        <th>Quinta</th>
-                        <th>Sexta</th>
-                    </tr>
-                    </thead>
-                    <tbody id="horariosDisponiveis">
-                    </tbody>
-                </table>
+                <h3 class="text-center col-md-12">Horarios ocupados</h3>
+                <!--Uma Tabela de Horário, shhhh, não conta pra ninguém-->
+                <div class="container-fluid">
+                    <div class="timetable"></div>
+                </div>
             </div>
             <!-- FIM HORARIOS -->
             <hr>
@@ -210,14 +201,11 @@
             $('#nomeHeader').append(json[0].oficina);
             //Setando os selects na posicao correta dos dados
             $('#selectPredio option[value='+predioAtual+']').attr('selected','selected');
-
-            $('#selectSala option[value='+salaAtual+']').attr('selected','selected');
-
-            $('#selectProf option[value='+professorAtual+']').attr('selected','selected');
-
             $('#selectOficina option[value='+oficinaAtual+']').attr('selected','selected');
             SalaFromPredioId();
-            disponibilidade();
+            setTimeout(()=> {$('#selectSala option[value='+salaAtual+']').attr('selected','selected');disponibilidade();},400);
+            setTimeout(()=> $('#selectProf option[value='+professorAtual+']').attr('selected','selected'),400);
+
         }
     }
 

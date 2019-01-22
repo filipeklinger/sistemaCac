@@ -157,29 +157,6 @@
     $(document).on("load", carregadorCadTurmas());
     $(document).on("ready", getMsgs());
 
-    function disponibilidade() {
-        var identificador = parseInt(selectSalaTurma.val());
-
-        //ajaxLoadGET('control/main.php?req=selectHorario&id=' + identificador, criaGrade, horariosTurma);
-        ajaxLoadGET('control/main.php?req=selectHorario&id=' + identificador, criaGrade, horariosTurma);
-    }
-
-    function jsonParteHorariosDisponiveis(resposta, corpo) {
-        console.log(corpo);
-        let objJson = JSON.parse(resposta);
-        for (let i in objJson) {
-            corpo.append(
-                '<tr>\n' +
-                '                    <th class="col-sm-2 col-md-2">' + objJson[i].inicio + ' ás ' + objJson[i].fim + '</th>\n' +
-                '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].segunda, objJson[i]) + '</td>\n' +
-                '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].terca, objJson[i]) + '</td>\n' +
-                '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].quarta, objJson[i]) + '</td>\n' +
-                '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].quinta, objJson[i]) + '</td>\n' +
-                '                    <td class="col-sm-2 col-md-2">' + isAtivoX(objJson[i].sexta, objJson[i]) + '</td>\n' +
-                '                </tr>');
-        }
-    }
-
 </script>
 <script src="js/checkboxButton.js"></script>
 

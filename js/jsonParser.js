@@ -217,6 +217,7 @@ function jsonParseNomePredios(resposta, corpo) {
     var objJson = JSON.parse(resposta);
     corpo.append('<option value="" disabled selected>Selecione o prédio ao qual a sala pertence</option>');
     for (var i in objJson) {
+        if(objJson[i].is_ativo == 0) continue;
         corpo.append(
             '<option value="' + objJson[i].id_predio + '">' + objJson[i].nome + '</option>');
     }
@@ -300,6 +301,11 @@ function carregadorCadTurmas() {
     SalaFromPredioId();
     disponibilidade();
 
+}
+
+function disponibilidade() {
+    var identificador = parseInt(selectSalaTurma.val());
+    ajaxLoadGET('control/main.php?req=selectHorario&id=' + identificador, criaGrade, horariosTurma);
 }
 
 function jsonParseOficinasTurma(resposta, corpo) {
