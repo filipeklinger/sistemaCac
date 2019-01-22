@@ -622,6 +622,7 @@ function loadMenor() {
         $('#menorIdade').removeAttr("hidden");
         $('#respnome').append(objJson[0].nome);
         $('#respsobrenome').append(objJson[0].sobrenome);
+        $('#respLink').attr('href','index.php?pag=Info.Pessoa&id='+objJson[0].responsavel_id);
         $('#parentesco').append(objJson[0].parentesco);
 
         loadContato(objJson[0].responsavel_id);
