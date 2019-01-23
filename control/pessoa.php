@@ -348,7 +348,7 @@ class pessoa{
 
             $ultimoNome = "";
             if(sizeof($partes)>1) {
-                unset($partes[0]);
+                if(sizeof($partes)>2){unset($partes[0]);unset($partes[1]);} else unset($partes[0]);//se tem mais de 2 nomes descartamos os 2 primeiros pois pode ser nome composto
                 $ultimoNome = implode(" ",$partes);
             }
             $ultimoNome = '%'.$ultimoNome.'%';
