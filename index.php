@@ -60,7 +60,6 @@ include_once 'control/constantes.php';
     <script type="application/x-javascript">
         <?php Ambiente::getUiMens(); ?>
     </script>
-    <script src="js/plotly-latest.min.js"></script>
     <!--Tabela timetable.js-->
     <link rel="stylesheet" href="timetable.js/styles/plugin.css">
     <script src="timetable.js/js/timetable.min.js"></script>
