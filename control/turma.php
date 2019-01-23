@@ -101,12 +101,11 @@ class turma{
      */
     public function setTurma(){
         $this->getCommonData();
-        $disponibilidade = json_decode($this->getHorariosBySalaId($this->sala));
-        for($i=0;$i<sizeof($disponibilidade);$i++){
-            if($disponibilidade[$i]->segunda and $disponibilidade[$i]->inicio){
-                //echo "conflito";
-                break;
-            }
+        //verificando disponibilidade
+        if($this->temConflitoDeHorario()){
+            new mensagem(ERRO,"<h3>Conflito de Horários com outra turma!!</h3>");
+            header("Location: " . $_SERVER['HTTP_REFERER'] . "");
+            return;
         }
         //inserindo turma
         $this->insertTurma();
@@ -115,6 +114,39 @@ class turma{
         $this->insertHorario();
         //redirecionando para pagina inicial
         $this->redireciona();
+    }
+
+    /**
+     * @param bool $updateId
+     * @return boolean
+     * @throws Exception
+     */
+    public function temConflitoDeHorario($updateId = false){
+        $inicio = strtotime($this->hinic);
+        $fim = strtotime($this->hfim);
+
+        $tempo = $this->getTempoStatic($this->db);
+
+        $projecao = "segunda,terca,quarta,quinta,sexta";
+        $table = "turma,horario_turma_sala";
+        $whereClause = "id_turma = turma_id and is_ativo = 1 and tempo_id = ?".
+            "and sala_id=? and ((inicio BETWEEN ? and ?) or (fim BETWEEN ? and ?))";
+        if($updateId != false) $whereClause .="and id_turma <> ".$updateId;//se for update excluimos o horario da atividade atual
+
+        $whereArgs = array(
+            $tempo->id_tempo,
+            $this->sala,
+            date('H:i:s',$inicio),date('H:i:s',$fim-60),// H maiusculo para hora formato 24h
+            date('H:i:s',$inicio+60),date('H:i:s',$fim));
+        $possiveisConflitos = json_decode($this->db->select($projecao,$table,$whereClause,$whereArgs),JSON_UNESCAPED_UNICODE);
+        foreach ($possiveisConflitos as $conflito){//verifica em todas as tuplas do mesmo horario se o dia tambem coincide
+            if($conflito['segunda'] && $this->seg) return true;
+            if($conflito['terca'] && $this->ter) return true;
+            if($conflito['quarta'] && $this->qua == 1) return true;
+            if($conflito['quinta'] && $this->qui == 1) return true;
+            if($conflito['sexta'] && $this->sex == 1) return true;
+        }
+        return false;//se nao encontrou nenhum dia conflitante entao conflito é falso
     }
 
     /**
@@ -221,7 +253,7 @@ class turma{
      */
     public function getTurmas($tempoId){
         //aqui mostramos todas as turmas ativas ou nao
-        $projection = "turma.is_ativo,oficina.nome as oficina,segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim,sala.nome as sala,pessoa.nome as professor,turma.num_vagas as vagas,turma.id_turma";
+        $projection = "turma.is_ativo,oficina.nome as oficina,segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim,sala.nome as sala,pessoa.nome as professor,turma.num_vagas as vagas,turma.id_turma,turma.nome_turma as turma";
         $table ="oficina,horario_turma_sala,sala,pessoa,turma";
 
         if($_SESSION['NIVEL'] == ADMINISTRADOR){
@@ -241,7 +273,7 @@ class turma{
     public function getHorariosBySalaId($identificador){
         //buscando periodo atual
         $tempo = self::getTempoStatic($this->db);
-        $projection = "oficina.nome as oficina,segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim";
+        $projection = "oficina.nome as oficina,segunda,terca,quarta,quinta,sexta,TIME_FORMAT(inicio, '%H:%ih') AS inicio,TIME_FORMAT(fim, '%H:%ih') AS fim,turma.nome_turma as turma";
         try {
             return $this->db->select($projection, "horario_turma_sala,turma,oficina", "sala_id = ? and turma_id = id_turma and oficina_id=id_oficina and  turma.is_ativo = 1 and turma.tempo_id = ?", array($identificador,$tempo->id_tempo),"inicio");
         } catch (Exception $e) {
@@ -280,8 +312,14 @@ class turma{
     public function updateTurma($turmaId){
         //recebendo dados
         $this->getCommonData();
-        $ativo = isset($_POST['ativo']) ? $_POST['ativo'] : SIM;//se der erro recebe ativo SIM
+        $ativo = isset($_POST['rb']) ? $_POST['rb'] : SIM;//por padrao recebe ativo
 
+        //verificando disponibilidade e se vai continuar ativo caso seja update de desativar turma nao gera conflitos
+        if($ativo == SIM && $this->temConflitoDeHorario($turmaId)){
+            new mensagem(ERRO,"<h3>Conflito de Horarios com outra turma!!</h3>");
+            header("Location: " . $_SERVER['HTTP_REFERER'] . "");
+            return;
+        }
         //atualiza turma
         $turmaColumns = array("num_vagas","professor","is_ativo");
         $turmaParams = array($this->vagas,$this->prof,$ativo);
@@ -289,34 +327,88 @@ class turma{
             //Somente vai tentar atualizar os horarios se a tuma for atualizada
             $horarioColumns = array("sala_id","segunda","terca","quarta","quinta","sexta","inicio","fim");
             $horarioParams = array($this->sala,$this->seg,$this->ter,$this->qua,$this->qui,$this->sex,$this->hinic,$this->hfim);
-
-            if($this->db->update($horarioColumns,"horario_turma_sala",$horarioParams,"turma_id = ?",array($turmaId))){
-                new mensagem(SUCESSO,"Turma e Horarios Atualizados");
+            if($ativo == SIM){//so deve atualizar horario de turmas ativas
+                if($this->db->update($horarioColumns,"horario_turma_sala",$horarioParams,"turma_id = ?",array($turmaId))){
+                    new mensagem(SUCESSO,"Turma e Horarios Atualizados");
+                    $this->andaListaEspera($turmaId);//aqui verificamos se turma precisa andar
+                }else{
+                    new mensagem(INSERT_ERRO,"Erro ao atualizar horario da turma");
+                }
             }else{
-                new mensagem(INSERT_ERRO,"Erro ao atualizar horario da turma");
+                new mensagem(SUCESSO,"Turma desativada com sucesso");
             }
 
         }else{
             new mensagem(INSERT_ERRO,"Não foi possivel atualizar");
         }
         $this->redireciona();
-
-        /*/atualiza
-        echo "<table>";
-            foreach ($_POST as $key => $value) {
-                echo "<tr>";
-                echo "<td>";
-                echo $key;
-                echo "</td>";
-                echo "<td>";
-                echo $value;
-                echo "</td>";
-                echo "</tr>";
-            }
-        echo "</table>";
-        */
-
     }
+
+    /**
+     * verifica vagas disponiveis e numero de alunos em determinada turma fazendo a lista de espera aumentar ou diminuir
+     * @param $turmaId
+     * @throws Exception
+     */
+    private function andaListaEspera($turmaId){
+        $vagas = json_decode($this->getVagasDisponiveis($turmaId));
+        $vagasDisponiveis = ($vagas[0]->vagas - $vagas[0]->ocupadas);
+        if ($vagasDisponiveis > 0) {
+            //iteramos sobre a lista de espera tirando alunos de la
+            $alunoSelecionado = json_decode($this->getAlunoListaEspera($turmaId));
+            $columns = array("lista_espera");
+            $set = array(NAO);
+            for ($i = 0; ($i < $vagasDisponiveis && $i < sizeof($alunoSelecionado)); $i++) {
+                $whereArgs = array($alunoSelecionado[$i]->id_aluno);
+                $this->db->update($columns, "aluno_turma", $set, "id_aluno = ?", $whereArgs);
+            }
+        }else if($vagasDisponiveis < 0){
+            //iteramos sobre a lista de espera colocando alunos de volta nela
+            $alunoSelecionado = json_decode($this->getAlunosId($turmaId));
+            $columns = array("lista_espera");
+            $set = array(SIM);
+            for ($i = 0;($i < (-$vagasDisponiveis) && $i < sizeof($alunoSelecionado)); $i++) {
+                $whereArgs = array($alunoSelecionado[$i]->id_aluno);
+                $this->db->update($columns, "aluno_turma", $set, "id_aluno = ?", $whereArgs);
+            }
+        }
+    }
+    /**
+     * Retorna as vagas disponiveis e ocupadas em uma turma
+     * @param $turmaId
+     * @return string
+     * @throws Exception
+     */
+    private function getVagasDisponiveis($turmaId){
+        $projection = "turma.id_turma,num_vagas as vagas,".
+            "(SELECT count(*) as n from aluno_turma where aluno_turma.turma_id = id_turma and lista_espera = 0 and trancado = 0) as ocupadas";
+        return $this->db->select($projection,"turma","id_turma = ?",array($turmaId));
+    }
+    /**
+     * Retorna todos os alunos em lista de espera
+     * @param $turmaId
+     * @return string
+     * @throws Exception
+     */
+    private function getAlunoListaEspera($turmaId){
+        $columns = "id_aluno,pessoa_id,nome,sobrenome";
+        $whereClause = "pessoa_id = id_pessoa and lista_espera = ? and turma_id = ?";
+        return $this->db->select($columns,"aluno_turma,pessoa",$whereClause,array(SIM,$turmaId),"id_aluno");
+    }
+
+    /**
+     * Retorna o id de todos os alunos de uma turma que nao estao na lista de espera
+     * pelo maior Id primeiro
+     * @param $turmaId
+     * @return string
+     * @throws Exception
+     */
+    private function getAlunosId($turmaId){
+        $tempo = turma::getTempoStatic($this->db);
+        $columns = "aluno_turma.id_aluno";
+        $whereClause = "aluno_turma.turma_id = turma.id_turma and turma.tempo_id = ? and turma.id_turma = ? and aluno_turma.lista_espera = 0 and aluno_turma.trancado = 0";
+        return $this->db->select($columns,"turma,aluno_turma",$whereClause,array($tempo->id_tempo,$turmaId),"aluno_turma.id_aluno",DESC);
+    }
+
 
     private function redireciona(){
         //depois de inserir redirecionamos para a pagina de infra
