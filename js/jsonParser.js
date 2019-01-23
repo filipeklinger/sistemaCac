@@ -62,7 +62,6 @@ function listaMarota(resposta, corpo) {
                 objJson[i].vagas = '&nbsp;&nbsp;' + objJson[i].vagas;
             }
             if (objJson[i].pre_requisito.length < 2) objJson[i].pre_requisito = 'Nenhum';
-            //console.log(avaliaData(objJson[i]));
             var aux = JSON.parse(avaliaData(objJson[i]));
 
             corpo.append(
@@ -511,18 +510,15 @@ function parseTurmasComVagas(resposta, corpo, funcaoEncadeada) {
 function getCandidatosByName() {
     let nome = $('#searchNames').val();
     let url = 'control/main.php?req=selectUsuario&nome=' + nome + '&pagina=' + pagina;
-    //console.log(url);
     ajaxLoadGET(url, parseCandidatos, '#tcandidatos');
-
     function parseCandidatos(resposta, corpo) {
         let objJson = JSON.parse(resposta);
-        console.log(objJson);
         if (objJson.length === 0) {
             corpo.append(
                 '<tr>' +
-                '<td style="font-size: x-large; font-weight: bold"><span class="fa fa-frown-o" ></span> ALUNO NÃO ENCONTRADO</td>\\n\' +</td>' +
+                '<td style="font-size: x-large; font-weight: bold"><span class="fa fa-frown-o" ></span> ALUNO NÃO ENCONTRADO</td>  </td>' +
                 '<td class=\'col-md-1\'></td>' +
-                '<td class=\'col-md-1\'></td>' +
+                '<td class=\'col-md-1\'>Tente pelo nome completo</td>' +
                 '<td class=\'col-md-1\'></td>' +
                 '</tr>');
         } else {
@@ -846,7 +842,6 @@ function editUsuarioContato() {
     let tipo = 0;
     tels.empty();
     if (jsonContato !== null) {
-        console.log(jsonContato);
         jsonContato = JSON.parse(jsonContato);
             tipo = jsonContato[0].tipo;
             acm += `<p><input type="hidden" name="resp_tel_id" value="${jsonContato[0].id_contato}">Tel: <input type="number" name="resp_tel" value="${jsonContato[0].contato}" required="required">Tipo: <select id="resp_tel_type" name="resp_tel_type">
