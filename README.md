@@ -37,7 +37,7 @@ As tabelas de horários foram criadas com a biblioteca [TimeTable](http://timeta
 
 Os arquivos PDF são criados utilizando a biblioteca [TCPDF](https://tcpdf.org/)
 
-Documentação específica do projeto [aqui](./Documentacao/Documentacao.md)
+Documentação específica do projeto [aqui](./documentacao/Documentacao.md)
 
 ### Versionamento
 
